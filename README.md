@@ -1,3 +1,7 @@
+# content-rating
+Customizable content-rating system for rating the textual, objectionablecontent in music, TV episodes, movies, and books.
+
+
 # Heroku Django Starter Template
 
 An utterly fantastic project starter template for Django 2.0.
