@@ -1,4 +1,8 @@
+from django.shortcuts import render
 from django.http import HttpResponse
 
 def homepage(request):
-	return HttpResponse("Rate your content!")
+	return render(request, 'base.html')
+    
+def login(request):
+    return render(request, 'login.html')
