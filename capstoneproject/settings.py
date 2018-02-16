@@ -16,7 +16,6 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -74,11 +73,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'capstoneproject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-#DATABASES = {
+# DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #        'NAME': 'capstoneproject',
@@ -87,7 +85,7 @@ WSGI_APPLICATION = 'capstoneproject.wsgi.application'
 #        'HOST': 'localhost',
 #        'PORT': '',
 #    }
-#}
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

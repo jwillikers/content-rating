@@ -23,5 +23,5 @@ from capstoneproject.views import login
 urlpatterns = [
     url(r'^admin/?$', admin.site.urls),
     url(r'^login/?$', login),
-    url(r'^/?$', homepage), # Main page, obviously
+    url(r'^/?$', homepage),  # Main page, obviously
 ]
