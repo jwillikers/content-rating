@@ -28,7 +28,6 @@ from capstoneproject.views import about_page
 
 urlpatterns = [
     url(r'^admin/?$', admin.site.urls),
-<<<<<<< HEAD
     url(r'^login/?$', login, name='login'),
 	url(r'^profile/?$', profile, name='profile'),
 	url(r'^search/?$', search, name='search'),
