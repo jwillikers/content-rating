@@ -5,39 +5,44 @@
 
 {% block content %}
 
-<div class="container">
-	<form lpformnum="1" _lpchecked="1">
-		<fieldset>
-			<center><legend class="display-4">Log In</legend></center>
-				<div class="form-group">
-					<label for="loginUsername">Username</label>
-					<input type="text" class="form-control" id="loginUsername" placeholder="Enter username">
-				</div>
-				<div class="form-group">
-					<label for="loginPassword">Password</label>
-					<input type="password" class="form-control" id="loginPassword" placeholder="Enter password">
-				</div>
-		</fieldset>
-		<button type="submit" class="btn btn-primary">Login</button>
-	</form>
-<center><h1 class="display-4">OR</h1></center>
-	<form lpformnum="1" _lpchecked="1">
-		<fieldset>
-			<center><legend class="display-4">Sign Up</legend></center>
-				<div class="form-group">
-					<label for="signupUsername">Username</label>
-					<input type="text" class="form-control" id="signupUsername" placeholder="Enter username">
-				</div>
-				<div class="form-group">
-					<label for="signupPassword">Password</label>
-					<input type="password" class="form-control" id="signupPassword" placeholder="Enter password">
-				</div>
-				<div class="form-group">
-					<label for="confirmSignupPassword">Confirm Password</label>
-					<input type="password" class="form-control" id="confirmSignupPassword" placeholder="Confirm password">
-				</div>
-		</fieldset>
-		<button type="submit" class="btn btn-primary">Sign Up</button>
-	</form>
-</div>
+    <div class="container">
+        <form lpformnum="1" _lpchecked="1">
+            <fieldset>
+                <center>
+                    <legend class="display-4">Log In</legend>
+                </center>
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" class="form-control" id="loginUsername" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter password">
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <center><h1 class="display-4">OR</h1></center>
+        <form lpformnum="1" _lpchecked="1">
+            <fieldset>
+                <center>
+                    <legend class="display-4">Sign Up</legend>
+                </center>
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" class="form-control" id="signupUsername" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" class="form-control" id="signupPassword" placeholder="Enter password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmSignupPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmSignupPassword"
+                           placeholder="Confirm password">
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+    </div>
 {% endblock %}
