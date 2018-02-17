@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block nav1 %}About the Algorithm{% endblock %}
-{% block nav2 %}About Us{% endblock %}
+{% block nav1 %}<a class="nav-item nav-link" href="{% url 'algorithm' %}">About the Algorithm</a>{% endblock %}
+{% block nav2 %}<a class="nav-item nav-link" href="{% url 'about' %}">About Us</a>{% endblock %}
 
 {% block content %}
 

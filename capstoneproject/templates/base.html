@@ -16,8 +16,10 @@
 			</button>
 			<div class="collapse navbar-collapse" id="mainNav">
 				<div class="navbar-nav">
-					<a class="nav-item nav-link" href="#">{% block nav1 %}{% endblock %}</a>
-					<a class="nav-item nav-link" href="#">{% block nav2 %}{% endblock %}</a>
+					{% block nav1 %}{% endblock %}
+					{% block nav2 %}{% endblock %}
+					{% block nav3 %}{% endblock %}
+					{% block nav4 %}{% endblock %}
 				</div>
 			</div>
 		</div>

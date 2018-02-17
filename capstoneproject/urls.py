@@ -19,9 +19,21 @@ from django.conf.urls import url
 
 from capstoneproject.views import homepage
 from capstoneproject.views import login
+from capstoneproject.views import profile
+from capstoneproject.views import search
+from capstoneproject.views import upload
+from capstoneproject.views import copy_in
+from capstoneproject.views import about_algorithm
+from capstoneproject.views import about_page
 
 urlpatterns = [
     url(r'^admin/?$', admin.site.urls),
-    url(r'^login/?$', login),
+    url(r'^login/?$', login, name='login'),
+	url(r'^profile/?$', profile, name='profile'),
+	url(r'^search/?$', search, name='search'),
+	url(r'^upload/?$', upload, name='upload'),
+	url(r'^copy/?$', copy_in, name='copy'),
+	url(r'^algorithm/?$', about_algorithm, name='algorithm'),
+	url(r'^about/?$', about_page, name='about'),
     url(r'^/?$', homepage), # Main page, obviously
 ]
