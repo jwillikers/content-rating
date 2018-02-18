@@ -1,86 +1,193 @@
 {% extends "base.html" %}
 
+{% block optional_styling %}
+<style>
+    .slidecontainer {
+    width: 100%;
+    }
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #a9a9a9;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    }
+
+.slider:hover {
+    opacity: 1;
+    }
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #E95420;
+    cursor: pointer;
+    }
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #E95420;
+    cursor: pointer;
+    }
+</style>
+{% endblock %}
+
 {% block nav1 %}<a class="nav-item nav-link" href="{% url 'algorithm' %}">About the Algorithm</a>{% endblock %}
 {% block nav2 %}<a class="nav-item nav-link" href="{% url 'about' %}">About Us</a>{% endblock %}
 {% block nav3 %}<a class="nav-item nav-link" href="{% url 'profile' %}">My Profile</a>{% endblock %}
 {% block nav4 %}<a class="nav-item nav-link" href="{% url 'login' %}">Sign Out</a>{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
 	<div class="row">
-		<div class="col">
-			<div class="container">
-				<div class="row">
-					<div class="jumbotron">
-						<center><h1 class="display-5">Update Credentials</h1>
-						<p class="lead">Update your username or password.</p></center>
-						<hr class="my-4">
-							<ul class="nav nav-tabs">
-								<li class="nav-item">
-									<a class="nav-link active show" data-toggle="tab" href="#username">Username</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" data-toggle="tab" href="#password">Password</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" data-toggle="tab" href="#userandpass">Username & Password</a>
-								</li>
-							 </ul>
-							 &nbsp;
-						<form lpformnum="1" _lpchecked="1">
-							<fieldset>
-								<div id="displayForm" class="tab-content">
-									<div class="tab-pane fade active show" id="username">
-										<center><legend class="display-6">Change Username</legend></center>
-											<div class="form-group">
-												<label for="newUsername">New Username</label>
-												<input type="text" class="form-control" id="newUsername" placeholder="Enter username">
-											</div>
-									</div>
-									<div class="tab-pane fade" id="password">
-										<center><legend class="display-6">Change Password</legend></center>
-											<div class="form-group">
-												<label for="newPassword">New Password</label>
-												<input type="password" class="form-control" id="newPassword" placeholder="Enter password">
-											</div>
-											<div class="form-group">
-												<label for="confirmPassword">Confirm Password</label>
-												<input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
-											</div>
-									</div>
-									<div class="tab-pane fade" id="userandpass">
-										<center><legend class="display-6">Change Username & Password</legend></center>
-											<div class="form-group">
-												<label for="newUsername">New Username</label>
-												<input type="text" class="form-control" id="newUsername" placeholder="Enter username">
-											</div>
-											<div class="form-group">
-												<label for="newPassword">New Password</label>
-												<input type="password" class="form-control" id="newPassword" placeholder="Enter password">
-											</div>
-											<div class="form-group">
-												<label for="confirmPassword">Confirm Password</label>
-												<input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
-											</div>
-									</div>
-								</div>
-							</fieldset>
-							<center><button type="submit" class="btn btn-primary">Update credentials</button></center>
-						</form>
-					</div>
-				</div>
+		<div class="col-md-4">
+			<div class="container-fluid">
+                <div class="jumbotron">
+                    <center><h1 class="display-5">Update Credentials</h1>
+                    <p class="lead">Update your username or password.</p></center>
+                    <hr class="my-4">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active show" data-toggle="tab" href="#username">Username</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#password">Password</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#userandpass">Username & Password</a>
+                            </li>
+                         </ul>
+                         &nbsp;
+                    <form lpformnum="1" _lpchecked="1">
+                        <fieldset>
+                            <div id="displayForm" class="tab-content">
+                                <div class="tab-pane fade active show" id="username">
+                                    <center><legend class="display-6">Change Username</legend></center>
+                                        <div class="form-group">
+                                            <label for="newUsername">New Username</label>
+                                            <input type="text" class="form-control" id="newUsername" placeholder="Enter username">
+                                        </div>
+                                </div>
+                                <div class="tab-pane fade" id="password">
+                                    <center><legend class="display-6">Change Password</legend></center>
+                                        <div class="form-group">
+                                            <label for="newPassword">New Password</label>
+                                            <input type="password" class="form-control" id="newPassword" placeholder="Enter password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirmPassword">Confirm Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+                                        </div>
+                                </div>
+                                <div class="tab-pane fade" id="userandpass">
+                                    <center><legend class="display-6">Change Username & Password</legend></center>
+                                        <div class="form-group">
+                                            <label for="newUsername">New Username</label>
+                                            <input type="text" class="form-control" id="newUsername" placeholder="Enter username">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newPassword">New Password</label>
+                                            <input type="password" class="form-control" id="newPassword" placeholder="Enter password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirmPassword">Confirm Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+                                        </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <center><button type="submit" class="btn btn-primary">Update credentials</button></center>
+                    </form>
+                </div>
 			</div>
 		</div>
+        <div class="col-md-4">
+            <div class="container-fluid">
+                    <div class="jumbotron">
+                        <center><h1 class="display-5">Recently Rated</h1></center>
+                        <hr class="my-4">
+                            <!-- Update later to display real time info from database -->
+                            <!-- Default colors: bg-success (1-20), bg-info (21-40), bg-warning (41-60), bg-primary (61-80), bg-danger (81-100) -->
+                            <p class="lead">Pillow Talkin:</p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="94" aria-valuemin="1" aria-valuemax="100" style="width: 94%">94</div>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Baby Got Back:</p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="67" aria-valuemin="1" aria-valuemax="100" style="width: 67%">67</div>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Africa:</p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Freebird:</p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="45" aria-valuemin="1" aria-valuemax="100" style="width: 45%">45</div>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">My First Song:</p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="25" aria-valuemin="1" aria-valuemax="100" style="width: 25%">25</div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+    <div class="col-md-4">
+        <div class="container-fluid">
+            <div class="jumbotron">
+                <form>
+                    <fieldset>
+                        <center><h1 class="display-5">My Rating Settings</h1></center>
+                        <hr class="my-4">
+                            <p class="lead">Violence:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="violence" name="violence" min="1" max="100" value="65" class="slider" oninput="violence_amount.value=violence.value">
+                                <output name="violence_amount" id="violence_amount" for="violence">65</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Drugs:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="drugs" name="drugs" min="1" max="100" value="32" class="slider" oninput="drugs_amount.value=drugs.value">
+                                <output name="drugs_amount" id="drugs_amount" for="drugs">32</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Sex/Nudity:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="sex" name="sex" min="1" max="100" value="89" class="slider" oninput="sex_amount.value=sex.value">
+                                <output name="sex_amount" id="sex_amount" for="sex">89</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Racism:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="racism" name="racism" min="1" max="100" value="24" class="slider" oninput="racism_amount.value=racism.value">
+                                <output name="racism_amount" id="racism_amount" for="racism">24</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Crude:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="crude" name="crude" min="1" max="100" value="10" class="slider" oninput="crude_amount.value=crude.value">
+                                <output name="crude_amount" id="crude_amount" for="crude">10</output>
+                            </div>
+                            &nbsp;
+                        <center><button type="submit" class="btn btn-primary">Update settings</button></center>
+                    </fieldset>
+                </form>
+                &nbsp;
+                <a href="{% url 'words' %}" class="btn btn-lg btn-block btn-info">Customize Word Weights</a>
+            </div>
+        </div>
 	</div>
-	<div class="row">
-		<div class="col">
-			<div class="container">
-				<div class="row">
-					<div class="jumbotron">
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 </div>
 {% endblock %}

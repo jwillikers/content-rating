@@ -25,6 +25,7 @@ from capstoneproject.views import upload
 from capstoneproject.views import copy_in
 from capstoneproject.views import about_algorithm
 from capstoneproject.views import about_page
+from capstoneproject.views import words
 
 urlpatterns = [
     url(r'^admin/?$', admin.site.urls),
@@ -35,5 +36,6 @@ urlpatterns = [
 	url(r'^copy/?$', copy_in, name='copy'),
 	url(r'^algorithm/?$', about_algorithm, name='algorithm'),
 	url(r'^about/?$', about_page, name='about'),
+    url(r'^words/?$', words, name='words'),
     url(r'^/?$', homepage), # Main page, obviously
 ]

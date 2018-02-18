@@ -25,3 +25,6 @@ def about_algorithm(request):
 
 def about_page(request):
 	return render(request, 'about.html')
+
+def words(request):
+    return render(request, 'words.html')
