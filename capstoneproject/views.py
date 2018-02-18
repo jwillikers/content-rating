@@ -45,26 +45,5 @@ def about_page(request):
 	return render(request, 'about.html')
 
 
-def logout_view(request):
-    logout(request)
-
-
-def attempt_login(request):
-    username = request.POST['loginUsername']
-    password = request.POST['loginPassword']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            # Redirect to a success page.
-#        else:
-    # Return a 'disabled account' error message
-    else:
-    # Return an 'invalid login' error message.
-#        if request.method == 'POST':
-#        form = LogInForm(request.POST)
-#        if form.is_valid():
-#            return render(request, 'homepage.html')
-#        else:
-#            form = LogInForm()
-        return render(request, 'login.html', {'form': form})
+def words(request):
+    return render(request, 'words.html')
