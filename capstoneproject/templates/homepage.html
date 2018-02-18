@@ -4,16 +4,18 @@
 {% block nav2 %}<a class="nav-item nav-link" href="{% url 'about' %}">About Us</a>{% endblock %}
 {% block nav3 %}<a class="nav-item nav-link" href="{% url 'profile' %}">My Profile</a>{% endblock %}
 {% block nav4 %}<a class="nav-item nav-link" href="{% url 'login' %}">Sign Out</a>{% endblock %}
+{% block nav5 %}<a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>{% endblock %}
+{% block nav_header %}Content Rater{% endblock %}
 
 {% block content %}
 <center><h1 class="display-4">Rate Your Content!</h1>
-<div class="card bg-light mb-3" style="max-width: 40rem;">
-	<div class="card-body">
-		<div class="container">
-			<a href="{% url 'search' %}" class="btn btn-lg btn-block btn-info">Search for Content</a>
-			<a href="{% url 'upload' %}" class="btn btn-lg btn-block btn-info">Upload a File</a>
-			<a href="{% url 'copy' %}" class="btn btn-lg btn-block btn-info">Copy it in!</a>
-		</div>
+<div class="container">
+	<div class="jumbotron">
+		<a href="{% url 'search' %}" class="btn btn-lg btn-block btn-info">Search for Content</a>
+		&nbsp;
+		<a href="{% url 'upload' %}" class="btn btn-lg btn-block btn-info">Upload a File</a>
+		&nbsp;
+		<a href="{% url 'copy' %}" class="btn btn-lg btn-block btn-info">Copy it in!</a>
 	</div>
 </div>
 </center>

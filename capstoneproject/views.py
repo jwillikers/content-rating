@@ -28,3 +28,9 @@ def about_page(request):
 
 def words(request):
     return render(request, 'words.html')
+	
+def rating_results(request):
+	return render(request, 'rating-result.html')
+
+def compare_results(request):
+	return render(request, 'compare.html')

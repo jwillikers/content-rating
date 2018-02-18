@@ -4,6 +4,31 @@
 {% block nav2 %}<a class="nav-item nav-link" href="{% url 'about' %}">About Us</a>{% endblock %}
 {% block nav3 %}<a class="nav-item nav-link" href="{% url 'profile' %}">My Profile</a>{% endblock %}
 {% block nav4 %}<a class="nav-item nav-link" href="{% url 'login' %}">Sign Out</a>{% endblock %}
+{% block nav5 %}<a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>{% endblock %}
+{% block nav_header %}Content Rater{% endblock %}
 
 {% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6">
+			<div class="jumbotron">
+				<form>
+					<fieldset>
+						<center>
+							<legend class="display-4">Upload a File</legend>
+						</center>
+						<div class="form-group">
+							<label for="inputFile">File input</label>
+							<input type="file" class="form-control-file" id="inputFile" aria-describedby="fileHelp">
+							<small id="fileHelp" class="form-text text-muted">Choose a file you'd like to have rated.</small>
+						</div>
+						<center><button type="submit" class="btn btn-primary">RATE!</button></center>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}

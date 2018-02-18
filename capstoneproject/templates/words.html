@@ -1,9 +1,183 @@
 {% extends "base.html" %}
 
+{% block optional_styling %}
+<style>
+    .slidecontainer {
+    width: 100%;
+    }
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #a9a9a9;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    }
+
+.slider:hover {
+    opacity: 1;
+    }
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #E95420;
+    cursor: pointer;
+    }
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #E95420;
+    cursor: pointer;
+    }
+</style>
+{% endblock %}
+
 {% block nav1 %}<a class="nav-item nav-link" href="{% url 'algorithm' %}">About the Algorithm</a>{% endblock %}
 {% block nav2 %}<a class="nav-item nav-link" href="{% url 'about' %}">About Us</a>{% endblock %}
 {% block nav3 %}<a class="nav-item nav-link" href="{% url 'profile' %}">My Profile</a>{% endblock %}
 {% block nav4 %}<a class="nav-item nav-link" href="{% url 'login' %}">Sign Out</a>{% endblock %}
+{% block nav5 %}<a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>{% endblock %}
+{% block nav_header %}Profile Name{% endblock %}
 
 {% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <center><h1>Customize Word Weights</h1>
+        <p class="lead">Edit each individual word in their respective categories.</p></center>
+        <hr class="my-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active show" data-toggle="tab" href="#violence">Violence</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#drugs">Drugs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#sex">Sex/Nudity</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#racism">Racism</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#crude">Crude</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#demeaning">Demeaning</a>
+                </li>
+             </ul>
+             &nbsp;
+        <form>
+            <fieldset>
+                <div id="displayForm" class="tab-content">
+                    <div class="tab-pane fade active show" id="violence">
+                        <center><legend class="display-6">Violence Words</legend></center>
+                            <hr class="my-4">
+                            <p class="lead">Word1:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word1_violence" name="word1_violence" min="1" max="100" value="50" class="slider" oninput="word1_violence_amount.value=word1_violence.value">
+                                <output name="word1_violence_amount" id="word1_violence_amount" for="word1_violence">50</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Word2:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word2_violence" name="word2_violence" min="1" max="100" value="50" class="slider" oninput="word2_violence_amount.value=word2_violence.value">
+                                <output name="word2_violence_amount" id="word2_violence_amount" for="word2_violence">50</output>
+                            </div>
+                            &nbsp;
+                    </div>
+                    <div class="tab-pane fade" id="drugs">
+                        <center><legend class="display-6">Drug Words</legend></center>
+                            <hr class="my-4">
+                            <p class="lead">Word1:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word1_drugs" name="word1_drugs" min="1" max="100" value="50" class="slider" oninput="word1_drugs_amount.value=word1_drugs.value">
+                                <output name="word1_drugs_amount" id="word1_drugs_amount" for="word1_drugs">50</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Word2:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word2_drugs" name="word2_drugs" min="1" max="100" value="50" class="slider" oninput="word2_drugs_amount.value=word2_drugs.value">
+                                <output name="word2_drugs_amount" id="word2_drugs_amount" for="word2_drugs">50</output>
+                            </div>
+                            &nbsp;
+                    </div>
+                    <div class="tab-pane fade" id="sex">
+                        <center><legend class="display-6">Sex/Nudity Words</legend></center>
+                            <hr class="my-4">
+                            <p class="lead">Word1:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word1_sex" name="word1_sex" min="1" max="100" value="50" class="slider" oninput="word1_sex_amount.value=word1_sex.value">
+                                <output name="word1_sex_amount" id="word1_sex_amount" for="word1_sex">50</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Word2:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word2_sex" name="word2_sex" min="1" max="100" value="50" class="slider" oninput="word2_sex_amount.value=word2_sex.value">
+                                <output name="word2_sex_amount" id="word2_sex_amount" for="word2_sex">50</output>
+                            </div>
+                            &nbsp;
+                    </div>
+                    <div class="tab-pane fade" id="racism">
+                        <center><legend class="display-6">Racism Words</legend></center>
+                            <hr class="my-4">
+                            <p class="lead">Word1:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word1_racism" name="word1_racism" min="1" max="100" value="50" class="slider" oninput="word1_racism_amount.value=word1_racism.value">
+                                <output name="word1_racism_amount" id="word1_racism_amount" for="word1_racism">50</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Word2:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word2_racism" name="word2_racism" min="1" max="100" value="50" class="slider" oninput="word2_racism_amount.value=word2_racism.value">
+                                <output name="word2_racism_amount" id="word2_racism_amount" for="word2_racism">50</output>
+                            </div>
+                            &nbsp;
+                    </div>
+                    <div class="tab-pane fade" id="crude">
+                        <center><legend class="display-6">Crude Words</legend></center>
+                            <hr class="my-4">
+                            <p class="lead">Word1:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word1_crude" name="word1_crude" min="1" max="100" value="50" class="slider" oninput="word1_crude_amount.value=word1_crude.value">
+                                <output name="word1_crude_amount" id="word1_crude_amount" for="word1_crude">50</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Word2:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word2_crude" name="word2_crude" min="1" max="100" value="50" class="slider" oninput="word2_crude_amount.value=word2_crude.value">
+                                <output name="word2_crude_amount" id="word2_crude_amount" for="word2_crude">50</output>
+                            </div>
+                            &nbsp;
+                    </div>
+                    <div class="tab-pane fade" id="demeaning">
+                        <center><legend class="display-6">Demeaning Words</legend></center>
+                            <hr class="my-4">
+                            <p class="lead">Word1:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word1_demeaning" name="word1_demeaning" min="1" max="100" value="50" class="slider" oninput="word1_demeaning_amount.value=word1_demeaning.value">
+                                <output name="word1_demeaning_amount" id="word1_demeaning_amount" for="word1_demeaning">50</output>
+                            </div>
+                            <hr class="my-4">
+                            <p class="lead">Word2:</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="word2_demeaning" name="word2_demeaning" min="1" max="100" value="50" class="slider" oninput="word2_demeaning_amount.value=word2_demeaning.value">
+                                <output name="word2_demeaning_amount" id="word2_demeaning_amount" for="word2_demeaning">50</output>
+                            </div>
+                            &nbsp;
+                    </div>
+                </div>
+            </fieldset>
+            <center><button type="submit" class="btn btn-primary">Update words</button></center>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
