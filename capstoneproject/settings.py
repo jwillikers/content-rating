@@ -73,6 +73,20 @@ TEMPLATES = [
     },
 ]
 
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': 'd8gai1rsjp905h',
+       'USER': 'gcjwqqsybhpnax',
+       'PASSWORD': '88c2c936ca1814ea37fd42d934aff7912efe63d01e0172dbe20a526b2fc6b295',
+       'HOST': 'ec2-54-235-66-81.compute-1.amazonaws.com',
+       'PORT': '5432'
+   }
+}
+
 WSGI_APPLICATION = 'capstoneproject.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -100,7 +114,8 @@ USE_L10N = True
 USE_TZ = True
 
 # Change 'default' database configuration with $DATABASE_URL.
-DATABASES['default'] = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'] = dj_database_url.config(conn_max_age=500)
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
