@@ -32,16 +32,16 @@ from capstoneproject.views import compare_results
 
 urlpatterns = [
     url(r'^admin/?', admin.site.urls),
-	url(r'^login/$', login, name='login'),
-	url(r'^logout/$', auth_views.logout, {'next_page': 'login/'}, name='logout'),
-	url(r'^profile/?$', profile, name='profile'),
-	url(r'^search/?$', search, name='search'),
-	url(r'^upload/?$', upload, name='upload'),
-	url(r'^copy/?$', copy_in, name='copy'),
-	url(r'^algorithm/?$', about_algorithm, name='algorithm'),
-	url(r'^about/?$', about_page, name='about'),
+    url(r'^login/$', login, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': 'login/'}, name='logout'),
+    url(r'^profile/?$', profile, name='profile'),
+    url(r'^search/?$', search, name='search'),
+    url(r'^upload/?$', upload, name='upload'),
+    url(r'^copy/?$', copy_in, name='copy'),
+    url(r'^algorithm/?$', about_algorithm, name='algorithm'),
+    url(r'^about/?$', about_page, name='about'),
     url(r'^words/?$', words, name='words'),
-	url(r'^results/?$', rating_results, name='results'),
-	url(r'^compare/?$', compare_results, name='compare'),
-    url(r'^/?$', homepage, name='homepage'), # Main page, obviously
+    url(r'^results/?$', rating_results, name='results'),
+    url(r'^compare/?$', compare_results, name='compare'),
+    url(r'^?$', homepage, name='homepage'),  # Main page, obviously
 ]
