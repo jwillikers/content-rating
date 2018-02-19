@@ -43,5 +43,5 @@ urlpatterns = [
     url(r'^words/?$', words, name='words'),
     url(r'^results/?$', rating_results, name='results'),
     url(r'^compare/?$', compare_results, name='compare'),
-    url(r'^?$', homepage, name='homepage'),  # Main page, obviously
+    url(r'', homepage, name='homepage'),  # Main page, obviously
 ]
