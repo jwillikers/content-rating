@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from .forms import LogInForm
 
 
-@login_required
 def homepage(request):
     return render(request, 'homepage.html')
 
@@ -17,22 +16,18 @@ def login(request):
     return render(request, 'login.html')
 
 
-@login_required
 def profile(request):
 	return render(request, 'profile.html')
 
 
-@login_required
 def search(request):
 	return render(request, 'search.html')
 
 
-@login_required
 def upload(request):
 	return render(request, 'upload.html')
 
 
-@login_required
 def copy_in(request):
 	return render(request, 'copy-in.html')
 
@@ -48,8 +43,10 @@ def about_page(request):
 def words(request):
     return render(request, 'words.html')
 	
+	
 def rating_results(request):
 	return render(request, 'rating-result.html')
 
+	
 def compare_results(request):
 	return render(request, 'compare.html')
