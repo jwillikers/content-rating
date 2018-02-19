@@ -27,8 +27,8 @@ class Spelling(models.Model):
 
 
 class Phrase(models.Model):
-    phrase = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    phrase = models.CharField(max_length=100)
     weight = models.IntegerField()
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
 
