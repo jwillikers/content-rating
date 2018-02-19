@@ -30,7 +30,7 @@ from capstoneproject.views import rating_results
 from capstoneproject.views import compare_results
 
 urlpatterns = [
-    url(r'^admin/?$', admin.site.urls),
+    url(r'^admin/?', admin.site.urls),
     url(r'^login/?$', login, name='login'),
 	url(r'^profile/?$', profile, name='profile'),
 	url(r'^search/?$', search, name='search'),
