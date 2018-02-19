@@ -4,6 +4,24 @@
 {% block nav2 %}<a class="nav-item nav-link" href="{% url 'about' %}">About Us</a>{% endblock %}
 {% block nav3 %}<a class="nav-item nav-link" href="{% url 'profile' %}">My Profile</a>{% endblock %}
 {% block nav4 %}<a class="nav-item nav-link" href="{% url 'login' %}">Sign Out</a>{% endblock %}
+{% block nav5 %}<a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>{% endblock %}
+{% block nav_header %}Content Rater{% endblock %}
 
 {% block content %}
+<div class="container">
+	<div class="jumbotron">
+		<form>
+			<fieldset>
+				<center>
+					<legend class="display-4">Copy In Your Own</legend>
+				</center>
+				<div class="form-group">
+					<label for="textArea">Content:</label>
+					<textarea class="form-control" id="textArea" rows="10"></textarea>
+				</div>
+				<center><button type="submit" class="btn btn-primary">RATE!</button></center>
+			</fieldset>
+		</form>
+	</div>
+</div>
 {% endblock %}

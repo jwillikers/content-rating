@@ -27,6 +27,8 @@ from capstoneproject.views import copy_in
 from capstoneproject.views import about_algorithm
 from capstoneproject.views import about_page
 from capstoneproject.views import words
+from capstoneproject.views import rating_results
+from capstoneproject.views import compare_results
 
 urlpatterns = [
     url(r'^admin/?', admin.site.urls),
@@ -39,5 +41,7 @@ urlpatterns = [
 	url(r'^algorithm/?$', about_algorithm, name='algorithm'),
 	url(r'^about/?$', about_page, name='about'),
     url(r'^words/?$', words, name='words'),
-    url(r'^/?$', homepage), # Main page, obviously
+	url(r'^results/?$', rating_results, name='results'),
+	url(r'^compare/?$', compare_results, name='compare'),
+    url(r'^/?$', homepage, name='homepage'), # Main page, obviously
 ]

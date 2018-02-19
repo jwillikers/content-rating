@@ -22,13 +22,14 @@
 					{% block nav2 %}{% endblock %}
 					{% block nav3 %}{% endblock %}
 					{% block nav4 %}{% endblock %}
+					{% block nav5 %}{% endblock %}
 				</div>
 			</div>
 		</div>
 	</nav>
 	<div class="jumbotron jumbotron-fluid bg-primary text-white text-center">
 		<div class="container">
-			<h1>Content Rater</h1>
+			<h1>{% block nav_header %}{% endblock %}</h1>
 		</div>
 	</div>
     {% block content %}{% endblock %}

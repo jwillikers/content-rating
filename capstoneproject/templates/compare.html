@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block nav1 %}<a class="nav-item nav-link" href="{% url 'algorithm' %}">About the Algorithm</a>{% endblock %}
+{% block nav2 %}<a class="nav-item nav-link" href="{% url 'about' %}">About Us</a>{% endblock %}
+{% block nav3 %}<a class="nav-item nav-link" href="{% url 'profile' %}">My Profile</a>{% endblock %}
+{% block nav4 %}<a class="nav-item nav-link" href="{% url 'login' %}">Sign Out</a>{% endblock %}
+{% block nav5 %}<a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>{% endblock %}
+{% block nav_header %}Content Rater{% endblock %}
+
+{% block content %}
+<center><h1>Comparison Results</h1></center>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="container">
+				<div class="jumbotron">
+					<center><h3>Song: Pillow Talkin</h3>
+					<h3>Artist: Lil' Dicky (feat. BRAIN)</h3></center>
+					<hr class="my-4">
+					<h4>Overall Rating</h4>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="94" aria-valuemin="1" aria-valuemax="100" style="width: 94%">94</div>
+					</div>
+					<hr class="my-4">
+					<center><h5>By Category</h5></center>
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Violence:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Drugs:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="3" aria-valuemin="1" aria-valuemax="100" style="width: 3%">3</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Sex/Nudity:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="1" aria-valuemax="100" style="width: 100%">100</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Racism:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Crude:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="67" aria-valuemin="1" aria-valuemax="100" style="width: 67%">67</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Demeaning:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="45" aria-valuemin="1" aria-valuemax="100" style="width: 45%">45</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="container">
+				<div class="jumbotron">
+					<center><h3>Song: Baby Got Back</h3>
+					<h3>Artist: Sir Mix a Lot</h3></center>
+					<hr class="my-4">
+					<h4>Overall Rating</h4>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="67" aria-valuemin="1" aria-valuemax="100" style="width: 67%">67</div>
+					</div>
+					<hr class="my-4">
+					<center><h5>By Category</h5></center>
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Violence:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Drugs:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Sex/Nudity:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="81" aria-valuemin="1" aria-valuemax="100" style="width: 81%">81</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Racism:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Crude:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="23" aria-valuemin="1" aria-valuemax="100" style="width: 23%">23</div>
+					</div>
+					<hr class="my-4">
+					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Demeaning:</p>
+						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+						<a class="dropdown-item" href="#">Word1: 3</a>
+						<a class="dropdown-item" href="#">Word2: 4</a>
+						<a class="dropdown-item" href="#">Word3: 2</a>
+						</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="22" aria-valuemin="1" aria-valuemax="100" style="width: 22%">22</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
