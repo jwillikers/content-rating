@@ -16,6 +16,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
 from capstoneproject.views import homepage
 from capstoneproject.views import login
@@ -29,7 +30,8 @@ from capstoneproject.views import words
 
 urlpatterns = [
     url(r'^admin/?', admin.site.urls),
-    url(r'^login/?$', login, name='login'),
+	url(r'^login/$', login, name='login'),
+	url(r'^logout/$', auth_views.logout, {'next_page': 'login/'}, name='logout'),
 	url(r'^profile/?$', profile, name='profile'),
 	url(r'^search/?$', search, name='search'),
 	url(r'^upload/?$', upload, name='upload'),

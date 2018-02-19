@@ -87,6 +87,8 @@ DATABASES = {
    }
 }
 
+LOGIN_REDIRECT_URL = '/'
+
 WSGI_APPLICATION = 'capstoneproject.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
