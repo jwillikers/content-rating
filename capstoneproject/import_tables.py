@@ -23,37 +23,37 @@ def import_category(path):
 
 
 def import_word(path):
-    with open(path) as f:
-        reader = csv.reader(f)
+    f = open(path);
+    reader = csv.reader(f)
 
     for row in reader:
         row0 = row[0]
         if row0 != 'category':
             _, created = capstoneproject.models.Word.objects.get_or_create(
-                category=row0,
+                category=capstoneproject.models.Category.objects.get(pk=row[0]),
                 word=row[1],
                 weight=row[2],
             )
 
 
 def import_phrase(path):
-    with open(path) as f:
-        reader = csv.reader(f)
+    f = open(path)
+    reader = csv.reader(f)
 
     for row in reader:
         row0 = row[0]
         if row0 != 'category':
             _, created = capstoneproject.models.Phrase.objects.get_or_create(
-                category=row0,
+                category=capstoneproject.models.Category.objects.get(pk=row[0]),
                 phrase=row[1],
                 weight=row[2],
-                word_set=row[3].split(' ')
+                word=capstoneproject.models.Word.objects.get(pk=row[3]),
             )
 
 
 def import_spelling(path):
-    with open(path) as f:
-        reader = csv.reader(f)
+    f = open(path)
+    reader = csv.reader(f)
 
     for row in reader:
         row0 = row[0]
@@ -65,7 +65,7 @@ def import_spelling(path):
 
 
 def main():
-    import_category("/Users/jwilliams/Downloads/Category.csv")
+    import_phrase("/Users/jwilliams/Downloads/Phrase.csv")
 
 
 if __name__ == '__main__':

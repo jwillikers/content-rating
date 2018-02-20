@@ -34,7 +34,7 @@ class Phrase(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     phrase = models.CharField(max_length=100)
     weight = models.IntegerField()
-    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    word = models.ForeignKey(Word, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return u'Category : %s\n' \
