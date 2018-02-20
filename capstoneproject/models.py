@@ -6,16 +6,19 @@ class Category(models.Model):
     weight = models.IntegerField()
 
     def __str__(self):
-        return u'%s %d' % (self.category, self.weight)
+        return u'Category: %s\n' \
+               u'Weight  :  %d\n' % (self.category, self.weight)
 
 
 class Word(models.Model):
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     word = models.CharField(max_length=30)
     weight = models.IntegerField()
 
     def __str__(self):
-        return u'%s %s %d' % (self.category, self.word, self.weight)
+        return u'Category: %s\n' \
+               u'Word    : %s\n' \
+               u'Weight  : %d\n' % (self.category, self.word, self.weight)
 
 
 class Spelling(models.Model):
@@ -23,7 +26,8 @@ class Spelling(models.Model):
     spelling = models.CharField(max_length=30)
 
     def __str__(self):
-        return u'Word or phrase: %s \nSpelling: %s' % (self.word_or_phrase, self.spelling)
+        return u'Word or phrase: %s\n' \
+               u'Spelling      : %s\n' % (self.word_or_phrase, self.spelling)
 
 
 class Phrase(models.Model):
@@ -33,4 +37,7 @@ class Phrase(models.Model):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
 
     def __str__(self):
-        return u'%s %s' % (self.id, self.spelling)
+        return u'Category : %s\n' \
+               u'Phrase   : %s\n' \
+               u'Weight   : %d\n' \
+               u'Word     : %s\n' % (self.category, self.phrase, self.weight, self.word)
