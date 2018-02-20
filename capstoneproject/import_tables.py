@@ -66,7 +66,7 @@ def import_word_spelling(path):
         row0 = row[0]
         if row0 != 'word':
             _, created = capstoneproject.models.WordSpelling.objects.get_or_create(
-                word=row0,
+                word=capstoneproject.models.Word.objects.get(pk=row0),
                 spelling=row[1],
             )
 
