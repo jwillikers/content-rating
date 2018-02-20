@@ -21,15 +21,6 @@ class Word(models.Model):
                u'Weight  : %d\n' % (self.category, self.word, self.weight)
 
 
-class Spelling(models.Model):
-    word_or_phrase = models.ForeignKey(Word, on_delete=models.CASCADE)
-    spelling = models.CharField(max_length=30)
-
-    def __str__(self):
-        return u'Word or phrase: %s\n' \
-               u'Spelling      : %s\n' % (self.word_or_phrase, self.spelling)
-
-
 class Phrase(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     phrase = models.CharField(max_length=100)
@@ -41,3 +32,21 @@ class Phrase(models.Model):
                u'Phrase   : %s\n' \
                u'Weight   : %d\n' \
                u'Word     : %s\n' % (self.category, self.phrase, self.weight, self.word)
+
+
+class WordSpelling(models.Model):
+    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    spelling = models.CharField(max_length=30)
+
+    def __str__(self):
+        return u'Word    : %s\n' \
+               u'Spelling: %s\n' % (self.word, self.spelling)
+
+
+class PhraseSpelling(models.Model):
+    phrase = models.ForeignKey(Phrase, on_delete=models.CASCADE)
+    spelling = models.CharField(max_length=100)
+
+    def __str__(self):
+        return u'Phrase  : %s\n' \
+               u'Spelling: %s\n' % (self.phrase, self.spelling)

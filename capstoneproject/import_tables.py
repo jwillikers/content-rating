@@ -42,30 +42,37 @@ def import_phrase(path):
 
     for row in reader:
         row0 = row[0]
+
+        row3 = row[3]
+        if row3 == '':
+            word_obj = None
+        else:
+            word_obj = capstoneproject.models.Word.objects.get(pk=row3)
+
         if row0 != 'category':
             _, created = capstoneproject.models.Phrase.objects.get_or_create(
-                category=capstoneproject.models.Category.objects.get(pk=row[0]),
+                category=capstoneproject.models.Category.objects.get(pk=row0),
                 phrase=row[1],
                 weight=row[2],
-                word=capstoneproject.models.Word.objects.get(pk=row[3]),
+                word=word_obj,
             )
 
 
-def import_spelling(path):
+def import_word_spelling(path):
     f = open(path)
     reader = csv.reader(f)
 
     for row in reader:
         row0 = row[0]
         if row0 != 'word':
-            _, created = capstoneproject.models.Spelling.objects.get_or_create(
-                word_or_phrase=row0,
+            _, created = capstoneproject.models.WordSpelling.objects.get_or_create(
+                word=row0,
                 spelling=row[1],
             )
 
 
 def main():
-    import_phrase("/Users/jwilliams/Downloads/Phrase.csv")
+    import_word_spelling("/Users/jwilliams/Downloads/WordSpelling.csv")
 
 
 if __name__ == '__main__':
