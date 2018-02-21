@@ -19,14 +19,14 @@ def login(request):
                 auth_login(request, user)
                 return render(request, 'homepage.html')
             else:
-                return render(request, 'login.html', {'login_form': LoginForm, 'signup_form': form})
+                return render(request, 'login.html', {'login_form': LoginForm(), 'signup_form': form})
 
         if request.POST.get('submit') == 'login':
             form = LoginForm(request.POST)
             if form.is_valid():
-                username = form.cleaned_data.get('username')
-                raw_password = form.cleaned_data.get('password')
-                user = authenticate(username=username, password=raw_password)
+                login_username = form.cleaned_data.get('login_username')
+                raw_password = form.cleaned_data.get('login_password')
+                user = authenticate(username=login_username, password=raw_password)
                 if user is not None:
                     if user.is_active:
                         auth_login(request, user)
@@ -35,11 +35,11 @@ def login(request):
                         login_form = LoginForm()
                         login_form.disabled_account_error()
                         return render(request, 'login.html', {'login_form': form, 'signup_form': SignUpForm()})
-            return render(request, 'login.html', {'login_form': form, 'signup_form': SignUpForm()})
+            return render(request, 'login.html', {'login_form': LoginForm(), 'signup_form': SignUpForm()})
     else:
         c = {}
         c.update((csrf(request)))
-        c.update(({'login_form':LoginForm, 'signup_form': SignUpForm}))
+        c.update(({'login_form': LoginForm(), 'signup_form': SignUpForm()}))
         return render_to_response('login.html', c)
 
 

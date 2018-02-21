@@ -14,19 +14,21 @@ class LoginForm(forms.ModelForm):
         'disabled_account': _("Account is disabled."),
     }
 
-    username = forms.CharField(label='Username',
+    login_username = forms.CharField(label='Username',
                                max_length=20,
                                strip=False,
-                               widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter username'}))
+                               widget=forms.TextInput(
+                                   attrs={'class': 'form-control', 'placeholder': 'Enter username'}))
 
-    password = forms.CharField(label='Password',
+    login_password = forms.CharField(label='Password',
                                max_length=20,
                                strip=False,
-                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter password'}))
+                               widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control', 'placeholder': 'Enter password'}))
 
     class Meta:
         model = User
-        fields = ('username', 'password',)
+        fields = ('login_username', 'login_password',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -35,12 +37,12 @@ class LoginForm(forms.ModelForm):
         super()._post_clean()
         # Validate the password after self.instance is updated with form data
         # by super().
-        password = self.cleaned_data.get('password')
+        password = self.cleaned_data.get('login_password')
         if password:
             try:
                 password_validation.validate_password(password, self.instance)
             except forms.ValidationError as error:
-                self.add_error('password', error)
+                self.add_error('login_password', error)
 
     def invalid_login_error(self):
         raise forms.ValidationError(
