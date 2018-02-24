@@ -22,7 +22,7 @@ class Phrase(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     phrase = models.CharField(unique=True, max_length=100)
     weight = models.IntegerField()
-    word = models.ManyToManyField(Word, null=True)
+    word_set = models.ManyToManyField(Word, null=True)
 
     def __str__(self):
         return self.phrase

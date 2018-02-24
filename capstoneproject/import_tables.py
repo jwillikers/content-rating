@@ -69,14 +69,15 @@ def import_phrase(path):
         try:
             category = categories.get(category=phrase_entry['category'])
         except ObjectDoesNotExist:
-            print('skipping ' + phrase_entry['phrase'] + ': category \'' + phrase_entry['category'] + '\' does not exist')
+            print(
+                'skipping ' + phrase_entry['phrase'] + ': category \'' + phrase_entry['category'] + '\' does not exist')
             continue
 
-        word_set = list()
+        entry_word_set = list()
         for word_word in [phrase_entry['word1'], phrase_entry['word2'], phrase_entry['word3']]:
             if word_word != '':
                 try:
-                    word_set.append(words.get(word=word_word))
+                    entry_word_set.append(words.get(word=word_word))
                 except ObjectDoesNotExist:
                     print('skipping ' + phrase_entry['phrase'] + ': word \'' + word_word + '\' does not exist')
 
@@ -88,9 +89,9 @@ def import_phrase(path):
         phrase.category_id = category.id
         phrase.phrase = phrase_entry['phrase']
         phrase.weight = phrase_entry['weight']
-        phrase.word.clear()
-        for word_obj in word_set:
-            phrase.word.add(word_obj)
+        phrase.word_set.clear()
+        for word_obj in entry_word_set:
+            phrase.word_set.add(word_obj)
         phrase.save()
 
     print('import of csv into phrases table complete\n')
