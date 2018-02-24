@@ -2,7 +2,6 @@ import csv
 import os
 import django
 from django.core.exceptions import ObjectDoesNotExist
-from sys import argv
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 django.setup()
