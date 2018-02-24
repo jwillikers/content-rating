@@ -39,7 +39,7 @@ def import_category(path):
             category.weight = category_entry['weight']
         except ValueError:
             print('skipping ' + category_entry['category']
-                  + ': weight ' + category_entry['weight'] + ' is not an integer')
+                  + '\t\t: weight ' + category_entry['weight'] + ' is not an integer')
 
         category.save()
 
@@ -54,9 +54,9 @@ def import_word(path):
             category = categories.get(category=word_entry['category'])
             words.update_or_create(word=word_entry['word'], category_id=category.id, weight=word_entry['weight'])
         except ObjectDoesNotExist:
-            print('skipping ' + word_entry['word'] + ': category \'' + word_entry['category'] + '\' does not exist')
+            print('skipping ' + word_entry['word'] + '\t\t: category \'' + word_entry['category'] + '\' does not exist')
         except ValueError:
-            print('skipping ' + word_entry['word'] + ': weight ' + word_entry['weight'] + ' is not an integer')
+            print('skipping ' + word_entry['word'] + '\t\t: weight ' + word_entry['weight'] + ' is not an integer')
 
     print('import of csv into words table complete\n')
 
@@ -69,7 +69,8 @@ def import_phrase(path):
             category = categories.get(category=phrase_entry['category'])
         except ObjectDoesNotExist:
             print(
-                'skipping ' + phrase_entry['phrase'] + ': category \'' + phrase_entry['category'] + '\' does not exist')
+                'skipping ' + phrase_entry['phrase'] + '\t\t: category \'' + phrase_entry[
+                    'category'] + '\' does not exist')
             continue
 
         entry_word_set = list()
@@ -78,20 +79,20 @@ def import_phrase(path):
                 try:
                     entry_word_set.append(words.get(word=word_word))
                 except ObjectDoesNotExist:
-                    print('skipping ' + phrase_entry['phrase'] + ': word \'' + word_word + '\' does not exist')
+                    print('skipping ' + phrase_entry['phrase'] + '\t\t: word \'' + word_word + '\' does not exist')
+                    continue
 
-        try:
-            phrase = phrases.get(phrase=phrase_entry['phrase'])
-        except ObjectDoesNotExist:
-            phrase = Phrase()
+            try:
+                phrase = phrases.get(phrase=phrase_entry['phrase'])
+            except ObjectDoesNotExist:
+                phrase = Phrase(phrase=phrase_entry['phrase'])
 
         phrase.category_id = category.id
-        phrase.phrase = phrase_entry['phrase']
         phrase.weight = phrase_entry['weight']
+        phrase.save()
         phrase.word_set.clear()
         for word_obj in entry_word_set:
             phrase.word_set.add(word_obj)
-        phrase.save()
 
     print('import of csv into phrases table complete\n')
 
@@ -104,7 +105,7 @@ def import_phrase_spelling(path):
             phrase = phrases.get(phrase=spelling_entry['phrase'])
         except ObjectDoesNotExist:
             print('skipping ' + spelling_entry['spelling']
-                  + ': phrase \'' + spelling_entry['phrase'] + '\' does not exist')
+                  + '\t\t: phrase \'' + spelling_entry['phrase'] + '\' does not exist')
             continue
 
         phrase_spellings.update_or_create(
@@ -122,7 +123,8 @@ def import_word_spelling(path):
         try:
             word = words.get(word=spelling_entry['word'])
         except ObjectDoesNotExist:
-            print('skipping ' + spelling_entry['spelling'] + ': word \'' + spelling_entry['word'] + '\' does not exist')
+            print('skipping ' + spelling_entry['spelling'] + '\t\t: word \'' + spelling_entry[
+                'word'] + '\' does not exist')
             continue
 
         word_spellings.update_or_create(
@@ -151,8 +153,8 @@ def import_tables(root_folder='', category_path='', word_path='', phrase_path=''
 def main():
     import_tables(
         root_folder='/Users/jwilliams/Downloads/',
-        category_path='Category.csv',
-        word_path='Word.csv',
+        # category_path='Category.csv',
+        # word_path='Word.csv',
         phrase_path='Phrase.csv',
         wordspelling_path='WordSpelling.csv',
         phrasespelling_path='PhraseSpelling.csv'
