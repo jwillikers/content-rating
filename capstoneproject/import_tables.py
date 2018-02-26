@@ -1,3 +1,19 @@
+#!/usr/bin/env python3
+"""import_tables
+
+This module imports csv files into the
+content-rating dictionary tables.
+
+Example:
+    comment out the lines in the import_tables
+    function for any unused import tables, then
+    run
+
+    $ python3 import_tables.py
+
+Todo:
+    * add commandline options for importing tables
+"""
 import csv
 import os
 import django
