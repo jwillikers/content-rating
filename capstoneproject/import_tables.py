@@ -3,12 +3,14 @@ import os
 import django
 from django.core.exceptions import ObjectDoesNotExist
 
+# set the django settings and start the django app
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 django.setup()
 
-# your imports, e.g. Django models
+# after loading django, import the content-rater models
 from capstoneproject.models import Category, Word, Phrase, PhraseSpelling, WordSpelling
 
+# setup simple aliases for the model objects
 categories = Category.objects
 words = Word.objects
 phrases = Phrase.objects
@@ -16,7 +18,15 @@ word_spellings = WordSpelling.objects
 phrase_spellings = PhraseSpelling.objects
 
 
-def csv_reader(path):
+def csv_reader(path: str):
+    """
+    open the csv file at the given path
+
+    :param path: path to csv file
+    :type path: str
+    :return: the csv file as dictionary entries
+    :rtype: csv.DictReader
+    """
     f = open(path, 'r')
     print('opened ' + path.rpartition('/')[2])
     reader = csv.DictReader(f)
@@ -26,7 +36,14 @@ def csv_reader(path):
     return reader
 
 
-def import_category(path):
+def import_category(path: str):
+    """
+    import category entries into the Category table
+
+    :param path: path to the category csv file
+    :type path: str
+    :return: nothing
+    """
     reader = csv_reader(path)
 
     for category_entry in reader:
@@ -46,7 +63,14 @@ def import_category(path):
     print('import of csv into category table complete\n')
 
 
-def import_word(path):
+def import_word(path: str):
+    """
+    import the word entries into the Word table
+
+    :param path: path to the csv of word entries
+    :type path: str
+    :return: nothing
+    """
     reader = csv_reader(path)
 
     for word_entry in reader:
@@ -61,7 +85,14 @@ def import_word(path):
     print('import of csv into words table complete\n')
 
 
-def import_phrase(path):
+def import_phrase(path: str):
+    """
+    import the phrase entries from the csv into the Phrase table
+
+    :param path: path to the csv holding the Phrase entries
+    :type path: str
+    :return: nothing
+    """
     reader = csv_reader(path)
 
     for phrase_entry in reader:
@@ -97,7 +128,14 @@ def import_phrase(path):
     print('import of csv into phrases table complete\n')
 
 
-def import_phrase_spelling(path):
+def import_phrase_spelling(path: str):
+    """
+    import the phrase spelling entries from the csv into the PhraseSpelling table
+
+    :param path: path to the csv holding the phrase spelling entries
+    :type path: str
+    :return: nothing
+    """
     reader = csv_reader(path)
 
     for spelling_entry in reader:
@@ -116,7 +154,14 @@ def import_phrase_spelling(path):
     print('import of csv into phrases spelling table complete\n')
 
 
-def import_word_spelling(path):
+def import_word_spelling(path: str):
+    """
+    import the word spelling entries from the csv into the WordSpelling table
+
+    :param path: path to the csv holding the word spelling entries
+    :type path: str
+    :return: nothing
+    """
     reader = csv_reader(path)
 
     for spelling_entry in reader:
@@ -137,6 +182,23 @@ def import_word_spelling(path):
 
 def import_tables(root_folder='', category_path='', word_path='', phrase_path='', wordspelling_path='',
                   phrasespelling_path=''):
+    """
+    import the tables from the csv files into the dictionary tables
+
+    :param root_folder: path to the folder where the csv's are located
+    :type root_folder: str
+    :param category_path: path to the category csv file
+    :type category_path: str
+    :param word_path: path to the word csv file
+    :type word_path: str
+    :param phrase_path: path to the phrase csv file
+    :type phrase_path: str
+    :param wordspelling_path: path to the word spelling csv file
+    :type wordspelling_path: str
+    :param phrasespelling_path: path to the phrase spelling csv file
+    :type phrasespelling_path: str
+    :return: nothing
+    """
     if category_path != '':
         import_category(root_folder + category_path)
     if word_path != '':
@@ -151,6 +213,14 @@ def import_tables(root_folder='', category_path='', word_path='', phrase_path=''
 
 
 def main():
+    """
+    import the csv files into the dictionary tables
+    just comment out the corresponding path names to
+    allow for the corresponding tables to be uploaded
+    until I get some args stuff setup.
+
+    :return: nothing
+    """
     import_tables(
         root_folder='/Users/jwilliams/Downloads/',
         # category_path='Category.csv',
@@ -162,4 +232,7 @@ def main():
 
 
 if __name__ == '__main__':
+    """
+    call the main method when this module is ran
+    """
     main()
