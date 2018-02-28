@@ -3,6 +3,7 @@ from django.db import models
 
 class Category(models.Model):
     category = models.CharField(unique=True, max_length=30)
+    parent_category = models.ManyToManyField('self', null=True)
     weight = models.IntegerField()
 
     def __str__(self):
