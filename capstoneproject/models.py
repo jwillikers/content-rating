@@ -9,8 +9,16 @@ class Category(models.Model):
         return self.category
 
 
-class Word(models.Model):
+class CategoryStrength(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    strong = models.BooleanField()
+
+    def __str__(self):
+        return self.strong
+
+
+class Word(models.Model):
+    category_strength = models.ManyToManyField(CategoryStrength)
     word = models.CharField(unique=True, max_length=30)
     weight = models.IntegerField()
 
