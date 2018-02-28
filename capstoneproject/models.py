@@ -27,7 +27,7 @@ class Word(models.Model):
 
 
 class Phrase(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category_strength = models.ManyToManyField(CategoryStrength)
     phrase = models.CharField(unique=True, max_length=100)
     weight = models.IntegerField()
     word_set = models.ManyToManyField(Word, null=True)
