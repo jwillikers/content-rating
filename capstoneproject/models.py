@@ -3,14 +3,14 @@ from django.db import models
 
 class Category(models.Model):
     category = models.CharField(unique=True, max_length=30)
-    parent_category = models.ManyToManyField('self', null=True)
+    parent_set = models.ManyToManyField('self')
     weight = models.IntegerField()
 
     def __str__(self):
         return self.category
 
 
-class CategoryStrength(models.Model):
+class CategoryStrong(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     strong = models.BooleanField()
 
@@ -19,7 +19,7 @@ class CategoryStrength(models.Model):
 
 
 class Word(models.Model):
-    category_strength = models.ManyToManyField(CategoryStrength)
+    category_strong_set = models.ManyToManyField(CategoryStrong)
     word = models.CharField(unique=True, max_length=30)
     weight = models.IntegerField()
 
@@ -28,10 +28,10 @@ class Word(models.Model):
 
 
 class Phrase(models.Model):
-    category_strength = models.ManyToManyField(CategoryStrength)
+    category_strong = models.ManyToManyField(CategoryStrong)
     phrase = models.CharField(unique=True, max_length=100)
     weight = models.IntegerField()
-    word_set = models.ManyToManyField(Word, null=True)
+    word_set = models.ManyToManyField(Word)
 
     def __str__(self):
         return self.phrase

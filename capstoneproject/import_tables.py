@@ -24,10 +24,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 django.setup()
 
 # after loading django, import the content-rater models
-from capstoneproject.models import Category, Word, Phrase, PhraseSpelling, WordSpelling
+from capstoneproject.models import Category, Word, Phrase, PhraseSpelling, WordSpelling, CategoryStrong
 
 # setup simple aliases for the model objects
 categories = Category.objects
+category_strongs = CategoryStrong.objects
 words = Word.objects
 phrases = Phrase.objects
 word_spellings = WordSpelling.objects
@@ -70,11 +71,24 @@ def import_category(path: str):
 
         try:
             category.weight = category_entry['weight']
+            category.save()
         except ValueError:
             print('skipping ' + category_entry['category']
                   + '\t\t: weight ' + category_entry['weight'] + ' is not an integer')
+            continue
 
-        category.save()
+        parents = list()
+        for index in [1, 2]:
+            parent_name = category_entry['parent' + str(index)]
+            if parent_name is not '':
+                try:
+                    parent = categories.get(category=parent_name)
+                except ObjectDoesNotExist:
+                    print('skipping ' + category_entry['category']
+                          + '\t\t: parent ' + parent_name + ' does not exist')
+                    continue
+                parents.append(parent)
+        category.parent_set.set(parents)
 
     print('import of csv into category table complete\n')
 
@@ -90,13 +104,43 @@ def import_word(path: str):
     reader = csv_reader(path)
 
     for word_entry in reader:
+        category_strong_list = list()
+        for index in [1, 2, 3]:
+            category_name = word_entry['category' + str(index)]
+            strong = bool(word_entry['strong' + str(index)])
+
+            if category_name != '' and strong is not None:
+                try:
+                    category = categories.get(category=category_name)
+                except ObjectDoesNotExist:
+                    print('skipping category for ' + word_entry['word'] + '\t\t: category \'' + category_name + '\' does not exist')
+                    continue
+
+                try:
+                    category_strong, _ = category_strongs.get_or_create(category_id=category.id, strong=strong)
+                except ValueError:
+                    print('skipping ' + word_entry['word'] + '\t\t: strong ' + str(strong) + ' is not a boolean')
+                    continue
+
+                category_strong_list.append(category_strong)
+
         try:
-            category = categories.get(category=word_entry['category'])
-            words.update_or_create(word=word_entry['word'], category_id=category.id, weight=word_entry['weight'])
+            word = words.get(
+                word=word_entry['word']
+            )
         except ObjectDoesNotExist:
-            print('skipping ' + word_entry['word'] + '\t\t: category \'' + word_entry['category'] + '\' does not exist')
+            word = Word(word=word_entry['word'])
+
+        try:
+            word.weight = word_entry['weight']
         except ValueError:
             print('skipping ' + word_entry['word'] + '\t\t: weight ' + word_entry['weight'] + ' is not an integer')
+            continue
+        word.save()
+
+        for category_strong in category_strong_list:
+            word.category_strong_set.add(category_strong.id)
+        word.save()
 
     print('import of csv into words table complete\n')
 
@@ -239,11 +283,11 @@ def main():
     """
     import_tables(
         root_folder='/Users/jwilliams/Downloads/',
-        # category_path='Category.csv',
-        # word_path='Word.csv',
-        phrase_path='Phrase.csv',
-        wordspelling_path='WordSpelling.csv',
-        phrasespelling_path='PhraseSpelling.csv'
+        category_path='Category.csv',
+        word_path='Word.csv',
+        # phrase_path='Phrase.csv',
+        # wordspelling_path='WordSpelling.csv',
+        # phrasespelling_path='PhraseSpelling.csv'
     )
 
 
