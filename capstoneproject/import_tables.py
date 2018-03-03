@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""import_tables
+"""Import tables from csv into the database.
 
 This module imports csv files into the
 content-rating dictionary tables.
@@ -7,12 +7,12 @@ content-rating dictionary tables.
 Example:
     comment out the lines in the import_tables
     function for any unused import tables, then
-    run
+    run.
 
     $ python3 import_tables.py
 
 Todo:
-    * add commandline options for importing tables
+    * add commandline options for importing tables.
 """
 import csv
 import os
@@ -36,13 +36,13 @@ phrase_spellings = PhraseSpelling.objects
 
 
 def csv_reader(path: str):
-    """
-    open the csv file at the given path
+    """Open the csv file at the given path.
 
-    :param path: path to csv file
-    :type path: str
-    :return: the csv file as dictionary entries
-    :rtype: csv.DictReader
+    Args:
+        path (str): path to csv file.
+
+    Returns:
+        csv.DictReader: the csv file as dictionary entries.
     """
     f = open(path, 'r')
     print('opened ' + path.rpartition('/')[2])
@@ -54,12 +54,13 @@ def csv_reader(path: str):
 
 
 def import_category(path: str):
-    """
-    import category entries into the Category table
+    """Import category entries into the Category table.
 
-    :param path: path to the category csv file
-    :type path: str
-    :return: nothing
+    Args:
+        path (str): path to the category csv file.
+
+    Returns:
+        None: updates the category table.
     """
     reader = csv_reader(path)
 
@@ -94,12 +95,13 @@ def import_category(path: str):
 
 
 def import_word(path: str):
-    """
-    import the word entries into the Word table
+    """Import the word entries into the Word table.
 
-    :param path: path to the csv of word entries
-    :type path: str
-    :return: nothing
+    Args:
+        path (str): path to the csv of word entries.
+
+    Returns:
+        None: updates the Word table.
     """
     reader = csv_reader(path)
 
@@ -146,12 +148,13 @@ def import_word(path: str):
 
 
 def import_phrase(path: str):
-    """
-    import the phrase entries from the csv into the Phrase table
+    """Import the phrase entries from the csv into the Phrase table.
 
-    :param path: path to the csv holding the Phrase entries
-    :type path: str
-    :return: nothing
+    Args:
+        path: path to the csv holding the Phrase entries.
+
+    Returns:
+        None: updates the Phrase table.
     """
     reader = csv_reader(path)
 
@@ -189,12 +192,13 @@ def import_phrase(path: str):
 
 
 def import_phrase_spelling(path: str):
-    """
-    import the phrase spelling entries from the csv into the PhraseSpelling table
+    """Import the phrase spelling entries from the csv into the PhraseSpelling table.
 
-    :param path: path to the csv holding the phrase spelling entries
-    :type path: str
-    :return: nothing
+    Args:
+        path (str): path to the csv holding the phrase spelling entries.
+
+    Returns:
+        None: updates the PhraseSpelling table.
     """
     reader = csv_reader(path)
 
@@ -215,12 +219,12 @@ def import_phrase_spelling(path: str):
 
 
 def import_word_spelling(path: str):
-    """
-    import the word spelling entries from the csv into the WordSpelling table
+    """Import the word spelling entries from the csv into the WordSpelling table.
 
-    :param path: path to the csv holding the word spelling entries
-    :type path: str
-    :return: nothing
+    path (str): path to the csv holding the word spelling entries.
+
+    Returns:
+        None: imports the spelling table.
     """
     reader = csv_reader(path)
 
@@ -242,22 +246,18 @@ def import_word_spelling(path: str):
 
 def import_tables(root_folder='', category_path='', word_path='', phrase_path='', wordspelling_path='',
                   phrasespelling_path=''):
-    """
-    import the tables from the csv files into the dictionary tables
+    """import the tables from the csv files into the dictionary tables.
 
-    :param root_folder: path to the folder where the csv's are located
-    :type root_folder: str
-    :param category_path: path to the category csv file
-    :type category_path: str
-    :param word_path: path to the word csv file
-    :type word_path: str
-    :param phrase_path: path to the phrase csv file
-    :type phrase_path: str
-    :param wordspelling_path: path to the word spelling csv file
-    :type wordspelling_path: str
-    :param phrasespelling_path: path to the phrase spelling csv file
-    :type phrasespelling_path: str
-    :return: nothing
+    Args:
+        root_folder (str): path to the folder where the csv's are located.
+        category_path (str): path to the category csv file.
+        word_path (str): path to the word csv file.
+        phrase_path (str): path to the phrase csv file.
+        wordspelling_path (str): path to the word spelling csv file.
+        phrasespelling_path (str): path to the phrase spelling csv file.
+
+    Returns:
+        None: updates the tables in the database.
     """
     if category_path != '':
         import_category(root_folder + category_path)
@@ -273,13 +273,15 @@ def import_tables(root_folder='', category_path='', word_path='', phrase_path=''
 
 
 def main():
-    """
-    import the csv files into the dictionary tables
-    just comment out the corresponding path names to
-    allow for the corresponding tables to be uploaded
-    until I get some args stuff setup.
+    """Import the csv files into the dictionary tables.
 
-    :return: nothing
+    Notes:
+        Just comment out the corresponding path names to
+        allow for the corresponding tables to be uploaded
+        until I get some args stuff setup.
+
+    Returns:
+        None: updates the dictionary tables.
     """
     import_tables(
         root_folder='/Users/jwilliams/Downloads/',
