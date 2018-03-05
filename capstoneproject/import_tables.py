@@ -24,11 +24,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 django.setup()
 
 # after loading django, import the content-rater models
-from capstoneproject.models import Category, Word, Phrase, PhraseSpelling, WordSpelling, CategoryStrong
+from capstoneproject.models import Category, Word, Phrase, PhraseSpelling, WordSpelling, WordCategory
 
 # setup simple aliases for the model objects
 categories = Category.objects
-category_strongs = CategoryStrong.objects
+word_categories = WordCategory.objects
 words = Word.objects
 phrases = Phrase.objects
 word_spellings = WordSpelling.objects
@@ -106,25 +106,31 @@ def import_word(path: str):
     reader = csv_reader(path)
 
     for word_entry in reader:
-        category_strong_list = list()
+        word_category_list = list()
         for index in [1, 2, 3]:
             category_name = word_entry['category' + str(index)]
             strong = bool(word_entry['strong' + str(index)])
+            weight = word_entry['weight' + str(index)]
 
-            if category_name != '' and strong is not None:
+            if category_name != '' and strong is not None and weight is not None:
                 try:
                     category = categories.get(category=category_name)
                 except ObjectDoesNotExist:
-                    print('skipping category for ' + word_entry['word'] + '\t\t: category \'' + category_name + '\' does not exist')
+                    print('skipping category for ' + word_entry['word'] + '\t\t: category \'' + category_name
+                          + '\' does not exist')
                     continue
 
                 try:
-                    category_strong, _ = category_strongs.get_or_create(category_id=category.id, strong=strong)
+                    word_category, _ = word_categories.get_or_create(
+                        category_id=category.id,
+                        strong=strong,
+                        weight=weight
+                    )
                 except ValueError:
                     print('skipping ' + word_entry['word'] + '\t\t: strong ' + str(strong) + ' is not a boolean')
                     continue
 
-                category_strong_list.append(category_strong)
+                word_category_list.append(word_category)
 
         try:
             word = words.get(
@@ -133,15 +139,10 @@ def import_word(path: str):
         except ObjectDoesNotExist:
             word = Word(word=word_entry['word'])
 
-        try:
-            word.weight = word_entry['weight']
-        except ValueError:
-            print('skipping ' + word_entry['word'] + '\t\t: weight ' + word_entry['weight'] + ' is not an integer')
-            continue
         word.save()
 
-        for category_strong in category_strong_list:
-            word.category_strong_set.add(category_strong.id)
+        for word_category in word_category_list:
+            word.word_category_set.add(word_category.id)
         word.save()
 
     print('import of csv into words table complete\n')

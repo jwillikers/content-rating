@@ -10,27 +10,32 @@ class Category(models.Model):
         return self.category
 
 
-class CategoryStrong(models.Model):
+class WordCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     strong = models.BooleanField()
+    weight = models.SmallIntegerField(
+        choices=[
+            (0, 'innocuous'),
+            (1, 'slight'),
+            (2, 'moderate'),
+            (3, 'heavy')
+        ])
 
     def __str__(self):
         return self.strong
 
 
 class Word(models.Model):
-    category_strong_set = models.ManyToManyField(CategoryStrong)
+    word_category_set = models.ManyToManyField(WordCategory)
     word = models.CharField(unique=True, max_length=30)
-    weight = models.IntegerField()
 
     def __str__(self):
         return self.word
 
 
 class Phrase(models.Model):
-    category_strong = models.ManyToManyField(CategoryStrong)
+    word_category_set = models.ManyToManyField(WordCategory)
     phrase = models.CharField(unique=True, max_length=100)
-    weight = models.IntegerField()
     word_set = models.ManyToManyField(Word)
 
     def __str__(self):
