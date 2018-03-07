@@ -83,15 +83,23 @@ def about_algorithm(request):
 
 def about_page(request):
 	return render(request, 'about.html')
+    
 
 @login_required(login_url='/login/')
 def words(request):
     return render(request, 'words.html')
+    
 
 @login_required(login_url='/login/')
 def rating_results(request):
 	return render(request, 'rating-result.html')
+    
 
 @login_required(login_url='/login/')	
 def compare_results(request):
 	return render(request, 'compare.html')
+    
+    
+def word_counts(request):
+    return render(request, 'word-counts.html')
+    

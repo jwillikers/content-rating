@@ -29,6 +29,7 @@ from capstoneproject.views import about_page
 from capstoneproject.views import words
 from capstoneproject.views import rating_results
 from capstoneproject.views import compare_results
+from capstoneproject.views import word_counts
 
 urlpatterns = [
     url(r'^admin/?', admin.site.urls),
@@ -43,5 +44,6 @@ urlpatterns = [
     url(r'^words/?$', words, name='words'),
     url(r'^results/?$', rating_results, name='results'),
     url(r'^compare/?$', compare_results, name='compare'),
+    url(r'^word-counts/?$', word_counts, name='word-counts'),
     url(r'', homepage, name='homepage'),  # Main page, obviously
 ]
