@@ -37,6 +37,27 @@ class ContentRating:
         """
         features = {}
 
+        non_dict_words = 0
+        words = []
+        for word, POS_tag in sent_tokens:
+            words.append(word)
+            if word not in Word.objects.all():
+                non_dict_words += 1
+        features['clean_words'] = non_dict_words
+        # Make a feature for every category.
+        for category in Category.objects.all():
+            # Initially set the strongly_offensive feature for the current category to false.
+            features['strongly_offensive({})'.format(str(category))] = False
+            # For every offensive word that falls in that category, check if it is in the current sentence.
+            for word in Word.objects.filter(word_category_set__category=category.id):
+                contains = word.word in words
+                # Update the sentence to be strongly offensive if a strongly offensive word is within the sentence.
+                if contains and word.word_category_set.filter(category=category.id, weight=True):
+                    features['strongly_offensive({})'.format(str(category))] = True
+                # Flag the appearance of word in the dictionary and provide the number of counts.
+                features['contains({}-{})'.format(str(category), word.word)] = contains
+                features['count({}-{})'.format(str(category), word.word)] = words.count(word)
+
         return features
 
     def syntactic_features(self, sent_tokens):
@@ -76,7 +97,7 @@ class ContentRating:
         text = text.lower()
         tokenized_text = self.tokenize(text)
         # Extract Features
-        features_path = 'Features'
+        features_path = 'capstoneproject/testing_resources/Features'
         with open(features_path, 'w') as feature_file:
             for sent in tokenized_text:
                 featureset = self.lexical_features(sent)
