@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 
 from capstoneproject.forms import SignUpForm, LoginForm
+from capstoneproject.content_rating.algorithm import content_rating
 
 
 def login(request):
@@ -59,47 +60,49 @@ def logout(request):
 
 @login_required(login_url='/login/')
 def profile(request):
-	return render(request, 'profile.html')
+    return render(request, 'profile.html')
 
 
 @login_required(login_url='/login/')
 def search(request):
-	return render(request, 'search.html')
+    cr = content_rating.ContentRating()
+    cr.algorithm('')
+    return render(request, 'search.html')
 
 
 @login_required(login_url='/login/')
 def upload(request):
-	return render(request, 'upload.html')
+    return render(request, 'upload.html')
 
 
 @login_required(login_url='/login/')
 def copy_in(request):
-	return render(request, 'copy-in.html')
+    return render(request, 'copy-in.html')
 
 
 def about_algorithm(request):
-	return render(request, 'algorithm.html')
+    return render(request, 'algorithm.html')
 
 
 def about_page(request):
-	return render(request, 'about.html')
-    
+    return render(request, 'about.html')
+
 
 @login_required(login_url='/login/')
 def words(request):
     return render(request, 'words.html')
-    
+
 
 @login_required(login_url='/login/')
 def rating_results(request):
-	return render(request, 'rating-result.html')
-    
+    return render(request, 'rating-result.html')
 
-@login_required(login_url='/login/')	
+
+@login_required(login_url='/login/')
 def compare_results(request):
-	return render(request, 'compare.html')
-    
-    
+    return render(request, 'compare.html')
+
+
+@login_required(login_url='/login/')
 def word_counts(request):
     return render(request, 'word-counts.html')
-    
