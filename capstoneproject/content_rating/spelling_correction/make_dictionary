@@ -10,18 +10,16 @@ def make_dictionary():
     """
     # Populate the original dictionary
     en_dict = {}
-    with open('en_50k.txt', 'r') as f:
+    with open('capstoneproject/content_rating/spelling_correction/dictionary_resources/en_50k.txt', 'r') as f:
         for line in f:
             values = line.split(' ')
             en_dict[values[0]] = int(values[1])
     # Save the dictionary in a JSON file
-    with open('en.json', 'w') as f:
+    with open('capstoneproject/content_rating/spelling_correction/dictionary_resources/en.json', 'w') as f:
         json.dump(en_dict, f, ensure_ascii=False)
     # Zip the JSON file
-    with open("en.json", 'rb') as orig_file:
-        with gzip.open("en.json.gz", 'wb') as zipped_file:
+    with open("capstoneproject/content_rating/spelling_correction/dictionary_resources/en.json", 'rb') as orig_file:
+        with gzip.open("capstoneproject/content_rating/spelling_correction/dictionary_resources/en.json.gz", 'wb') \
+                as zipped_file:
             zipped_file.writelines(orig_file)
 
-
-if __name__ == "__main__":
-    make_dictionary()
