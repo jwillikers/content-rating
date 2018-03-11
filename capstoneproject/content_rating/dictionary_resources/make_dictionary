@@ -1,0 +1,27 @@
+import json, gzip
+
+
+def make_dictionary():
+    """
+    This method makes a dictionary by reading a dictionary file containing words and frequencies and storing the
+    data into a dictionary. The dictionary is then placed within a JSON file. The JSON file is then zipped.
+
+    :return: None
+    """
+    # Populate the original dictionary
+    en_dict = {}
+    with open('en_50k.txt', 'r') as f:
+        for line in f:
+            values = line.split(' ')
+            en_dict[values[0]] = int(values[1])
+    # Save the dictionary in a JSON file
+    with open('en.json', 'w') as f:
+        json.dump(en_dict, f, ensure_ascii=False)
+    # Zip the JSON file
+    with open("en.json", 'rb') as orig_file:
+        with gzip.open("en.json.gz", 'wb') as zipped_file:
+            zipped_file.writelines(orig_file)
+
+
+if __name__ == "__main__":
+    make_dictionary()
