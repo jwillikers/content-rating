@@ -1,11 +1,4 @@
-{% extends "base.html" %}
-
-{% block nav1 %}<a class="nav-item nav-link" href="{% url 'algorithm' %}">About the Algorithm</a>{% endblock %}
-{% block nav2 %}<a class="nav-item nav-link" href="{% url 'about' %}">About Us</a>{% endblock %}
-{% block nav3 %}<a class="nav-item nav-link" href="{% url 'profile' %}">My Profile</a>{% endblock %}
-{% block nav4 %}<a class="nav-item nav-link" href="{% url 'logout' %}">Sign Out</a>{% endblock %}
-{% block nav5 %}<a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>{% endblock %}
-{% block nav_header %}Content Rater{% endblock %}
+{% extends "navbar-contentrater.html" %}
 
 {% block content %}
 <center><h1 class="display-4">Rate Your Content!</h1>

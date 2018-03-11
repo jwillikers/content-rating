@@ -1,0 +1,94 @@
+{% extends "navbar-contentrater.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <center><h1>Word Counts for Baby Got Back</h1>
+        <p class="lead">Check word counts by category.</p></center>
+        <hr class="my-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active show" data-toggle="tab" href="#violence">Violence</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#drugs">Drugs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#sex">Sex/Nudity</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#racism">Racism</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#crude">Crude</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#demeaning">Demeaning</a>
+                </li>
+            </ul>
+             &nbsp;
+        <div id="displayForm" class="tab-content">
+            <div class="tab-pane fade active show" id="violence">
+                <center><legend class="display-6">Violence Words</legend></center>
+                    <hr class="my-4">
+                    <p class="lead">Word1: 3</p>
+                    <hr class="my-4">
+                    <p class="lead">Word2: 4</p>
+                    <hr class="my-4">
+                    <p class="lead">Word3: 2</p>
+                    &nbsp;
+            </div>
+            <div class="tab-pane fade" id="drugs">
+                <center><legend class="display-6">Drug Words</legend></center>
+                    <hr class="my-4">
+                    <p class="lead">Word1: 3</p>
+                    <hr class="my-4">
+                    <p class="lead">Word2: 4</p>
+                    <hr class="my-4">
+                    <p class="lead">Word3: 2</p>
+                    &nbsp;
+            </div>
+            <div class="tab-pane fade" id="sex">
+                <center><legend class="display-6">Sex/Nudity Words</legend></center>
+                    <hr class="my-4">
+                    <p class="lead">Word1: 3</p>
+                    <hr class="my-4">
+                    <p class="lead">Word2: 4</p>
+                    <hr class="my-4">
+                    <p class="lead">Word3: 2</p>
+                    &nbsp;
+            </div>
+            <div class="tab-pane fade" id="racism">
+                <center><legend class="display-6">Racism Words</legend></center>
+                    <hr class="my-4">
+                    <p class="lead">Word1: 3</p>
+                    <hr class="my-4">
+                    <p class="lead">Word2: 4</p>
+                    <hr class="my-4">
+                    <p class="lead">Word3: 2</p>
+                    &nbsp;
+            </div>
+            <div class="tab-pane fade" id="crude">
+                <center><legend class="display-6">Crude Words</legend></center>
+                    <hr class="my-4">
+                    <p class="lead">Word1: 3</p>
+                    <hr class="my-4">
+                    <p class="lead">Word2: 4</p>
+                    <hr class="my-4">
+                    <p class="lead">Word3: 2</p>
+                    &nbsp;
+            </div>
+            <div class="tab-pane fade" id="demeaning">
+                <center><legend class="display-6">Demeaning Words</legend></center>
+                    <hr class="my-4">
+                    <p class="lead">Word1: 3</p>
+                    <hr class="my-4">
+                    <p class="lead">Word2: 4</p>
+                    <hr class="my-4">
+                    <p class="lead">Word3: 2</p>
+                    &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
