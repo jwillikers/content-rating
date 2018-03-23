@@ -5,7 +5,6 @@ from nltk.probability import FreqDist
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import TweetTokenizer
 from nltk.corpus import stopwords
-from spellchecker import SpellChecker
 from capstoneproject.models import Category, Word, WordCategory
 from capstoneproject.content_rating.spelling_correction import SpellChecker
 

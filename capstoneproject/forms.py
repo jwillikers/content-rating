@@ -5,10 +5,11 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.models import User
 from django.utils.translation import gettext, gettext_lazy as _
 
-"""
-    A login form.
-"""
+
 class LoginForm(forms.ModelForm):
+    """
+        A login form.
+    """
     error_messages = {
         'invalid_login': _("Invalid username or password."),
         'disabled_account': _("Account is disabled."),
@@ -56,11 +57,12 @@ class LoginForm(forms.ModelForm):
 #            code='disabled_account',
         )
 
-"""
-    A form that creates a user, with no privileges, from the given username and
-    password.
-"""
+
 class SignUpForm(forms.ModelForm):
+    """
+        A form that creates a user, with no privileges, from the given username and
+        password.
+    """
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
     }

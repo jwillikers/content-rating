@@ -1,5 +1,6 @@
 ''' SpellChecker Module; simple, intuitive spell checker based on the post by
-    Peter Norvig. See: https://norvig.com/spell-correct.html '''
+    Peter Norvig. See: https://norvig.com/spell-correct.html
+    Code from https://github.com/barrust/pyspellchecker'''
 from __future__ import absolute_import, division, unicode_literals
 
 import os
