@@ -33,6 +33,27 @@ class Word(models.Model):
         return self.word
 
 
+def get_words_of_category(category):
+    if category:
+        return Word.objects.filter(word_category_set__category=category)
+    return Word.objects.all()
+
+
+def get_words_of_category_strong(category, strong):
+    if category:
+        return Word.objects.filter(word_category_set__category=category, word_category_set__strong=strong)
+    return Word.objects.filter(word_category_set__strong=strong)
+
+
+def get_word_offensiveness(word, category):
+    if Word.objects.get(word=word, word_category_set__category=category.id, word_category_set__strong=True):
+        return 'STRONG'
+    elif Word.objects.get(word=word, word_category_set__category=category.id, word_category_set__strong=False):
+        return 'WEAK'
+    else:
+        return 'NOT'
+
+
 class Phrase(models.Model):
     word_category_set = models.ManyToManyField(WordCategory)
     phrase = models.CharField(unique=True, max_length=100)
