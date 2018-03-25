@@ -5,8 +5,10 @@ from nltk.probability import FreqDist
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import TweetTokenizer
 from nltk.corpus import stopwords
-from capstoneproject.models import Category, Word, WordCategory
 from capstoneproject.content_rating.spelling_correction import SpellChecker
+from capstoneproject.content_rating.algorithm.sentence import Sentence
+from capstoneproject.content_rating.algorithm.text import Text
+
 
 def isalphanum(word):
     """
@@ -21,84 +23,73 @@ def isalphanum(word):
 
 
 class ContentRating:
-
+    """
+    Class to implement the content rating algorithm and contain relevant methods.
+    """
     def __init__(self):
-        self.spellchecker = SpellChecker()
-        self.spellchecker.word_frequency.load_text_file('capstoneproject/testing_resources/Pillow_Talking')
-
-        category_list = Category.objects.all()
-
-    def lexical_features(self, sent_tokens):
         """
-        This function derives lexical features from a tokenized sentence
-        :param sent_tokens: a list of tuples. The first element is a word token, the second element is its POS tag.
-        :return: a set of lexical features
+        Initialize the ContentRating class by initializing the spell checker.
         """
-        features = {}
+#        self.spellchecker = SpellChecker()
+        # Load extra texts to the dictionary used by the SpellChecker to make it more similar to the content that the
+        # system will be exposed to.
+#        self.spellchecker.word_frequency.load_text_file('capstoneproject/testing_resources/Pillow_Talking')
 
-        non_dict_words = 0
-        words = []
-        for word, POS_tag in sent_tokens:
-            words.append(word)
-            if word not in Word.objects.all():
-                non_dict_words += 1
-        features['clean_words'] = non_dict_words
-        # Make a feature for every category.
-        for category in Category.objects.all():
-            # Initially set the strongly_offensive feature for the current category to false.
-            features['strongly_offensive({})'.format(str(category))] = False
-            # For every offensive word that falls in that category, check if it is in the current sentence.
-            for word in Word.objects.filter(word_category_set__category=category.id):
-                contains = word.word in words
-                # Update the sentence to be strongly offensive if a strongly offensive word is within the sentence.
-                if contains and word.word_category_set.filter(category=category.id, weight=True):
-                    features['strongly_offensive({})'.format(str(category))] = True
-                # Flag the appearance of word in the dictionary and provide the number of counts.
-                features['contains({}-{})'.format(str(category), word.word)] = contains
-                features['count({}-{})'.format(str(category), word.word)] = words.count(word)
 
-        return features
-
-    def syntactic_features(self, sent_tokens):
-        print("To Do")
+    '''
+    def correct_spelling(self, words):
+        """"
+        This function performs the spelling correction functionality by identifying words within a given sentence that
+        do not appear within the dictionary. If the word does not appear, it corrects the word to its most probable
+        match.
+        :param words: A list containing the words within a sentence.
+        :return: A list of the sentence's words with no typos.
+        """
+        spell_words = []  # A list to store the edited version of the sentence that fixes typos.
+        for word in words:
+            unknown_words = self.spellchecker.unknown([word])  # will be empty if the word is in the dictionary.
+            if len(unknown_words) > 0:
+                correct_spelling = self.spellchecker.correction(unknown_words.pop())
+                spell_words.append(correct_spelling)  # Add the most likely correction of the word to the edited
+                # sentence if it was a typo.
+            else:
+                spell_words.append(word)  # Add the original word to the edited sentence if it was not a typo.
+       '''
 
     def tokenize(self, text):
+        """
+        Perform the first phase of the content rating algorithm by tokenizing and normalizing the text.
+        :param text: The text, given as a string, to tokenize and normalize.
+        :return: The list of tokenized sentences.
+        """
         output_path = 'capstoneproject/testing_resources/Tokens'
         with open(output_path, 'w') as output_file:
-            # Define Spell Checker
+            # Use tweet tokenizer to tokenize individual words within sentences.
+            # Reduce_len will compact words where letters occur 3 or more times due to typos.
             tweet_tokenizer = TweetTokenizer(reduce_len=True)
-
-            tokenized_sents = []
-            for sent in nltk.sent_tokenize(text):
+            sentences = []
+            for count, sent in enumerate(nltk.sent_tokenize(text)):
                 words = [word for word in tweet_tokenizer.tokenize(sent) if isalphanum(word)]
-                # words = [word for word in nltk.word_tokenize(sent) if word not in string.punctuation]
-                # Spelling Correction
-                spell_words = []
-                for pos, word in enumerate(words):
-                    unknown_words = self.spellchecker.unknown([word])
-                    if len(unknown_words) > 0:
-                        for misspell in unknown_words:
-                            correct_spelling = self.spellchecker.correction(misspell)
-                            spell_words.append(correct_spelling)
-                    else:
-                        spell_words.append(word)
-                tokenized_sents.append(words)
-            tagged_tokenized_text = nltk.pos_tag_sents(tokenized_sents)
-            output_file.write(str(tagged_tokenized_text))
-            return tagged_tokenized_text
+                #correct_spelling_sent = self.correct_spelling(words)
+                sentences.append(Sentence(words, count))
+        #    tagged_tokenized_text = nltk.pos_tag_sents(tokenized_sents)
+            output_file.write(str(sentences))
+            return sentences
 
-    def algorithm(self, text):
+    def algorithm(self, text_string):
         print("In algorithm")
         input_path = 'capstoneproject/testing_resources/Baby_Got_Back'
         with open(input_path, 'r') as input_file:
-            text = input_file.read()
-        # Normalize Text
-        text = text.lower()
-        tokenized_text = self.tokenize(text)
-        # Extract Features
-        features_path = 'capstoneproject/testing_resources/Features'
-        with open(features_path, 'w') as feature_file:
-            for sent in tokenized_text:
-                featureset = self.lexical_features(sent)
-                feature_file.write(str(featureset) + '\n\n')
+            text_string = input_file.read()
 
+        # Step 1: Normalize and Tokenize Text
+        text = Text(self.tokenize(text_string.lower()))
+
+        # Step 2: Extract Features
+        text.extract_features()
+
+        # Step 3: Determine offensiveness
+        #text.calculate_offensiveness()
+
+        # Step 4: Generate rating
+        #text.generate_rating()
