@@ -1,5 +1,3 @@
-# import unicodedata
-
 from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.models import User
@@ -32,9 +30,18 @@ class LoginForm(forms.ModelForm):
         fields = ('login_username', 'login_password',)
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the login form.
+        :param args:
+        :param kwargs:
+        """
         super().__init__(*args, **kwargs)
 
     def _post_clean(self):
+        """
+        Clean the login form.
+        :return: None.
+        """
         super()._post_clean()
         # Validate the password after self.instance is updated with form data
         # by super().
@@ -46,12 +53,20 @@ class LoginForm(forms.ModelForm):
                 self.add_error('login_password', error)
 
     def invalid_login_error(self):
+        """
+        Raises an invalid login error.
+        :return: None.
+        """
         raise forms.ValidationError(
             self.error_messages['invalid_login'],
 #            code='invalid_login',
         )
 
     def disabled_account_error(self):
+        """
+        Raises an disabled account error.
+        :return: None.
+        """
         raise forms.ValidationError(
             self.error_messages['disabled_account'],
 #            code='disabled_account',
@@ -95,11 +110,20 @@ class SignUpForm(forms.ModelForm):
         fields = ('username', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize a signup form.
+        :param args:
+        :param kwargs:
+        """
         super().__init__(*args, **kwargs)
 #        if self._meta.model.USERNAME_FIELD in self.fields:
 #            self.fields[self._meta.model.USERNAME_FIELD].widget.attrs.update({'autofocus': True})
 
     def clean_password2(self):
+        """
+        Clean the sign up form. Raise an error if the passwords do not match, otherwise return the password.
+        :return: The password provided.
+        """
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
@@ -110,6 +134,10 @@ class SignUpForm(forms.ModelForm):
         return password2
 
     def _post_clean(self):
+        """
+        Clean the sign up form.
+        :return: None.
+        """
         super()._post_clean()
         # Validate the password after self.instance is updated with form data
         # by super().
@@ -121,6 +149,11 @@ class SignUpForm(forms.ModelForm):
                 self.add_error('password2', error)
 
     def save(self, commit=True):
+        """
+        Saves a new account if the information is valid.
+        :param commit: Saves the user if True.
+        :return: The user.
+        """
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
