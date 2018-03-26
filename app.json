@@ -1,0 +1,12 @@
+{
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "test_content_rater.py"
+      },
+      "addons":[
+        "heroku-postgresql:hobby-dev"
+      ]
+    }
+  }
+}
