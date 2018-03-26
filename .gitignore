@@ -1,7 +1,7 @@
 .idea
 capstoneproject/Makefile
-capstoneproject/conf.py
 capstoneproject/index.rst
+capstoneproject/conf.py
 capstoneproject/make.bat
 
 # Byte-compiled / optimized / DLL files
