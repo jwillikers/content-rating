@@ -1,5 +1,6 @@
 from unittest import TestCase
 from capstoneproject.content_rating.algorithm.content_rating import isalphanum
+from capstoneproject.content_rating.algorithm.content_rating import ContentRating
 
 class TestIsalphanum(TestCase):
 
@@ -19,3 +20,16 @@ class TestIsalphanum(TestCase):
             self.assertFalse(isalphanum('---'))
             self.assertFalse(isalphanum('+'))
             self.assertFalse(isalphanum('?'))
+
+class TestTokenize(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.cr = ContentRating()
+
+    def test_tokenize_words(self):
+        sentence_words = list()
+        sentence_tokens = \
+            TestTokenize.cr.tokenize('Hello World!')[0].sentence_tokens
+        for token in sentence_tokens:
+            sentence_words.append(token[0])
+        self.assertListEqual(sentence_words, ['Hello', 'World'])
