@@ -1,7 +1,7 @@
 {% extends "navbar-contentrater.html" %}
 
 {% block content %}
-<center><h1>Rating Results</h1></center>
+<div style="text-align: center;"><h1>Rating Results</h1></div>
 <div class="container">
 	<div class="row">
 		<div class="col-md-3">
@@ -12,15 +12,15 @@
 		<div class="col-md-6">
 			<div class="container">
 				<div class="jumbotron">
-					<a href="{% url 'word-counts' %}"><center><h3>Song: Baby Got Back</h3></a>
-					<h3>Artist: Sir Mix a Lot</h3></center>
-					<hr class="my-4">
+					<a href="{% url 'word-counts' %}" style="text-align: center;"><h3>Song: Baby Got Back</h3></a>
+					<h3>Artist: Sir Mix a Lot</h3>
+                    <hr class="my-4">
 					<h4>Overall Rating</h4>
 					<div class="progress">
 						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="67" aria-valuemin="1" aria-valuemax="100" style="width: 67%">67</div>
 					</div>
 					<hr class="my-4">
-					<center><h5>By Category</h5></center>
+					<div style="text-align: center;"><h5>By Category</h5></div>
 					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Violence:</p>
 						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
 						<a class="dropdown-item" href="#">Word1: 3</a>

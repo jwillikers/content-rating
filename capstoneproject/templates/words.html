@@ -41,134 +41,55 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="jumbotron">
-        <center><h1>Customize Word Weights</h1>
-        <p class="lead">Edit each individual word in their respective categories.</p></center>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <a href="{% url 'profile' %}" class="btn btn-lg btn-block btn-info">Back to Profile</a>
+            </div>
+        </div>
+        &nbsp;
+        <div style="text-align: center;"><h1>Customize Word Weights</h1>
+        <p class="lead">Edit each individual word in their respective categories.</p></div>
         <hr class="my-4">
             <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active show" data-toggle="tab" href="#violence">Violence</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#drugs">Drugs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#sex">Sex/Nudity</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#racism">Racism</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#crude">Crude</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#demeaning">Demeaning</a>
-                </li>
+                {% for category in categories %}
+                    {% if forloop.counter == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link active show" data-toggle="tab" href="#{{ category }}">{{ category|title }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#{{ category }}">{{ category|title }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
              </ul>
              &nbsp;
         <form>
             <fieldset>
                 <div id="displayForm" class="tab-content">
-                    <div class="tab-pane fade active show" id="violence">
-                        <center><legend class="display-6">Violence Words</legend></center>
-                            <hr class="my-4">
-                            <p class="lead">Word1:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word1_violence" name="word1_violence" min="1" max="100" value="50" class="slider" oninput="word1_violence_amount.value=word1_violence.value">
-                                <output name="word1_violence_amount" id="word1_violence_amount" for="word1_violence">50</output>
+                    {% for category in categories %}
+                        {% if forloop.counter == 1 %}
+                            <div class="tab-pane fade active show" id="{{ category }}">
+                        {% else %}
+                            <div class="tab-pane fade" id="{{ category }}">
+                        {% endif %}
+                                <div style="text-align: center;"><legend class="display-6">{{ category|title }} Words</legend></div>
+                                {% for word in words %}
+                                        <hr class="my-4">
+                                            <p class="lead">{{ word }}</p>
+                                            <div class="slidecontainer">
+                                                <input type="range" id="{{ word }}_{{ category }}" name="{{ word }}_{{ category }}" min="0" max="3" value="1" class="slider" oninput="{{ word }}_{{ category }}_amount.value={{ word }}_{{ category }}.value">
+                                                <output name="{{ word }}_{{ category }}_amount" id="{{ word }}_{{ category }}_amount" for="{{ word }}_{{ category }}">1</output>
+                                            </div>
+                                            &nbsp;
+                                {% endfor %}
                             </div>
-                            <hr class="my-4">
-                            <p class="lead">Word2:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word2_violence" name="word2_violence" min="1" max="100" value="50" class="slider" oninput="word2_violence_amount.value=word2_violence.value">
-                                <output name="word2_violence_amount" id="word2_violence_amount" for="word2_violence">50</output>
-                            </div>
-                            &nbsp;
-                    </div>
-                    <div class="tab-pane fade" id="drugs">
-                        <center><legend class="display-6">Drug Words</legend></center>
-                            <hr class="my-4">
-                            <p class="lead">Word1:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word1_drugs" name="word1_drugs" min="1" max="100" value="50" class="slider" oninput="word1_drugs_amount.value=word1_drugs.value">
-                                <output name="word1_drugs_amount" id="word1_drugs_amount" for="word1_drugs">50</output>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">Word2:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word2_drugs" name="word2_drugs" min="1" max="100" value="50" class="slider" oninput="word2_drugs_amount.value=word2_drugs.value">
-                                <output name="word2_drugs_amount" id="word2_drugs_amount" for="word2_drugs">50</output>
-                            </div>
-                            &nbsp;
-                    </div>
-                    <div class="tab-pane fade" id="sex">
-                        <center><legend class="display-6">Sex/Nudity Words</legend></center>
-                            <hr class="my-4">
-                            <p class="lead">Word1:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word1_sex" name="word1_sex" min="1" max="100" value="50" class="slider" oninput="word1_sex_amount.value=word1_sex.value">
-                                <output name="word1_sex_amount" id="word1_sex_amount" for="word1_sex">50</output>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">Word2:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word2_sex" name="word2_sex" min="1" max="100" value="50" class="slider" oninput="word2_sex_amount.value=word2_sex.value">
-                                <output name="word2_sex_amount" id="word2_sex_amount" for="word2_sex">50</output>
-                            </div>
-                            &nbsp;
-                    </div>
-                    <div class="tab-pane fade" id="racism">
-                        <center><legend class="display-6">Racism Words</legend></center>
-                            <hr class="my-4">
-                            <p class="lead">Word1:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word1_racism" name="word1_racism" min="1" max="100" value="50" class="slider" oninput="word1_racism_amount.value=word1_racism.value">
-                                <output name="word1_racism_amount" id="word1_racism_amount" for="word1_racism">50</output>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">Word2:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word2_racism" name="word2_racism" min="1" max="100" value="50" class="slider" oninput="word2_racism_amount.value=word2_racism.value">
-                                <output name="word2_racism_amount" id="word2_racism_amount" for="word2_racism">50</output>
-                            </div>
-                            &nbsp;
-                    </div>
-                    <div class="tab-pane fade" id="crude">
-                        <center><legend class="display-6">Crude Words</legend></center>
-                            <hr class="my-4">
-                            <p class="lead">Word1:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word1_crude" name="word1_crude" min="1" max="100" value="50" class="slider" oninput="word1_crude_amount.value=word1_crude.value">
-                                <output name="word1_crude_amount" id="word1_crude_amount" for="word1_crude">50</output>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">Word2:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word2_crude" name="word2_crude" min="1" max="100" value="50" class="slider" oninput="word2_crude_amount.value=word2_crude.value">
-                                <output name="word2_crude_amount" id="word2_crude_amount" for="word2_crude">50</output>
-                            </div>
-                            &nbsp;
-                    </div>
-                    <div class="tab-pane fade" id="demeaning">
-                        <center><legend class="display-6">Demeaning Words</legend></center>
-                            <hr class="my-4">
-                            <p class="lead">Word1:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word1_demeaning" name="word1_demeaning" min="1" max="100" value="50" class="slider" oninput="word1_demeaning_amount.value=word1_demeaning.value">
-                                <output name="word1_demeaning_amount" id="word1_demeaning_amount" for="word1_demeaning">50</output>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">Word2:</p>
-                            <div class="slidecontainer">
-                                <input type="range" id="word2_demeaning" name="word2_demeaning" min="1" max="100" value="50" class="slider" oninput="word2_demeaning_amount.value=word2_demeaning.value">
-                                <output name="word2_demeaning_amount" id="word2_demeaning_amount" for="word2_demeaning">50</output>
-                            </div>
-                            &nbsp;
-                    </div>
-                </div>
+                    {% endfor %}
             </fieldset>
-            <center><button type="submit" class="btn btn-primary">Update words</button></center>
+            <div style="text-align: center;"><button type="submit" class="btn btn-primary">Update words</button></div>
         </form>
     </div>
 </div>

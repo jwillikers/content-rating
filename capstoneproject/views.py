@@ -8,6 +8,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 
+from capstoneproject.display import display_categories, display_words
 from capstoneproject.forms import SignUpForm, LoginForm
 from capstoneproject.content_rating.algorithm import content_rating
 
@@ -94,7 +95,16 @@ def profile(request):
     :param request: The HTML request to handle.
     :return: Renders the profile page.
     """
-    return render(request, 'profile.html')
+    recently_rated = {'Pillow Talkin': 9,
+                      'Baby Got Back': 7,
+                      'Africa': 1,
+                      'Freebird': 5,
+                      'My First Song': 3
+                      }
+    context = {'categories': display_categories(),
+               'recently_rated': recently_rated
+               }
+    return render(request, 'profile.html', context)
 
 
 @login_required(login_url='/login/')
@@ -154,7 +164,10 @@ def words(request):
     :param request: The HTML request to handle.
     :return: Renders the words page.
     """
-    return render(request, 'words.html')
+    context = {'categories': display_categories(),
+               'words': display_words()
+               }
+    return render(request, 'words.html', context)
 
 
 @login_required(login_url='/login/')

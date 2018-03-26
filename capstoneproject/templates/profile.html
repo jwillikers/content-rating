@@ -47,8 +47,8 @@
 			<div class="container">
                 <div class="jumbotron">
                     <div class="jumbotron" style="background: #a9a9a9;">
-                        <center><h1 class="display-5">Update Credentials</h1>
-                        <p class="lead">Update your username or password.</p></center>
+                        <div style="text-align: center;"><h1 class="display-5">Update Credentials</h1>
+                        <p class="lead">Update your username or password.</p></div>
                         <hr class="my-4">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
@@ -66,14 +66,14 @@
                             <fieldset>
                                 <div id="displayForm" class="tab-content">
                                     <div class="tab-pane fade active show" id="username">
-                                        <center><legend class="display-6">Change Username</legend></center>
+                                        <div style="text-align: center;"><legend class="display-6">Change Username</legend></div>
                                             <div class="form-group">
                                                 <label for="newUsername">New Username</label>
                                                 <input type="text" class="form-control" id="newUsername" placeholder="Enter username">
                                             </div>
                                     </div>
                                     <div class="tab-pane fade" id="password">
-                                        <center><legend class="display-6">Change Password</legend></center>
+                                        <div style="text-align: center;"><legend class="display-6">Change Password</legend></div>
                                             <div class="form-group">
                                                 <label for="newPassword">New Password</label>
                                                 <input type="password" class="form-control" id="newPassword" placeholder="Enter password">
@@ -84,7 +84,7 @@
                                             </div>
                                     </div>
                                     <div class="tab-pane fade" id="userandpass">
-                                        <center><legend class="display-6">Change Username & Password</legend></center>
+                                        <div style="text-align: center;"><legend class="display-6">Change Username & Password</legend></div>
                                             <div class="form-group">
                                                 <label for="newUsername">New Username</label>
                                                 <input type="text" class="form-control" id="newUsername" placeholder="Enter username">
@@ -100,38 +100,33 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <center><button type="submit" class="btn btn-primary">Update credentials</button></center>
+                            <div style="text-align: center;"><button type="submit" class="btn btn-primary">Update credentials</button></div>
                         </form>
                     </div>
                     <div class="container">
-                        <center><h1 class="display-5">Recently Rated</h1></center>
-                        <hr class="my-4">
-                            <!-- Update later to display real time info from database -->
-                            <!-- Default colors: bg-success (1-20), bg-info (21-40), bg-warning (41-60), bg-primary (61-80), bg-danger (81-100) -->
-                            <p class="lead">Pillow Talkin:</p>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="94" aria-valuemin="1" aria-valuemax="100" style="width: 94%">94</div>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">Baby Got Back:</p>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="67" aria-valuemin="1" aria-valuemax="100" style="width: 67%">67</div>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">Africa:</p>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">Freebird:</p>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="45" aria-valuemin="1" aria-valuemax="100" style="width: 45%">45</div>
-                            </div>
-                            <hr class="my-4">
-                            <p class="lead">My First Song:</p>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="25" aria-valuemin="1" aria-valuemax="100" style="width: 25%">25</div>
-                            </div>
+                        {% if recently_rated|length == 0 %}
+                            <div style="text-align: center;"><h1 class="display-5">No Recently Rated</h1></div>
+                        {% else %}
+                            <div style="text-align: center;"><h1 class="display-5">Recently Rated</h1></div>
+                            {% for song, rating in recently_rated.items %}
+                                <hr class="my-4">
+                                <!-- Default colors: bg-success (1-2), bg-info (3-4), bg-warning (5-6), bg-primary (7-8), bg-danger (9-10) -->
+                                <p class="lead">{{ song }}:</p>
+                                <div class="progress">
+                                    {% if rating == 1 or rating == 2 %}
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                                    {% elif rating == 3 or rating == 4 %}
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                                    {% elif rating == 5 or rating == 6 %}
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                                    {% elif rating == 7 or rating == 8 %}
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                                    {% elif rating == 9 or rating == 10 %}
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
 			</div>
@@ -141,39 +136,16 @@
                 <div class="jumbotron">
                     <form>
                         <fieldset>
-                            <center><h1 class="display-5">My Rating Settings</h1></center>
-                            <hr class="my-4">
-                                <p class="lead">Violence:</p>
-                                <div class="slidecontainer">
-                                    <input type="range" id="violence" name="violence" min="1" max="100" value="65" class="slider" oninput="violence_amount.value=violence.value">
-                                    <output name="violence_amount" id="violence_amount" for="violence">65</output>
-                                </div>
-                                <hr class="my-4">
-                                <p class="lead">Drugs:</p>
-                                <div class="slidecontainer">
-                                    <input type="range" id="drugs" name="drugs" min="1" max="100" value="32" class="slider" oninput="drugs_amount.value=drugs.value">
-                                    <output name="drugs_amount" id="drugs_amount" for="drugs">32</output>
-                                </div>
-                                <hr class="my-4">
-                                <p class="lead">Sex/Nudity:</p>
-                                <div class="slidecontainer">
-                                    <input type="range" id="sex" name="sex" min="1" max="100" value="89" class="slider" oninput="sex_amount.value=sex.value">
-                                    <output name="sex_amount" id="sex_amount" for="sex">89</output>
-                                </div>
-                                <hr class="my-4">
-                                <p class="lead">Racism:</p>
-                                <div class="slidecontainer">
-                                    <input type="range" id="racism" name="racism" min="1" max="100" value="24" class="slider" oninput="racism_amount.value=racism.value">
-                                    <output name="racism_amount" id="racism_amount" for="racism">24</output>
-                                </div>
-                                <hr class="my-4">
-                                <p class="lead">Crude:</p>
-                                <div class="slidecontainer">
-                                    <input type="range" id="crude" name="crude" min="1" max="100" value="10" class="slider" oninput="crude_amount.value=crude.value">
-                                    <output name="crude_amount" id="crude_amount" for="crude">10</output>
-                                </div>
-                                &nbsp;
-                            <center><button type="submit" class="btn btn-primary">Update settings</button></center>
+                            <div style="text-align: center;"><h1 class="display-5">My Rating Settings</h1></div>
+                                {% for category in categories %}
+                                    <hr class="my-4">
+                                    <p class="lead">{{ category.category|title }}</p>
+                                    <div class="slidecontainer">
+                                        <input type="range" id="{{ category.category }}" name="{{ category.category }}" min="0" max="3" value="{{ category.weight }}" class="slider" oninput="{{ category.category }}_amount.value={{ category.category }}.value">
+                                        <output name="{{ category.category }}_amount" id="{{ category.category }}_amount" for="{{ category.category }}">{{ category.weight }}</output>
+                                    </div>
+                                &nbsp;{% endfor %}
+                            <div style="text-align: center;"><button type="submit" class="btn btn-primary">Update settings</button></div>
                         </fieldset>
                     </form>
                     &nbsp;
