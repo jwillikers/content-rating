@@ -1,0 +1,331 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>capstoneproject.content_rating.spelling_correction.spellchecker &#8212; Content Rater  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for capstoneproject.content_rating.spelling_correction.spellchecker</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; SpellChecker Module; simple, intuitive spell checker based on the post by</span>
+<span class="sd">    Peter Norvig. See: https://norvig.com/spell-correct.html</span>
+<span class="sd">    Code from https://github.com/barrust/pyspellchecker&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+
+
+<div class="viewcode-block" id="SpellChecker"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker">[docs]</a><span class="k">class</span> <span class="nc">SpellChecker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; The SpellChecker class encapsulates the basics needed to accomplish a</span>
+<span class="sd">        simple spell checking algorithm. It is based on the work by</span>
+<span class="sd">        Peter Norvig (https://norvig.com/spell-correct.html)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            language (str): The language of the dictionary to load or None \</span>
+<span class="sd">            for no dictionary. Supported languages are `en`, `es`, `de`, and \</span>
+<span class="sd">            `fr`. Defaults to `en`</span>
+<span class="sd">            local_dictionary (str): The path to a locally stored word \</span>
+<span class="sd">            frequency dictionary &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">local_dictionary</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span> <span class="o">=</span> <span class="n">WordFrequency</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">local_dictionary</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span><span class="o">.</span><span class="n">load_dictionary</span><span class="p">(</span><span class="n">local_dictionary</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">language</span><span class="p">:</span>
+            <span class="n">full_filename</span> <span class="o">=</span> <span class="s1">&#39;capstoneproject/content_rating/spelling_correction/dictionary_resources/en.json.gz&#39;</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">full_filename</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;The provided dictionary language (</span><span class="si">{}</span><span class="s1">) does not &#39;</span>
+                       <span class="s1">&#39;exist!&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span><span class="o">.</span><span class="n">load_dictionary</span><span class="p">(</span><span class="n">full_filename</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; setup easier known checks &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; setup easier frequency checks &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">word_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; WordFrequency: An encapsulation of the word frequency `dictionary`</span>
+
+<span class="sd">            Note:</span>
+<span class="sd">                Not settable &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span>
+
+<div class="viewcode-block" id="SpellChecker.words"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker.words">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Split text into individual `words` using a simple whitespace regex</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                text (str): The text to split into individual words</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                list(str): A listing of all words in the provided text &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">_words</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpellChecker.word_probability"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker.word_probability">[docs]</a>    <span class="k">def</span> <span class="nf">word_probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">total_words</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Calculate the probability of the `word` being the desired, correct</span>
+<span class="sd">            word</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                word (str): The word for which the word probability is \</span>
+<span class="sd">                calculated</span>
+<span class="sd">                total_words (int): The total number of words to use in the \</span>
+<span class="sd">                calculation; use the default for using the whole word \</span>
+<span class="sd">                frequency</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                float: The probability that the word is the correct word &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">total_words</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">total_words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span><span class="o">.</span><span class="n">total_words</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span><span class="o">.</span><span class="n">dictionary</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_words</span></div>
+
+<div class="viewcode-block" id="SpellChecker.correction"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker.correction">[docs]</a>    <span class="k">def</span> <span class="nf">correction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; The most probable correct spelling for the word</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                word (str): The word to correct</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                str: The most likely candidate &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">candidates</span><span class="p">(</span><span class="n">word</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">word_probability</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpellChecker.candidates"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker.candidates">[docs]</a>    <span class="k">def</span> <span class="nf">candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Generate possible spelling corrections for the provided word up to</span>
+<span class="sd">            an edit distance of two, if and only when needed</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                word (str): The word for which to calculate candidate spellings</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                set: The set of words that are possible candidates &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">known</span><span class="p">([</span><span class="n">word</span><span class="p">])</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">known</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_distance_1</span><span class="p">(</span><span class="n">word</span><span class="p">))</span> <span class="ow">or</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">known</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_distance_2</span><span class="p">(</span><span class="n">word</span><span class="p">))</span> <span class="ow">or</span> <span class="p">[</span><span class="n">word</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="SpellChecker.known"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker.known">[docs]</a>    <span class="k">def</span> <span class="nf">known</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; The subset of `words` that appear in the dictionary of words</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                words (list): List of words to determine which are in the \</span>
+<span class="sd">                corpus</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                set: The set of those words from the input that are in the \</span>
+<span class="sd">                corpus &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span><span class="o">.</span><span class="n">dictionary</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpellChecker.unknown"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker.unknown">[docs]</a>    <span class="k">def</span> <span class="nf">unknown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; The subset of `words` that do not appear in the dictionary</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                words (list): List of words to determine which are not in the \</span>
+<span class="sd">                corpus</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                set: The set of those words from the input that are not in \</span>
+<span class="sd">                the corpus &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span><span class="o">.</span><span class="n">dictionary</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpellChecker.edit_distance_1"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker.edit_distance_1">[docs]</a>    <span class="k">def</span> <span class="nf">edit_distance_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Compute all strings that are one edit away from `word` using only</span>
+<span class="sd">            the letters in the corpus</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                word (str): The word for which to calculate the edit distance</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                set: The set of strings that are edit distance two from the \</span>
+<span class="sd">                provided word &#39;&#39;&#39;</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word_frequency</span><span class="o">.</span><span class="n">letters</span>
+        <span class="n">splits</span> <span class="o">=</span> <span class="p">[(</span><span class="n">word</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">:])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="n">deletes</span> <span class="o">=</span> <span class="p">[</span><span class="n">L</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="ow">in</span> <span class="n">splits</span> <span class="k">if</span> <span class="n">R</span><span class="p">]</span>
+        <span class="n">transposes</span> <span class="o">=</span> <span class="p">[</span><span class="n">L</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="k">for</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="ow">in</span> <span class="n">splits</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">R</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">replaces</span> <span class="o">=</span> <span class="p">[</span><span class="n">L</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="ow">in</span> <span class="n">splits</span> <span class="k">if</span> <span class="n">R</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">]</span>
+        <span class="n">inserts</span> <span class="o">=</span> <span class="p">[</span><span class="n">L</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="n">R</span> <span class="k">for</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="ow">in</span> <span class="n">splits</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">deletes</span> <span class="o">+</span> <span class="n">transposes</span> <span class="o">+</span> <span class="n">replaces</span> <span class="o">+</span> <span class="n">inserts</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpellChecker.edit_distance_2"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.SpellChecker.edit_distance_2">[docs]</a>    <span class="k">def</span> <span class="nf">edit_distance_2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Compute all strings that are two edits away from `word` using only</span>
+<span class="sd">            the letters in the corpus</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                word (str): The word for which to calculate the edit distance</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                set: The set of strings that are edit distance one from the \</span>
+<span class="sd">                provided word &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">e2</span> <span class="k">for</span> <span class="n">e1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edit_distance_1</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">e2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edit_distance_1</span><span class="p">(</span><span class="n">e1</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="WordFrequency"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.WordFrequency">[docs]</a><span class="k">class</span> <span class="nc">WordFrequency</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Store the `dictionary` as a word frequency list while allowing for</span>
+<span class="sd">        different methods to load the data and update over time &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_total_words</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_words</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_letters</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; turn on contains &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; turn on getitem &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Counter: A counting dictionary of all words in the corpus and the \</span>
+<span class="sd">            number of times each has been seen</span>
+
+<span class="sd">            Note:</span>
+<span class="sd">                Not settable &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">total_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; int: The sum of all word occurances in the word frequency \</span>
+<span class="sd">                 dictionary</span>
+
+<span class="sd">            Note:</span>
+<span class="sd">                Not settable &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_words</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">unique_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; int: The total number of unique words in the word frequency list</span>
+
+<span class="sd">            Note:</span>
+<span class="sd">                Not settable &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_words</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">letters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; str: The listing of all letters found within the corpus</span>
+
+<span class="sd">            Note:</span>
+<span class="sd">                Not settable &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_letters</span>
+
+<div class="viewcode-block" id="WordFrequency.load_dictionary"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.WordFrequency.load_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">load_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Load in a pre-built word frequency list</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                filename (str): The filepath to the json (optionally gzipped) \</span>
+<span class="sd">                file to be loaded &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_dictionary</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WordFrequency.load_text_file"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.WordFrequency.load_text_file">[docs]</a>    <span class="k">def</span> <span class="nf">load_text_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Load in a text file from which to generate a word frequency list</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                filename (str): The filepath to the text file to be loaded &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_text</span><span class="p">(</span><span class="n">fobj</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="WordFrequency.load_text"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.WordFrequency.load_text">[docs]</a>    <span class="k">def</span> <span class="nf">load_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Load text from which to generate a word frequency list</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                text (str): The text to be loaded &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_words</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_dictionary</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WordFrequency.load_words"><a class="viewcode-back" href="../../../../doc/source/capstoneproject.content_rating.spelling_correction.html#capstoneproject.content_rating.spelling_correction.spellchecker.WordFrequency.load_words">[docs]</a>    <span class="k">def</span> <span class="nf">load_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Load a list of words from which to generate a word frequency list</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                text (list): The list of words to be loaded &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_dictionary</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_update_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Update the word frequency object &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_total_words</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_letters</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictionary</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_letters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Parse the text into words; currently removes punctuation &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\w+&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Craig Olson, Scott, Olson, Jordan Williams.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

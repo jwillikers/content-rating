@@ -1,0 +1,19 @@
+.. Content Rater documentation master file, created by
+   sphinx-quickstart on Mon Mar 26 19:08:25 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Content Rater's documentation!
+=========================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
