@@ -6,15 +6,19 @@ class Command(BaseCommand):
         words = models.Word.objects.prefetch_related('word_category_set__category')
         all = dict()
         for word in words:
+            word_all = dict()
             for word_category in word.word_category_set.all():
-                word_category_dict = (
-                    {word.word:
-                        {word_category.category.category:
-                            (word_category.get_strength_display(), word_category.get_weight_display())}})
-                all.update(word_category_dict)
+                category = word_category.category.category
+                strength = word_category.get_strength_display()
+                weight_numeric = word_category.weight
+                weight_choice = word_category.get_weight_display()
+                word_cat_dict = {category:
+                                 {'strength': strength, 'weight': (weight_numeric, weight_choice)}}
+                word_all.update(word_cat_dict)
+            all.update(word_all)
 
-        self.stdout.write('displaying all:\n')
-        for item in words:
-            self.stdout.write(item.__str__(), ending='\n')
-            for word_category in item.word_category_set.all():
-                self.stdout.write('\t' + word_category.__str__(), style_func=None, ending=None)
+        #for word in words:
+            #self.stdout.write(all, style_func=None, ending=None)
+            #self.stdout.write(word.__str__(), ending='\n')
+            #for word_category in word.word_category_set.all():
+            #    self.stdout.write('\t' + word_category.__str__(), style_func=None, ending=None)

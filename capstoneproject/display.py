@@ -12,10 +12,13 @@ def display_all():
     words = models.Word.objects.prefetch_related('word_category_set__category')
     all = dict()
     for word in words:
+        word_all = dict()
         for word_category in word.word_category_set.all():
-            word_category_dict = (
-                {word.word:
-                    {word_category.category.category:
-                        (word_category.get_strength_display(), word_category.get_weight_display())}})
-            all.update(word_category_dict)
-    return all
+            category = word_category.category.category
+            strength = word_category.get_strength_display()
+            weight_numeric = word_category.weight
+            weight_choice = word_category.get_weight_display()
+            word_cat_dict = {category:
+                             {'strength': strength, 'weight': (weight_numeric, weight_choice)}}
+            word_all.update(word_cat_dict)
+        all.update(word_all)
