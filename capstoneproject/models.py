@@ -11,7 +11,7 @@ class Category(models.Model):
 
 class WordCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    strong = models.BooleanField()
+    strength = models.BooleanField(choices=[(True, 'strong'), (False, 'weak')], default=False)
     weight = models.SmallIntegerField(
         choices=[
             (0, 'innocuous'),
@@ -21,7 +21,7 @@ class WordCategory(models.Model):
         ])
 
     def __str__(self):
-        return self.strong
+        return '{}: {}, {}'.format(self.category, self.get_strength_display(), self.get_weight_display())
 
 
 class Word(models.Model):
@@ -38,10 +38,10 @@ def get_words_of_category(category):
     return Word.objects.all()
 
 
-def get_words_of_category_strong(category, strong):
+def get_words_of_category_strong(category, strength):
     if category:
-        return Word.objects.filter(word_category_set__category=category, word_category_set__strong=strong)
-    return Word.objects.filter(word_category_set__strong=strong)
+        return Word.objects.filter(word_category_set__category=category, word_category_set__strength=strength)
+    return Word.objects.filter(word_category_set__strength=strength)
 
 
 def get_word_offensiveness(word, category):

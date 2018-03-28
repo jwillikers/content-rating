@@ -17,14 +17,9 @@ Todo:
 import csv
 import os
 import django
+from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-
-# set the django settings and start the django app
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
-django.setup()
-
-# after loading django, import the content-rater models
-from capstoneproject.models import Category, Word, Phrase, PhraseSpelling, WordSpelling, WordCategory
+import capstoneproject.models as models
 
 # setup simple aliases for the model objects
 categories = Category.objects
@@ -272,30 +267,23 @@ def import_tables(root_folder='', category_path='', word_path='', phrase_path=''
         import_phrase_spelling(root_folder + phrasespelling_path)
     print('\nall imports complete\n')
 
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        """Import the csv files into the dictionary tables.
 
-def main():
-    """Import the csv files into the dictionary tables.
+        Notes:
+            Just comment out the corresponding path names to
+            allow for the corresponding tables to be uploaded
+            until I get some args stuff setup.
 
-    Notes:
-        Just comment out the corresponding path names to
-        allow for the corresponding tables to be uploaded
-        until I get some args stuff setup.
-
-    Returns:
-        None: updates the dictionary tables.
-    """
-    import_tables(
-        root_folder='/Users/jwilliams/Downloads/',
-        category_path='Category.csv',
-        word_path='Word.csv',
-        # phrase_path='Phrase.csv',
-        # wordspelling_path='WordSpelling.csv',
-        # phrasespelling_path='PhraseSpelling.csv'
-    )
-
-
-if __name__ == '__main__':
-    """
-    call the main method when this module is ran
-    """
-    main()
+        Returns:
+            None: updates the dictionary tables.
+        """
+        import_tables(
+            root_folder='/Users/jwilliams/Downloads/',
+            category_path='Category.csv',
+            word_path='Word.csv',
+            # phrase_path='Phrase.csv',
+            # wordspelling_path='WordSpelling.csv',
+            # phrasespelling_path='PhraseSpelling.csv'
+        )
