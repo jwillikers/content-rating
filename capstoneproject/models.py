@@ -7,7 +7,13 @@ class Category(models.Model):
     weight = models.IntegerField()
 
     def __str__(self):
+        return 'category: {}, weight: {}'.format(self.category, self.weight)
+
+    def __repr__(self):
         return self.category
+
+    def _dict(self):
+        return {self.category: self.weight}
 
 
 class WordCategory(models.Model):
@@ -22,7 +28,17 @@ class WordCategory(models.Model):
         ])
 
     def __str__(self):
-        return '{}: {}, {}'.format(self.category, self.get_strength_display(), self.get_weight_display())
+        return 'category: {}, strength: {}, weight: {}'.format(self.category.category, self.get_strength_display(), self.get_weight_display())
+
+    def __repr__(self):
+        return '{} {} {}'.format(self.category.category, self.strength, self.weight)
+
+    def _dict(self):
+        return {
+            'category': self.category.category,
+            'strength': self.get_strength_display(),
+            'weight': (self.weight, self.get_weight_display())
+        }
 
 
 class Word(models.Model):
@@ -30,7 +46,19 @@ class Word(models.Model):
     word = models.CharField(unique=True, max_length=30)
 
     def __str__(self):
+        string = ''
+        for word_category in self.word_category_set:
+            string += word_category.__str__() + '\n'
+        return string
+
+    def __repr__(self):
         return self.word
+
+    def _dict(self):
+        word_categories_dict = dict()
+        for word_category in self.word_category_set:
+            word_categories_dict.update(word_category._dict())
+        return {self.word: word_categories_dict}
 
 
 def get_words():

@@ -90,10 +90,10 @@ def import_word(path: str):
         word_category_list = list()
         for index in [1, 2, 3]:
             category_name = word_entry['category' + str(index)]
-            strong = bool(word_entry['strong' + str(index)])
+            strong = bool(word_entry['strength' + str(index)])
             weight = word_entry['weight' + str(index)]
 
-            if category_name != '' and strong is not None and weight is not None:
+            if category_name != '' and strength is not None and weight is not None:
                 try:
                     category = categories.get(category=category_name)
                 except ObjectDoesNotExist:
@@ -104,7 +104,7 @@ def import_word(path: str):
                 try:
                     word_category, _ = word_categories.get_or_create(
                         category_id=category.id,
-                        strong=strong,
+                        strength=strength,
                         weight=weight
                     )
                 except ValueError:
