@@ -102,27 +102,3 @@ def get_word_offensiveness(word, category):
     else:
         offensiveness = None
     return offensiveness
-
-class Phrase(models.Model):
-    word_category_set = models.ManyToManyField(WordCategory)
-    phrase = models.CharField(unique=True, max_length=100)
-    word_set = models.ManyToManyField(Word)
-
-    def __str__(self):
-        return self.phrase
-
-
-class WordSpelling(models.Model):
-    word = models.ForeignKey(Word, on_delete=models.CASCADE)
-    spelling = models.CharField(unique=True, max_length=30)
-
-    def __str__(self):
-        return self.spelling
-
-
-class PhraseSpelling(models.Model):
-    phrase = models.ForeignKey(Phrase, on_delete=models.CASCADE)
-    spelling = models.CharField(unique=True, max_length=100)
-
-    def __str__(self):
-        return self.spelling
