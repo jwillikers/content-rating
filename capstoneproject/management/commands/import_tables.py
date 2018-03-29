@@ -72,20 +72,6 @@ def import_category(path: str):
             print('skipping ' + category_entry['category']
                   + '\t\t: weight ' + category_entry['weight'] + ' is not an integer')
             continue
-
-        parents = list()
-        for index in [1, 2]:
-            parent_name = category_entry['parent' + str(index)]
-            if parent_name is not '':
-                try:
-                    parent = categories.get(category=parent_name)
-                except ObjectDoesNotExist:
-                    print('skipping ' + category_entry['category']
-                          + '\t\t: parent ' + parent_name + ' does not exist')
-                    continue
-                parents.append(parent)
-        category.parent_set.set(parents)
-
     print('import of csv into category table complete\n')
 
 
