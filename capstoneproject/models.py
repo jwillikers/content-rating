@@ -18,27 +18,35 @@ class Category(models.Model):
 
 class WordCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    strength = models.BooleanField(choices=[(True, 'strong'), (False, 'weak')], default=False)
+    strength = models.BooleanField(
+        choices=[(True, 'strong'),
+                 (False, 'weak')],
+        default=False)
     weight = models.SmallIntegerField(
-        choices=[
-            (0, 'innocuous'),
-            (1, 'slight'),
-            (2, 'moderate'),
-            (3, 'heavy')
-        ])
+        choices=[(0, 'innocuous'),
+                 (1, 'slight'),
+                 (2, 'moderate'),
+                 (3, 'heavy')])
 
     def __str__(self):
-        return 'category: {}, strength: {}, weight: {}'.format(self.category.category, self.get_strength_display(), self.get_weight_display())
+        return 'category: {}, strength: {}, weight: {}'.format(
+            self.category.category,
+            self.get_strength_display(),
+            self.get_weight_display())
 
     def __repr__(self):
-        return '{} {} {}'.format(self.category.category, self.strength, self.weight)
+        return '{} {} {}'.format(
+            self.category.category,
+            self.strength,
+            self.weight)
 
     def _dict(self):
-        return {
-            'category': self.category.category,
-            'strength': self.get_strength_display(),
-            'weight': (self.weight, self.get_weight_display())
-        }
+        return {'category': self.category.category,
+                'strength': {self.get_strength_display(): self.strength)
+                'weight': {self.get_weight_display(): self.weight)}
+
+    def get_category(self):
+        return self.category.category
 
 
 class Word(models.Model):
@@ -55,35 +63,45 @@ class Word(models.Model):
         return self.word
 
     def _dict(self):
+        return {self.word: self.get_word_categories}
+
+    def get_word_categories():
         word_categories_dict = dict()
         for word_category in self.word_category_set:
             word_categories_dict.update(word_category._dict())
-        return {self.word: word_categories_dict}
+        return word_categories_dict
 
+    def get_categories(self):
+        cats = list()
+        for word_category in self.word_category_set:
+            cats.append(word_category.get_category())
+        return cats
 
-def get_words():
-    return Word.objects.prefetch_related(Prefetch('word_category_set__category', to_attr='words_cache'))
 
 def get_words_of_category(category):
     if category:
-        return Word.objects.filter(word_category_set__category=category)
-    return Word.objects.all()
+        words = Word.objects.filter(word_category_set__category=category)
+    else:
+        words = Word.objects.all()
+    return words
 
 
 def get_words_of_category_strong(category, strength):
     if category:
-        return Word.objects.filter(word_category_set__category=category, word_category_set__strength=strength)
-    return Word.objects.filter(word_category_set__strength=strength)
+        words = Word.objects.filter(
+            word_category_set__category=category,
+            word_category_set__strength=strength)
+    else:
+        words = Word.objects.filter(word_category_set__strength=strength)
+    return words
 
 
 def get_word_offensiveness(word, category):
-    if Word.objects.get(word=word, word_category_set__category=category.id, word_category_set__strong=True):
-        return 'STRONG'
-    elif Word.objects.get(word=word, word_category_set__category=category.id, word_category_set__strong=False):
-        return 'WEAK'
+    if word.category = category:
+        offensiveness = word.get_strength_display()
     else:
-        return 'NOT'
-
+        offensiveness = None
+    return offensiveness
 
 class Phrase(models.Model):
     word_category_set = models.ManyToManyField(WordCategory)
