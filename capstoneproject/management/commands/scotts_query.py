@@ -3,7 +3,8 @@ import capstoneproject.models as models
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        words = models.Word.objects.prefetch_related('word_category_set__category')
+        # words = models.Word.objects.prefetch_related('word_category_set__category')
+        words = models.get_words()
         all = dict()
         for word in words:
             word_all = dict()
@@ -15,8 +16,7 @@ class Command(BaseCommand):
                 word_cat_dict = {category:
                                  {'strength': strength, 'weight': (weight_numeric, weight_choice)}}
                 word_all.update(word_cat_dict)
-            all.update(word_all)
-
+            all.update({word: word_all})
         #for word in words:
             #self.stdout.write(all, style_func=None, ending=None)
             #self.stdout.write(word.__str__(), ending='\n')

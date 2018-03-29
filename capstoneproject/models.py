@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Prefetch
 
 
 class Category(models.Model):
@@ -31,6 +32,9 @@ class Word(models.Model):
     def __str__(self):
         return self.word
 
+
+def get_words():
+    return Word.objects.prefetch_related(Prefetch('word_category_set__category', to_attr='words_cache'))
 
 def get_words_of_category(category):
     if category:
