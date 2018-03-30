@@ -1,104 +1,126 @@
 from django.db import models
-from django.db.models import Prefetch
+from django.db.models import Manager, Model, CharField, IntegerField, \
+    BooleanField, ForeignKey, SmallIntegerField, CASCADE, QuerySet, \
+    ManyToManyField
 
 
-class Category(models.Model):
-    category = models.CharField(unique=True, max_length=30)
-    weight = models.IntegerField()
+class Weight(Model):
+    WEIGHTS = [(0, 'innocuous'), (1, 'slight'), (2, 'moderate'), (3, 'heavy')]
+    weight = SmallIntegerField(choices=WEIGHTS)
+
+    class Meta:
+        abstract = True
+
+
+class Category(Weight):
+    name = CharField(unique=True, max_length=30)
+    categories = Manager()
 
     def __str__(self):
-        return 'category: {}, weight: {}'.format(self.category, self.weight)
+        return 'category: {}, weight: {}'.format(self.name, self.weight)
 
     def __repr__(self):
-        return self.category
+        return self.name
 
     def _dict(self):
-        return {self.category: self.weight}
+        return {self.name: self.weight}
+
+    class Meta:
+        default_manager_name = 'categories'
 
 
-class WordCategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    strength = models.BooleanField(
-        choices=[(True, 'strong'),
-                 (False, 'weak')],
-        default=False)
-    weight = models.SmallIntegerField(
-        choices=[(0, 'innocuous'),
-                 (1, 'slight'),
-                 (2, 'moderate'),
-                 (3, 'heavy')])
+class WordFeature(Weight):
+    STRENGTHS = [(True, 'strong'), (False, 'weak')]
+    category = ForeignKey(Category, on_delete=CASCADE)
+    strength = BooleanField(choices=STRENGTHS, default='weak')
+    word_features = Manager()
 
     def __str__(self):
         return 'category: {}, strength: {}, weight: {}'.format(
-            self.category.category,
+            self.category.name,
             self.get_strength_display(),
             self.get_weight_display())
 
     def __repr__(self):
         return '{} {} {}'.format(
-            self.category.category,
+            self.category.name,
             self.strength,
             self.weight)
 
     def _dict(self):
-        return {'category': self.category.category,
-                'strength': {self.get_strength_display(): self.strength)
-                'weight': {self.get_weight_display(): self.weight)}
+        return {'category': self.category.name,
+                'strength': {self.get_strength_display(): self.strength},
+                'weight': {self.get_weight_display(): self.weight}}
 
-    def get_category(self):
-        return self.category.category
+    class Meta:
+        default_manager_name = 'word_features'
 
 
-class Word(models.Model):
-    word_category_set = models.ManyToManyField(WordCategory)
-    word = models.CharField(unique=True, max_length=30)
+class WordQuerySet(QuerySet):
+    def category(self, category):
+        """Filters words based on given category.
+
+        Args:
+            category: name, id, or object of the Category.
+
+        Returns:
+            Words belonging to the given category.
+        """
+        if isinstance(category, str):
+            words = self.filter(word_features__category__name=category)
+        elif isinstance(category, int):
+            words = self.filter(word_features__category=category)
+        elif isinstance(category, Category):
+            words = self.filter(word_features__category=category.id)
+        else:
+            raise TypeError()
+        return words
+
+    def strength(self, strength):
+        found = False
+        if isinstance(strength, bool):
+            word_features = self.filter(word_features__strength=strength)
+            found = True
+        elif isinstance(strength, str):
+            strength = strength.lower()
+            for val, model_strength in WordFeature.STRENGTHS:
+                if strength == model_strength:
+                    word_features = self.filter(
+                        word_features__strength=val)
+                    found = True
+        if not found:
+            raise TypeError()
+        return word_features
+
+
+class Word(Model):
+    word_features = ManyToManyField(WordFeature)
+    name = CharField(unique=True, max_length=30)
+    words = WordQuerySet.as_manager()
 
     def __str__(self):
-        string = ''
-        for word_category in self.word_category_set:
-            string += word_category.__str__() + '\n'
+        string = self.name + '\n'
+        for word_feature in self.word_features.all():
+            string += '\t' + word_feature.__str__() + '\n'
         return string
 
     def __repr__(self):
-        return self.word
+        return self.name
 
     def _dict(self):
-        return {self.word: self.get_word_categories}
+        return {self.name: self.get_word_features()}
 
-    def get_word_categories():
-        word_categories_dict = dict()
-        for word_category in self.word_category_set:
-            word_categories_dict.update(word_category._dict())
-        return word_categories_dict
+    def get_word_features(self):
+        word_features_dict = dict()
+        for word_feature in self.word_features:
+            word_features_dict.update(word_feature._dict())
+        return word_features_dict
 
     def get_categories(self):
         cats = list()
-        for word_category in self.word_category_set:
-            cats.append(word_category.get_category())
+        for word_feature in self.word_features:
+            cats.append(word_feature.get_category())
         return cats
 
-
-def get_words_of_category(category):
-    if category:
-        words = Word.objects.filter(word_category_set__category=category)
-    else:
-        words = Word.objects.all()
-    return words
-
-
-def get_words_of_category_strong(category, strength):
-    if category:
-        words = Word.objects.filter(
-            word_category_set__category=category,
-            word_category_set__strength=strength)
-    else:
-        words = Word.objects.filter(word_category_set__strength=strength)
-    return words
-
-
-def get_word_offensiveness(word, category):
-    if word.category = category:
-        offensiveness = word.get_strength_display()
-    else:
-        offensiveness = None
-    return offensiveness
+    class Meta:
+        default_manager_name = 'words'

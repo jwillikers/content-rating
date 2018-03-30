@@ -8,22 +8,21 @@ class LoginForm(forms.ModelForm):
     """
         A login form.
     """
-    error_messages = {
-        'invalid_login': _("Invalid username or password."),
-        'disabled_account': _("Account is disabled."),
-    }
+    error_messages = {'invalid_login': _("Invalid username or password."),
+                      'disabled_account': _("Account is disabled.")}
 
-    login_username = forms.CharField(label='Username',
-                               max_length=20,
-                               strip=False,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': 'Enter username'}))
-
-    login_password = forms.CharField(label='Password',
-                               max_length=20,
-                               strip=False,
-                               widget=forms.PasswordInput(
-                                   attrs={'class': 'form-control', 'placeholder': 'Enter password'}))
+    login_username = forms.CharField(
+        label='Username',
+        max_length=20,
+        strip=False,
+        widget=forms.TextInput(attrs={'class': 'form-control',
+                                      'placeholder': 'Enter username'}))
+    login_password = forms.CharField(
+        label='Password',
+        max_length=20,
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-control',
+                                          'placeholder': 'Enter password'}))
 
     class Meta:
         model = User
@@ -60,7 +59,7 @@ class LoginForm(forms.ModelForm):
         raise forms.ValidationError(
             self.error_messages['invalid_login'],
 #            code='invalid_login',
-        )
+            )
 
     def disabled_account_error(self):
         """
@@ -70,7 +69,7 @@ class LoginForm(forms.ModelForm):
         raise forms.ValidationError(
             self.error_messages['disabled_account'],
 #            code='disabled_account',
-        )
+            )
 
 
 class SignUpForm(forms.ModelForm):
@@ -79,31 +78,32 @@ class SignUpForm(forms.ModelForm):
         password.
     """
     error_messages = {
-        'password_mismatch': _("The two password fields didn't match."),
-    }
+        'password_mismatch': _("The two password fields didn't match.")}
 
     username = forms.CharField(
         label=_("Username"),
         max_length=20,
         strip=False,
-        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Enter username'}),
-        help_text=_("Enter a username with less than 20 characters."),
-    )
+        widget=forms.TextInput(
+            attrs={'class': 'form-control',
+                   'placeholder': 'Enter username'}),
+        help_text=_("Enter a username with less than 20 characters."))
 
     password1 = forms.CharField(
         label=_("Password"),
         max_length=20,
         strip=False,
-        widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Enter password'}),
-#        help_text=password_validation.password_validators_help_text_html(),
-    )
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control',
+                   'placeholder': 'Enter password'}))
     password2 = forms.CharField(
-        label=_("Password Confirmation"),
+        label=("Password Confirmation"),
         max_length=20,
-        widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Confirm password'}),
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control',
+                   'placeholder': 'Confirm password'}),
         strip=False,
-        help_text=_("Enter the same password as before, for verification."),
-    )
+        help_text=("Enter the same password as before, for verification."))
 
     class Meta:
         model = User
@@ -116,8 +116,6 @@ class SignUpForm(forms.ModelForm):
         :param kwargs:
         """
         super().__init__(*args, **kwargs)
-#        if self._meta.model.USERNAME_FIELD in self.fields:
-#            self.fields[self._meta.model.USERNAME_FIELD].widget.attrs.update({'autofocus': True})
 
     def clean_password2(self):
         """
@@ -129,8 +127,7 @@ class SignUpForm(forms.ModelForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(
                 self.error_messages['password_mismatch'],
-                code='password_mismatch',
-            )
+                code='password_mismatch')
         return password2
 
     def _post_clean(self):
