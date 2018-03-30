@@ -61,10 +61,10 @@ class WordQuerySet(QuerySet):
         """Filters words based on given category.
 
         Args:
-            category: name, id, or object of the Category.
+            category: name, id, or Category representing the category.
 
         Returns:
-            Words belonging to the given category.
+            QuerySet: Words belonging to the given category.
         """
         if isinstance(category, str):
             words = self.filter(word_features__category__name=category)
@@ -77,20 +77,99 @@ class WordQuerySet(QuerySet):
         return words
 
     def strength(self, strength):
-        found = False
+        """Filters words based on the given strength.
+
+        Args:
+            strength: string or numeric form of the strength.
+
+        Returns:
+            QuerySet: Words containing the given strength.
+        """
         if isinstance(strength, bool):
             word_features = self.filter(word_features__strength=strength)
-            found = True
         elif isinstance(strength, str):
             strength = strength.lower()
+            found = False
             for val, model_strength in WordFeature.STRENGTHS:
                 if strength == model_strength:
                     word_features = self.filter(
                         word_features__strength=val)
                     found = True
-        if not found:
+            if not found:
+                raise TypeError()
+        else:
             raise TypeError()
         return word_features
+
+    def weight(self, weight):
+        """Filters words based on the given weight.
+
+        Args:
+            weight: string or numeric form of the weight.
+
+        Returns:
+            QuerySet: Words containing the given weight.
+        """
+        if isinstance(weight, int):
+            found = False
+            for val, _ in WordFeature.WEIGHTS:
+                if weight == val:
+                    word_features = self.filter(word_features__weight=weight)
+                    found = True
+                    break
+            if not found:
+                raise TypeError()
+        elif isinstance(strength, str):
+            weight = weight.lower()
+            found = False
+            for val, model_weight in WordFeature.WEIGHTS:
+                if weight == model_weight:
+                    word_features = self.filter(
+                        word_features__weight=val)
+                    found = True
+            if not found:
+                raise TypeError()
+        else:
+            raise TypeError()
+        return word_features
+
+    def word(self, word):
+        """Filters words based on given word.
+
+        Args:
+            word: name, id, or Word representing the word.
+
+        Returns:
+            QuerySet: the word given.
+        """
+        if isinstance(word, str):
+            word = self.filter(name=word)
+        elif isinstance(word, int):
+            word = self.filter(id=word)
+        elif isinstance(word, Word):
+            word = self.filter(id=word.id)
+        else:
+            raise TypeError()
+        return word
+
+    def get_word(self, word):
+        """Retrieves the given word.
+
+        Args:
+            word: name, id, or Word representing the word.
+
+        Returns:
+            Word: the word given or None if not found.
+        """
+        if isinstance(word, str):
+            word = self.filter(name=word).first()
+        elif isinstance(word, int):
+            word = self.filter(id=word).first()
+        elif isinstance(word, Word):
+            word = self.filter(id=word.id).first()
+        else:
+            word = None
+        return word
 
 
 class Word(Model):
