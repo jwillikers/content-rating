@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from django.contrib.auth import views as auth_views
 
+from django.contrib.auth.models import User
 from django import forms
 from capstoneproject.display import display_categories, display_words
 from capstoneproject.forms import SignUpForm, LoginForm, ProfileUsernameForm, ProfilePasswordForm, ProfileUsernamePasswordForm
@@ -125,39 +126,23 @@ def profile(request):
         if request.POST.get('submit_username') == 'username':
             form = ProfileUsernameForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                form.update_username(request)
-                # Authenticate and login the user.
-                # auth_login(request, user)
-                context['profile_username_form'] = form
-                return render(request, 'profile.html', context)
+                if form.update_username(request):
+                    return render(request, 'profile.html', context)
+                else:
+                    context['profile_username_form'] = form
+                    return render(request, 'profile.html', context)
             else:  # Go back to the login in page with a new login form if the
                 context['profile_username_form'] = form
                 return render(request, 'profile.html', context)
 
-        if request.POST.get('submit') == 'login':
-            form = LoginForm(request.POST)
+        if request.POST.get('submit_password') == 'password':
+            form = ProfilePasswordForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                login_username = form.cleaned_data.get('login_username')
-                raw_password = form.cleaned_data.get('login_password')
-                user = authenticate(
-                    username=login_username,
-                    password=raw_password)
-                if user is not None:
-                    if user.is_active:
-                        auth_login(request, user)
-                        return redirect('homepage')
-                    else:
-                        login_form = LoginForm()
-                        login_form.disabled_account_error()
-                        return render(request, 'login.html',
-                                      {'login_form': form,
-                                       'signup_form': SignUpForm()})
-                else:
-                    form.invalid_login_error()
-            # If the form is not valid, return to the login page.
-            return render(request, 'login.html',
-                          {'login_form': form,
-                           'signup_form': SignUpForm()})
+                form.update_password(request)
+                return render(request, 'profile.html', context)
+            else:  # Go back to the login in page with a new login form if the
+                context['profile_password_form'] = form
+                return render(request, 'profile.html', context)
     #else:
     #    c = {}
     #    c.update((csrf(request)))

@@ -192,7 +192,7 @@ class ProfileUsernameForm(forms.ModelForm):
         user = request.user
         user.username = self.cleaned_data['profile_username']
         user.save()
-        return user
+        return True
 
     def username_available(self):
         if User.objects.filter(username=self.cleaned_data['profile_username']).exists():
@@ -203,7 +203,7 @@ class ProfileUsernameForm(forms.ModelForm):
             self.username_available()
         except forms.ValidationError as error:
             self.add_error('profile_username', error)
-            return None
+            return False
         return self.save_username(request)
 
 
@@ -271,16 +271,10 @@ class ProfilePasswordForm(forms.ModelForm):
             except forms.ValidationError as error:
                 self.add_error('profile_confirm_password', error)
 
-    def save(self, commit=True):
-        """
-        Saves a new account if the information is valid.
-        :param commit: Saves the user if True.
-        :return: The user.
-        """
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["profile_password"])
-        if commit:
-            user.save()
+    def update_password(self, request):
+        user = request.user
+        user.set_password(self.cleaned_data['profile_confirm_password'])
+        user.save()
         return user
 
 
