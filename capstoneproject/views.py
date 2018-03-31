@@ -111,8 +111,7 @@ def profile(request):
                       'My First Song': 3
                       }
     context = {'categories': display_categories(),
-               'recently_rated': recently_rated
-               }
+               'recently_rated': recently_rated}
     return render(request, 'profile.html', context)
 
 

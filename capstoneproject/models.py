@@ -73,7 +73,8 @@ class WordQuerySet(QuerySet):
         elif isinstance(category, Category):
             words = self.filter(word_features__category=category.id)
         else:
-            raise TypeError()
+            raise TypeError('''{} is not a Category object, id, or name.
+                '''.format(category))
         return words
 
     def strength(self, strength):
@@ -96,9 +97,11 @@ class WordQuerySet(QuerySet):
                         word_features__strength=val)
                     found = True
             if not found:
-                raise TypeError()
+                raise ValueError('{} is not a valid strength choice'.format(
+                    strength))
         else:
-            raise TypeError()
+            raise TypeError('''{} is not a valid type for strength
+                '''.format(strength))
         return word_features
 
     def weight(self, weight):
@@ -118,8 +121,9 @@ class WordQuerySet(QuerySet):
                     found = True
                     break
             if not found:
-                raise TypeError()
-        elif isinstance(strength, str):
+                raise ValueError('''{} is not a valid weight choice between 0
+                    and 3 inclusive.'''.format(weight))
+        elif isinstance(weight, str):
             weight = weight.lower()
             found = False
             for val, model_weight in WordFeature.WEIGHTS:
@@ -128,9 +132,11 @@ class WordQuerySet(QuerySet):
                         word_features__weight=val)
                     found = True
             if not found:
-                raise TypeError()
+                raise ValueError('''{} is not one of the 4 valid weight choices:
+                    innocuous, slight, moderate, or heavy.'''.format(weight))
         else:
-            raise TypeError()
+            raise TypeError('''{} is not a valid type for weight
+                '''.format(weight))
         return word_features
 
     def word(self, word):
@@ -149,7 +155,7 @@ class WordQuerySet(QuerySet):
         elif isinstance(word, Word):
             word = self.filter(id=word.id)
         else:
-            raise TypeError()
+            raise TypeError('''{} is not a valid type for word'''.format(word))
         return word
 
     def get_word(self, word):
@@ -168,7 +174,7 @@ class WordQuerySet(QuerySet):
         elif isinstance(word, Word):
             word = self.filter(id=word.id).first()
         else:
-            word = None
+            raise TypeError('''{} is not a valid type for word'''.format(word))
         return word
 
 
