@@ -1,4 +1,17 @@
 {% extends "navbar-contentrater.html" %}
+{% load access_dict %}
+{% block optional_styling %}
+<style>
+    .linkButton {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    .linkButton:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 <div style="text-align: center;"><h1>Comparison Results</h1></div>
@@ -7,151 +20,93 @@
 		<div class="col-md-6">
 			<div class="container">
 				<div class="jumbotron">
-					<div style="text-align: center;"><h3>Song: Pillow Talkin</h3>
-					<h3>Artist: Lil' Dicky (feat. BRAIN)</h3></div>
+                    <a title="Check Word Counts" href="{% url 'word-counts' name=current_name %}" style="text-align: center;"><h3>{{ current_name }}</h3></a>
+                    <h3 style="text-align: center;">{{ current_creator }}</h3>
 					<hr class="my-4">
-					<h4>Overall Rating</h4>
+					    <h4>Overall Rating</h4>
 					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="94" aria-valuemin="1" aria-valuemax="100" style="width: 94%">94</div>
+                        {% if current_overall_rating == 1 or current_overall_rating == 2 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ current_overall_rating }}</div>
+                        {% elif current_overall_rating == 3 or current_overall_rating == 4 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ current_overall_rating }}</div>
+                        {% elif current_overall_rating == 5 or current_overall_rating == 6 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ current_overall_rating }}</div>
+                        {% elif current_overall_rating == 7 or current_overall_rating == 8 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ current_overall_rating }}</div>
+                        {% elif current_overall_rating == 9 or current_overall_rating == 10 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ current_overall_rating }}</div>
+                        {% endif %}
 					</div>
 					<hr class="my-4">
 					<div style="text-align: center;"><h5>By Category</h5></div>
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Violence:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Drugs:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="3" aria-valuemin="1" aria-valuemax="100" style="width: 3%">3</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Sex/Nudity:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="1" aria-valuemax="100" style="width: 100%">100</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Racism:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Crude:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="67" aria-valuemin="1" aria-valuemax="100" style="width: 67%">67</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Demeaning:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="45" aria-valuemin="1" aria-valuemax="100" style="width: 45%">45</div>
-					</div>
-				</div>
-			</div>
-		</div>
+					{% for category, rating in current_category_ratings.items %}
+                        <hr class="my-4">
+                        <p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">{{ category|title }}:</p>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            {% for word in current_category_word_counts|get_item:category %}
+                                <a class="dropdown-item" href="#">{{ word }}: {{ current_category_word_counts|get_item:category|get_item:word }}</a>
+                            {% endfor %}
+                            </div>
+                            {% if rating == 1 or rating == 2 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 3 or rating == 4 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 5 or rating == 6 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 7 or rating == 8 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 9 or rating == 10 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
 		<div class="col-md-6">
 			<div class="container">
 				<div class="jumbotron">
-					<div style="text-align: center;"><h3>Song: Baby Got Back</h3>
-					<h3>Artist: Sir Mix a Lot</h3></div>
+					<a title="Check Word Counts" href="{% url 'word-counts' name=previous_name %}" style="text-align: center;"><h3>{{ previous_name }}</h3></a>
+					<h3 style="text-align: center;">{{ previous_creator }}</h3>
 					<hr class="my-4">
 					<h4>Overall Rating</h4>
 					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="67" aria-valuemin="1" aria-valuemax="100" style="width: 67%">67</div>
+                        {% if previous_overall_rating == 1 or previous_overall_rating == 2 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="{{ previous_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ previous_overall_rating }}</div>
+                        {% elif previous_overall_rating == 3 or previous_overall_rating == 4 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="{{ previous_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ previous_overall_rating }}</div>
+                        {% elif previous_overall_rating == 5 or previous_overall_rating == 6 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{ previous_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ previous_overall_rating }}</div>
+                        {% elif previous_overall_rating == 7 or previous_overall_rating == 8 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="{{ previous_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ previous_overall_rating }}</div>
+                        {% elif previous_overall_rating == 9 or previous_overall_rating == 10 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="{{ previous_overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ previous_overall_rating }}</div>
+                        {% endif %}
 					</div>
 					<hr class="my-4">
 					<div style="text-align: center;"><h5>By Category</h5></div>
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Violence:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Drugs:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Sex/Nudity:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="81" aria-valuemin="1" aria-valuemax="100" style="width: 81%">81</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Racism:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Crude:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="23" aria-valuemin="1" aria-valuemax="100" style="width: 23%">23</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Demeaning:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="22" aria-valuemin="1" aria-valuemax="100" style="width: 22%">22</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+					{% for category, rating in previous_category_ratings.items %}
+                        <hr class="my-4">
+                        <p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">{{ category|title }}:</p>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            {% for word in previous_category_word_counts|get_item:category %}
+                                <a class="dropdown-item" href="#">{{ word }}: {{ previous_category_word_counts|get_item:category|get_item:word }}</a>
+                            {% endfor %}
+                            </div>
+                            {% if rating == 1 or rating == 2 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 3 or rating == 4 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 5 or rating == 6 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 7 or rating == 8 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 9 or rating == 10 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

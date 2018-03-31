@@ -1,4 +1,5 @@
 {% extends "navbar-profile.html" %}
+{% load access_dict %}
 
 {% block optional_styling %}
 <style>
@@ -41,7 +42,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container">
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-4"></div>
@@ -49,49 +50,31 @@
                 <a href="{% url 'profile' %}" class="btn btn-lg btn-block btn-info">Back to Profile</a>
             </div>
         </div>
-        &nbsp;
         <div style="text-align: center;"><h1>Customize Word Weights</h1>
-        <p class="lead">Edit each individual word in their respective categories.</p></div>
-        <hr class="my-4">
-            <ul class="nav nav-tabs">
-                {% for category in categories %}
-                    {% if forloop.counter == 1 %}
-                        <li class="nav-item">
-                            <a class="nav-link active show" data-toggle="tab" href="#{{ category }}">{{ category|title }}</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#{{ category }}">{{ category|title }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-             </ul>
-             &nbsp;
+        <p class="lead">Edit each individual word weight in category: {{ category|title }}.</p></div>
         <form>
             <fieldset>
-                <div id="displayForm" class="tab-content">
-                    {% for category in categories %}
-                        {% if forloop.counter == 1 %}
-                            <div class="tab-pane fade active show" id="{{ category }}">
-                        {% else %}
-                            <div class="tab-pane fade" id="{{ category }}">
-                        {% endif %}
-                                <div style="text-align: center;"><legend class="display-6">{{ category|title }} Words</legend></div>
-                                {% for word in words %}
-                                        <hr class="my-4">
-                                            <p class="lead">{{ word }}</p>
-                                            <div class="slidecontainer">
-                                                <input type="range" id="{{ word }}_{{ category }}" name="{{ word }}_{{ category }}" min="0" max="3" value="1" class="slider" oninput="{{ word }}_{{ category }}_amount.value={{ word }}_{{ category }}.value">
-                                                <output name="{{ word }}_{{ category }}_amount" id="{{ word }}_{{ category }}_amount" for="{{ word }}_{{ category }}">1</output>
-                                            </div>
-                                            &nbsp;
-                                {% endfor %}
+                <div style="text-align: center;"><legend class="display-6">{{ category|title }} Words</legend></div>
+                {% for word in words %}
+                        <hr class="my-4">
+                            <p class="lead">{{ word }}</p>
+                            <div class="slidecontainer">
+                                <input type="range" id="{{ word.name }}" name="{{ word.name }}" min="0" max="{{ weight_levels }}" value="{{ word.word_features.first.weight }}" class="slider" oninput="update_output('{{ word.name }}')">
+                                <output name="{{ word.name }}_amount" id="{{ word.name }}_amount" for="{{ word.name }}">{{ weight_dict|get_item:word.word_features.first.weight }}</output>
                             </div>
-                    {% endfor %}
+                {% endfor %}
             </fieldset>
             <div style="text-align: center;"><button type="submit" class="btn btn-primary">Update words</button></div>
         </form>
     </div>
 </div>
-
+<script>
+    function update_output(word) {
+        var text = {};
+        {% for weight in weight_dict %}
+            text[{{ weight }}] = "{{ weight_dict|get_item:weight }}";
+        {% endfor %}
+        document.getElementById(word + '_amount').value = text[document.getElementById(word).value];
+    }
+</script>
 {% endblock %}

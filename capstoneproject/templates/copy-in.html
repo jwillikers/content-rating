@@ -3,16 +3,16 @@
 {% block content %}
 <div class="container">
 	<div class="jumbotron">
-		<form>
+		<form action="{% url 'results' %}">
 			<fieldset>
-				<center>
+				<div style="text-align: center;">
 					<legend class="display-4">Copy In Your Own</legend>
-				</center>
+				</div>
 				<div class="form-group">
 					<label for="textArea">Content:</label>
 					<textarea class="form-control" id="textArea" rows="10"></textarea>
 				</div>
-				<center><button type="submit" class="btn btn-primary">RATE!</button></center>
+				<div style="text-align: center;"><button type="submit" class="btn btn-primary">RATE!</button></div>
 			</fieldset>
 		</form>
 	</div>

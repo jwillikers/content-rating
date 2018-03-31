@@ -1,4 +1,5 @@
 {% extends "navbar-contentrater.html" %}
+{% load access_dict %}
 
 {% block content %}
 <div style="text-align: center;"><h1>Rating Results</h1></div>
@@ -12,80 +13,55 @@
 		<div class="col-md-6">
 			<div class="container">
 				<div class="jumbotron">
-					<a href="{% url 'word-counts' %}" style="text-align: center;"><h3>Song: Baby Got Back</h3></a>
-					<h3>Artist: Sir Mix a Lot</h3>
+					<a title="Check Word Counts" href="{% url 'word-counts' name=name %}" style="text-align: center;"><h3>{{ name }}</h3></a>
+                    <div style="text-align: center;"><h3>{{ creator }}</h3>
                     <hr class="my-4">
-					<h4>Overall Rating</h4>
+                        <h4>Overall Rating</h4></div>
 					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="67" aria-valuemin="1" aria-valuemax="100" style="width: 67%">67</div>
+                        {% if overall_rating == 1 or overall_rating == 2 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                        {% elif overall_rating == 3 or overall_rating == 4 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                        {% elif overall_rating == 5 or overall_rating == 6 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                        {% elif overall_rating == 7 or overall_rating == 8 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                        {% elif overall_rating == 9 or overall_rating == 10 %}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                        {% endif %}
 					</div>
 					<hr class="my-4">
 					<div style="text-align: center;"><h5>By Category</h5></div>
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Violence:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Drugs:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Sex/Nudity:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="81" aria-valuemin="1" aria-valuemax="100" style="width: 81%">81</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Racism:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 1%">1</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Crude:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="23" aria-valuemin="1" aria-valuemax="100" style="width: 23%">23</div>
-					</div>
-					<hr class="my-4">
-					<p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">Demeaning:</p>
-						<div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-						<a class="dropdown-item" href="#">Word1: 3</a>
-						<a class="dropdown-item" href="#">Word2: 4</a>
-						<a class="dropdown-item" href="#">Word3: 2</a>
-						</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="22" aria-valuemin="1" aria-valuemax="100" style="width: 22%">22</div>
-					</div>
+                    {% for category, rating in category_ratings.items %}
+                        <hr class="my-4">
+                        <p class="dropdown-toggle display-6" data-toggle="dropdown" href="#" aria-expanded="false">{{ category|title }}:</p>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            {% for word in category_word_counts|get_item:category %}
+                                <a class="dropdown-item" href="#">{{ word }}: {{ category_word_counts|get_item:category|get_item:word }}</a>
+                            {% endfor %}
+                            </div>
+                            {% if rating == 1 or rating == 2 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 3 or rating == 4 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 5 or rating == 6 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 7 or rating == 8 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% elif rating == 9 or rating == 10 %}
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1" aria-valuemax="10" style="width: {{ rating }}0%">{{ rating }}</div>
+                            {% endif %}
+                    {% endfor %}
 				</div>
 			</div>
 		</div>
 		<div class="col-md-3">
 			<div class="container">
-				<a href="{% url 'homepage' %}" class="btn btn-lg btn-block btn-info">Compare!</a>
+                <form action="{% url 'homepage' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="content_compare" id="content_compare" value="{{ name }}">
+                    <input type="submit" id="compare" class="btn btn-lg btn-block btn-info" value="Compare!">
+                </form>
 			</div>
 		</div>
 	</div>

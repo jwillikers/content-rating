@@ -3,7 +3,6 @@ import capstoneproject.models as models
 from django.db.models import Prefetch
 
 
-
 class Command(BaseCommand):
     def handle(self, *args, **options):
         category = 'excretory'

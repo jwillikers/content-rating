@@ -9,9 +9,10 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 
-from capstoneproject.display import display_categories, display_words
+from capstoneproject.display import display_categories, display_words, display_category_words
 from capstoneproject.forms import SignUpForm, LoginForm
 from capstoneproject.content_rating.algorithm import content_rating
+from capstoneproject.models import Weight
 
 
 def login(request):
@@ -83,6 +84,11 @@ def homepage(request):
     :param request: The HTML request to handle.
     :return: Renders the home page.
     """
+    if request.session.get('delete'):
+        del request.session['delete']
+        del request.session['content_compare']
+    if request.method == "POST":
+        request.session['content_compare'] = request.POST['content_compare']
     return render(request, 'homepage.html')
 
 
@@ -104,6 +110,12 @@ def profile(request):
     :param request: The HTML request to handle.
     :return: Renders the profile page.
     """
+    if request.session.get('delete'):
+        del request.session['delete']
+        del request.session['content_compare']
+    weight_dict = dict()
+    for weight in Weight.WEIGHTS:
+        weight_dict[weight[0]] = weight[1]
     recently_rated = {'Pillow Talkin': 9,
                       'Baby Got Back': 7,
                       'Africa': 1,
@@ -111,7 +123,10 @@ def profile(request):
                       'My First Song': 3
                       }
     context = {'categories': display_categories(),
-               'recently_rated': recently_rated}
+               'recently_rated': recently_rated,
+               'weight_levels': len(weight_dict) - 1,
+               'weight_dict': weight_dict
+               }
     return render(request, 'profile.html', context)
 
 
@@ -123,8 +138,11 @@ def search(request):
     :param request: The HTML request to handle.
     :return: Renders the search page.
     """
-    cr = content_rating.ContentRating()
-    cr.algorithm('')
+    if request.session.get('delete'):
+        del request.session['delete']
+        del request.session['content_compare']
+    # cr = content_rating.ContentRating()
+    # cr.algorithm('')
     return render(request, 'search.html')
 
 
@@ -135,6 +153,9 @@ def upload(request):
     :param request: The HTML request to handle.
     :return: Renders the upload page.
     """
+    if request.session.get('delete'):
+        del request.session['delete']
+        del request.session['content_compare']
     return render(request, 'upload.html')
 
 
@@ -145,6 +166,9 @@ def copy_in(request):
     :param request: The HTML request to handle.
     :return: Renders the copy-in page.
     """
+    if request.session.get('delete'):
+        del request.session['delete']
+        del request.session['content_compare']
     return render(request, 'copy-in.html')
 
 
@@ -154,6 +178,9 @@ def about_algorithm(request):
     :param request: The HTML request to handle.
     :return: Renders the about algorithm page.
     """
+    if request.session.get('delete'):
+        del request.session['delete']
+        del request.session['content_compare']
     return render(request, 'algorithm.html')
 
 
@@ -163,19 +190,31 @@ def about_page(request):
     :param request: The HTML request to handle.
     :return: Renders the about us algorithm page.
     """
+    if request.session.get('delete'):
+        del request.session['delete']
+        del request.session['content_compare']
     return render(request, 'about.html')
 
 
 @login_required(login_url='/login/')
-def words(request):
+def words(request, category):
     """
     Function to handle requests on the page containing the offensive words and
         their levels of offensiveness.
     :param request: The HTML request to handle.
     :return: Renders the words page.
     """
-    context = {'categories': display_categories(),
-               'words': display_words()}
+    if request.session.get('delete'):
+        del request.session['delete']
+        del request.session['content_compare']
+    weight_dict = dict()
+    for weight in Weight.WEIGHTS:
+        weight_dict[weight[0]] = weight[1]
+    context = {'category': category,
+               'words': display_category_words(category),
+               'weight_levels': len(weight_dict) - 1,
+               'weight_dict': weight_dict
+               }
     return render(request, 'words.html', context)
 
 
@@ -186,7 +225,23 @@ def rating_results(request):
     :param request: The HTML request to handle.
     :return: Renders the rating results page.
     """
-    return render(request, 'rating-result.html')
+    if 'content_compare' in request.session:
+        return redirect('compare')
+    category_ratings = dict()
+    category_word_counts = dict()
+    for category in display_categories():
+        category_ratings[category.name] = 5
+        category_word_counts[category.name] = {'word1': 4,
+                                               'word2': 3,
+                                               'word3': 2
+                                               }
+    context = {'name': 'Pillow Talkin',
+               'creator': "Lil' Dicky (feat. BRAIN)",
+               'overall_rating': 7,
+               'category_ratings': category_ratings,
+               'category_word_counts': category_word_counts
+               }
+    return render(request, 'rating-result.html', context)
 
 
 @login_required(login_url='/login/')
@@ -196,14 +251,51 @@ def compare_results(request):
     :param request: The HTML request to handle.
     :return: Renders the compare page.
     """
-    return render(request, 'compare.html')
+    content_compare = request.session['content_compare']  # name of item to be compared, will be Content object in future
+    request.session['delete'] = True
+    current_category_ratings = dict()
+    current_category_word_counts = dict()
+    previous_category_ratings = dict()
+    previous_category_word_counts = dict()
+    for category in display_categories():
+        current_category_ratings[category.name] = 5
+        previous_category_ratings[category.name] = 8
+        current_category_word_counts[category.name] = {'word1': 4,
+                                                       'word2': 3,
+                                                       'word3': 2
+                                                       }
+        previous_category_word_counts[category.name] = {'word1': 7,
+                                                        'word2': 4,
+                                                        'word3': 6
+                                                        }
+    context = {'current_name': 'Baby Got Back',
+               'current_creator': 'Sir Mix a Lot',
+               'previous_name': content_compare,
+               'previous_creator': "Lil' Dicky (feat. BRAIN)",
+               'current_overall_rating': 7,
+               'previous_overall_rating': 5,
+               'current_category_ratings': current_category_ratings,
+               'current_category_word_counts': current_category_word_counts,
+               'previous_category_ratings': previous_category_ratings,
+               'previous_category_word_counts': previous_category_word_counts
+               }
+    return render(request, 'compare.html', context)
 
 
 @login_required(login_url='/login/')
-def word_counts(request):
+def word_counts(request, name):
     """
     Function to handle requests to the word counts page.
     :param request: The HTML request to handle.
     :return: Renders the word-counts page.
     """
-    return render(request, 'word-counts.html')
+    category_word_counts = dict()
+    for category in display_categories():
+        category_word_counts[category.name] = {'word1': 4,
+                                               'word2': 3,
+                                               'word3': 2
+                                               }
+    context = {'name': name,
+               'category_word_counts': category_word_counts
+               }
+    return render(request, 'word-counts.html', context)

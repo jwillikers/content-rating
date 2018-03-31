@@ -11,4 +11,4 @@ def display_words():
 
 
 def display_category_words(category):
-    return Word.words.category(category).all()
+    return Word.words.category(category)
