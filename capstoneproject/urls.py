@@ -23,8 +23,8 @@ import capstoneproject.views as views
 
 urlpatterns = [
     re_path(r'^admin/?', admin.site.urls),
-    re_path(r'^login/$', views.login, name='login'), # Page where the user logs in
-    re_path(r'^logout/$', auth_views.logout, {'next_page': 'login/'}, name='logout'),  # Page that logs the user out
+    re_path(r'^login/$', views.login, name='login'),  # Page where the user logs in
+    re_path(r'^logout/$', views.logout, name='logout'),  # Page that logs the user out
     re_path(r'^profile/?$', views.profile, name='profile'),  # Page containing info about the user's profile
     re_path(r'^search/?$', views.search, name='search'),  # Page where the user can search for content to rate from online sources
     re_path(r'^upload/?$', views.upload, name='upload'),  # Page where the user can upload a file
