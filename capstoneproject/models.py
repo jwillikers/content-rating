@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import Manager, Model, CharField, IntegerField, \
     BooleanField, ForeignKey, SmallIntegerField, CASCADE, QuerySet, \
-    ManyToManyField
+    ManyToManyField, Prefetch
 
 
 class Weight(Model):
@@ -29,6 +29,47 @@ class Category(Weight):
         default_manager_name = 'categories'
 
 
+class WordFeatureQuerySet(QuerySet):
+    def category(self, category):
+        """Filters word features based on the given category.
+
+        Args:
+            category: name, id, or Category representing the category.
+
+        Returns:
+            QuerySet: Word features belonging to the given category.
+        """
+        if isinstance(category, str):
+            features = self.filter(category__name=category)
+        elif isinstance(category, int):
+            features = self.filter(category=category)
+        elif isinstance(category, Category):
+            features = self.filter(category=category.id)
+        else:
+            raise TypeError('''{} is not a Category object, id, or name.
+                '''.format(category))
+        return features
+
+    def word(self, word):
+        """Filters word features based on the given word.
+
+        Args:
+            word: name, id, or Word representing the word.
+
+        Returns:
+            QuerySet: the word features for the given word.
+        """
+        if isinstance(word, str):
+            features = self.filter(word_set=word)
+        elif isinstance(word, int):
+            features = self.filter(word_set_id=word)
+        elif isinstance(word, Word):
+            features = self.filter(word_set_id=word.id)
+        else:
+            raise TypeError('''{} is not a valid type for word'''.format(word))
+        return features
+
+
 class WordFeature(Weight):
     STRENGTHS = [(True, 'strong'), (False, 'weak')]
     category = ForeignKey(Category, on_delete=CASCADE)
@@ -43,7 +84,7 @@ class WordFeature(Weight):
 
     def __repr__(self):
         return '{} {} {}'.format(
-            self.category.name,
+            self.category,
             self.strength,
             self.weight)
 
@@ -66,15 +107,20 @@ class WordQuerySet(QuerySet):
         Returns:
             QuerySet: Words belonging to the given category.
         """
-        if isinstance(category, str):
-            words = self.filter(word_features__category__name=category)
-        elif isinstance(category, int):
-            words = self.filter(word_features__category=category)
-        elif isinstance(category, Category):
-            words = self.filter(word_features__category=category.id)
-        else:
-            raise TypeError('''{} is not a Category object, id, or name.
-                '''.format(category))
+        try:
+            if isinstance(category, str):
+                    category = Category.categories.get(name=category.lower())
+            elif isinstance(category, int):
+                category = Category.categories.get(pk=category)
+            elif isinstance(category, Category):
+                pass
+            else:
+                raise TypeError('''{} is not a Category object, id, or name.
+                    '''.format(category))
+            category_features = WordFeature.word_features.filter(category=category)
+            words = Word.words.filter(word_features__category=category).prefetch_related(Prefetch('word_features', queryset=category_features, to_attr='word_features_list'))
+        except Category.DoesNotExist:
+            words = self.none()
         return words
 
     def strength(self, strength):
@@ -179,18 +225,15 @@ class WordQuerySet(QuerySet):
 
 
 class Word(Model):
-    word_features = ManyToManyField(WordFeature)
+    word_features = ManyToManyField(WordFeature, related_name='words')
     name = CharField(unique=True, max_length=30)
     words = WordQuerySet.as_manager()
 
     def __str__(self):
-        string = self.name + '\n'
-        for word_feature in self.word_features.all():
-            string += '\t' + word_feature.__str__() + '\n'
-        return string
+        return self.name
 
     def __repr__(self):
-        return self.name
+        return 'word: {} features: {}'.format(self.name, self.word_features)
 
     def _dict(self):
         return {self.name: self.get_word_features()}
