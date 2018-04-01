@@ -71,8 +71,8 @@
                                             <div style="text-align: center;">
                                                 <legend class="display-6">Change Username</legend>
                                             </div>
-                                                {% for field in profile_username_form %}
-                                                    <div class="form-group">
+                                            {% for field in profile_username_form %}
+                                                <div class="form-group">
                                                     {{ field.label_tag }} <br>
                                                     {{ field }}
                                                     {% if field.help_text %}
@@ -81,8 +81,8 @@
                                                     {% for error in field.errors %}
                                                         <p style="color: red">{{ error }}</p>
                                                     {% endfor %}
-                                                    </div>
-                                                {% endfor %}
+                                                </div>
+                                            {% endfor %}
                                             <div style="text-align: center;">
                                                 <button type="submit" value="username" name="submit_username"
                                                         class="btn btn-primary">Update credentials
@@ -99,7 +99,7 @@
                                                 <legend class="display-6">Change Password</legend>
                                             </div>
                                             {% for field in profile_password_form %}
-                                                    <div class="form-group">
+                                                <div class="form-group">
                                                     {{ field.label_tag }} <br>
                                                     {{ field }}
                                                     {% if field.help_text %}
@@ -108,7 +108,7 @@
                                                     {% for error in field.errors %}
                                                         <p style="color: red">{{ error }}</p>
                                                     {% endfor %}
-                                                    </div>
+                                                </div>
                                             {% endfor %}
                                             <div style="text-align: center;">
                                                 <button type="submit" value="password" name="submit_password"

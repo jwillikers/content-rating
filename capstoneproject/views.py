@@ -4,17 +4,15 @@ web application. Each HTML page will call a function which will provide the
 site's functionality.
 """
 from django.shortcuts import render, redirect, render_to_response
-from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from django.contrib.auth import views as auth_views
 
-from django.contrib.auth.models import User
-from django import forms
 from capstoneproject.display import display_categories, display_words
 from capstoneproject.forms import SignUpForm, LoginForm, ProfileUsernameForm, ProfilePasswordForm, ProfileUsernamePasswordForm
 from capstoneproject.content_rating.algorithm import content_rating
+from capstoneproject import form_handler
 
 
 def login(request):
@@ -23,48 +21,38 @@ def login(request):
     :param request: The HTML request containing the user's action.
     :return: Renders the proper HTML page depending on the user's actions.
     """
+    context = {'login_form': LoginForm(),
+               'signup_form': SignUpForm()}
+
     if request.method == 'POST':
         if request.POST.get('submit') == 'signup':
             form = SignUpForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                form.save()
-                # Obtain the username and password from the valid form.
-                username = form.cleaned_data.get('username')
-                raw_password = form.cleaned_data.get('password1')
-                # Authenticate and login the user.
-                user = authenticate(username=username, password=raw_password)
-                auth_login(request, user)
+                form_handler.attempt_signup(form, request)
                 # Go to the home screen if the user is now authenticated and
                 # logged in.
                 return render(request, 'homepage.html')
             else:  # Go back to the login in page with a new login form if the
-                return render(request, 'login.html',
-                              {'login_form': LoginForm(), 'signup_form': form})
+                context['signup_form'] = form
+                return render(request, 'login.html', context)
 
         if request.POST.get('submit') == 'login':
             form = LoginForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                login_username = form.cleaned_data.get('login_username')
-                raw_password = form.cleaned_data.get('login_password')
-                user = authenticate(
-                    username=login_username,
-                    password=raw_password)
+                user = form_handler.authenticate_user(form)
                 if user is not None:
-                    if user.is_active:
+                    if user.is_active:  # Check if user account is active.
                         auth_login(request, user)
                         return redirect('homepage')
-                    else:
-                        login_form = LoginForm()
-                        login_form.disabled_account_error()
-                        return render(request, 'login.html',
-                                      {'login_form': form,
-                                       'signup_form': SignUpForm()})
+                    else:  # User account is disabled.
+                        context['login_form'].disabled_account_error()
+                        return render(request, 'login.html', context)
                 else:
                     form.invalid_login_error()
             # If the form is not valid, return to the login page.
-            return render(request, 'login.html',
-                          {'login_form': form,
-                           'signup_form': SignUpForm()})
+            else:
+                context['login_form'] = form
+            return render(request, 'login.html', context)
     else:
         c = {}
         c.update((csrf(request)))
@@ -126,30 +114,32 @@ def profile(request):
         if request.POST.get('submit_username') == 'username':
             form = ProfileUsernameForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                if form.update_username(request):
+                if form.update_username(request):  # Update the username and return to profile page
                     return render(request, 'profile.html', context)
-                else:
+                else:  # Return to profile page and display errors
                     context['profile_username_form'] = form
                     return render(request, 'profile.html', context)
-            else:  # Go back to the login in page with a new login form if the
+            else:  # Go back to the profile page and display errors
                 context['profile_username_form'] = form
                 return render(request, 'profile.html', context)
 
-        if request.POST.get('submit_password') == 'password':
+        elif request.POST.get('submit_password') == 'password':
             form = ProfilePasswordForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                form.update_password(request)
+                form.update_password(request)  # Update the user's password and return to profile page
                 return render(request, 'profile.html', context)
-            else:  # Go back to the login in page with a new login form if the
+            else:  # Go back to the profile page and display errors
                 context['profile_password_form'] = form
                 return render(request, 'profile.html', context)
-    #else:
-    #    c = {}
-    #    c.update((csrf(request)))
-    #    c.update(({'login_form': LoginForm(), 'signup_form': SignUpForm()}))
-    #    return render_to_response('login.html', c)
 
-
+        elif request.POST.get('submit_both') == 'both':
+            form = ProfileUsernamePasswordForm(request.POST)
+            if form.is_valid():  # Check if the form is valid.
+                form.update_profile(request)  # Update the username and password and return to profile page
+                return render(request, 'profile.html', context)
+            else:  # Go back to the profile page and display errors
+                context['profile_username_password_form'] = form
+                return render(request, 'profile.html', context)
 
     return render(request, 'profile.html', context)
 

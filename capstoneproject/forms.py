@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, logout
 from django.utils.translation import gettext, gettext_lazy as _
 
 
@@ -91,6 +90,7 @@ class SignUpForm(forms.ModelForm):
         widget=forms.PasswordInput(
             attrs={'class': 'form-control',
                    'placeholder': 'Enter password'}))
+
     password2 = forms.CharField(
         label=("Password Confirmation"),
         max_length=20,
@@ -175,7 +175,7 @@ class ProfileUsernameForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize a signup form.
+        Initialize a change-username form.
         :param args:
         :param kwargs:
         """
@@ -183,22 +183,36 @@ class ProfileUsernameForm(forms.ModelForm):
 
     def _post_clean(self):
         """
-        Clean the sign up form.
+        Clean the change-username form.
         :return: None.
         """
         super()._post_clean()
 
     def save_username(self, request):
+        """
+        Updates the user's username to the new value.
+        :param request: The HTML request containing the user's current information.
+        :return: True if the username was updated.
+        """
         user = request.user
         user.username = self.cleaned_data['profile_username']
         user.save()
         return True
 
     def username_available(self):
+        """
+        Checks if the desired new username is available. Raises a Validation Error if the username is unavailable.
+        :return: None.
+        """
         if User.objects.filter(username=self.cleaned_data['profile_username']).exists():
             raise forms.ValidationError(self.error_messages['unavailable_username'], code='unavailable_username')
 
     def update_username(self, request):
+        """
+        This function facilitates changing the user's username.
+        :param request: The HTML request containing the user's current information.
+        :return: False if the username could not be changed, otherwise True.
+        """
         try:
             self.username_available()
         except forms.ValidationError as error:
@@ -237,7 +251,7 @@ class ProfilePasswordForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize a signup form.
+        Initialize a change-password form.
         :param args:
         :param kwargs:
         """
@@ -245,7 +259,7 @@ class ProfilePasswordForm(forms.ModelForm):
 
     def clean_profile_confirm_password(self):
         """
-        Clean the sign up form. Raise an error if the passwords do not match, otherwise return the password.
+        Clean the change-password form. Raise an error if the passwords do not match, otherwise return the password.
         :return: The password provided.
         """
         password1 = self.cleaned_data.get("profile_password")
@@ -258,7 +272,7 @@ class ProfilePasswordForm(forms.ModelForm):
 
     def _post_clean(self):
         """
-        Clean the sign up form.
+        Clean the change-password form.
         :return: None.
         """
         super()._post_clean()
@@ -272,6 +286,11 @@ class ProfilePasswordForm(forms.ModelForm):
                 self.add_error('profile_confirm_password', error)
 
     def update_password(self, request):
+        """
+        Updates the user's password.
+        :param request: The HTML request containing the user's current information.
+        :return: The updated user.
+        """
         user = request.user
         user.set_password(self.cleaned_data['profile_confirm_password'])
         user.save()
@@ -283,6 +302,7 @@ class ProfileUsernamePasswordForm(forms.ModelForm):
         A form that changes the user's username and password.
     """
     error_messages = {
+        'unavailable_username': _("The username is unavailable."),
         'password_mismatch': _("The two password fields didn't match.")}
 
     profile_username_both = forms.CharField(
@@ -317,7 +337,7 @@ class ProfileUsernamePasswordForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize a signup form.
+        Initialize a change-username-and-password form.
         :param args:
         :param kwargs:
         """
@@ -325,7 +345,8 @@ class ProfileUsernamePasswordForm(forms.ModelForm):
 
     def clean_profile_confirm_password_both(self):
         """
-        Clean the sign up form. Raise an error if the passwords do not match, otherwise return the password.
+        Clean the change-username-and-password form. Raise an error if the passwords do not match,
+        otherwise return the password.
         :return: The password provided.
         """
         password1 = self.cleaned_data.get("profile_password_both")
@@ -338,7 +359,7 @@ class ProfileUsernamePasswordForm(forms.ModelForm):
 
     def _post_clean(self):
         """
-        Clean the sign up form.
+        Clean the change-username-and-password form by validating the password is sufficiently difficult.
         :return: None.
         """
         super()._post_clean()
@@ -351,15 +372,37 @@ class ProfileUsernamePasswordForm(forms.ModelForm):
             except forms.ValidationError as error:
                 self.add_error('profile_confirm_password_both', error)
 
-    def save(self, commit=True):
+    def save_profile(self, request):
         """
-        Saves a new account if the information is valid.
-        :param commit: Saves the user if True.
-        :return: The user.
+        This function saves the user's new username and new password.
+        :param request: The HTML request containing the user's information.
+        :return: True if the information was updated successfully.
         """
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["profile_password_both"])
-        if commit:
-            user.save()
-        return user
+        user = request.user
+        user.username = self.cleaned_data['profile_username_both']
+        user.set_password(self.cleaned_data['profile_confirm_password_both'])
+        user.save()
+        return True
+
+    def username_available(self):
+        """
+        This function checks if a username is available or already being used. If the username is not available, a
+        Validation Error will be raised.
+        :return: None.
+        """
+        if User.objects.filter(username=self.cleaned_data['profile_username_both']).exists():
+            raise forms.ValidationError(self.error_messages['unavailable_username'], code='unavailable_username')
+
+    def update_profile(self, request):
+        """
+        This function facilitates updating the username and password.
+        :param request: The HTML requets containing the user's existing information.
+        :return: False if the profile was not updates, otherwise True.
+        """
+        try:
+            self.username_available()
+        except forms.ValidationError as error:
+            self.add_error('profile_username_both', error)
+            return False
+        return self.save_profile(request)
 
