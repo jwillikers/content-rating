@@ -13,16 +13,21 @@ class TestWordQuerySet(TestCase):
             category=cls.cat1, strength=True, weight=1)
         cls.feature2 = WordFeature.word_features.create(
             category=cls.cat2, strength=False, weight=3)
+        cls.feature4 = WordFeature.word_features.create(
+            category=cls.cat1, strength=True, weight=2)
         cls.word1 = Word.words.create(name='word1')
         cls.word1.word_features.add(cls.feature1.id)
         cls.word2 = Word.words.create(name='word2')
         cls.word2.word_features.add(cls.feature2.id)
         cls.word3 = Word.words.create(name='word3')
+        cls.word4 = Word.words.create(name='word4')
         cls.word3.word_features.add(cls.feature1.id)
         cls.word3.word_features.add(cls.feature2.id)
+        cls.word4.word_features.add(cls.feature4.id)
         cls.word1.save()
         cls.word2.save()
         cls.word3.save()
+        cls.word4.save()
 
     @classmethod
     def tearDownClass(cls):
@@ -61,6 +66,27 @@ class TestWordQuerySet(TestCase):
         with self.assertRaises(TypeError):
             Word.words.category(TestWordQuerySet.word1)
 
+    def test_category_prefetch_size(self):
+        word3 = Word.words.category(TestWordQuerySet.cat1).get(name=TestWordQuerySet.word3.name)
+        self.assertEqual(len(word3.word_features_list), 1)
+
+    def test_category_prefetch(self):
+        word3 = Word.words.category(TestWordQuerySet.cat1).get(name=TestWordQuerySet.word3.name)
+        self.assertIn(TestWordQuerySet.feature1, word3.word_features_list)
+        self.assertNotIn(TestWordQuerySet.feature2, word3.word_features_list)
+
+    def test_category_chain(self):
+        words = list(Word.words.category(TestWordQuerySet.cat1).category(TestWordQuerySet.cat2).all())
+        self.assertIn(TestWordQuerySet.word3, words)
+        self.assertNotIn(TestWordQuerySet.word1, words)
+        self.assertNotIn(TestWordQuerySet.word2, words)
+
+    def test_category_chain_prefetch(self):
+        features = list(Word.words.category(TestWordQuerySet.cat1).category(TestWordQuerySet.cat2).get_word(TestWordQuerySet.word3).word_features_list)
+        self.assertNotIn(TestWordQuerySet.feature1, features)
+        self.assertIn(TestWordQuerySet.feature2, features)
+        self.assertNotIn(TestWordQuerySet.feature4, features)
+
     def test_word_name(self):
         word1_name = TestWordQuerySet.word1.name
         word_words = Word.words.word(word1_name).all()
@@ -84,7 +110,7 @@ class TestWordQuerySet(TestCase):
 
     def test_word_bad_name(self):
         bad_word = 'not a real word'
-        words = Word.words.category(bad_word).all()
+        words = Word.words.word(bad_word).all()
         self.assertFalse(words)
 
     def test_word_type_error(self):
@@ -92,6 +118,23 @@ class TestWordQuerySet(TestCase):
             Word.words.word(1.1)
         with self.assertRaises(TypeError):
             Word.words.word(TestWordQuerySet.cat1)
+
+    def test_word_chain_not_words(self):
+        not_words = Word.words.word('ass').word('fuck')
+        self.assertFalse(not_words)
+
+    def test_word_chain_words(self):
+        words = Word.words.word(TestWordQuerySet.word1).word(TestWordQuerySet.word2)
+        self.assertFalse(words)
+
+    def test_word_category_chain(self):
+        words = Word.words.category(TestWordQuerySet.cat1).word(TestWordQuerySet.word1)
+        self.assertEqual(TestWordQuerySet.word1, words.first())
+
+    def test_word_category_chain_prefetch(self):
+        words = Word.words.category(TestWordQuerySet.cat1).word(TestWordQuerySet.word3)
+        self.assertIn(TestWordQuerySet.feature1, list(words.first().word_features_list))
+        self.assertNotIn(TestWordQuerySet.feature2, list(words.first().word_features_list))
 
     def test_strength_string(self):
         strong = Word.words.strength('strong').all()
@@ -119,6 +162,27 @@ class TestWordQuerySet(TestCase):
         with self.assertRaises(TypeError):
             Word.words.strength(TestWordQuerySet.word1)
 
+    def test_strength_prefetch_size(self):
+        word3 = Word.words.strength(TestWordQuerySet.feature1.strength).get(name=TestWordQuerySet.word3.name)
+        self.assertEqual(len(word3.word_features_list), 1)
+
+    def test_strength_prefetch(self):
+        word3 = Word.words.strength(TestWordQuerySet.feature1.strength).get(name=TestWordQuerySet.word3.name)
+        self.assertIn(TestWordQuerySet.feature1, word3.word_features_list)
+        self.assertNotIn(TestWordQuerySet.feature2, word3.word_features_list)
+
+    def test_strength_chain(self):
+        words = list(Word.words.strength(TestWordQuerySet.feature1.strength).strength(TestWordQuerySet.feature2.strength).all())
+        self.assertIn(TestWordQuerySet.word3, words)
+        self.assertNotIn(TestWordQuerySet.word1, words)
+        self.assertNotIn(TestWordQuerySet.word2, words)
+        self.assertNotIn(TestWordQuerySet.word4, words)
+
+    def test_category_strength_prefetch_chain(self):
+        word3 = Word.words.strength(TestWordQuerySet.feature1.strength).category(TestWordQuerySet.cat1.name).get(name=TestWordQuerySet.word3.name)
+        self.assertIn(TestWordQuerySet.feature1, word3.word_features_list)
+        self.assertNotIn(TestWordQuerySet.feature2, word3.word_features_list)
+
     def test_strength_value_error(self):
         with self.assertRaises(ValueError):
             Word.words.strength('over 9000')
@@ -142,8 +206,8 @@ class TestWordQuerySet(TestCase):
         self.assertIn(TestWordQuerySet.word3, weight_3)
 
     def test_weight_empty(self):
-        weight_2 = Word.words.weight(2).all()
-        self.assertFalse(weight_2)
+        weight_0 = Word.words.weight(0).all()
+        self.assertFalse(weight_0)
 
     def test_weight_type_error(self):
         with self.assertRaises(TypeError):
@@ -160,6 +224,20 @@ class TestWordQuerySet(TestCase):
             Word.words.weight(-1)
         with self.assertRaises(ValueError):
             Word.words.weight(4)
+
+    def test_weight_prefetch_size(self):
+        word3 = Word.words.weight(TestWordQuerySet.feature1.weight).get(name=TestWordQuerySet.word3.name)
+        self.assertEqual(len(word3.word_features_list), 1)
+
+    def test_weight_prefetch(self):
+        word3 = Word.words.weight(TestWordQuerySet.feature1.weight).get(name=TestWordQuerySet.word3.name)
+        self.assertIn(TestWordQuerySet.feature1, word3.word_features_list)
+        self.assertNotIn(TestWordQuerySet.feature2, word3.word_features_list)
+
+    def test_feature_prefetch_chain(self):
+        word3 = Word.words.weight(TestWordQuerySet.feature1.weight).strength(TestWordQuerySet.feature1.strength).category(TestWordQuerySet.cat1.name).get(name=TestWordQuerySet.word3.name)
+        self.assertIn(TestWordQuerySet.feature1, word3.word_features_list)
+        self.assertNotIn(TestWordQuerySet.feature2, word3.word_features_list)
 
     def test_get_word_name(self):
         word1_name = TestWordQuerySet.word1.name
