@@ -32,7 +32,7 @@ def login(request):
         if request.POST.get('submit') == 'signup':
             form = SignUpForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                form_handler.attempt_signup(form, request)
+                form_handler.signup(form, request)
                 # Go to the home screen if the user is now authenticated and
                 # logged in.
                 return render(request, 'homepage.html')
@@ -54,8 +54,7 @@ def login(request):
                 else:
                     form.invalid_login_error()
             # If the form is not valid, return to the login page.
-            else:
-                context['login_form'] = form
+            context['login_form'] = form
             return render(request, 'login.html', context)
     else:
         c = {}

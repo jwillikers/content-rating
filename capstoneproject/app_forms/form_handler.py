@@ -6,9 +6,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 
 
-def attempt_signup(form, request):
+def signup(form, request):
     """
-    This function attempts to save a new user account, and then authenticate the user and log them in.
+    This function saves a new user account and then authenticate the user and log them in.
     :param form: The form the user filled in to sign up.
     :param request: The HTML request containing the request to sign up.
     :return: None
