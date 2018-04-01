@@ -31,9 +31,9 @@ urlpatterns = [
     re_path(r'^copy/?$', views.copy_in, name='copy'),  # Page where the user can copy in text
     re_path(r'^algorithm/?$', views.about_algorithm, name='algorithm'),  # Page to describe the content rating algorithm
     re_path(r'^about/?$', views.about_page, name='about'),  # Page to describe the website
-    re_path(r'^words/?$', views.words, name='words'),  # Page to show offensive words for the user to update
+    re_path(r'^words/(?P<category>[a-z]+)/?$', views.words, name='words'),  # Page to show offensive words for the user to update
     re_path(r'^results/?$', views.rating_results, name='results'),  # Page to show the ratings results of one source
     re_path(r'^compare/?$', views.compare_results, name='compare'),  # Page to compare rating results from two sources
-    re_path(r'^word-counts/?$', views.word_counts, name='word-counts'),  # Page to show counts of flagged words after rating
+    re_path(r'^word-counts/(?P<name>[A-Za-z\s]+)?$', views.word_counts, name='word-counts'),  # Page to show counts of flagged words after rating
     re_path(r'', views.homepage, name='homepage'),  # Main page
 ]

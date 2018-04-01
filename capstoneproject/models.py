@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import Manager, Model, CharField, IntegerField, \
     BooleanField, ForeignKey, SmallIntegerField, CASCADE, QuerySet, \
-    ManyToManyField
+    ManyToManyField, Prefetch
 
 
 class Weight(Model):
@@ -29,6 +29,47 @@ class Category(Weight):
         default_manager_name = 'categories'
 
 
+class WordFeatureQuerySet(QuerySet):
+    def category(self, category):
+        """Filters word features based on the given category.
+
+        Args:
+            category: name, id, or Category representing the category.
+
+        Returns:
+            QuerySet: Word features belonging to the given category.
+        """
+        if isinstance(category, str):
+            features = self.filter(category__name=category)
+        elif isinstance(category, int):
+            features = self.filter(category=category)
+        elif isinstance(category, Category):
+            features = self.filter(category=category.id)
+        else:
+            raise TypeError('''{} is not a Category object, id, or name.
+                '''.format(category))
+        return features
+
+    def word(self, word):
+        """Filters word features based on the given word.
+
+        Args:
+            word: name, id, or Word representing the word.
+
+        Returns:
+            QuerySet: the word features for the given word.
+        """
+        if isinstance(word, str):
+            features = self.filter(word_set=word)
+        elif isinstance(word, int):
+            features = self.filter(word_set_id=word)
+        elif isinstance(word, Word):
+            features = self.filter(word_set_id=word.id)
+        else:
+            raise TypeError('''{} is not a valid type for word'''.format(word))
+        return features
+
+
 class WordFeature(Weight):
     STRENGTHS = [(True, 'strong'), (False, 'weak')]
     category = ForeignKey(Category, on_delete=CASCADE)
@@ -43,7 +84,7 @@ class WordFeature(Weight):
 
     def __repr__(self):
         return '{} {} {}'.format(
-            self.category.name,
+            self.category,
             self.strength,
             self.weight)
 
@@ -57,6 +98,8 @@ class WordFeature(Weight):
 
 
 class WordQuerySet(QuerySet):
+    feature_queryset = None
+
     def category(self, category):
         """Filters words based on given category.
 
@@ -67,14 +110,28 @@ class WordQuerySet(QuerySet):
             QuerySet: Words belonging to the given category.
         """
         if isinstance(category, str):
-            words = self.filter(word_features__category__name=category)
+            try:
+                category = Category.categories.get(name=category.lower())
+            except Category.DoesNotExist:
+                return self.none()
         elif isinstance(category, int):
-            words = self.filter(word_features__category=category)
+            try:
+                category = Category.categories.get(pk=category)
+            except Category.DoesNotExist:
+                return self.none()
         elif isinstance(category, Category):
-            words = self.filter(word_features__category=category.id)
+            pass
         else:
             raise TypeError('''{} is not a Category object, id, or name.
                 '''.format(category))
+
+        if not self.feature_queryset:
+            self.feature_queryset = WordFeature.word_features.all()
+        self.feature_queryset = self.feature_queryset.select_related('category').filter(category=category)
+
+        feature_prefetch = Prefetch('word_features', queryset=self.feature_queryset, to_attr='word_features_list')
+
+        words = self.prefetch_related(None).filter(word_features__category=category).prefetch_related(feature_prefetch)
         return words
 
     def strength(self, strength):
@@ -87,14 +144,13 @@ class WordQuerySet(QuerySet):
             QuerySet: Words containing the given strength.
         """
         if isinstance(strength, bool):
-            word_features = self.filter(word_features__strength=strength)
+            pass
         elif isinstance(strength, str):
             strength = strength.lower()
             found = False
             for val, model_strength in WordFeature.STRENGTHS:
                 if strength == model_strength:
-                    word_features = self.filter(
-                        word_features__strength=val)
+                    strength = val
                     found = True
             if not found:
                 raise ValueError('{} is not a valid strength choice'.format(
@@ -102,7 +158,14 @@ class WordQuerySet(QuerySet):
         else:
             raise TypeError('''{} is not a valid type for strength
                 '''.format(strength))
-        return word_features
+        if self.feature_queryset is None:
+            self.feature_queryset = WordFeature.word_features.all()
+        self.feature_queryset = self.feature_queryset.filter(strength=strength)
+
+        feature_prefetch = Prefetch('word_features', queryset=self.feature_queryset, to_attr='word_features_list')
+
+        words = self.prefetch_related(None).filter(word_features__strength=strength).prefetch_related(feature_prefetch)
+        return words
 
     def weight(self, weight):
         """Filters words based on the given weight.
@@ -117,7 +180,6 @@ class WordQuerySet(QuerySet):
             found = False
             for val, _ in WordFeature.WEIGHTS:
                 if weight == val:
-                    word_features = self.filter(word_features__weight=weight)
                     found = True
                     break
             if not found:
@@ -128,8 +190,7 @@ class WordQuerySet(QuerySet):
             found = False
             for val, model_weight in WordFeature.WEIGHTS:
                 if weight == model_weight:
-                    word_features = self.filter(
-                        word_features__weight=val)
+                    weight = val
                     found = True
             if not found:
                 raise ValueError('''{} is not one of the 4 valid weight choices:
@@ -137,7 +198,14 @@ class WordQuerySet(QuerySet):
         else:
             raise TypeError('''{} is not a valid type for weight
                 '''.format(weight))
-        return word_features
+        if self.feature_queryset is None:
+            self.feature_queryset = WordFeature.word_features.all()
+        self.feature_queryset = self.feature_queryset.filter(weight=weight)
+
+        feature_prefetch = Prefetch('word_features', queryset=self.feature_queryset, to_attr='word_features_list')
+
+        words = self.prefetch_related(None).filter(word_features__weight=weight).prefetch_related(feature_prefetch)
+        return words
 
     def word(self, word):
         """Filters words based on given word.
@@ -179,18 +247,15 @@ class WordQuerySet(QuerySet):
 
 
 class Word(Model):
-    word_features = ManyToManyField(WordFeature)
+    word_features = ManyToManyField(WordFeature, related_name='words')
     name = CharField(unique=True, max_length=30)
     words = WordQuerySet.as_manager()
 
     def __str__(self):
-        string = self.name + '\n'
-        for word_feature in self.word_features.all():
-            string += '\t' + word_feature.__str__() + '\n'
-        return string
+        return self.name
 
     def __repr__(self):
-        return self.name
+        return 'word: {} features: {}'.format(self.name, self.word_features)
 
     def _dict(self):
         return {self.name: self.get_word_features()}

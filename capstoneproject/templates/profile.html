@@ -1,4 +1,5 @@
 {% extends "navbar-profile.html" %}
+{% load access_dict %}
 
 {% block optional_styling %}
     <style>
@@ -194,27 +195,27 @@
                                 <div style="text-align: center;"><h1 class="display-5">My Rating Settings</h1></div>
                                 {% for category in categories %}
                                     <hr class="my-4">
-                                    <p class="lead">{{ category.category|title }}</p>
+                                    <a class="lead" href="{% url 'words' category=category.name %}">{{ category.name|title }}</a>
                                     <div class="slidecontainer">
-                                        <input type="range" id="{{ category.category }}" name="{{ category.category }}"
-                                               min="0"
-                                               max="3" value="{{ category.weight }}" class="slider"
-                                               oninput="{{ category.category }}_amount.value={{ category.category }}.value">
-                                        <output name="{{ category.category }}_amount"
-                                                id="{{ category.category }}_amount"
-                                                for="{{ category.category }}">{{ category.weight }}</output>
+                                        <input type="range" id="{{ category.name }}" name="{{ category.name }}" min="0" max="{{ weight_levels }}" value="{{ category.weight }}" class="slider" oninput="update_output('{{ category.name }}')">
+                                        <output name="{{ category.name }}_amount" id="{{ category.name }}_amount" for="{{ category.name }}">{{ weight_dict|get_item:category.weight }}</output>
                                     </div>
-                                    &nbsp;{% endfor %}
-                                <div style="text-align: center;">
-                                    <button type="submit" class="btn btn-primary">Update settings</button>
-                                </div>
-                            </fieldset>
-                        </form>
-                        &nbsp;
-                        <a href="{% url 'words' %}" class="btn btn-lg btn-block btn-info">Customize Word Weights</a>
-                    </div>
+                                &nbsp;{% endfor %}
+                            <div style="text-align: center;"><button type="submit" class="btn btn-primary">Update category weights</button></div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+	</div>
+</div>
+<script>
+    function update_output(category) {
+        var text = {};
+        {% for weight in weight_dict %}
+            text[{{ weight }}] = "{{ weight_dict|get_item:weight }}";
+        {% endfor %}
+        document.getElementById(category + '_amount').value = text[document.getElementById(category).value];
+    }
+</script>
 {% endblock %}
