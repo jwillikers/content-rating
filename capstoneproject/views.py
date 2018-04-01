@@ -10,11 +10,14 @@ from django.template.context_processors import csrf
 from django.contrib.auth import views as auth_views
 
 from capstoneproject.display import display_categories, display_words, display_category_words
-from capstoneproject.forms import SignUpForm, LoginForm, ProfileUsernameForm, ProfilePasswordForm, ProfileUsernamePasswordForm
 from capstoneproject.content_rating.algorithm import content_rating
 from capstoneproject.models import Weight
-from capstoneproject import form_handler
-
+from capstoneproject.app_forms import form_handler
+from capstoneproject.app_forms.forms.login_form import LoginForm
+from capstoneproject.app_forms.forms.signup_form import SignUpForm
+from capstoneproject.app_forms.forms.change_password_form import ChangePasswordForm
+from capstoneproject.app_forms.forms.change_username_form import ChangeUsernameForm
+from capstoneproject.app_forms.forms.change_username_password_form import ChangeUsernamePasswordForm
 
 def login(request):
     """
@@ -120,39 +123,39 @@ def profile(request):
                'recently_rated': recently_rated,
                'weight_levels': len(weight_dict) - 1,
                'weight_dict': weight_dict,
-               'profile_username_form': ProfileUsernameForm(),
-               'profile_password_form': ProfilePasswordForm(),
-               'profile_username_password_form': ProfileUsernamePasswordForm()}
+               'change_username_form': ChangeUsernameForm(),
+               'change_password_form': ChangePasswordForm(),
+               'change_username_password_form': ChangeUsernamePasswordForm()}
 
     if request.method == 'POST':
         if request.POST.get('submit_username') == 'username':
-            form = ProfileUsernameForm(request.POST)
+            form = ChangeUsernameForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 if form.update_username(request):  # Update the username and return to profile page
                     return render(request, 'profile.html', context)
                 else:  # Return to profile page and display errors
-                    context['profile_username_form'] = form
+                    context['change_username_form'] = form
                     return render(request, 'profile.html', context)
             else:  # Go back to the profile page and display errors
-                context['profile_username_form'] = form
+                context['change_username_form'] = form
                 return render(request, 'profile.html', context)
 
         elif request.POST.get('submit_password') == 'password':
-            form = ProfilePasswordForm(request.POST)
+            form = ChangePasswordForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 form.update_password(request)  # Update the user's password and return to profile page
                 return render(request, 'profile.html', context)
             else:  # Go back to the profile page and display errors
-                context['profile_password_form'] = form
+                context['change_password_form'] = form
                 return render(request, 'profile.html', context)
 
         elif request.POST.get('submit_both') == 'both':
-            form = ProfileUsernamePasswordForm(request.POST)
+            form = ChangeUsernamePasswordForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 form.update_profile(request)  # Update the username and password and return to profile page
                 return render(request, 'profile.html', context)
             else:  # Go back to the profile page and display errors
-                context['profile_username_password_form'] = form
+                context['change_username_password_form'] = form
                 return render(request, 'profile.html', context)
 
     return render(request, 'profile.html', context)
