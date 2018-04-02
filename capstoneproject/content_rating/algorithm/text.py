@@ -1,5 +1,9 @@
+"""
+This file contains the Text class to contain data on the classification and rating of a given text.
+"""
 from capstoneproject.models import Word
 from collections import defaultdict
+
 
 class Text:
     """
@@ -89,6 +93,10 @@ class Text:
             total_text_feature_file.write(str(text_features))
 
     def get_text_features(self):
+        """
+        This function provides the offensive features of the text.
+        :return: None
+        """
         print("To do")
 
 
@@ -101,7 +109,7 @@ class Text:
 
     def generate_rating(self):
         """
-        This function
-        :return:
+        This function generates an offensiveness rating using the text's classification data.
+        :return: None.
         """
         print("To do")

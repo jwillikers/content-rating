@@ -1,3 +1,6 @@
+"""
+This file contains the Sentence class which contains data on individual sentences within a given text.
+"""
 import nltk
 from capstoneproject.models import Category, Word
 from collections import defaultdict

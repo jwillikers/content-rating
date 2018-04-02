@@ -1,3 +1,7 @@
+"""
+This file contains classes and function to implement the content offensiveness classification and content rating
+algorithm.
+"""
 import nltk
 import string
 
@@ -77,6 +81,11 @@ class ContentRating:
             return sentences
 
     def algorithm(self, text_string):
+        """
+        Implement the offensive content classification and content rating algorithm.
+        :param text_string: A string containing the text to classify and rate.
+        :return: a Text object, containing the results.
+        """
         print("In algorithm")
         input_path = 'capstoneproject/testing_resources/Baby_Got_Back'
         with open(input_path, 'r') as input_file:

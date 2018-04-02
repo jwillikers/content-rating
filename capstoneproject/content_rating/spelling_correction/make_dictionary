@@ -1,3 +1,8 @@
+"""
+This file contains functions related to making a dictionary of words and their frequencies.
+This dictionary is used by the spelling correction algorithm to find the most likely spelling correction.
+"""
+
 import json, gzip
 
 
@@ -5,7 +10,6 @@ def make_dictionary():
     """
     This method makes a dictionary by reading a dictionary file containing words and frequencies and storing the
     data into a dictionary. The dictionary is then placed within a JSON file. The JSON file is then zipped.
-
     :return: None
     """
     # Populate the original dictionary

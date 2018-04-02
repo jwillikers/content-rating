@@ -32,13 +32,10 @@ words = Word.words
 
 class Command(BaseCommand):
     def csv_reader(self, path: str):
-        """Open the csv file at the given path.
-
-        Args:
-            path (str): path to csv file.
-
-        Returns:
-            csv.DictReader: the csv file as dictionary entries.
+        """
+        Open the csv file at the given path.
+        :param path: A string of the path to the csv file.
+        :return: a csv.DictReader, a csv file as dictionary entries.
         """
         f = open(path, 'r')
         self.stdout.write('opened ' + path.rpartition('/')[2])
@@ -49,13 +46,10 @@ class Command(BaseCommand):
         return reader
 
     def import_category(self, path: str):
-        """Import category entries into the Category table.
-
-        Args:
-            path (str): path to the category csv file.
-
-        Returns:
-            None: updates the category table.
+        """
+        Import category entries into the Category table.
+        :param path: a string, the path to the category csv file.
+        :return: None
         """
         reader = self.csv_reader(path)
 
@@ -76,13 +70,10 @@ class Command(BaseCommand):
         self.stdout.write('import of csv into category table complete\n')
 
     def import_word(self, path: str):
-        """Import the word entries into the Word table.
-
-        Args:
-            path (str): path to the csv of word entries.
-
-        Returns:
-            None: updates the Word table.
+        """
+        Import the word entries into the Word table.
+        :param path: a string, the path to the csv of word entries.
+        :return: None
         """
         reader = self.csv_reader(path)
 
@@ -131,15 +122,12 @@ class Command(BaseCommand):
         self.stdout.write('import of csv into words table complete\n')
 
     def import_tables(self, root_folder='', category_path='', word_path=''):
-        """import the tables from the csv files into the dictionary tables.
-
-        Args:
-            root_folder (str): path to the folder where the csv's are located.
-            category_path (str): path to the category csv file.
-            word_path (str): path to the word csv file.
-
-        Returns:
-            None: updates the tables in the database.
+        """
+        Import the tables from the csv files into the dictionary tables.
+        :param root_folder: a string, the path to the folder where the csv's are located.
+        :param category_path: a string, the path to the category csv file.
+        :param word_path: a string, the path to the word csv file.
+        :return: None
         """
         if category_path != '':
             self.import_category(root_folder + category_path)
@@ -148,6 +136,12 @@ class Command(BaseCommand):
         self.stdout.write('\nall imports complete\n')
 
     def handle(self, *args, **options):
+        """
+        Imports tables from the root folder, category path, and word path.
+        :param args:
+        :param options:
+        :return: None.
+        """
         self.import_tables(root_folder='/Users/jwilliams/Downloads/',
                            category_path='Category.csv',
                            word_path='Word.csv')
