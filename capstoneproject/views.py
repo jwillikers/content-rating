@@ -18,6 +18,10 @@ from capstoneproject.app_forms.forms.signup_form import SignUpForm
 from capstoneproject.app_forms.forms.change_password_form import ChangePasswordForm
 from capstoneproject.app_forms.forms.change_username_form import ChangeUsernameForm
 from capstoneproject.app_forms.forms.change_username_password_form import ChangeUsernamePasswordForm
+from capstoneproject.app_forms.forms.song_search_form import SongSearchForm
+from capstoneproject.app_forms.forms.tv_show_search_form import TVShowSearchForm
+from capstoneproject.app_forms.forms.movie_search_form import MovieSearchForm
+from capstoneproject.app_forms.forms.webpage_search_form import WebsiteSearchForm
 
 def login(request):
     """
@@ -168,12 +172,35 @@ def search(request):
     :param request: The HTML request to handle.
     :return: Renders the search page.
     """
+    context = {'song_search_form': SongSearchForm(),
+               'tv_search_form': TVShowSearchForm(),
+               'movie_search_form': MovieSearchForm(),
+               'website_search_form': WebsiteSearchForm()}
+
     if request.session.get('delete'):
         del request.session['delete']
         del request.session['content_compare']
+
+    if request.method == 'POST':
+        if request.POST.get('submit') == 'song':
+            form = SongSearchForm(request.POST)
+            if form.is_valid():  # Check if the form is valid.
+                print()
+        elif request.POST.get('submit') == 'tv_show':
+            form = TVShowSearchForm(request.POST)
+            if form.is_valid():
+                print()
+        elif request.POST.get('submit') == 'movie':
+            form = MovieSearchForm(request.POST)
+            if form.is_valid():
+                print()
+        elif request.POST.get('submit') == 'website':
+            form = WebsiteSearchForm(request.POST)
+            if form.is_valid():
+                print()
     # cr = content_rating.ContentRating()
     # cr.algorithm('')
-    return render(request, 'search.html')
+    return render(request, 'search.html', context)
 
 
 @login_required(login_url='/login/')
@@ -199,6 +226,11 @@ def copy_in(request):
     if request.session.get('delete'):
         del request.session['delete']
         del request.session['content_compare']
+    if request.method == 'POST':
+        if request.POST.get('submit') == 'copy-in':
+            text = request.POST.get('textArea')
+            if text ==
+            # Rate text
     return render(request, 'copy-in.html')
 
 
@@ -271,6 +303,10 @@ def rating_results(request):
                'category_ratings': category_ratings,
                'category_word_counts': category_word_counts
                }
+
+
+
+
     return render(request, 'rating-result.html', context)
 
 

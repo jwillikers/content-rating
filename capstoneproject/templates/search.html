@@ -1,11 +1,11 @@
 {% extends "navbar-contentrater.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="jumbotron">
-        <div style="text-align: center;"><h1 class="display-5">Find Content Online</h1>
-        <p class="lead">Search for song, TV Show, Movie, or Webpage.</p></div>
-        <hr class="my-4">
+    <div class="container">
+        <div class="jumbotron">
+            <div style="text-align: center;"><h1 class="display-5">Find Content Online</h1>
+                <p class="lead">Search for song, TV Show, Movie, or Webpage.</p></div>
+            <hr class="my-4">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="nav-link active show" data-toggle="tab" href="#song">Song</a>
@@ -19,56 +19,112 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#webpage">Webpage</a>
                 </li>
-             </ul>
-             &nbsp;
-        <form action="{% url 'results' %}">
-            <fieldset>
-                <div id="displayForm" class="tab-content">
-                    <div class="tab-pane fade active show" id="song">
-                        <div style="text-align: center;"><legend class="display-6">Search for a song</legend></div>
-                            <div class="form-group">
-                                <label for="songName">Name</label>
-                                <input type="text" class="form-control" id="songName" placeholder="Enter song name">
+            </ul>
+            &nbsp;
+            <div id="displayForm" class="tab-content">
+                <div class="tab-pane fade active show" id="song">
+                    <form action="{% url 'search' %}" method="POST">
+                        <fieldset>
+                            <div style="text-align: center;">
+                                <legend class="display-6">Search for a Song</legend>
                             </div>
-                            <div class="form-group">
-                                <label for="songArtist">Artist</label>
-                                <input type="text" class="form-control" id="songArtist" placeholder="Enter artist">
+                            {% csrf_token %}
+                            {% for field in song_search_form %}
+                                <div class="form-group">
+                                    {{ field.label_tag }} <br>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small style="color: grey">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <div style="text-align: center;">
+                                <button type="submit" class="btn btn-primary" name="submit" value="song">RATE!</button>
                             </div>
-                    </div>
-                    <div class="tab-pane fade" id="tv">
-                        <div style="text-align: center;"><legend class="display-6">Search for a TV show</legend></div>
-                            <div class="form-group">
-                                <label for="showTitle">Show Title</label>
-                                <input type="text" class="form-control" id="showTitle" placeholder="Enter show title">
-                            </div>
-                            <div class="form-group">
-                                <label for="episodeTitle">Episode Title</label>
-                                <input type="text" class="form-control" id="episodeTitle" placeholder="Enter episode title">
-                            </div>
-                    </div>
-                    <div class="tab-pane fade" id="movie">
-                        <div style="text-align: center;"><legend class="display-6">Search for a movie</legend></div>
-                            <div class="form-group">
-                                <label for="movieTitle">Movie Title</label>
-                                <input type="text" class="form-control" id="movieTitle" placeholder="Enter movie title">
-                            </div>
-                    </div>
-                    <div class="tab-pane fade" id="webpage">
-                        <div style="text-align: center;"><legend class="display-6">Search for a webpage or specific post</legend></div>
-                            <div class="form-group">
-                                <label for="websiteName">Website Name</label>
-                                <input type="text" class="form-control" id="websiteName" placeholder="Enter website name">
-                            </div>
-                            <div style="text-align: center;"><p class="display-5">OR</p></div>
-                            <div class="form-group">
-                                <label for="url">URL</label>
-                                <input type="text" class="form-control" id="url" placeholder="Enter url">
-                            </div>
-                    </div>
+                        </fieldset>
+                    </form>
                 </div>
-            </fieldset>
-            <div style="text-align: center;"><button type="submit" class="btn btn-primary">RATE!</button></div>
-        </form>
+                <div class="tab-pane fade" id="tv">
+                    <form action="{% url 'search' %}" method="POST">
+                        <fieldset>
+                            <div style="text-align: center;">
+                                <legend class="display-6">Search for a TV Show</legend>
+                            </div>
+                            {% csrf_token %}
+                            {% for field in tv_search_form %}
+                                <div class="form-group">
+                                    {{ field.label_tag }} <br>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small style="color: grey">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <div style="text-align: center;">
+                                <button type="submit" class="btn btn-primary" name="submit" value="tv_show">RATE!
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="movie">
+                    <form action="{% url 'search' %}" method="POST">
+                        <fieldset>
+                            <div style="text-align: center;">
+                                <legend class="display-6">Search for a Movie</legend>
+                            </div>
+                            {% csrf_token %}
+                            {% for field in movie_search_form %}
+                                <div class="form-group">
+                                    {{ field.label_tag }} <br>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small style="color: grey">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <div style="text-align: center;">
+                                <button type="submit" class="btn btn-primary" name="submit" value="movie">RATE!</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="webpage">
+                    <form action="{% url 'search' %}" method="POST">
+                        <fieldset>
+                            <div style="text-align: center;">
+                                <legend class="display-6">Search for a Webpage or Specific Post</legend>
+                            </div>
+                            {% csrf_token %}
+                            {% for field in website_search_form %}
+                                <div class="form-group">
+                                    {{ field.label_tag }} <br>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small style="color: grey">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <div style="text-align: center;">
+                                <button type="submit" class="btn btn-primary" name="submit" value="webpage">RATE!
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}
