@@ -2,45 +2,47 @@
 
 {% block content %}
 
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <div class="jumbotron">
-                        <div class="container">
-                            <div style="text-align: center;"><h1 class="display-4">Log In or Sign Up</h1>
+            <div class="col-md-6">
+                <div class="jumbotron">
+                    <div class="container">
+                        <div style="text-align: center;"><h1 class="display-4">Log In or Sign Up</h1>
                             <ul class="nav nav-tabs">
-                                <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#login">Log In</a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#signup">Sign Up</a></li>
-                             </ul>
+                                <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#login">Log
+                                    In</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#signup">Sign Up</a>
+                                </li>
+                            </ul>
                         </div>
                         <div class="tab-content" id="accountform">
                             <div class="tab-pane fade active show" id="login">
-                            <form lpformnum="1" _lpchecked="1" action="/login/" method="post">
-                                <fieldset>
-                                    <div style="text-align: center;">
-                                        <legend class="display-5">Log In</legend>
-                                    </div>
-                                    {% csrf_token %}
-                                    {% for field in login_form %}
-                                        <div class="form-group">
-                                            {{ field.label_tag }} <br>
-                                            {{ field }}
-                                            {% if field.help_text %}
-                                                <small style="color: grey">{{ field.help_text }}</small>
-                                            {% endif %}
-                                            {% for error in field.errors %}
-                                                <p style="color: red">{{ error }}</p>
-                                            {% endfor %}
+                                <form lpformnum="1" _lpchecked="1" action="{% url 'login' %}" method="post">
+                                    <fieldset>
+                                        <div style="text-align: center;">
+                                            <legend class="display-5">Log In</legend>
                                         </div>
-                                    {% endfor %}
-                                </fieldset>
-                                <button type="submit" class="btn btn-primary" value="login" name="submit">Login</button>
-                            </form>
+                                        {% csrf_token %}
+                                        {% for field in login_form %}
+                                            <div class="form-group">
+                                                {{ field.label_tag }} <br>
+                                                {{ field }}
+                                                {% if field.help_text %}
+                                                    <small style="color: grey">{{ field.help_text }}</small>
+                                                {% endif %}
+                                                {% for error in field.errors %}
+                                                    <p style="color: red">{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                                    </fieldset>
+                                    <button type="submit" class="btn btn-primary" value="login" name="submit">Login
+                                    </button>
+                                </form>
                             </div>
                             <div class="tab-pane fade" id="signup">
-                                <form lpformnum="1" _lpchecked="1" action="/login/" method="post">
+                                <form lpformnum="1" _lpchecked="1" action="{% url 'login' %}" method="post">
                                     <fieldset>
                                         <div style="text-align: center;">
                                             <legend class="display-5">Sign Up</legend>
@@ -59,13 +61,14 @@
                                             </div>
                                         {% endfor %}
                                     </fieldset>
-                                    <button type="submit" class="btn btn-primary" value="signup" name="submit">Sign Up</button>
+                                    <button type="submit" class="btn btn-primary" value="signup" name="submit">Sign Up
+                                    </button>
                                 </form>
                             </div>
                         </div>
-                        </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -41,4 +41,8 @@ class CopyInForm(forms.Form):
         self.add_error('copy_in_text', self.error_messages['empty_text'])
 
     def get_text(self):
+        """
+        Provides the text in the form's text area where the user provided text.
+        :return: A string containing the text from the user.
+        """
         return self.cleaned_data['copy_in_text']

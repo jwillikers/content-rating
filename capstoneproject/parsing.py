@@ -1,3 +1,7 @@
+"""
+This file contains functions for parsing different forms of text.
+The functions convert the various text formats into simple strings.
+"""
 import os
 
 import PyPDF2
@@ -13,6 +17,12 @@ from ebooklib import epub
 
 
 def parse_docx(filename):
+    """
+    This function parses a docx file by parsing the file given by the filename and returning a string of the
+    content in the file.
+    :param filename: The docx file to parse.
+    :return: A string containing the docx file's contents.
+    """
     doc = docx.Document(filename)
     full_text = ""
     for paragraph in doc.paragraphs:
@@ -23,6 +33,12 @@ def parse_docx(filename):
 
 
 def parse_pdf(filename):
+    """
+    This function parses a pdf file by parsing the file given by the filename and returning a string of the content in
+    the file.
+    :param filename: The pdf file to parse.
+    :return: A string containing the pdf file's contents.
+    """
     with open(filename, 'rb') as pdf:
         pdf_reader = PyPDF2.PdfFileReader(pdf)
         page_objects = []
@@ -39,6 +55,12 @@ def parse_pdf(filename):
 
 
 def parse_epub(filename):
+    """
+    This function parses an epub file by parsing the file given by the filename and returning a string of the content
+    in the file.
+    :param filename: The epub file to parse.
+    :return: A string containing the epub file's contents.
+    """
     book = epub.read_epub(filename)
     full_text = ""
     for obj in book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
@@ -49,13 +71,25 @@ def parse_epub(filename):
 
 
 def parse_txt(filename):
+    """
+    This function parses a txt file by parsing the file given by the filename and returning a string of the content
+    in the file.
+    :param filename: The txt file to parse.
+    :return: A string containing the txt file's contents.
+    """
     with open(filename) as txt_file:
         full_text = txt_file.read()
         full_text = os.linesep.join([s for s in full_text.splitlines() if s])  # strips out blank lines
     return full_text
 
 
-def parse_srt(filename): # parses .srt subtitle files
+def parse_srt(filename):  # parses .srt subtitle files
+    """
+    This function parses srt subtitle file by parsing the file given by the filename and returning a string of the
+    content in the file.
+    :param filename: The srt subtitle file to parse.
+    :return: A string containing the srt subtitle file's contents.
+    """
     subs = pysrt.open(filename)
     full_text = ""
     for sub in subs:
@@ -68,6 +102,12 @@ def parse_srt(filename): # parses .srt subtitle files
 
 
 def search_songs(song, artist=""):
+    """
+    This function searches for a song given a song title and artist and returns a string containing the lyrics.
+    :param song: The song title to search.
+    :param artist: The artist of the song to search.
+    :return: A string containing the song's lyrics.
+    """
     params = {
         'uid': 6191,
         'tokenid': 'fTm7bNQjneSL7j7D',
@@ -100,6 +140,11 @@ def search_songs(song, artist=""):
 
 
 def search_website(website):
+    """
+    This function gets the contents from a website and returns its contents as a string.
+    :param website: The website title to retrieve content from.
+    :return: A string containing the website's contents.
+    """
     r = requests.get(website)
     full_text = html2text.html2text(r.text)
     return full_text

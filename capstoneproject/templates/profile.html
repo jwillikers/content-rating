@@ -66,7 +66,7 @@
                             &nbsp;
                             <div id="displayForm" class="tab-content">
                                 <div class="tab-pane fade active show" id="username">
-                                    <form lpformnum="1" _lpchecked="1" action="/profile/" method="post">
+                                    <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="post">
                                         <fieldset>
                                             {% csrf_token %}
                                             <div style="text-align: center;">
@@ -93,7 +93,7 @@
                                     </form>
                                 </div>
                                 <div class="tab-pane fade" id="password">
-                                    <form lpformnum="1" _lpchecked="1" action="/profile/" method="post">
+                                    <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="post">
                                         <fieldset>
                                             {% csrf_token %}
                                             <div style="text-align: center;">
@@ -120,7 +120,7 @@
                                     </form>
                                 </div>
                                 <div class="tab-pane fade" id="userandpass">
-                                    <form lpformnum="1" _lpchecked="1" action="/profile/" method="post">
+                                    <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="post">
                                         <fieldset>
                                             {% csrf_token %}
                                             <div style="text-align: center;">
