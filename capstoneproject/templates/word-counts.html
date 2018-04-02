@@ -2,17 +2,18 @@
 {% load access_dict %}
 
 {% block content %}
-<div class="container">
-    <div class="jumbotron">
-        <a href="{% url 'results' %}" class="btn btn-lg btn-block btn-info">Back to Results</a>
-        <div style="text-align: center;"><h1>Word Counts for {{ name }}</h1>
-        <p class="lead">Check word counts by category.</p></div>
-        <hr class="my-4">
+    <div class="container">
+        <div class="jumbotron">
+            <a href="{% url 'results' %}" class="btn btn-lg btn-block btn-info">Back to Results</a>
+            <div style="text-align: center;"><h1>Word Counts for {{ name }}</h1>
+                <p class="lead">Check word counts by category.</p></div>
+            <hr class="my-4">
             <ul class="nav nav-tabs">
                 {% for category in category_word_counts %}
                     {% if forloop.counter == 1 %}
                         <li class="nav-item">
-                            <a class="nav-link active show" data-toggle="tab" href="#{{ category }}">{{ category|title }}</a>
+                            <a class="nav-link active show" data-toggle="tab"
+                               href="#{{ category }}">{{ category|title }}</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
@@ -21,27 +22,31 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <div id="displayForm" class="tab-content">
-            {% for category in category_word_counts %}
-                {% if forloop.counter == 1 %}
-                    <div class="tab-pane fade active show" id="{{ category }}">
-                        <div style="text-align: center;"><legend class="display-6">{{ category|title }} Words</legend></div>
+            <div id="displayForm" class="tab-content">
+                {% for category in category_word_counts %}
+                    {% if forloop.counter == 1 %}
+                        <div class="tab-pane fade active show" id="{{ category }}">
+                            <div style="text-align: center;">
+                                <legend class="display-6">{{ category|title }} Words</legend>
+                            </div>
                             {% for word in category_word_counts|get_item:category %}
                                 <hr class="my-4">
                                 <p class="lead">{{ word }}: {{ category_word_counts|get_item:category|get_item:word }}</p>
                             {% endfor %}
-                    </div>
-                {% else %}
-                    <div class="tab-pane fade" id="{{ category }}">
-                        <div style="text-align: center;"><legend class="display-6">{{ category|title }} Words</legend></div>
+                        </div>
+                    {% else %}
+                        <div class="tab-pane fade" id="{{ category }}">
+                            <div style="text-align: center;">
+                                <legend class="display-6">{{ category|title }} Words</legend>
+                            </div>
                             {% for word in category_word_counts|get_item:category %}
                                 <hr class="my-4">
                                 <p class="lead">{{ word }}: {{ category_word_counts|get_item:category|get_item:word }}</p>
                             {% endfor %}
-                    </div>
-                {% endif %}
-            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

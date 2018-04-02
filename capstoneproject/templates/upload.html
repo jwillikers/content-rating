@@ -1,27 +1,37 @@
 {% extends "navbar-contentrater.html" %}
 
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-3">
-		</div>
-		<div class="col-md-6">
-			<div class="jumbotron">
-				<form action="{% url 'results' %}" method="POST">
-					<fieldset>
-						<div style="text-align: center;">
-							<legend class="display-4">Upload a File</legend>
-						</div>
-						<div class="form-group">
-							<label for="inputFile">File input</label>
-							<input type="file" class="form-control-file" id="inputFile" aria-describedby="fileHelp">
-							<small id="fileHelp" class="form-text text-muted">Choose a file you'd like to have rated.</small>
-						</div>
-						<div style="text-align: center;"><button type="submit" class="btn btn-primary">RATE!</button></div>
-					</fieldset>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6">
+                <div class="jumbotron">
+                    <form action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
+                        <fieldset>
+                            <div style="text-align: center;">
+                                <legend class="display-4">Upload a File</legend>
+                            </div>
+                            {% csrf_token %}
+                            {% for field in upload_file_form %}
+                                <div class="form-group">
+                                    {{ field.label_tag }} <br>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small style="color: grey">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <div style="text-align: center;">
+                                <button type="submit" class="btn btn-primary" name="submit" value="file">RATE!</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
