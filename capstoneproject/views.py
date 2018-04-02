@@ -22,6 +22,7 @@ from capstoneproject.app_forms.forms.song_search_form import SongSearchForm
 from capstoneproject.app_forms.forms.tv_show_search_form import TVShowSearchForm
 from capstoneproject.app_forms.forms.movie_search_form import MovieSearchForm
 from capstoneproject.app_forms.forms.webpage_search_form import WebsiteSearchForm
+from capstoneproject.app_forms.forms.copy_in_form import CopyInForm
 
 def login(request):
     """
@@ -185,19 +186,27 @@ def search(request):
         if request.POST.get('submit') == 'song':
             form = SongSearchForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                print()
+                return rating_results(request)
+            else:
+                context['song_search_form'] = form
         elif request.POST.get('submit') == 'tv_show':
             form = TVShowSearchForm(request.POST)
             if form.is_valid():
-                print()
+                return rating_results(request)
+            else:
+                context['tv_search_form'] = form
         elif request.POST.get('submit') == 'movie':
             form = MovieSearchForm(request.POST)
             if form.is_valid():
-                print()
+                return rating_results(request)
+            else:
+                context['movie_search_form'] = form
         elif request.POST.get('submit') == 'website':
             form = WebsiteSearchForm(request.POST)
             if form.is_valid():
-                print()
+                return rating_results(request)
+            else:
+                context['website_search_form'] = form
     # cr = content_rating.ContentRating()
     # cr.algorithm('')
     return render(request, 'search.html', context)
@@ -223,16 +232,21 @@ def copy_in(request):
     :param request: The HTML request to handle.
     :return: Renders the copy-in page.
     """
+    context = {'copy_in_form': CopyInForm()}
+
     if request.session.get('delete'):
         del request.session['delete']
         del request.session['content_compare']
+
     if request.method == 'POST':
         if request.POST.get('submit') == 'copy-in':
-            text = request.POST.get('textArea')
-            if text != '':
-                return rating_results(request)
-            # Rate text
-    return render(request, 'copy-in.html')
+            form = CopyInForm(request.POST)
+            if form.is_valid():  # Check if the form is valid.
+                return rating_results(request)  # If the form is valid, go to the results page.
+            else:
+                context['copy_in_form'] = form  # Form is invalid, keep the same form to provide error messages.
+
+    return render(request, 'copy-in.html', context)
 
 
 def about_algorithm(request):
@@ -305,8 +319,42 @@ def rating_results(request):
                'category_word_counts': category_word_counts
                }
 
-
-
+    if request.method == 'POST':
+        if request.POST.get('submit') == 'copy-in':
+            form = CopyInForm(request.POST)
+            if form.is_valid():  # Check if the form is valid.
+                # Rate text here
+                print()
+            else:
+                return copy_in(request)
+        elif request.POST.get('submit') == 'song':
+            form = SongSearchForm(request.POST)
+            if form.is_valid():  # Check if the form is valid.
+                # Rate text here
+                print()
+            else:
+                return search(request)
+        elif request.POST.get('submit') == 'tv_show':
+            form = TVShowSearchForm(request.POST)
+            if form.is_valid():
+                print()
+                # Rate text here
+            else:
+                return search(request)
+        elif request.POST.get('submit') == 'movie':
+            form = MovieSearchForm(request.POST)
+            if form.is_valid():
+                print()
+                # Rate text here
+            else:
+                return search(request)
+        elif request.POST.get('submit') == 'website':
+            form = WebsiteSearchForm(request.POST)
+            if form.is_valid():
+                print()
+                # Rate text here
+            else:
+                return search(request)
 
     return render(request, 'rating-result.html', context)
 

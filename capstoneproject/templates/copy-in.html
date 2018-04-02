@@ -1,21 +1,32 @@
 {% extends "navbar-contentrater.html" %}
 
 {% block content %}
-<div class="container">
-	<div class="jumbotron">
-		<form action="{% url 'results' %}" method="POST">
-			<fieldset>
-				{% csrf_token %}
-                <div style="text-align: center;">
-					<legend class="display-4">Copy In Your Own</legend>
-				</div>
-				<div class="form-group">
-					<label for="textArea">Content:</label>
-					<textarea class="form-control" id="textArea" name="textArea" rows="10"></textarea>
-				</div>
-				<div style="text-align: center;"><button type="submit" class="btn btn-primary" name="submit" value="rate">RATE!</button></div>
-			</fieldset>
-		</form>
-	</div>
-</div>
+    <div class="container">
+        <div class="jumbotron">
+            <form action="{% url 'copy' %}" method="POST">
+                <fieldset>
+                    {% csrf_token %}
+                    <div style="text-align: center;">
+                        <legend class="display-4">Copy In Your Own</legend>
+                    </div>
+                    {% csrf_token %}
+                    {% for field in copy_in_form %}
+                        <div class="form-group">
+                            {{ field.label_tag }} <br>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small style="color: grey">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-primary" name="submit" value="copy-in">RATE!</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
 {% endblock %}
