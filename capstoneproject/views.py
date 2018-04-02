@@ -229,7 +229,8 @@ def copy_in(request):
     if request.method == 'POST':
         if request.POST.get('submit') == 'copy-in':
             text = request.POST.get('textArea')
-            if text ==
+            if text != '':
+                return rating_results(request)
             # Rate text
     return render(request, 'copy-in.html')
 
