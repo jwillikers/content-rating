@@ -32,7 +32,7 @@ class MovieSearchForm(forms.Form):
         """
         super()._post_clean()
 
-    def not_found(self):
+    def not_found_error(self):
         """
         Adds an not found error to the movie title field.
         :return: None.

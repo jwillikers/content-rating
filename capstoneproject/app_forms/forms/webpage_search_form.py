@@ -10,18 +10,21 @@ class WebsiteSearchForm(forms.Form):
         A search song form.
     """
     error_messages = {'website_not_found': _("No website using the given website name was found"),
-                      'url_not_found': _("No website using the given URL was found")}
+                      'url_not_found': _("No website using the given URL was found"),
+                      'incomplete': _("No website title or URL was given")}
 
     website_name = forms.CharField(
         label='Name',
         max_length=30,
         strip=False,
+        required=False,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter song title'}))
 
     url = forms.CharField(
         label='URL',
         max_length=40,
         strip=False,
+        required=False,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter url'}))
 
     def __init__(self, *args, **kwargs):
@@ -38,6 +41,10 @@ class WebsiteSearchForm(forms.Form):
         :return: None.
         """
         super()._post_clean()
+        url = self.cleaned_data.get('url')
+        website = self.cleaned_data.get('website_name')
+        if not url and not website:
+            self.add_error('url', self.error_messages['incomplete'])
 
     def url_not_found(self):
         """

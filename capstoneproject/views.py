@@ -23,6 +23,9 @@ from capstoneproject.app_forms.forms.tv_show_search_form import TVShowSearchForm
 from capstoneproject.app_forms.forms.movie_search_form import MovieSearchForm
 from capstoneproject.app_forms.forms.webpage_search_form import WebsiteSearchForm
 from capstoneproject.app_forms.forms.copy_in_form import CopyInForm
+from capstoneproject.app_forms.forms.upload_file_form import UploadFileForm
+from capstoneproject import parsing
+
 
 def login(request):
     """
@@ -183,30 +186,30 @@ def search(request):
         del request.session['content_compare']
 
     if request.method == 'POST':
-        if request.POST.get('submit') == 'song':
+        if request.POST.get('submit') == 'song':  # Song request
             form = SongSearchForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                return rating_results(request)
+                return rating_results(request)  # Go to the rating results page if valid.
             else:
-                context['song_search_form'] = form
-        elif request.POST.get('submit') == 'tv_show':
+                context['song_search_form'] = form  # Display errors if invalid.
+        elif request.POST.get('submit') == 'tv_show':  # TV show request
             form = TVShowSearchForm(request.POST)
             if form.is_valid():
-                return rating_results(request)
+                return rating_results(request)  # Go to the rating results page if valid.
             else:
-                context['tv_search_form'] = form
-        elif request.POST.get('submit') == 'movie':
+                context['tv_search_form'] = form  # Display errors if invalid.
+        elif request.POST.get('submit') == 'movie':  # Movie request
             form = MovieSearchForm(request.POST)
             if form.is_valid():
-                return rating_results(request)
+                return rating_results(request)  # Go to the rating results page if valid.
             else:
-                context['movie_search_form'] = form
-        elif request.POST.get('submit') == 'website':
+                context['movie_search_form'] = form  # Display errors if invalid.
+        elif request.POST.get('submit') == 'webpage':  # Website request
             form = WebsiteSearchForm(request.POST)
             if form.is_valid():
-                return rating_results(request)
+                return rating_results(request)  # Go to the rating results page if valid.
             else:
-                context['website_search_form'] = form
+                context['website_search_form'] = form  # Display errors if invalid.
     # cr = content_rating.ContentRating()
     # cr.algorithm('')
     return render(request, 'search.html', context)
@@ -219,10 +222,21 @@ def upload(request):
     :param request: The HTML request to handle.
     :return: Renders the upload page.
     """
+    context = {'upload_file_form': UploadFileForm()}
+
     if request.session.get('delete'):
         del request.session['delete']
         del request.session['content_compare']
-    return render(request, 'upload.html')
+
+    if request.method == 'POST':
+        if request.POST.get('submit') == 'file':
+            form = UploadFileForm(request.POST, request.FILES)
+            if form.is_valid():  # Check if the form is valid.
+                return rating_results(request)  # If the form is valid, go to the results page.
+            else:
+                context['upload_file_form'] = form  # Form is invalid, keep the same form to provide error messages.
+
+    return render(request, 'upload.html', context)
 
 
 @login_required(login_url='/login/')
@@ -325,36 +339,58 @@ def rating_results(request):
             if form.is_valid():  # Check if the form is valid.
                 # Rate text here
                 print()
-            else:
+            else:  # This should never happen.
                 return copy_in(request)
         elif request.POST.get('submit') == 'song':
             form = SongSearchForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 # Rate text here
-                print()
-            else:
+                title = form.get_song_title()
+                artist = form.get_song_artist()
+                text = parsing.search_songs(title, artist)
+                print(text)
+            else:  # This should never happen.
                 return search(request)
         elif request.POST.get('submit') == 'tv_show':
             form = TVShowSearchForm(request.POST)
             if form.is_valid():
                 print()
                 # Rate text here
-            else:
+            else:  # This should never happen.
                 return search(request)
         elif request.POST.get('submit') == 'movie':
             form = MovieSearchForm(request.POST)
             if form.is_valid():
                 print()
                 # Rate text here
-            else:
+            else:  # This should never happen.
                 return search(request)
         elif request.POST.get('submit') == 'website':
             form = WebsiteSearchForm(request.POST)
             if form.is_valid():
                 print()
                 # Rate text here
-            else:
+            else:  # This should never happen.
                 return search(request)
+        elif request.POST.get('submit') == 'file':
+            form = UploadFileForm(request.POST, request.FILES)
+            if form.is_valid():
+                file = request.FILES['file'].name
+                print(file)
+                extension = file.split('.')[-1].lower()
+                text = ''
+                if extension == 'pdf':
+                    text = parsing.parse_pdf(file)
+                elif extension == 'epub':
+                    text = parsing.parse_epub(file)
+                elif extension == 'docx':
+                    text = parsing.parse_docx(file)
+                elif extension == 'txt':
+                    text = parsing.parse_txt(file)
+                print(text)
+                # Parse file and rate text here
+            else:
+                return upload(request)
 
     return render(request, 'rating-result.html', context)
 

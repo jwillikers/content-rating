@@ -38,7 +38,7 @@ class TVShowSearchForm(forms.Form):
         """
         super()._post_clean()
 
-    def not_found(self):
+    def not_found_error(self):
         """
         Adds a not found error to the episode title field.
         :return: None.

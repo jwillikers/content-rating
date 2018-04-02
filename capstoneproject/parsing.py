@@ -66,7 +66,7 @@ def parse_epub(filename):
     for obj in book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
         full_text += (obj.get_content()).decode('utf-8')
     full_text = html2text.html2text(full_text)
-    full_text = os.linesep.join([s for s in full_text.splitlines() if s]) # strips out blank lines
+    full_text = os.linesep.join([s for s in full_text.splitlines() if s])  # strips out blank lines
     return full_text
 
 

@@ -21,6 +21,7 @@ class SongSearchForm(forms.Form):
         label='Artist',
         max_length=30,
         strip=False,
+        required=False,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter artist'}))
 
     def __init__(self, *args, **kwargs):
@@ -38,7 +39,7 @@ class SongSearchForm(forms.Form):
         """
         super()._post_clean()
 
-    def not_found(self):
+    def not_found_error(self):
         """
         Add a not found error to the song artist field.
         :return: None.
