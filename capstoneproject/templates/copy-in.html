@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <div class="jumbotron">
-            <form action="{% url 'copy' %}" method="POST">
+            <form action="{% url 'results' %}" method="POST">
                 <fieldset>
                     {% csrf_token %}
                     <div style="text-align: center;">

@@ -9,7 +9,9 @@ class TVShowSearchForm(forms.Form):
     """
         A search TV show form.
     """
-    error_messages = {'not_found': _("No TV Show with the given show title and episode title was found")}
+    error_messages = {'not_found': _("No TV Show with the given show title and episode title was found"),
+                      'no_show_title': _("No show title was provided"),
+                      'no_episode_title': _("No episode title was provided")}
 
     show_title = forms.CharField(
         label='Show Title',
@@ -37,6 +39,10 @@ class TVShowSearchForm(forms.Form):
         :return: None.
         """
         super()._post_clean()
+        if self.cleaned_data.get("show_title") is not None and self.cleaned_data.get("show_title").strip() == '':
+            self.empty_show_title_error()
+        if self.cleaned_data.get("episode_title") is not None and self.cleaned_data.get("episode_title").strip() == '':
+            self.empty_episode_title_error()
 
     def not_found_error(self):
         """
@@ -44,6 +50,20 @@ class TVShowSearchForm(forms.Form):
         :return: None.
         """
         self.add_error('episode_title', self.error_messages['not_found'])
+
+    def empty_show_title_error(self):
+        """
+        Adds an not found error to the show title field.
+        :return: None.
+        """
+        self.add_error('show_title', self.error_messages['no_show_title'])
+
+    def empty_episode_title_error(self):
+        """
+        Adds an not found error to the episode title field.
+        :return: None.
+        """
+        self.add_error('episode_title', self.error_messages['no_episode_title'])
 
     def get_episode_title(self):
         return self.cleaned_data['episode_title']

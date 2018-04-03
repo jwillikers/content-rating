@@ -23,7 +23,7 @@
             &nbsp;
             <div id="displayForm" class="tab-content">
                 <div class="tab-pane fade active show" id="song">
-                    <form action="{% url 'search' %}" method="POST">
+                    <form action="{% url 'results' %}" method="POST">
                         <fieldset>
                             <div style="text-align: center;">
                                 <legend class="display-6">Search for a Song</legend>
@@ -48,7 +48,7 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="tv">
-                    <form action="{% url 'search' %}" method="POST">
+                    <form action="{% url 'results' %}" method="POST">
                         <fieldset>
                             <div style="text-align: center;">
                                 <legend class="display-6">Search for a TV Show</legend>
@@ -74,7 +74,7 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="movie">
-                    <form action="{% url 'search' %}" method="POST">
+                    <form action="{% url 'results' %}" method="POST">
                         <fieldset>
                             <div style="text-align: center;">
                                 <legend class="display-6">Search for a Movie</legend>
@@ -99,7 +99,7 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="webpage">
-                    <form action="{% url 'search' %}" method="POST">
+                    <form action="{% url 'results' %}" method="POST">
                         <fieldset>
                             <div style="text-align: center;">
                                 <legend class="display-6">Search for a Webpage or Specific Post</legend>

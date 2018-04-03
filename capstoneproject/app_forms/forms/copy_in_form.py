@@ -14,6 +14,7 @@ class CopyInForm(forms.Form):
     copy_in_text = forms.CharField(
         label='Content',
         strip=False,
+        required=False,
         widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter text here', 'rows': 10}))
 
     def __init__(self, *args, **kwargs):
@@ -30,7 +31,7 @@ class CopyInForm(forms.Form):
         :return: None.
         """
         super()._post_clean()
-        if self.cleaned_data.get("copy_in_text").strip() == '':
+        if self.cleaned_data.get("copy_in_text") is not None and self.cleaned_data.get("copy_in_text").strip() == '':
             self.empty_text_error()
 
     def empty_text_error(self):
