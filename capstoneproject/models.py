@@ -31,7 +31,7 @@ class Category(Weight):
         Overwrites the __str__ function and returns a string containing the category name and the weight.
         :return: A string containing the category name and the weight.
         """
-        return 'category: {}, weight: {}'.format(self.name, self.weight)
+        return 'Category:\n  Name: {}  Weight: {}'.format(self.name, self.weight)
 
     def __repr__(self):
         """
@@ -105,7 +105,7 @@ class WordFeature(Weight):
         Overwrites the __str__ function and returns a string for an entry in the table.
         :return: A string containing the category's name, the strength, and the weight.
         """
-        return 'category: {}, strength: {}, weight: {}'.format(
+        return 'Word Feature:\n  Category: {}\n  Strength: {}\n  Weight: {}'.format(
             self.category.name,
             self.get_strength_display(),
             self.get_weight_display())
@@ -288,7 +288,7 @@ class Word(Model):
         Overwrites the __str__ function to provide a string containing the word's name.
         :return: A string containing the word's name.
         """
-        return self.name
+        return 'Word: {}'.format(self.name)
 
     def __repr__(self):
         """
