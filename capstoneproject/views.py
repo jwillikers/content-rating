@@ -13,7 +13,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import reverse
 
 from capstoneproject.display import display_categories, display_words, display_category_words
-from capstoneproject.content_rating.algorithm import content_rating
+from capstoneproject.content_rating.algorithm import text
 from capstoneproject.models import Weight
 from capstoneproject.app_forms import form_handler
 from capstoneproject.app_forms.forms.login_form import LoginForm
@@ -348,6 +348,59 @@ def words(request, category):
     return render(request, 'words.html', context)
 
 
+def get_context(content_type: str, form, content: text.Text, request):
+    # TODO handle overall rating of 0
+    context = {'name': '',
+               'creator': '',
+               'overall_rating': int(content.overall_rating),
+               'category_ratings': content.category_ratings,
+               'category_word_counts': content.category_word_counts
+               }
+    print(content)
+
+    category_ratings = dict()
+    category_word_counts = dict()
+    #for category in display_categories():
+    #    category_ratings[category.name] = content.get_category_rating(category.name)
+    #    category_word_counts[category.name] = content.get_category_word_counts(category.name)
+
+    #context['category_ratings'] = category_ratings
+    #context['category_word_counts'] = category_word_counts
+    '''
+    category_ratings = dict()
+    category_word_counts = dict()
+    for category in display_categories():
+        category_ratings[category.name] = 5
+        category_word_counts[category.name] = {'word1': 4,
+                                               'word2': 3,
+                                               'word3': 2
+                                               }
+    context = {'name': 'Pillow Talkin',
+               'creator': "Lil' Dicky (feat. BRAIN)",
+               'overall_rating': 7,
+               'category_ratings': category_ratings,
+               'category_word_counts': category_word_counts
+               }
+    '''
+    if content_type == 'song':
+        context['name'] = form.get_song_title().upper()
+        context['creator'] = form.get_song_artist().upper()
+    elif content_type == 'tv_show':
+        context['name'] = form.get_episode_title().upper()
+        context['creator'] = form.get_show_title().upper()
+    elif content_type == 'movie':
+        context['name'] = form.get_movie_title().upper()
+    elif content_type == 'webpage':
+        context['name'] = form.get_search_request()
+    elif content_type == 'copy':
+        context['name'] = 'Given Text'
+        context['creator'] = str(request.user.username).upper()
+    elif content_type == 'file':
+        context['name'] = 'File'
+
+    return context
+
+
 @login_required(login_url='/login/')
 def rating_results(request):
     """
@@ -378,7 +431,9 @@ def rating_results(request):
             if form.is_valid():  # Check if the form is valid.
                 # Rate text here
                 text = form.cleaned_data.get('copy_in_text')
-                print(text)
+                rated_text = rater.algorithm(text)
+                # Used rated content to change context
+                context = get_context(content_type='copy', form=form, content=rated_text, request=request)
             else:
                 request.session['invalid_content'] = True
                 return HttpResponseRedirect(reverse('copy'))
@@ -389,14 +444,17 @@ def rating_results(request):
                 title = form.get_song_title()
                 artist = form.get_song_artist()
                 text = parsing.search_songs(title, artist)
-                print(text)
+                rated_text = rater.algorithm(text)
+                context = get_context(content_type='song', form=form, content=rated_text, request=request)
             else:
                 request.session['invalid_song'] = True
                 return HttpResponseRedirect(reverse('search'))
         elif request.POST.get('submit') == 'tv_show':
             form = TVShowSearchForm(request.POST)
             if form.is_valid():
-                print()
+                text = ''
+                rated_text = rater.algorithm(text)
+                context = get_context(content_type='tv_show', form=form, content=rated_text, request=request)
                 # Rate text here
             else:
                 request.session['invalid_tv_show'] = True
@@ -404,16 +462,24 @@ def rating_results(request):
         elif request.POST.get('submit') == 'movie':
             form = MovieSearchForm(request.POST)
             if form.is_valid():
-                print()
-                # Rate text here
+                text = ''
+                rated_text = rater.algorithm(text)  # Rate text here
+                context = get_context(content_type='movie', form=form, content=rated_text, request=request)
             else:
                 request.session['invalid_movie'] = True
                 return HttpResponseRedirect(reverse('search'))
         elif request.POST.get('submit') == 'webpage':
             form = WebsiteSearchForm(request.POST)
             if form.is_valid():
-                print()
-                # Rate text here
+                url = form.cleaned_data.get('url')
+                website_title = form.cleaned_data.get('website_name')
+                text = ''
+                if url:
+                    text = parsing.search_website(url)
+                elif website_title:
+                    text = ''
+                rated_text = rater.algorithm(text)  # Rate text here
+                context = get_context(content_type='webpage', form=form, content=rated_text, request=request)
             else:
                 request.session['invalid_website'] = True
                 return HttpResponseRedirect(reverse('search'))
@@ -422,7 +488,7 @@ def rating_results(request):
             if form.is_valid():
                 handle_uploaded_file(request.FILES['file'])  # TODO This should be a temp file
                 file = request.FILES['file'].name
-                print(file)
+                # print(file)
                 extension = file.split('.')[-1].lower()
                 text = ''
                 if extension == 'pdf':
@@ -433,16 +499,15 @@ def rating_results(request):
                     text = parsing.parse_docx('capstoneproject/tempfile')
                 elif extension == 'txt':
                     text = parsing.parse_txt('capstoneproject/tempfile')
-                print(text)
+                # print(text)
                 os.remove('capstoneproject/tempfile')  # Delete the temp file after use
+                rater.algorithm(text)
                 # Parse file and rate text here
             else:
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
+    print(context)
     return render(request, 'rating-result.html', context)
-
-
-
 
 
 def handle_uploaded_file(f):

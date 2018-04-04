@@ -22,23 +22,23 @@
                             {% if overall_rating == 1 or overall_rating == 2 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                      role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
                             {% elif overall_rating == 3 or overall_rating == 4 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                      role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
                             {% elif overall_rating == 5 or overall_rating == 6 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                      role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
                             {% elif overall_rating == 7 or overall_rating == 8 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                      role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
                             {% elif overall_rating == 9 or overall_rating == 10 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
                                      role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ rating }}0%">{{ overall_rating }}</div>
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
                             {% endif %}
                         </div>
                         <hr class="my-4">
@@ -47,6 +47,13 @@
                             <hr class="my-4">
                             <p class="dropdown-toggle display-6" data-toggle="dropdown" href="#"
                                aria-expanded="false">{{ category|title }}:</p>
+                            <div x-placement="bottom-start"
+                            style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                {% for word in category_word_counts|get_item:category %}
+                                    <a class="dropdown-item"
+                                       href="#">{{ word }}: {{ category_word_counts|get_item:category|get_item:word }}</a>
+                                {% endfor %}
+                            </div>
                             <div class="dropdown-menu" x-placement="bottom-start"
                                  style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
                                 {% for word in category_word_counts|get_item:category %}
