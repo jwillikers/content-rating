@@ -86,10 +86,10 @@ class ContentRating:
         :param text_string: A string containing the text to classify and rate.
         :return: a Text object, containing the results.
         """
-        print("In algorithm")
-        input_path = 'capstoneproject/testing_resources/Baby_Got_Back'
-        with open(input_path, 'r') as input_file:
-            text_string = input_file.read()
+        # TODO Remove this file path -- currently for testing
+        #input_path = 'capstoneproject/testing_resources/Baby_Got_Back'
+        #with open(input_path, 'r') as input_file:
+        #    text_string = input_file.read()
 
         # Step 1: Normalize and Tokenize Text
         text = Text(self.tokenize(text_string.lower()))
@@ -98,7 +98,9 @@ class ContentRating:
         text.extract_features()
 
         # Step 3: Determine offensiveness
-        #text.calculate_offensiveness()
+        # text.calculate_offensiveness()
 
         # Step 4: Generate rating
-        #text.generate_rating()
+        text.generate_rating()
+
+        return text
