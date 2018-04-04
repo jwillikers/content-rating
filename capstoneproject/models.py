@@ -1,34 +1,65 @@
 """
-This file contains the Models that represent tables in the system's database and helper functions to interact with
-the tables.
+This file contains the Models that represent tables in the system's database
+and helper functions to interact with the tables.
 """
+from django.contrib.auth.models import User
 from django.db.models import Manager, Model, CharField, IntegerField, \
-    BooleanField, ForeignKey, SmallIntegerField, CASCADE, QuerySet, \
-    ManyToManyField, Prefetch
+    BooleanField, ForeignKey, SmallIntegerField, \
+    CASCADE, QuerySet, DateTimeField, \
+    ManyToManyField, Prefetch, \
+    PositiveSmallIntegerField, PositiveIntegerField
 
 
 class Weight(Model):
     """
-    The Weight class is a table that stores the offensiveness levels associated with offensive words in specific
+    The Weight class is a table that stores the offensiveness levels associated
+    with offensive words in specific
     categories.
     """
     WEIGHTS = [(0, 'innocuous'), (1, 'slight'), (2, 'moderate'), (3, 'heavy')]
-    weight = SmallIntegerField(choices=WEIGHTS)
+    weight = PositiveSmallIntegerField(choices=WEIGHTS)
 
     class Meta:
         abstract = True
 
 
+class CategoryQuerySet(QuerySet):
+    category_queryset = None
+
+    def user(self, user):
+        if isinstance(user, str):
+            user = User.objects.get(username=user)
+        elif isinstance(word, int):
+            user = User.objects.get(pk=user)
+        elif isinstance(word, User):
+            pass
+        else:
+            raise TypeError('''{} is not a valid type for user'''.format(user))
+
+        category_prefetch = Prefetch(
+            'user_storage__user',
+            queryset=self.category_queryset,
+            to_attr='users_list')
+
+        filtered = self.prefetch_related(None).filter(
+            user_storage__user=user
+            ).prefetch_related(category_prefetch)
+        return filtered
+
+
 class Category(Weight):
     """
-    The Category class is a table that stores the offensive category and weight associated with an offensive word.
+    The Category class is a table that stores the offensive category and weight
+    associated with an offensive word.
     """
+    user = ManyToManyField(User, related_name='categories')
     name = CharField(unique=True, max_length=30)
     categories = Manager()
 
     def __str__(self):
         """
-        Overwrites the __str__ function and returns a string containing the category name and the weight.
+        Overwrites the __str__ function and returns a string containing the
+        category name and the weight.
         :return: A string containing the category name and the weight.
         """
         return 'Category:\n  Name: {}  Weight: {}'.format(self.name, self.weight)
@@ -42,7 +73,8 @@ class Category(Weight):
 
     def _dict(self):
         """
-        Provides a dictionary value of the category, mapping the category name to the weight.
+        Provides a dictionary value of the category, mapping the category name
+        to the weight.
         :return: A dictionary value containing the category name and weight.
         """
         return {self.name: self.weight}
@@ -51,64 +83,29 @@ class Category(Weight):
         default_manager_name = 'categories'
 
 
-class WordFeatureQuerySet(QuerySet):
-    """
-    This class represents a query set of Word Features.
-    """
-    def category(self, category):
-        """
-        Filters word features based on the given category.
-        :param category: name, id, or Category representing the category.
-        :return: Word features belonging to the given category.
-        """
-        if isinstance(category, str):
-            features = self.filter(category__name=category)
-        elif isinstance(category, int):
-            features = self.filter(category=category)
-        elif isinstance(category, Category):
-            features = self.filter(category=category.id)
-        else:
-            raise TypeError('''{} is not a Category object, id, or name.
-                '''.format(category))
-        return features
-
-    def word(self, word):
-        """
-        Filters word features based on the given word.
-        :param word: name, id, or Word representing the word.
-        :return: the word features for the given word.
-        """
-        if isinstance(word, str):
-            features = self.filter(word_set=word)
-        elif isinstance(word, int):
-            features = self.filter(word_set_id=word)
-        elif isinstance(word, Word):
-            features = self.filter(word_set_id=word.id)
-        else:
-            raise TypeError('''{} is not a valid type for word'''.format(word))
-        return features
-
-
 class WordFeature(Weight):
     """
-    This class is a table containing the Word Features associated with an offensive word.
-    The table contains the overall offensiveness strength (strong or weak), the offensive category, and the
-    offensiveness weight of the word and category.
+    This class is a table containing the Word Features associated with an
+    offensive word. The table contains the overall offensiveness strength
+    (strong or weak), the offensive category, and the offensiveness weight of
+    the word and category.
     """
     STRENGTHS = [(True, 'strong'), (False, 'weak')]
+    user = ManyToManyField(User, related_name='word_features')
     category = ForeignKey(Category, on_delete=CASCADE)
     strength = BooleanField(choices=STRENGTHS, default='weak')
     word_features = Manager()
 
     def __str__(self):
         """
-        Overwrites the __str__ function and returns a string for an entry in the table.
-        :return: A string containing the category's name, the strength, and the weight.
+        Overwrites the __str__ function and returns a string for a table entry.
+        :return: A string containing the category's name, strength, and weight.
         """
-        return 'Word Feature:\n  Category: {}\n  Strength: {}\n  Weight: {}'.format(
-            self.category.name,
-            self.get_strength_display(),
-            self.get_weight_display())
+        return 'Word Feature:\n  Category: {}\n  Strength: {}\n  Weight: {}'\
+            .format(
+                self.category.name,
+                self.get_strength_display(),
+                self.get_weight_display())
 
     def __repr__(self):
         """
@@ -122,17 +119,16 @@ class WordFeature(Weight):
 
     def _dict(self):
         """
-        Provides a dictionary mapping the category, strength, and weight to their corresponding values.
-        :return: A dictionary with the category, strength, weight, and their associated values.
+        Provides a dictionary mapping the category, strength, and weight to
+        their corresponding values.
+        :return: A dictionary with the category, strength, weight, and
+        their associated values.
         """
         dictionary = dict()
         dictionary['category'] = self.category.name
         dictionary['strength'] = {self.get_strength_display(): self.strength}
         dictionary['weight'] = {self.get_weight_display(): self.weight}
         return dictionary
-        #return {'category': self.category.name,
-        #        'strength': {self.get_strength_display(): self.strength},
-        #        'weight': {self.get_weight_display(): self.weight}}
 
     class Meta:
         default_manager_name = 'word_features'
@@ -168,11 +164,17 @@ class WordQuerySet(QuerySet):
 
         if not self.feature_queryset:
             self.feature_queryset = WordFeature.word_features.all()
-        self.feature_queryset = self.feature_queryset.select_related('category').filter(category=category)
+        self.feature_queryset = self.feature_queryset.select_related(
+            'category').filter(category=category)
 
-        feature_prefetch = Prefetch('word_features', queryset=self.feature_queryset, to_attr='word_features_list')
+        feature_prefetch = Prefetch(
+            'word_features',
+            queryset=self.feature_queryset,
+            to_attr='word_features_list')
 
-        words = self.prefetch_related(None).filter(word_features__category=category).prefetch_related(feature_prefetch)
+        words = self.prefetch_related(None).filter(
+            word_features__category=category
+            ).prefetch_related(feature_prefetch)
         return words
 
     def strength(self, strength):
@@ -200,9 +202,14 @@ class WordQuerySet(QuerySet):
             self.feature_queryset = WordFeature.word_features.all()
         self.feature_queryset = self.feature_queryset.filter(strength=strength)
 
-        feature_prefetch = Prefetch('word_features', queryset=self.feature_queryset, to_attr='word_features_list')
+        feature_prefetch = Prefetch(
+            'word_features',
+            queryset=self.feature_queryset,
+            to_attr='word_features_list')
 
-        words = self.prefetch_related(None).filter(word_features__strength=strength).prefetch_related(feature_prefetch)
+        words = self.prefetch_related(None).filter(
+            word_features__strength=strength
+            ).prefetch_related(feature_prefetch)
         return words
 
     def weight(self, weight):
@@ -237,9 +244,14 @@ class WordQuerySet(QuerySet):
             self.feature_queryset = WordFeature.word_features.all()
         self.feature_queryset = self.feature_queryset.filter(weight=weight)
 
-        feature_prefetch = Prefetch('word_features', queryset=self.feature_queryset, to_attr='word_features_list')
+        feature_prefetch = Prefetch(
+            'word_features',
+            queryset=self.feature_queryset,
+            to_attr='word_features_list')
 
-        words = self.prefetch_related(None).filter(word_features__weight=weight).prefetch_related(feature_prefetch)
+        words = self.prefetch_related(None).filter(
+            word_features__weight=weight
+            ).prefetch_related(feature_prefetch)
         return words
 
     def word(self, word):
@@ -279,20 +291,23 @@ class Word(Model):
     """
     A class representing the system's table of offensive Words.
     """
+    user = ManyToManyField(User, related_name='words')
     word_features = ManyToManyField(WordFeature, related_name='words')
     name = CharField(unique=True, max_length=30)
     words = WordQuerySet.as_manager()
 
     def __str__(self):
         """
-        Overwrites the __str__ function to provide a string containing the word's name.
-        :return: A string containing the word's name.
+        Overwrites the __str__ function to provide a string containing the
+        word's name.
+        :return: The word's name as a String.
         """
         return 'Word: {}'.format(self.name)
 
     def __repr__(self):
         """
-        Overwrites the __repr__ function to provide the name and features of the word.
+        Overwrites the __repr__ function to provide the name and features of
+        the word.
         :return: A string containing the word's name and word features
         """
         return 'word: {} features: {}'.format(self.name, self.word_features)
@@ -317,7 +332,7 @@ class Word(Model):
 
     def get_categories(self):
         """
-        Provides a list of the offensive categories that the word is classified as.
+        Provides a list of the offensive categories of which the word belongs.
         :return: A list of offensive categories that the word is classified as.
         """
         cats = list()
@@ -327,3 +342,101 @@ class Word(Model):
 
     class Meta:
         default_manager_name = 'words'
+
+
+class PositiveSmallIntegerRangeField(PositiveSmallIntegerField):
+    def __init__(self, verbose_name=None, name=None, min_value=None,
+                 max_value=None, **kwargs):
+        self.min_value, self.max_value = min_value, max_value
+        PositiveSmallIntegerField.__init__(
+            self, verbose_name, name, **kwargs)
+
+    def formfield(self, **kwargs):
+        defaults = {'min_value': self.min_value,
+                    'max_value': self.max_value}
+        defaults.update(kwargs)
+        return super(PositiveSmallIntegerRangeField,
+                     self).formfield(**defaults)
+
+
+class PositiveIntegerRangeField(PositiveIntegerField):
+    def __init__(self, verbose_name=None, name=None, min_value=None,
+                 max_value=None, **kwargs):
+        self.min_value, self.max_value = min_value, max_value
+        PositiveIntegerField.__init__(
+            self, verbose_name, name, **kwargs)
+
+    def formfield(self, **kwargs):
+        defaults = {'min_value': self.min_value,
+                    'max_value': self.max_value}
+        defaults.update(kwargs)
+        return super(PositiveIntegerRangeField, self).formfield(**defaults)
+
+
+class RatingField(PositiveSmallIntegerRangeField):
+    def __init__(self, verbose_name=None, name=None, **kwargs):
+        PositiveSmallIntegerRangeField.__init__(
+            self, min_value=0, max_value=10, verbose_name=verbose_name,
+            name=name, **kwargs)
+
+
+class WordCountField(PositiveIntegerField):
+    def __init__(self, verbose_name=None, name=None, **kwargs):
+        PositiveIntegerRangeField.__init__(
+            self, min_value=1, max_value=None, verbose_name=verbose_name,
+            name=name, **kwargs)
+
+
+class CategoryRating(Model):
+    user = ManyToManyField(User, related_name='category_ratings')
+    category = ForeignKey(Category, on_delete=CASCADE)
+    rating = RatingField()
+
+
+class WordCount(Model):
+    word = ForeignKey(Word, on_delete=CASCADE)
+    count = WordCountField(default=1)
+
+
+class Content(Model):
+    MEDIA_TYPES = [(0, 'song'),
+                   (1, 'movie'),
+                   (2, 'book'),
+                   (3, 'website'),
+                   (4, 'document')]
+    title = CharField(max_length=125)
+    creator = CharField(max_length=70)
+    media = PositiveSmallIntegerField(choices=MEDIA_TYPES)
+    content = Manager()
+
+    def __str__(self):
+        return "{} by {}".format(self.title, self.creator)
+
+    class Meta:
+        default_manager_name = 'content'
+
+
+class Rating(Model):
+    content = ForeignKey(Content, on_delete=CASCADE)
+    rating = RatingField(default=0)
+    category_ratings = ManyToManyField(
+        CategoryRating,
+        related_name='ratings')
+    word_counts = ManyToManyField(WordCount, related_name='ratings')
+    created = DateTimeField(auto_now_add=True)
+    updated = DateTimeField(auto_now=True)
+    ratings = Manager()
+
+    class Meta:
+        default_manager_name = 'ratings'
+
+
+class UserStorage(Model):
+    user = ForeignKey(User, on_delete=CASCADE)
+    ratings = ManyToManyField(Rating, related_name='user_storage')
+    word_features = ManyToManyField(WordFeature, related_name='user_storage')
+    categories = ManyToManyField(Category, related_name='user_storage')
+    user_storage = Manager()
+
+    class Meta:
+        default_manager_name = 'user_storage'

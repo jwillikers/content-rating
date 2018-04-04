@@ -1,4 +1,8 @@
 .idea
+make.bat
+capstoneproject/testing_resources/Features
+capstoneproject/testing_resources/Tokens
+capstoneproject/testing_resources/TotalTextFeatures
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
