@@ -14,7 +14,7 @@ from django.urls import reverse
 
 from capstoneproject.display import display_categories, display_words, display_category_words
 from capstoneproject.content_rating.algorithm import text
-from capstoneproject.models import Weight
+from capstoneproject import model_helper
 from capstoneproject.app_forms import form_handler
 from capstoneproject.app_forms.forms.login_form import LoginForm
 from capstoneproject.app_forms.forms.signup_form import SignUpForm
@@ -31,6 +31,7 @@ from capstoneproject import parsing
 from capstoneproject.shared import rater
 import os
 
+global_content = text.Text([], 'TEST')
 
 def login(request):
     """
@@ -122,7 +123,7 @@ def profile(request):
         del request.session['delete']
         del request.session['content_compare']
     weight_dict = dict()
-    for weight in Weight.WEIGHTS:
+    for weight in model_helper.get_weights():
         weight_dict[weight[0]] = weight[1]
     recently_rated = {'Pillow Talkin': 9,
                       'Baby Got Back': 7,
@@ -338,7 +339,7 @@ def words(request, category):
         del request.session['delete']
         del request.session['content_compare']
     weight_dict = dict()
-    for weight in Weight.WEIGHTS:
+    for weight in model_helper.get_weights():
         weight_dict[weight[0]] = weight[1]
     context = {'category': category,
                'words': display_category_words(category),
@@ -358,30 +359,6 @@ def get_context(content_type: str, form, content: text.Text, request):
                }
     print(content)
 
-    category_ratings = dict()
-    category_word_counts = dict()
-    #for category in display_categories():
-    #    category_ratings[category.name] = content.get_category_rating(category.name)
-    #    category_word_counts[category.name] = content.get_category_word_counts(category.name)
-
-    #context['category_ratings'] = category_ratings
-    #context['category_word_counts'] = category_word_counts
-    '''
-    category_ratings = dict()
-    category_word_counts = dict()
-    for category in display_categories():
-        category_ratings[category.name] = 5
-        category_word_counts[category.name] = {'word1': 4,
-                                               'word2': 3,
-                                               'word3': 2
-                                               }
-    context = {'name': 'Pillow Talkin',
-               'creator': "Lil' Dicky (feat. BRAIN)",
-               'overall_rating': 7,
-               'category_ratings': category_ratings,
-               'category_word_counts': category_word_counts
-               }
-    '''
     if content_type == 'song':
         context['name'] = form.get_song_title().upper()
         context['creator'] = form.get_song_artist().upper()
@@ -408,19 +385,18 @@ def rating_results(request):
     :param request: The HTML request to handle.
     :return: Renders the rating results page.
     """
+    global global_content
+
     if 'content_compare' in request.session:
         return redirect('compare')
-    category_ratings = dict()
-    category_word_counts = dict()
+    category_ratings = global_content.category_ratings
+    category_word_counts = global_content.category_word_counts
     for category in display_categories():
-        category_ratings[category.name] = 5
-        category_word_counts[category.name] = {'word1': 4,
-                                               'word2': 3,
-                                               'word3': 2
-                                               }
-    context = {'name': 'Pillow Talkin',
-               'creator': "Lil' Dicky (feat. BRAIN)",
-               'overall_rating': 7,
+        category_ratings[category.name] = global_content.get_category_rating(category.name)
+        category_word_counts[category.name] = global_content.get_category_word_counts(category.name)
+    context = {'name': global_content.name,
+               'creator': '',
+               'overall_rating': global_content.overall_rating,
                'category_ratings': category_ratings,
                'category_word_counts': category_word_counts
                }
@@ -431,9 +407,11 @@ def rating_results(request):
             if form.is_valid():  # Check if the form is valid.
                 # Rate text here
                 text = form.cleaned_data.get('copy_in_text')
-                rated_text = rater.algorithm(text)
+                rated_text = rater.algorithm(text, 'Given Text')
                 # Used rated content to change context
                 context = get_context(content_type='copy', form=form, content=rated_text, request=request)
+                global_content = rated_text
+                request.session['category_words'] = rated_text.category_word_counts
             else:
                 request.session['invalid_content'] = True
                 return HttpResponseRedirect(reverse('copy'))
@@ -444,7 +422,8 @@ def rating_results(request):
                 title = form.get_song_title()
                 artist = form.get_song_artist()
                 text = parsing.search_songs(title, artist)
-                rated_text = rater.algorithm(text)
+                rated_text = rater.algorithm(text, title)
+                global_content = rated_text
                 context = get_context(content_type='song', form=form, content=rated_text, request=request)
             else:
                 request.session['invalid_song'] = True
@@ -453,7 +432,8 @@ def rating_results(request):
             form = TVShowSearchForm(request.POST)
             if form.is_valid():
                 text = ''
-                rated_text = rater.algorithm(text)
+                rated_text = rater.algorithm(text, 'Test')
+                global_content = rated_text
                 context = get_context(content_type='tv_show', form=form, content=rated_text, request=request)
                 # Rate text here
             else:
@@ -463,7 +443,8 @@ def rating_results(request):
             form = MovieSearchForm(request.POST)
             if form.is_valid():
                 text = ''
-                rated_text = rater.algorithm(text)  # Rate text here
+                rated_text = rater.algorithm(text, 'Test')  # Rate text here
+                global_content = rated_text
                 context = get_context(content_type='movie', form=form, content=rated_text, request=request)
             else:
                 request.session['invalid_movie'] = True
@@ -478,7 +459,8 @@ def rating_results(request):
                     text = parsing.search_website(url)
                 elif website_title:
                     text = ''
-                rated_text = rater.algorithm(text)  # Rate text here
+                rated_text = rater.algorithm(text, 'Test')  # Rate text here
+                global_content = rated_text
                 context = get_context(content_type='webpage', form=form, content=rated_text, request=request)
             else:
                 request.session['invalid_website'] = True
@@ -501,7 +483,9 @@ def rating_results(request):
                     text = parsing.parse_txt('capstoneproject/tempfile')
                 # print(text)
                 os.remove('capstoneproject/tempfile')  # Delete the temp file after use
-                rater.algorithm(text)
+                rated_text = rater.algorithm(text, 'file')
+                global_content = rated_text
+                context = get_context(content_type='file', form=form, content=rated_text, request=request)
                 # Parse file and rate text here
             else:
                 request.session['invalid_file'] = True
@@ -561,13 +545,23 @@ def word_counts(request, name):
     :param request: The HTML request to handle.
     :return: Renders the word-counts page.
     """
-    category_word_counts = dict()
-    for category in display_categories():
-        category_word_counts[category.name] = {'word1': 4,
+    global global_content
+
+    if request.session.get('category_words'):
+        category_words = request.session['category_words']
+        del request.session['category_words']
+        context = {'name': '',
+                   'category_word_counts': category_words
+                   }
+    else:
+        category_word_counts = dict()
+        for category in display_categories():
+            category_word_counts[category.name] = {'word1': 4,
                                                'word2': 3,
                                                'word3': 2
                                                }
-    context = {'name': name,
+        context = {'name': name,
                'category_word_counts': category_word_counts
                }
+    context['category_word_counts'] = global_content.category_word_counts
     return render(request, 'word-counts.html', context)

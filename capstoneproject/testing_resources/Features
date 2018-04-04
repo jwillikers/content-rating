@@ -1,333 +1,592 @@
-Sent 0: [('we', 'PRP'), ('were', 'VBD'), ('both', 'DT'), ('young', 'JJ'), ('when', 'WRB'), ('i', 'NN'), ('first', 'RB'), ('saw', 'VBD'), ('you', 'PRP')]
-  Total Clean Words: 9  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+Sent 0: [('oh', 'UH'), ('my', 'PRP$'), ('god', 'NN')]
+  Total Clean Words: 2  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {'god': 1}, 'excretory': {}, 'profanity': {'god': 1}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
+  Offensive Categories: ['profanity', 'spiritual']
 
 
-Sent 1: [('i', 'NN'), ('close', 'VBP'), ('my', 'PRP$'), ('eyes', 'NNS'), ('and', 'CC'), ('the', 'DT'), ('flashback', 'NN'), ('starts', 'VBZ')]
-  Total Clean Words: 8  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+Sent 1: [('becky', 'JJ'), ('look', 'NN'), ('at', 'IN'), ('her', 'PRP$'), ('butt', 'NN')]
+  Total Clean Words: 4  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
+  Offensive Categories: ['excretory']
 
 
-Sent 2: [("i'm", 'NN'), ('standing', 'VBG'), ('there', 'RB'), ('on', 'IN'), ('a', 'DT'), ('balcony', 'NN'), ('in', 'IN'), ('summer', 'NN'), ('air', 'NN')]
-  Total Clean Words: 9  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 3: [('see', 'VB'), ('the', 'DT'), ('lights', 'NNS'), ('see', 'VBP'), ('the', 'DT'), ('party', 'NN'), ('the', 'DT'), ('ball', 'NN'), ('gowns', 'NNS')]
-  Total Clean Words: 8  Total Offensive Words: 1
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'ball': 1}, 'spiritual': {}, 'excretory': {}, 'profanity': {'ball': 1}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: ['profanity', 'sexual']
-
-
-Sent 4: [('see', 'VB'), ('you', 'PRP'), ('make', 'VB'), ('your', 'PRP$'), ('way', 'NN'), ('through', 'IN'), ('the', 'DT'), ('crowd', 'NN')]
-  Total Clean Words: 8  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 5: [('and', 'CC'), ('say', 'VB'), ('hello', 'NN')]
-  Total Clean Words: 3  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 6: [('little', 'JJ'), ('did', 'VBD'), ('i', 'VB'), ('know', 'VB')]
+Sent 2: [('it', 'PRP'), ('is', 'VBZ'), ('so', 'RB'), ('big', 'JJ')]
   Total Clean Words: 4  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 7: [('that', 'IN'), ('you', 'PRP'), ('were', 'VBD'), ('romeo', 'VBN'), ('you', 'PRP'), ('were', 'VBD'), ('throwing', 'VBG'), ('pebbles', 'NNS')]
+Sent 3: [('scoff', 'NN')]
+  Total Clean Words: 1  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 4: [('she', 'PRP'), ('looks', 'VBZ'), ('like', 'IN'), ('one', 'CD'), ('of', 'IN'), ('those', 'DT'), ('rap', 'JJ'), ('guys', 'NNS'), ('girlfriends', 'NNS')]
+  Total Clean Words: 9  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 5: [('but', 'CC'), ('you', 'PRP'), ('know', 'VBP'), ('who', 'WP'), ('understands', 'VBP'), ('those', 'DT'), ('rap', 'NNS'), ('guys', 'VBP')]
   Total Clean Words: 8  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 8: [('and', 'CC'), ('my', 'PRP$'), ('daddy', 'NN'), ('said', 'VBD'), ('stay', 'VB'), ('away', 'RB'), ('from', 'IN'), ('juliet', 'JJ')]
-  Total Clean Words: 8  Total Offensive Words: 0
+Sent 6: [('scoff', 'NN')]
+  Total Clean Words: 1  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 9: [('and', 'CC'), ('i', 'NN'), ('was', 'VBD'), ('crying', 'VBG'), ('on', 'IN'), ('the', 'DT'), ('staircase', 'NN')]
+Sent 7: [('they', 'PRP'), ('only', 'RB'), ('talk', 'NN'), ('to', 'TO'), ('her', 'PRP$'), ('because', 'IN'), ('she', 'PRP'), ('looks', 'VBZ'), ('like', 'IN'), ('a', 'DT'), ('total', 'JJ'), ('prostitute', 'NN'), ('kay', 'NN')]
+  Total Clean Words: 12  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'prostitute': 1}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {'prostitute': 1}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['slur', 'sexual']
+
+
+Sent 8: [('i', 'JJ'), ('mean', 'VBP'), ('her', 'PRP$'), ('butt', 'NN'), ('is', 'VBZ'), ('just', 'RB'), ('so', 'RB'), ('big', 'JJ')]
+  Total Clean Words: 7  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['excretory']
+
+
+Sent 9: [('i', 'NN'), ("can't", 'VBP'), ('believe', 'VB'), ("it's", 'NN'), ('just', 'RB'), ('so', 'RB'), ('round', 'JJ'), ("it's", 'NN'), ('like', 'IN'), ('out', 'IN'), ('there', 'EX'), ('i', 'JJ'), ('mean', 'VBP'), ('gross', 'JJ')]
+  Total Clean Words: 14  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 10: [('look', 'NN')]
+  Total Clean Words: 1  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 11: [("she's", 'NN'), ('just', 'RB'), ('so', 'RB'), ('black', 'JJ')]
+  Total Clean Words: 3  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {'black': 1}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['slur']
+
+
+Sent 12: [('sir', 'JJ'), ('mix-a-lot', 'NN'), ('i', 'NN'), ('like', 'IN'), ('big', 'JJ'), ('butts', 'NN'), ('and', 'CC'), ('i', 'NN'), ('can', 'MD'), ('not', 'RB'), ('lie', 'VB')]
+  Total Clean Words: 11  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 13: [('you', 'PRP'), ('other', 'JJ'), ('brothers', 'NNS'), ("can't", 'VBP'), ('deny', 'VB'), ('that', 'IN'), ('when', 'WRB'), ('a', 'DT'), ('girl', 'NN'), ('walks', 'NNS'), ('in', 'IN'), ('with', 'IN'), ('an', 'DT'), ('itty', 'JJ'), ('bitty', 'JJ'), ('waist', 'NN'), ('and', 'CC'), ('a', 'DT'), ('round', 'JJ'), ('thing', 'NN'), ('in', 'IN'), ('your', 'PRP$'), ('face', 'NN'), ('you', 'PRP'), ('get', 'VBP'), ('sprung', 'JJ'), ('wanna', 'NN'), ('pull', 'VBZ'), ('up', 'RP'), ('tough', 'JJ')]
+  Total Clean Words: 30  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 14: [('cause', 'NN'), ('you', 'PRP'), ('notice', 'VBP'), ('that', 'IN'), ('butt', 'NN'), ('was', 'VBD'), ('stuffed', 'VBN'), ('deep', 'RB'), ('in', 'IN'), ('the', 'DT'), ('jeans', 'NNS'), ("she's", 'VBP'), ('wearing', 'VBG')]
+  Total Clean Words: 12  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['excretory']
+
+
+Sent 15: [("i'm", 'NN'), ('hooked', 'VBD'), ('and', 'CC'), ('i', 'JJ'), ("can't", 'VBP'), ('stop', 'VB'), ('staring', 'NN')]
   Total Clean Words: 7  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 10: [('begging', 'VBG'), ('you', 'PRP'), ('please', 'VBP'), ("don't", 'VB'), ('go', 'VB')]
-  Total Clean Words: 5  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 11: [('and', 'CC'), ('i', 'NN'), ('said', 'VBD')]
-  Total Clean Words: 3  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 12: [('romeo', 'NNS'), ('take', 'VBP'), ('me', 'PRP'), ('somewhere', 'RB'), ('we', 'PRP'), ('can', 'MD'), ('be', 'VB'), ('alone', 'RB')]
-  Total Clean Words: 8  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 13: [("i'll", 'NN'), ('be', 'VB'), ('waiting', 'VBG'), ('all', 'DT'), ("that's", 'NN'), ('left', 'VBD'), ('to', 'TO'), ('do', 'VB'), ('is', 'VBZ'), ('run', 'VB')]
-  Total Clean Words: 10  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 14: [("you'll", 'RB'), ('be', 'VB'), ('the', 'DT'), ('prince', 'NN'), ('and', 'CC'), ("i'll", 'NN'), ('be', 'VB'), ('the', 'DT'), ('princess', 'NN')]
-  Total Clean Words: 9  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 15: [("it's", 'VB'), ('a', 'DT'), ('love', 'NN'), ('story', 'NN'), ('baby', 'NN'), ('just', 'RB'), ('say', 'VB'), ('yes', 'UH')]
-  Total Clean Words: 8  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 16: [('so', 'RB'), ('i', 'JJ'), ('sneak', 'VBP'), ('out', 'RP'), ('to', 'TO'), ('the', 'DT'), ('garden', 'NN'), ('to', 'TO'), ('see', 'VB'), ('you', 'PRP')]
-  Total Clean Words: 10  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 17: [('we', 'PRP'), ('keep', 'VBP'), ('quiet', 'JJ'), ('cause', 'NN'), ("we're", 'NN'), ('dead', 'JJ'), ('if', 'IN'), ('they', 'PRP'), ('knew', 'VBD')]
-  Total Clean Words: 8  Total Offensive Words: 1
-  Strongly Offensive Words: {'violence': {}, 'death': {'dead': 1}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: ['death']
-
-
-Sent 18: [('so', 'RB'), ('close', 'RB'), ('your', 'PRP$'), ('eyes', 'NNS'), ('escape', 'VBP'), ('this', 'DT'), ('town', 'NN'), ('for', 'IN'), ('a', 'DT'), ('little', 'JJ'), ('while', 'NN')]
+Sent 16: [('oh', 'IN'), ('baby', 'NN'), ('i', 'NN'), ('wanna', 'VBP'), ('get', 'VB'), ('with', 'IN'), ('you', 'PRP'), ('and', 'CC'), ('take', 'VB'), ('your', 'PRP$'), ('picture', 'NN')]
   Total Clean Words: 11  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 19: [('cause', 'NN'), ('you', 'PRP'), ('were', 'VBD'), ('romeo', 'VB'), ('i', 'NN'), ('was', 'VBD'), ('a', 'DT'), ('scarlet', 'NN'), ('letter', 'NN')]
-  Total Clean Words: 9  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+Sent 17: [('my', 'PRP$'), ('homeboys', 'NNS'), ('tried', 'VBN'), ('to', 'TO'), ('warn', 'VB'), ('me', 'PRP'), ('but', 'CC'), ('that', 'IN'), ('butt', 'VBP'), ('you', 'PRP'), ('got', 'VBD'), ('makes', 'VBZ'), ('me', 'PRP'), ('so', 'IN'), ('horny', 'JJ')]
+  Total Clean Words: 13  Total Offensive Words: 2
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'horny': 1}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
+  Offensive Categories: ['excretory', 'sexual']
 
 
-Sent 20: [('and', 'CC'), ('my', 'PRP$'), ('daddy', 'NN'), ('said', 'VBD'), ('stay', 'VB'), ('away', 'RB'), ('from', 'IN'), ('juliet', 'JJ')]
-  Total Clean Words: 8  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 21: [('but', 'CC'), ('you', 'PRP'), ('were', 'VBD'), ('everything', 'NN'), ('to', 'TO'), ('me', 'PRP'), ('i', 'VB'), ('was', 'VBD'), ('begging', 'VBG'), ('you', 'PRP'), ('please', 'VBP'), ("don't", 'VB'), ('go', 'VB')]
-  Total Clean Words: 13  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 22: [('and', 'CC'), ('i', 'NN'), ('said', 'VBD'), ('romeo', 'NNS'), ('take', 'VB'), ('me', 'PRP'), ('somewhere', 'RB'), ('we', 'PRP'), ('can', 'MD'), ('be', 'VB'), ('alone', 'RB')]
-  Total Clean Words: 11  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 23: [("i'll", 'NN'), ('be', 'VB'), ('waiting', 'VBG'), ('all', 'DT'), ("there's", 'NN'), ('left', 'VBD'), ('to', 'TO'), ('do', 'VB'), ('is', 'VBZ'), ('run', 'VB')]
-  Total Clean Words: 10  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 24: [("you'll", 'RB'), ('be', 'VB'), ('the', 'DT'), ('prince', 'NN'), ('and', 'CC'), ("i'll", 'NN'), ('be', 'VB'), ('the', 'DT'), ('princess', 'NN')]
-  Total Clean Words: 9  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 25: [("it's", 'VB'), ('a', 'DT'), ('love', 'NN'), ('story', 'NN'), ('baby', 'NN'), ('just', 'RB'), ('say', 'VB'), ('yes', 'UH')]
-  Total Clean Words: 8  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 26: [('romeo', 'NN'), ('save', 'VB'), ('me', 'PRP'), ("they're", 'VB'), ('trying', 'VBG'), ('to', 'TO'), ('tell', 'VB'), ('me', 'PRP'), ('how', 'WRB'), ('to', 'TO'), ('feel', 'VB')]
-  Total Clean Words: 11  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 27: [('this', 'DT'), ('love', 'NN'), ('is', 'VBZ'), ('difficult', 'JJ'), ('but', 'CC'), ("it's", 'JJ'), ('real', 'JJ')]
-  Total Clean Words: 7  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 28: [("don't", 'NN'), ('be', 'VB'), ('afraid', 'JJ'), ("we'll", 'NNS'), ('make', 'VBP'), ('it', 'PRP'), ('out', 'IN'), ('of', 'IN'), ('this', 'DT'), ('mess', 'NN')]
-  Total Clean Words: 10  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 29: [("it's", 'VB'), ('a', 'DT'), ('love', 'NN'), ('story', 'NN'), ('baby', 'NN'), ('just', 'RB'), ('say', 'VB'), ('yes', 'UH')]
-  Total Clean Words: 8  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 30: [('oh', 'UH'), ('oh', 'NN')]
+Sent 18: [('ooh', 'IN'), ("rump-o'-smooth-skin", 'JJ')]
   Total Clean Words: 2  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 31: [('i', 'NN'), ('got', 'VBD'), ('tired', 'JJ'), ('of', 'IN'), ('waiting', 'VBG')]
-  Total Clean Words: 5  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 32: [('wondering', 'VBG'), ('if', 'IN'), ('you', 'PRP'), ('were', 'VBD'), ('ever', 'RB'), ('coming', 'VBG'), ('around', 'RB')]
-  Total Clean Words: 7  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 33: [('my', 'PRP$'), ('faith', 'NN'), ('in', 'IN'), ('you', 'PRP'), ('was', 'VBD'), ('fading', 'VBG')]
-  Total Clean Words: 5  Total Offensive Words: 1
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {'faith': 1}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: ['spiritual']
-
-
-Sent 34: [('when', 'WRB'), ('i', 'NN'), ('met', 'VBD'), ('you', 'PRP'), ('on', 'IN'), ('the', 'DT'), ('outskirts', 'NNS'), ('of', 'IN'), ('town', 'NN')]
-  Total Clean Words: 9  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 35: [('and', 'CC'), ('i', 'NN'), ('said', 'VBD')]
-  Total Clean Words: 3  Total Offensive Words: 0
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: []
-
-
-Sent 36: [('romeo', 'NN'), ('save', 'VB'), ('me', 'PRP'), ("i've", 'JJ'), ('been', 'VBN'), ('feeling', 'VBG'), ('so', 'RB'), ('alone', 'RB')]
+Sent 19: [('you', 'PRP'), ('say', 'VBP'), ('you', 'PRP'), ('wanna', 'VBP'), ('get', 'VB'), ('in', 'IN'), ('my', 'PRP$'), ('benz', 'NN')]
   Total Clean Words: 8  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 37: [('i', 'JJ'), ('keep', 'VBP'), ('waiting', 'VBG'), ('for', 'IN'), ('you', 'PRP'), ('but', 'CC'), ('you', 'PRP'), ('never', 'RB'), ('come', 'VBP')]
-  Total Clean Words: 9  Total Offensive Words: 0
+Sent 20: [('well', 'RB'), ('use', 'IN'), ('me', 'PRP'), ('use', 'IN'), ('me', 'PRP'), ('cause', 'VBP'), ('you', 'PRP'), ("ain't", 'VBP'), ('that', 'DT'), ('average', 'JJ'), ('groupie', 'NN')]
+  Total Clean Words: 11  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 38: [('is', 'VBZ'), ('this', 'DT'), ('in', 'IN'), ('my', 'PRP$'), ('head', 'NN')]
+Sent 21: [("i've", 'NN'), ('seen', 'VBN'), ('them', 'PRP'), ('dancin', 'VBP'), ('to', 'TO'), ('hell', 'VB'), ('with', 'IN'), ('romancin', 'NN')]
+  Total Clean Words: 7  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {'hell': 1}, 'excretory': {}, 'profanity': {'hell': 1}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['profanity', 'spiritual']
+
+
+Sent 22: [("she's", 'JJ'), ('sweat', 'NN'), ('wet', 'NN'), ('got', 'VBD'), ('it', 'PRP'), ('goin', 'VBZ'), ('like', 'IN'), ('a', 'DT'), ('turbo', 'NN'), ('vette', 'NN')]
+  Total Clean Words: 10  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 23: [("i'm", 'NN'), ('tired', 'VBD'), ('of', 'IN'), ('magazines', 'NNS'), ('sayin', 'VBP'), ('flat', 'JJ'), ('butts', 'NNS'), ('are', 'VBP'), ('the', 'DT'), ('thing', 'NN')]
+  Total Clean Words: 10  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 24: [('take', 'VB'), ('the', 'DT'), ('average', 'JJ'), ('black', 'JJ'), ('man', 'NN'), ('and', 'CC'), ('ask', 'VB'), ('him', 'PRP'), ('that', 'IN'), ('she', 'PRP'), ('gotta', 'VBD'), ('pack', 'RB'), ('much', 'JJ'), ('back', 'RB')]
+  Total Clean Words: 13  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {'black': 1}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['slur']
+
+
+Sent 25: [('so', 'RB'), ('fellas', 'JJ')]
+  Total Clean Words: 2  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 26: [('yeah', 'NN')]
+  Total Clean Words: 1  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 27: [('fellas', 'NNS')]
+  Total Clean Words: 1  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 28: [('yeah', 'NN')]
+  Total Clean Words: 1  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 29: [('has', 'VBZ'), ('your', 'PRP$'), ('girlfriend', 'NN'), ('got', 'VBD'), ('the', 'DT'), ('butt', 'NN')]
+  Total Clean Words: 5  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['excretory']
+
+
+Sent 30: [('hell', 'NN'), ('yeah', 'NN')]
+  Total Clean Words: 1  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {'hell': 1}, 'excretory': {}, 'profanity': {'hell': 1}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['profanity', 'spiritual']
+
+
+Sent 31: [('tell', 'VB'), ('em', 'NN'), ('to', 'TO'), ('shake', 'VB'), ('it', 'PRP')]
+  Total Clean Words: 5  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 32: [('shake', 'VB'), ('it', 'PRP')]
+  Total Clean Words: 2  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 33: [('shake', 'VB'), ('it', 'PRP')]
+  Total Clean Words: 2  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 34: [('shake', 'VB'), ('it', 'PRP')]
+  Total Clean Words: 2  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 35: [('shake', 'VB'), ('that', 'DT'), ('healthy', 'JJ'), ('butt', 'NN')]
+  Total Clean Words: 3  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['excretory']
+
+
+Sent 36: [('baby', 'NN'), ('got', 'VBD'), ('back', 'RB')]
+  Total Clean Words: 3  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 37: [('la', 'JJ'), ('face', 'NN'), ('with', 'IN'), ('oakland', 'NN'), ('booty', 'NN')]
   Total Clean Words: 4  Total Offensive Words: 1
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'head': 1}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'booty': 1}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: ['sexual']
 
 
-Sent 39: [('i', 'JJ'), ("don't", 'NN'), ('know', 'VB'), ('what', 'WP'), ('to', 'TO'), ('think', 'VB')]
-  Total Clean Words: 6  Total Offensive Words: 0
+Sent 38: [('baby', 'NN'), ('got', 'VBD'), ('back', 'RB')]
+  Total Clean Words: 3  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 40: [('he', 'PRP'), ('knelt', 'VBD'), ('to', 'TO'), ('the', 'DT'), ('ground', 'NN'), ('and', 'CC'), ('pulled', 'VBD'), ('out', 'RP'), ('a', 'DT'), ('ring', 'NN'), ('and', 'CC'), ('said', 'VBD')]
+Sent 39: [('la', 'JJ'), ('face', 'NN'), ('with', 'IN'), ('oakland', 'NN'), ('booty', 'NN')]
+  Total Clean Words: 4  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'booty': 1}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['sexual']
+
+
+Sent 40: [('la', 'JJ'), ('face', 'NN'), ('with', 'IN'), ('oakland', 'NN'), ('booty', 'NN')]
+  Total Clean Words: 4  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'booty': 1}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['sexual']
+
+
+Sent 41: [('sir', 'JJ'), ('mix-a-lot', 'NN'), ('i', 'NN'), ('like', 'IN'), ('em', 'NN'), ('round', 'NN'), ('and', 'CC'), ('big', 'JJ'), ('and', 'CC'), ('when', 'WRB'), ("i'm", 'NN'), ('throwin', 'VB'), ('a', 'DT'), ('gig', 'NN'), ('i', 'NN'), ('just', 'RB'), ("can't", 'VB'), ('help', 'NN'), ('myself', 'PRP'), ("i'm", 'VBP'), ('actin', 'RB'), ('like', 'IN'), ('an', 'DT'), ('animal', 'NN')]
+  Total Clean Words: 24  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 42: [('now', 'RB'), ("here's", 'VBP'), ('my', 'PRP$'), ('scandal', 'NN'), ('i', 'NN'), ('wanna', 'VBP'), ('get', 'VB'), ('you', 'PRP'), ('home', 'NN'), ('and', 'CC'), ('ugh', 'JJ'), ('double-up', 'JJ'), ('ugh', 'IN'), ('ugh', 'JJ')]
+  Total Clean Words: 14  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 43: [('i', 'NN'), ("ain't", 'VBP'), ('talkin', 'VB'), ('bout', 'IN'), ('playboy', 'NN'), ('cause', 'NN'), ('silicone', 'NN'), ('parts', 'NNS'), ('are', 'VBP'), ('made', 'VBN'), ('for', 'IN'), ('toys', 'NNS')]
+  Total Clean Words: 11  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'playboy': 1}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['sexual']
+
+
+Sent 44: [('i', 'NN'), ('want', 'VBP'), ('em', 'JJ'), ('real', 'JJ'), ('thick', 'NN'), ('and', 'CC'), ('juicy', 'NN')]
+  Total Clean Words: 7  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 45: [('so', 'RB'), ('find', 'VB'), ('that', 'DT'), ('juicy', 'NN'), ('double', 'NN')]
+  Total Clean Words: 5  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 46: [("mix-a-lot's", 'NN'), ('in', 'IN'), ('trouble', 'NN')]
+  Total Clean Words: 3  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 47: [('beggin', 'NN'), ('for', 'IN'), ('a', 'DT'), ('piece', 'NN'), ('of', 'IN'), ('that', 'DT'), ('bubble', 'JJ')]
+  Total Clean Words: 7  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 48: [('so', 'RB'), ("i'm", 'JJ'), ('lookin', 'NN'), ('at', 'IN'), ('rock', 'NN'), ('videos', 'NNS'), ('knock-kneed', 'JJ'), ('bimbos', 'JJ'), ('walkin', 'NN'), ('like', 'IN'), ('hoes', 'NNS')]
+  Total Clean Words: 11  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 49: [('you', 'PRP'), ('can', 'MD'), ('have', 'VB'), ('them', 'PRP'), ('bimbos', 'VB')]
+  Total Clean Words: 5  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 50: [("i'll", 'JJ'), ('keep', 'VB'), ('my', 'PRP$'), ('women', 'NNS'), ('like', 'IN'), ('flo', 'NN'), ('jo', 'NN')]
+  Total Clean Words: 7  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 51: [('a', 'DT'), ('word', 'NN'), ('to', 'TO'), ('the', 'DT'), ('thick', 'JJ'), ('soul', 'NN'), ('sisters', 'NNS'), ('i', 'VBP'), ('wanna', 'VBP'), ('get', 'VB'), ('with', 'IN'), ('ya', 'NN')]
   Total Clean Words: 12  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 41: [('marry', 'VB'), ('me', 'PRP'), ('juliet', 'JJ'), ("you'll", 'NN'), ('never', 'RB'), ('have', 'VBP'), ('to', 'TO'), ('be', 'VB'), ('alone', 'RB')]
-  Total Clean Words: 9  Total Offensive Words: 0
+Sent 52: [('i', 'NN'), ("won't", 'VBP'), ('cuss', 'NN'), ('or', 'CC'), ('hit', 'VB'), ('ya', 'NNS')]
+  Total Clean Words: 6  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 42: [('i', 'NN'), ('love', 'VBP'), ('you', 'PRP'), ('and', 'CC'), ("that's", 'VB'), ('all', 'DT'), ('i', 'NNS'), ('really', 'RB'), ('know', 'VBP')]
-  Total Clean Words: 9  Total Offensive Words: 0
+Sent 53: [('but', 'CC'), ('i', 'VB'), ('gotta', 'VBP'), ('be', 'VB'), ('straight', 'VBN'), ('when', 'WRB'), ('i', 'NNS'), ('say', 'VBP'), ('i', 'JJ'), ('wanna', 'VBP'), ('moan', 'NN'), ('till', 'IN'), ('the', 'DT'), ('break', 'NN'), ('of', 'IN'), ('dawn', 'NN')]
+  Total Clean Words: 16  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 43: [('i', 'NN'), ('talked', 'VBD'), ('to', 'TO'), ('your', 'PRP$'), ('dad', 'NN'), ('go', 'VB'), ('pick', 'NN'), ('out', 'RP'), ('a', 'DT'), ('white', 'JJ'), ('dress', 'NN')]
-  Total Clean Words: 10  Total Offensive Words: 1
-  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {'white': 1}}
+Sent 54: [('baby', 'NN'), ('got', 'VBD'), ('it', 'PRP'), ('goin', 'VB'), ('on', 'IN')]
+  Total Clean Words: 5  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
-  Offensive Categories: ['slur']
+  Offensive Categories: []
 
 
-Sent 44: [("it's", 'VB'), ('a', 'DT'), ('love', 'NN'), ('story', 'NN'), ('baby', 'NN'), ('just', 'RB'), ('say', 'VB'), ('yes', 'UH')]
+Sent 55: [('a', 'DT'), ('lot', 'NN'), ('of', 'IN'), ('simps', 'NNS'), ("won't", 'VBP'), ('like', 'IN'), ('this', 'DT'), ('song', 'NN')]
   Total Clean Words: 8  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 45: [('oh', 'UH'), ('oh', 'NN')]
+Sent 56: [('cause', 'VB'), ('them', 'PRP'), ('punks', 'NNS'), ('like', 'IN'), ('to', 'TO'), ('hit', 'VB'), ('it', 'PRP'), ('and', 'CC'), ('quit', 'VB'), ('it', 'PRP'), ('and', 'CC'), ("i'd", 'VB'), ('rather', 'RB'), ('stay', 'NN'), ('and', 'CC'), ('play', 'NN')]
+  Total Clean Words: 16  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 57: [('cause', 'NN'), ("i'm", 'NN'), ('long', 'RB'), ('and', 'CC'), ("i'm", 'VB'), ('strong', 'JJ'), ('and', 'CC'), ("i'm", 'VB'), ('down', 'RP'), ('to', 'TO'), ('get', 'VB'), ('the', 'DT'), ('friction', 'NN'), ('on', 'IN')]
+  Total Clean Words: 14  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 58: [('so', 'RB'), ('ladies', 'NNS')]
   Total Clean Words: 2  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 46: [('oh', 'UH'), ('oh', 'NN')]
+Sent 59: [('yeah', 'NN')]
+  Total Clean Words: 1  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 60: [('ladies', 'NNS')]
+  Total Clean Words: 1  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 61: [('yeah', 'RB'), ('if', 'IN'), ('you', 'PRP'), ('wanna', 'VBP'), ('roll', 'VB'), ('in', 'IN'), ('my', 'PRP$'), ('mercedes', 'NNS'), ('yeah', 'VBP')]
+  Total Clean Words: 9  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 62: [('then', 'RB'), ('turn', 'VB'), ('around', 'RP')]
+  Total Clean Words: 3  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 63: [('stick', 'VB'), ('it', 'PRP'), ('out', 'RP')]
+  Total Clean Words: 3  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 64: [('even', 'RB'), ('white', 'JJ'), ('boys', 'NNS'), ('got', 'VBD'), ('to', 'TO'), ('shout', 'VB'), ('baby', 'NN'), ('got', 'VBD'), ('back', 'RB')]
+  Total Clean Words: 8  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {'white': 1}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['slur']
+
+
+Sent 65: [('baby', 'NN'), ('got', 'VBD'), ('back', 'RB')]
+  Total Clean Words: 3  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 66: [('yeah', 'NNS'), ('baby', 'NN'), ('when', 'WRB'), ('it', 'PRP'), ('comes', 'VBZ'), ('to', 'TO'), ('females', 'NNS'), ('cosmo', 'VBP'), ("ain't", 'JJ'), ('got', 'VBD'), ('nothin', 'JJ'), ('to', 'TO'), ('do', 'VB'), ('with', 'IN'), ('my', 'PRP$'), ('selection', 'NN')]
+  Total Clean Words: 16  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 67: [('36-24-', 'JJ'), ('36', 'CD')]
   Total Clean Words: 2  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Offensive Categories: []
 
 
-Sent 47: [('cause', 'NN'), ('we', 'PRP'), ('were', 'VBD'), ('both', 'DT'), ('young', 'JJ'), ('when', 'WRB'), ('i', 'NN'), ('first', 'RB'), ('saw', 'VBD'), ('you', 'PRP')]
+Sent 68: [('ha', 'NN'), ('ha', 'VBZ'), ('only', 'RB'), ('if', 'IN'), ("she's", 'VBN'), ('5', 'CD'), ('3', 'CD')]
+  Total Clean Words: 7  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 69: [('sir', 'JJ'), ('mix-a-lot', 'NN'), ('so', 'IN'), ('your', 'PRP$'), ('girlfriend', 'NN'), ('rolls', 'VBZ'), ('a', 'DT'), ('honda', 'NN'), ('playin', 'NN'), ('workout', 'IN'), ('tapes', 'NNS'), ('by', 'IN'), ('fonda', 'NN')]
+  Total Clean Words: 13  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 70: [('but', 'CC'), ('fonda', 'VBP'), ("ain't", 'NNS'), ('got', 'VBD'), ('a', 'DT'), ('motor', 'NN'), ('in', 'IN'), ('the', 'DT'), ('back', 'NN'), ('of', 'IN'), ('her', 'PRP$'), ('honda', 'NN')]
+  Total Clean Words: 12  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 71: [('my', 'PRP$'), ('anaconda', 'NNS'), ("don't", 'VBP'), ('want', 'VBP'), ('none', 'NN'), ('unless', 'IN'), ("you've", 'NN'), ('got', 'VBD'), ('buns', 'NNS'), ('hun', 'NN')]
+  Total Clean Words: 10  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 72: [('you', 'PRP'), ('can', 'MD'), ('do', 'VB'), ('side', 'VB'), ('bends', 'NNS'), ('or', 'CC'), ('sit-ups', 'NNS'), ('but', 'CC'), ('please', 'VBP'), ("don't", 'VB'), ('lose', 'VB'), ('that', 'DT'), ('butt', 'NN')]
+  Total Clean Words: 12  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['excretory']
+
+
+Sent 73: [('some', 'DT'), ('brothers', 'NNS'), ('wanna', 'VBP'), ('play', 'VB'), ('that', 'DT'), ('hard', 'JJ'), ('role', 'NN'), ('and', 'CC'), ('tell', 'VB'), ('you', 'PRP'), ('that', 'IN'), ('the', 'DT'), ('butt', 'NN'), ("ain't", 'NN'), ('gold', 'NN')]
+  Total Clean Words: 13  Total Offensive Words: 2
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'hard': 1}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['sexual', 'excretory']
+
+
+Sent 74: [('so', 'RB'), ('they', 'PRP'), ('toss', 'VBP'), ('it', 'PRP'), ('and', 'CC'), ('leave', 'VB'), ('it', 'PRP'), ('and', 'CC'), ('i', 'VB'), ('pull', 'VBP'), ('up', 'RP'), ('quick', 'JJ'), ('to', 'TO'), ('retrieve', 'VB'), ('it', 'PRP')]
+  Total Clean Words: 14  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'toss': 1}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['sexual']
+
+
+Sent 75: [('so', 'RB'), ('cosmo', 'JJ'), ('says', 'VBZ'), ("you're", 'NN'), ('fat', 'NN'), ('well', 'RB'), ('i', 'VB'), ("ain't", 'VBP'), ('down', 'RP'), ('with', 'IN'), ('that', 'DT')]
+  Total Clean Words: 10  Total Offensive Words: 1
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {'fat': 1}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['slur']
+
+
+Sent 76: [('cause', 'VB'), ('your', 'PRP$'), ('waist', 'NN'), ('is', 'VBZ'), ('small', 'JJ'), ('and', 'CC'), ('your', 'PRP$'), ('curves', 'NNS'), ('are', 'VBP'), ('kickin', 'JJ'), ('and', 'CC'), ("i'm", 'JJ'), ('thinkin', 'NN'), ('bout', 'NN'), ('stickin', 'NN'), ('to', 'TO'), ('the', 'DT'), ('beanpole', 'NN'), ('dames', 'VBZ'), ('in', 'IN'), ('the', 'DT'), ('magazines', 'NNS'), ('you', 'PRP'), ("ain't", 'VBP'), ('it', 'PRP'), ('miss', 'JJ'), ('thing', 'NN')]
+  Total Clean Words: 27  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 77: [('give', 'VB'), ('me', 'PRP'), ('a', 'DT'), ('sister', 'NN'), ('i', 'NN'), ("can't", 'VBP'), ('resist', 'VB'), ('her', 'PRP$')]
+  Total Clean Words: 8  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 78: [('red', 'JJ'), ('beans', 'NNS'), ('and', 'CC'), ('rice', 'NN'), ("didn't", 'NN'), ('miss', 'VBD'), ('her', 'PRP$')]
+  Total Clean Words: 7  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 79: [('some', 'DT'), ('knucklehead', 'NN'), ('tried', 'VBD'), ('to', 'TO'), ('diss', 'VB'), ('cause', 'VB'), ('his', 'PRP$'), ('girls', 'NNS'), ('are', 'VBP'), ('on', 'IN'), ('my', 'PRP$'), ('list', 'NN')]
+  Total Clean Words: 12  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 80: [('he', 'PRP'), ('had', 'VBD'), ('game', 'NN'), ('but', 'CC'), ('he', 'PRP'), ('chose', 'VBD'), ('to', 'TO'), ('hit', 'VB'), ('em', 'JJ'), ('and', 'CC'), ('i', 'JJ'), ('pull', 'VBP'), ('up', 'RP'), ('quick', 'RB'), ('to', 'TO'), ('get', 'VB'), ('wit', 'JJ'), ('em', 'NN')]
+  Total Clean Words: 18  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 81: [('so', 'RB'), ('ladies', 'VBZ'), ('if', 'IN'), ('the', 'DT'), ('butt', 'NN'), ('is', 'VBZ'), ('round', 'VBN'), ('and', 'CC'), ('you', 'PRP'), ('want', 'VBP'), ('a', 'DT'), ('triple', 'JJ'), ('x', 'NN'), ('throw', 'VBP'), ('down', 'RP'), ('dial', 'JJ'), ('1-900-', 'JJ'), ('mixalot', 'NN'), ('and', 'CC'), ('kick', 'VB'), ('them', 'PRP'), ('nasty', 'JJ'), ('thoughts', 'NNS')]
+  Total Clean Words: 21  Total Offensive Words: 2
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {'nasty': 1}, 'spiritual': {}, 'excretory': {'butt': 1}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: ['excretory', 'sexual']
+
+
+Sent 82: [('baby', 'NN'), ('got', 'VBD'), ('back', 'RB')]
+  Total Clean Words: 3  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 83: [('baby', 'NN'), ('got', 'VBD'), ('back', 'RB')]
+  Total Clean Words: 3  Total Offensive Words: 0
+  Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
+  Offensive Categories: []
+
+
+Sent 84: [('little', 'RB'), ('in', 'IN'), ('the', 'DT'), ('middle', 'NN'), ('but', 'CC'), ('she', 'PRP'), ('got', 'VBD'), ('much', 'RB'), ('back', 'RB'), ('4x', 'CD')]
   Total Clean Words: 10  Total Offensive Words: 0
   Strongly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}
   Weakly Offensive Words: {'violence': {}, 'death': {}, 'drug': {}, 'sexual': {}, 'spiritual': {}, 'excretory': {}, 'profanity': {}, 'slur': {}}

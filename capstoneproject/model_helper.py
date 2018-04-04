@@ -1,8 +1,7 @@
 """
 This file contains functions used to provide data from the database.
 """
-from capstoneproject.models import Category
-from capstoneproject.models import Word
+from capstoneproject.models import Word, Weight, Category
 import traceback
 
 
@@ -38,3 +37,7 @@ def get_word(word):
     except TypeError:
         print(traceback.print_exc())
     return word_model
+
+
+def get_weights():
+    return Weight.WEIGHTS

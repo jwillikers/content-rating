@@ -9,11 +9,12 @@ class Text:
     Class to represent the text to classify and rate.
     """
 
-    def __init__(self, text_sentences):
+    def __init__(self, text_sentences, name):
         """
         Initialize a Text object
         :param text_sentences: the sentences contained within the text, a list of Sentence objects.
         """
+        self.name = name
         self.offensive_sentences = dict()
         self.sentence_list = text_sentences
         self.total_strongly_offensive_words_dict = dict()
@@ -55,7 +56,7 @@ class Text:
             self.total_weakly_offensive_words_dict['{}'.format(category.name)] = dict()
         self.overall_rating = 0
 
-    def add_strongly_offensive_words(self, offensive_words):
+    def add_strongly_offensive_words(self, offensive_words: dict):
         """
         Use a dictionary of strongly offensive words and their quantities from a single sentence to update the
         text's total count.
@@ -70,7 +71,7 @@ class Text:
                 except KeyError:
                     self.category_word_counts[category][word] = word_count
 
-    def add_weakly_offensive_words(self, offensive_words):
+    def add_weakly_offensive_words(self, offensive_words: dict):
         """
         Use a dictionary of weakly offensive words and their quantities from a single sentence to update the
         text's total count.
@@ -85,7 +86,7 @@ class Text:
                 except KeyError:
                     self.category_word_counts[category][word] = word_count
 
-    def add_offensive_words(self, number_of_offensive_words):
+    def add_offensive_words(self, number_of_offensive_words: int):
         """
         Update the text's total number of offensive words by adding the given amount.
         :param number_of_offensive_words: The number of offensive words to increase the total number of offensive words
@@ -94,13 +95,16 @@ class Text:
         """
         self.total_number_of_offensive_words += number_of_offensive_words
 
-    def add_clean_words(self, number_of_clean_words):
+    def add_clean_words(self, number_of_clean_words: int):
         """
         Update the text's total number of clean words by adding the given amount.
         :param number_of_clean_words: The number of clean words to increase the total number of clean words by.
         :return: None.
         """
         self.total_number_of_clean_words += number_of_clean_words
+
+    def update_offensive_sentences(self, sent_num: int, offensive_categories: list):
+        self.offensive_sentences[sent_num] = offensive_categories
 
     def extract_features(self):
         """
@@ -117,12 +121,11 @@ class Text:
                     print(sent)
                     feature_file.write(str(sent) + '\n\n')
                     # sent.extract_syntactic_features()  # Extract the syntactic features from each sentence.
-                    text_features['{}:Offensive'.format(sent.sentence_number)] = sent.offensive_categories
-
                     self.add_strongly_offensive_words(sent.strongly_offensive_words)
                     self.add_weakly_offensive_words(sent.weakly_offensive_words)
                     self.add_offensive_words(sent.number_of_offensive_words)
                     self.add_clean_words(sent.number_of_clean_words)
+                    self.update_offensive_sentences(sent_num=sent.sentence_number, offensive_categories=sent.offensive_categories)
                 text_features['Number of offensive words'] = self.total_number_of_offensive_words
                 text_features['Number of clean words'] = self.total_number_of_clean_words
             # print(str(text_features))
