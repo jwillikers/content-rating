@@ -418,13 +418,14 @@ def rating_results(request):
                                                'word2': 3,
                                                'word3': 2
                                                }
+    '''
     context = {'name': 'Pillow Talkin',
                'creator': "Lil' Dicky (feat. BRAIN)",
                'overall_rating': 7,
                'category_ratings': category_ratings,
                'category_word_counts': category_word_counts
                }
-
+    '''
     if request.method == 'POST':
         if request.POST.get('submit') == 'copy-in':
             form = CopyInForm(request.POST)
@@ -506,7 +507,6 @@ def rating_results(request):
             else:
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
-    print(context)
     return render(request, 'rating-result.html', context)
 
 

@@ -45,22 +45,7 @@
                         <div style="text-align: center;"><h5>By Category</h5></div>
                         {% for category, rating in category_ratings.items %}
                             <hr class="my-4">
-                            <p class="dropdown-toggle display-6" data-toggle="dropdown" href="#"
-                               aria-expanded="false">{{ category|title }}:</p>
-                            <div x-placement="bottom-start"
-                            style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                {% for word in category_word_counts|get_item:category %}
-                                    <a class="dropdown-item"
-                                       href="#">{{ word }}: {{ category_word_counts|get_item:category|get_item:word }}</a>
-                                {% endfor %}
-                            </div>
-                            <div class="dropdown-menu" x-placement="bottom-start"
-                                 style="position: static; transform: translate3d(0px, 42px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                {% for word in category_word_counts|get_item:category %}
-                                    <a class="dropdown-item"
-                                       href="#">{{ word }}: {{ category_word_counts|get_item:category|get_item:word }}</a>
-                                {% endfor %}
-                            </div>
+                            <p class="display-6">{{ category|title }}:</p>
                             {% if rating == 1 or rating == 2 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                      role="progressbar" aria-valuenow="{{ rating }}" aria-valuemin="1"
