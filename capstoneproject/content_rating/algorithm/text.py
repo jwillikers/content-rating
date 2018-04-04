@@ -176,7 +176,10 @@ class Text:
         :param numerator: An int, the numerator value.
         :return: The numerator divided by the total words, times 10.
         """
-        return numerator / (self.total_number_of_clean_words + self.total_number_of_offensive_words) * 10
+        clean_words_fraction = int(self.total_number_of_clean_words/10)
+        if clean_words_fraction < self.total_number_of_offensive_words:
+            clean_words_fraction = self.total_number_of_clean_words
+        return numerator / (clean_words_fraction + self.total_number_of_offensive_words) * 10
 
     def generate_category_ratings(self):
         """

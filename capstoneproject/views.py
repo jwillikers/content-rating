@@ -490,7 +490,7 @@ def rating_results(request):
             else:
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
-    print(context)
+            print(context)
     return render(request, 'rating-result.html', context)
 
 
