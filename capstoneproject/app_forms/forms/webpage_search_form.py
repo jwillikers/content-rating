@@ -86,3 +86,9 @@ class WebsiteSearchForm(forms.Form):
 
     def get_url(self):
         return self.cleaned_data['url']
+
+    def get_search_request(self):
+        if self.cleaned_data.get('url'):
+            return self.get_url()
+        else:
+            return self.get_website_name()
