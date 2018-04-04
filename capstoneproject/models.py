@@ -2,7 +2,6 @@
 This file contains the Models that represent tables in the system's database and helper functions to interact with
 the tables.
 """
-from django.db import models
 from django.db.models import Manager, Model, CharField, IntegerField, \
     BooleanField, ForeignKey, SmallIntegerField, CASCADE, QuerySet, \
     ManyToManyField, Prefetch
@@ -126,9 +125,14 @@ class WordFeature(Weight):
         Provides a dictionary mapping the category, strength, and weight to their corresponding values.
         :return: A dictionary with the category, strength, weight, and their associated values.
         """
-        return {'category': self.category.name,
-                'strength': {self.get_strength_display(): self.strength},
-                'weight': {self.get_weight_display(): self.weight}}
+        dictionary = dict()
+        dictionary['category'] = self.category.name
+        dictionary['strength'] = {self.get_strength_display(): self.strength}
+        dictionary['weight'] = {self.get_weight_display(): self.weight}
+        return dictionary
+        #return {'category': self.category.name,
+        #        'strength': {self.get_strength_display(): self.strength},
+        #        'weight': {self.get_weight_display(): self.weight}}
 
     class Meta:
         default_manager_name = 'word_features'
@@ -305,10 +309,11 @@ class Word(Model):
         Provides the word's features
         :return: A dictionary mapping a word to its features.
         """
-        word_features_dict = dict()
-        for word_feature in self.word_features:
-            word_features_dict.update(word_feature._dict())
-        return word_features_dict
+        word_features_list = []
+        for word_feature in self.word_features.all():
+            word_features_list.append(word_feature._dict())
+
+        return word_features_list
 
     def get_categories(self):
         """
@@ -316,8 +321,8 @@ class Word(Model):
         :return: A list of offensive categories that the word is classified as.
         """
         cats = list()
-        for word_feature in self.word_features:
-            cats.append(word_feature.get_category())
+        for word_feature in self.word_features.all():
+            cats.append(word_feature.category.name)
         return cats
 
     class Meta:
