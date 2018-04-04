@@ -254,6 +254,13 @@ def upload(request):
         del request.session['delete']
         del request.session['content_compare']
 
+    if request.method == 'GET':
+        if request.session.get('invalid_file'):
+            del request.session['invalid_file']
+            form = UploadFileForm(request.GET)
+            form.is_valid()
+            context['upload_file_form'] = form
+
     if request.method == 'POST':
         if request.POST.get('submit') == 'file':
             form = UploadFileForm(request.POST, request.FILES)
@@ -430,7 +437,8 @@ def rating_results(request):
                 os.remove('capstoneproject/tempfile')  # Delete the temp file after use
                 # Parse file and rate text here
             else:
-                return upload(request)
+                request.session['invalid_file'] = True
+                return HttpResponseRedirect(reverse('upload'))
     return render(request, 'rating-result.html', context)
 
 
