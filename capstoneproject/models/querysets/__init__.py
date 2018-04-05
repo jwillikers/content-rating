@@ -1,0 +1,1 @@
+from capstoneproject.models.querysets.word_queryset import WordQuerySet

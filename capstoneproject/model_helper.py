@@ -1,7 +1,7 @@
 """
 This file contains functions used to provide data from the database.
 """
-from capstoneproject.models import Word, Weight, Category
+from capstoneproject.models import *
 import traceback
 
 
