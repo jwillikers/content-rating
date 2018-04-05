@@ -24,6 +24,26 @@ def get_category(category):
     return Category.categories.get(name=category)
 
 
+def get_user_categories(user: User):
+    """
+    This function returns a queryset of a User's Categories.
+    :param user: A User
+    :return: A queryset containing a User's Categories
+    """
+    print("TODO")  # TODO
+
+
+def get_user_category(user:User, category: str):
+    """
+    This function returns a Category model associated with
+    the given User and category name.
+    :param user: A User
+    :param category: A string, the name of the category
+    :return: A Category model
+    """
+    print("TODO")  # TODO
+
+
 def get_words():
     """
     This function returns all words that are used to classify offensive content.
@@ -46,6 +66,36 @@ def get_word(word):
     return word_model
 
 
+def get_user_word_features(user: User, word: str):
+    print("TODO")  # TODO - Need to better define what we will need.
+
+
+def get_word_weight(user: User, word: str, category: str):
+    """
+    This function provides the weight associated with a given User, Word, and Category.
+    If the user has stored their own word weight, then this value is returned.
+    Otherwise, return the default word weight.
+    :param user: A User
+    :param word: A string, the word name
+    :param category: A string, the category name
+    :return: An int, the offensiveness weight associated with the given user, word, and category
+    """
+    print("TODO")  # TODO
+
+
+def update_user_word_weight(user: User, word: str, category: str, weight: int):
+    """
+    This function updates the weight associated with the WordFeature of the given
+    word and given category to be the given weight.
+    :param user: A User
+    :param word: A string, the word name
+    :param category: A string, the category name
+    :param weight: An int, the new Weight value (0-3)
+    :return: None
+    """
+    print("TODO")  # TODO
+
+
 def get_category_words(category):
     """
     This function returns all words that are used to classify offensive content from the given category.
@@ -62,6 +112,30 @@ def get_weights():
     :return: a list of the possible offensive weight values
     """
     return Weight.WEIGHTS
+
+
+def get_user_category_weight(user: User, category: str):
+    """
+    This function provides the weight associated with a given User and Category.
+    If the user has stored their own category weight, then this value is returned.
+    Otherwise return the default category weight.
+    :param user: A User
+    :param category: A string, the category name
+    :return:
+    """
+    print("TODO")  # TODO
+
+
+def update_user_category_weight(user: User, category: str, weight: int):
+    """
+    This function updates Weight associated with the Category in the
+    User's UserStorage that matches a given string with the given weight.
+    :param user: A User
+    :param category: A string, the category name
+    :param weight: An int, the new Weight value (0-3)
+    :return: None
+    """
+    print("TODO")  # TODO
 
 
 def get_user_storage(user: User):
@@ -170,6 +244,8 @@ def delete_oldest_user_rating(user: User):
     :return: None
     """
     print("TODO")  # TODO This function will not be needed if we just overwrite the user's oldest Rating.
+    # Delete related WordCounts
+    # Delete related CategoryRatings
 
 
 def overwrite_oldest_user_rating(user: User, rating: Rating):
@@ -181,52 +257,6 @@ def overwrite_oldest_user_rating(user: User, rating: Rating):
     :return: None
     """
     print("TODO")  # TODO This function will not be needed if we delete the user's oldest Rating instead.
+    # Update/Delete WordCounts of overwritten Rating
+    # Update/Delete CategoryRatings of overwritten Rating
 
-
-def get_user_categories(user: User):
-    """
-    This function returns a queryset of a User's Categories.
-    :param user: A User
-    :return: A queryset containing a User's Categories
-    """
-    print("TODO")  # TODO
-
-
-def get_user_category(user:User, category: str):
-    """
-    This function returns a Category model associated with
-    the given User and category name.
-    :param user: A User
-    :param category: A string, the name of the category
-    :return: A Category model
-    """
-    print("TODO")  # TODO
-
-
-def get_user_word_features(user: User, word: str):
-    print("TODO")  # TODO - Need to better define what we will need.
-
-
-def update_user_category_weight(user: User, category: str, weight: int):
-    """
-    This function updates Weight associated with the Category in the
-    User's UserStorage that matches a given string with the given weight.
-    :param user: A User
-    :param category: A string, the category name
-    :param weight: An int, the new Weight value (0-3)
-    :return: None
-    """
-    print("TODO")  # TODO
-
-
-def update_user_word_weight(user: User, word: str, category: str, weight: int):
-    """
-    This function updates the weight associated with the WordFeature of the given
-    word and given category to be the given weight.
-    :param user: A User
-    :param word: A string, the word name
-    :param category: A string, the category name
-    :param weight: An int, the new Weight value (0-3)
-    :return: None
-    """
-    print("TODO")  # TODO

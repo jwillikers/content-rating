@@ -6,6 +6,7 @@ import capstoneproject.content_rating.algorithm.text as text
 import capstoneproject.app_forms.forms as forms
 from capstoneproject.shared import rater
 from capstoneproject import parsing
+from capstoneproject.models import User
 from capstoneproject.helpers import model_helper
 
 
@@ -22,13 +23,14 @@ def perform_rating(content: str, form, request):
     return context
 
 
-def get_rating_results(content: str, form, user):
+def get_rating_results(content: str, form, user: User):
     """
     This function classifies and rates the given text.
     It then saves the rating information.
     Lastly, it returns a dictionary containing the rating results.
     :param content: A string, the content to rate.
     :param form: A form, submitted by the user and contains information about the content.
+    :param user: A User
     :return: A dictionary containing the rating results
     """
     # TODO handle overall rating of 0
