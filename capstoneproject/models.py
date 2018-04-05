@@ -10,6 +10,49 @@ from django.db.models import Manager, Model, CharField, IntegerField, \
     PositiveSmallIntegerField, PositiveIntegerField
 
 
+class PositiveSmallIntegerRangeField(PositiveSmallIntegerField):
+    def __init__(self, verbose_name=None, name=None, min_value=None,
+                 max_value=None, **kwargs):
+        self.min_value, self.max_value = min_value, max_value
+        PositiveSmallIntegerField.__init__(
+            self, verbose_name, name, **kwargs)
+
+    def formfield(self, **kwargs):
+        defaults = {'min_value': self.min_value,
+                    'max_value': self.max_value}
+        defaults.update(kwargs)
+        return super(PositiveSmallIntegerRangeField,
+                     self).formfield(**defaults)
+
+
+class PositiveIntegerRangeField(PositiveIntegerField):
+    def __init__(self, verbose_name=None, name=None, min_value=None,
+                 max_value=None, **kwargs):
+        self.min_value, self.max_value = min_value, max_value
+        PositiveIntegerField.__init__(
+            self, verbose_name, name, **kwargs)
+
+    def formfield(self, **kwargs):
+        defaults = {'min_value': self.min_value,
+                    'max_value': self.max_value}
+        defaults.update(kwargs)
+        return super(PositiveIntegerRangeField, self).formfield(**defaults)
+
+
+class RatingField(PositiveSmallIntegerRangeField):
+    def __init__(self, verbose_name=None, name=None, **kwargs):
+        PositiveSmallIntegerRangeField.__init__(
+            self, min_value=0, max_value=10, verbose_name=verbose_name,
+            name=name, **kwargs)
+
+
+class WordCountField(PositiveIntegerField):
+    def __init__(self, verbose_name=None, name=None, **kwargs):
+        PositiveIntegerRangeField.__init__(
+            self, min_value=1, max_value=None, verbose_name=verbose_name,
+            name=name, **kwargs)
+
+
 class Weight(Model):
     """
     The Weight class is a table that stores the offensiveness levels associated
@@ -52,7 +95,7 @@ class Category(Weight):
     The Category class is a table that stores the offensive category and weight
     associated with an offensive word.
     """
-    user = ManyToManyField(User, related_name='categories')
+    user = ManyToManyField(User, related_name='categories', null=True, blank=True)
     name = CharField(unique=True, max_length=30)
     categories = Manager()
 
@@ -83,6 +126,13 @@ class Category(Weight):
         default_manager_name = 'categories'
 
 
+class CategoryRating(Model):
+    user = ManyToManyField(
+        User, related_name='category_ratings', null=True, blank=True)
+    category = ForeignKey(Category, on_delete=CASCADE)
+    rating = RatingField()
+
+
 class WordFeature(Weight):
     """
     This class is a table containing the Word Features associated with an
@@ -91,7 +141,7 @@ class WordFeature(Weight):
     the word and category.
     """
     STRENGTHS = [(True, 'strong'), (False, 'weak')]
-    user = ManyToManyField(User, related_name='word_features')
+    user = ManyToManyField(User, related_name='word_features', null=True, blank=True)
     category = ForeignKey(Category, on_delete=CASCADE)
     strength = BooleanField(choices=STRENGTHS, default='weak')
     word_features = Manager()
@@ -291,7 +341,7 @@ class Word(Model):
     """
     A class representing the system's table of offensive Words.
     """
-    user = ManyToManyField(User, related_name='words')
+    user = ManyToManyField(User, related_name='words', null=True, blank=True)
     word_features = ManyToManyField(WordFeature, related_name='words')
     name = CharField(unique=True, max_length=30)
     words = WordQuerySet.as_manager()
@@ -344,55 +394,6 @@ class Word(Model):
         default_manager_name = 'words'
 
 
-class PositiveSmallIntegerRangeField(PositiveSmallIntegerField):
-    def __init__(self, verbose_name=None, name=None, min_value=None,
-                 max_value=None, **kwargs):
-        self.min_value, self.max_value = min_value, max_value
-        PositiveSmallIntegerField.__init__(
-            self, verbose_name, name, **kwargs)
-
-    def formfield(self, **kwargs):
-        defaults = {'min_value': self.min_value,
-                    'max_value': self.max_value}
-        defaults.update(kwargs)
-        return super(PositiveSmallIntegerRangeField,
-                     self).formfield(**defaults)
-
-
-class PositiveIntegerRangeField(PositiveIntegerField):
-    def __init__(self, verbose_name=None, name=None, min_value=None,
-                 max_value=None, **kwargs):
-        self.min_value, self.max_value = min_value, max_value
-        PositiveIntegerField.__init__(
-            self, verbose_name, name, **kwargs)
-
-    def formfield(self, **kwargs):
-        defaults = {'min_value': self.min_value,
-                    'max_value': self.max_value}
-        defaults.update(kwargs)
-        return super(PositiveIntegerRangeField, self).formfield(**defaults)
-
-
-class RatingField(PositiveSmallIntegerRangeField):
-    def __init__(self, verbose_name=None, name=None, **kwargs):
-        PositiveSmallIntegerRangeField.__init__(
-            self, min_value=0, max_value=10, verbose_name=verbose_name,
-            name=name, **kwargs)
-
-
-class WordCountField(PositiveIntegerField):
-    def __init__(self, verbose_name=None, name=None, **kwargs):
-        PositiveIntegerRangeField.__init__(
-            self, min_value=1, max_value=None, verbose_name=verbose_name,
-            name=name, **kwargs)
-
-
-class CategoryRating(Model):
-    user = ManyToManyField(User, related_name='category_ratings')
-    category = ForeignKey(Category, on_delete=CASCADE)
-    rating = RatingField()
-
-
 class WordCount(Model):
     word = ForeignKey(Word, on_delete=CASCADE)
     count = WordCountField(default=1)
@@ -433,9 +434,14 @@ class Rating(Model):
 
 class UserStorage(Model):
     user = ForeignKey(User, on_delete=CASCADE)
-    ratings = ManyToManyField(Rating, related_name='user_storage')
-    word_features = ManyToManyField(WordFeature, related_name='user_storage')
-    categories = ManyToManyField(Category, related_name='user_storage')
+    ratings = ManyToManyField(
+        Rating, related_name='user_storage',
+        null=True, blank=True)
+    word_features = ManyToManyField(
+        WordFeature, related_name='user_storage',
+        null=True, blank=True)
+    categories = ManyToManyField(
+        Category, related_name='user_storage', null=True, blank=True)
     user_storage = Manager()
 
     class Meta:
