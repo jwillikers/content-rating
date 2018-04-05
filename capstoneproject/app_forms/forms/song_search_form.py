@@ -57,9 +57,9 @@ class SongSearchForm(forms.Form):
         """
         self.add_error('song_artist', self.error_messages['no_title'])
 
-    def get_song_title(self):
+    def get_title(self):
         return self.cleaned_data['song_title']
 
-    def get_song_artist(self):
+    def get_creator(self):
         return self.cleaned_data['song_artist']
 

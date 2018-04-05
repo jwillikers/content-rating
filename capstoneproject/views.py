@@ -4,17 +4,17 @@ web application. Each HTML page will call a function which will provide the
 site's functionality.
 """
 from django.shortcuts import render, redirect, render_to_response
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
+from django.http import HttpResponseRedirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
 from django.template.context_processors import csrf
 from django.contrib.auth import views as auth_views
 from django.urls import reverse
 
-from capstoneproject.display import display_categories, display_words, display_category_words
+from capstoneproject.display import display_categories, display_category_words
 from capstoneproject.content_rating.algorithm import text
-from capstoneproject import model_helper
+from capstoneproject.helpers import model_helper
+from capstoneproject.helpers import view_helper
 from capstoneproject.app_forms import form_handler
 from capstoneproject.app_forms.forms.login_form import LoginForm
 from capstoneproject.app_forms.forms.signup_form import SignUpForm
@@ -31,7 +31,7 @@ from capstoneproject import parsing
 from capstoneproject.shared import rater
 import os
 
-global_content = text.Text([], 'TEST')
+global_content = text.Text([])
 
 def login(request):
     """
@@ -183,8 +183,6 @@ def search(request):
     :return: Renders the search page.
     """
     context = {'song_search_form': SongSearchForm(),
-               'tv_search_form': TVShowSearchForm(),
-               'movie_search_form': MovieSearchForm(),
                'website_search_form': WebsiteSearchForm()}
 
     if request.session.get('delete'):
@@ -192,53 +190,17 @@ def search(request):
         del request.session['content_compare']
 
     if request.method == 'GET':
-        if request.session.get('invalid_song'):
+        if request.session.get('invalid_song'):  # Check if the user submitted an invalid search of a song.
             del request.session['invalid_song']
             form = SongSearchForm(request.GET)
             form.is_valid()
             context['song_search_form'] = form
-        elif request.session.get('invalid_tv_show'):
-            del request.session['invalid_tv_show']
-            form = TVShowSearchForm(request.GET)
-            form.is_valid()
-            context['tv_search_form'] = form
-        elif request.session.get('invalid_movie'):
-            del request.session['invalid_movie']
-            form = MovieSearchForm(request.GET)
-            form.is_valid()
-            context['movie_search_form'] = form
-        elif request.session.get('invalid_website'):
+        elif request.session.get('invalid_website'):  # Check if the user submitted an invalid search of a website
             del request.session['invalid_website']
             form = WebsiteSearchForm(request.GET)
             form.is_valid()
             context['website_search_form'] = form
 
-    if request.method == 'POST':
-        if request.POST.get('submit') == 'song':  # Song request
-            form = SongSearchForm(request.POST)
-            if form.is_valid():  # Check if the form is valid.
-                return redirect('results')  # Go to the rating results page if valid.
-            else:
-                context['song_search_form'] = form  # Display errors if invalid.
-        elif request.POST.get('submit') == 'tv_show':  # TV show request
-            form = TVShowSearchForm(request.POST)
-            if form.is_valid():
-                return redirect('results')  # Go to the rating results page if valid.
-            else:
-                context['tv_search_form'] = form  # Display errors if invalid.
-        elif request.POST.get('submit') == 'movie':  # Movie request
-            form = MovieSearchForm(request.POST)
-            if form.is_valid():
-                return redirect('results')  # Go to the rating results page if valid.
-            else:
-                context['movie_search_form'] = form  # Display errors if invalid.
-        elif request.POST.get('submit') == 'webpage':  # Website request
-            form = WebsiteSearchForm(request.POST)
-            if form.is_valid():
-                return redirect('results')  # Go to the rating results page if valid.
-            else:
-                context['website_search_form'] = form  # Display errors if invalid.
-    # rater.algorithm('')
     return render(request, 'search.html', context)
 
 
@@ -256,19 +218,11 @@ def upload(request):
         del request.session['content_compare']
 
     if request.method == 'GET':
-        if request.session.get('invalid_file'):
+        if request.session.get('invalid_file'):  # Check if the last provided file was invalid.
             del request.session['invalid_file']
             form = UploadFileForm(request.GET)
             form.is_valid()
             context['upload_file_form'] = form
-
-    if request.method == 'POST':
-        if request.POST.get('submit') == 'file':
-            form = UploadFileForm(request.POST, request.FILES)
-            if form.is_valid():  # Check if the form is valid.
-                return rating_results(request)  # If the form is valid, go to the results page.
-            else:
-                context['upload_file_form'] = form  # Form is invalid, keep the same form to provide error messages.
 
     return render(request, 'upload.html', context)
 
@@ -286,19 +240,11 @@ def copy_in(request):
         del request.session['content_compare']
 
     if request.method == 'GET':
-        if request.session.get('invalid_content'):
+        if request.session.get('invalid_content'):  # Check if the last copy-in text provided was invalid.
             del request.session['invalid_content']
             form = CopyInForm(request.GET)
             form.is_valid()
             context['copy_in_form'] = form
-
-    if request.method == 'POST':
-        if request.POST.get('submit') == 'copy-in':
-            form = CopyInForm(request.POST)
-            if form.is_valid():  # Check if the form is valid.
-                return rating_results(request)  # If the form is valid, go to the results page.
-            else:
-                context['copy_in_form'] = form  # Form is invalid, keep the same form to provide error messages.
 
     return render(request, 'copy-in.html', context)
 
@@ -333,6 +279,7 @@ def words(request, category):
     Function to handle requests on the page containing the offensive words and
         their levels of offensiveness.
     :param request: The HTML request to handle.
+    :param category: The category to display.
     :return: Renders the words page.
     """
     if request.session.get('delete'):
@@ -349,33 +296,7 @@ def words(request, category):
     return render(request, 'words.html', context)
 
 
-def get_context(content_type: str, form, content: text.Text, request):
-    # TODO handle overall rating of 0
-    context = {'name': '',
-               'creator': '',
-               'overall_rating': int(content.overall_rating),
-               'category_ratings': content.category_ratings,
-               'category_word_counts': content.category_word_counts
-               }
-    print(content)
 
-    if content_type == 'song':
-        context['name'] = form.get_song_title().upper()
-        context['creator'] = form.get_song_artist().upper()
-    elif content_type == 'tv_show':
-        context['name'] = form.get_episode_title().upper()
-        context['creator'] = form.get_show_title().upper()
-    elif content_type == 'movie':
-        context['name'] = form.get_movie_title().upper()
-    elif content_type == 'webpage':
-        context['name'] = form.get_search_request()
-    elif content_type == 'copy':
-        context['name'] = 'Given Text'
-        context['creator'] = str(request.user.username).upper()
-    elif content_type == 'file':
-        context['name'] = 'File'
-
-    return context
 
 
 @login_required(login_url='/login/')
@@ -389,115 +310,71 @@ def rating_results(request):
 
     if 'content_compare' in request.session:
         return redirect('compare')
+    '''
     category_ratings = global_content.category_ratings
     category_word_counts = global_content.category_word_counts
     for category in display_categories():
         category_ratings[category.name] = global_content.get_category_rating(category.name)
         category_word_counts[category.name] = global_content.get_category_word_counts(category.name)
-    context = {'name': global_content.name,
+    
+    context = {'name': global_content.title,
                'creator': '',
                'overall_rating': global_content.overall_rating,
                'category_ratings': category_ratings,
                'category_word_counts': category_word_counts
                }
-
+    '''
     if request.method == 'POST':
         if request.POST.get('submit') == 'copy-in':
             form = CopyInForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 # Rate text here
-                text = form.cleaned_data.get('copy_in_text')
-                rated_text = rater.algorithm(text, 'Given Text')
-                # Used rated content to change context
-                context = get_context(content_type='copy', form=form, content=rated_text, request=request)
-                global_content = rated_text
-                request.session['category_words'] = rated_text.category_word_counts
+                text_str = form.cleaned_data.get('copy_in_text')  # Get text
+                context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
             else:
                 request.session['invalid_content'] = True
                 return HttpResponseRedirect(reverse('copy'))
         elif request.POST.get('submit') == 'song':
             form = SongSearchForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                # Rate text here
-                title = form.get_song_title()
-                artist = form.get_song_artist()
-                text = parsing.search_songs(title, artist)
-                rated_text = rater.algorithm(text, title)
-                global_content = rated_text
-                context = get_context(content_type='song', form=form, content=rated_text, request=request)
+                title = form.get_title()  # Get title
+                artist = form.get_creator()  # Get artist
+                text_str = parsing.search_songs(title, artist)  # Get text
+
+                if text_str == 0:  # TODO Handle no matching song better
+                    request.session['invalid_song'] = True
+                    return HttpResponseRedirect(reverse('search'))
+
+                context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
             else:
                 request.session['invalid_song'] = True
-                return HttpResponseRedirect(reverse('search'))
-        elif request.POST.get('submit') == 'tv_show':
-            form = TVShowSearchForm(request.POST)
-            if form.is_valid():
-                text = ''
-                rated_text = rater.algorithm(text, 'Test')
-                global_content = rated_text
-                context = get_context(content_type='tv_show', form=form, content=rated_text, request=request)
-                # Rate text here
-            else:
-                request.session['invalid_tv_show'] = True
-                return HttpResponseRedirect(reverse('search'))
-        elif request.POST.get('submit') == 'movie':
-            form = MovieSearchForm(request.POST)
-            if form.is_valid():
-                text = ''
-                rated_text = rater.algorithm(text, 'Test')  # Rate text here
-                global_content = rated_text
-                context = get_context(content_type='movie', form=form, content=rated_text, request=request)
-            else:
-                request.session['invalid_movie'] = True
                 return HttpResponseRedirect(reverse('search'))
         elif request.POST.get('submit') == 'webpage':
             form = WebsiteSearchForm(request.POST)
             if form.is_valid():
+                # Find if user wanted to search url or website title
                 url = form.cleaned_data.get('url')
                 website_title = form.cleaned_data.get('website_name')
-                text = ''
-                if url:
-                    text = parsing.search_website(url)
-                elif website_title:
-                    text = ''
-                rated_text = rater.algorithm(text, 'Test')  # Rate text here
-                global_content = rated_text
-                context = get_context(content_type='webpage', form=form, content=rated_text, request=request)
+                text_str = ''
+                if url:  # Get text from url
+                    text_str = parsing.search_website(url)
+                elif website_title:  # Get text from website title
+                    text_str = ''
+
+                context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
             else:
                 request.session['invalid_website'] = True
                 return HttpResponseRedirect(reverse('search'))
         elif request.POST.get('submit') == 'file':
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
-                handle_uploaded_file(request.FILES['file'])  # TODO This should be a temp file
-                file = request.FILES['file'].name
-                # print(file)
-                extension = file.split('.')[-1].lower()
-                text = ''
-                if extension == 'pdf':
-                    text = parsing.parse_pdf('capstoneproject/tempfile')
-                elif extension == 'epub':
-                    text = parsing.parse_epub('capstoneproject/tempfile')
-                elif extension == 'docx':
-                    text = parsing.parse_docx('capstoneproject/tempfile')
-                elif extension == 'txt':
-                    text = parsing.parse_txt('capstoneproject/tempfile')
-                # print(text)
-                os.remove('capstoneproject/tempfile')  # Delete the temp file after use
-                rated_text = rater.algorithm(text, 'file')
-                global_content = rated_text
-                context = get_context(content_type='file', form=form, content=rated_text, request=request)
-                # Parse file and rate text here
+                text_str = view_helper.get_file_content(request.FILES['file'])  # Get text from file
+                context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
             else:
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
-            print(context)
+    print(context)
     return render(request, 'rating-result.html', context)
-
-
-def handle_uploaded_file(f):
-    with open('capstoneproject/tempfile', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
 
 
 @login_required(login_url='/login/')

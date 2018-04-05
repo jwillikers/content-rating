@@ -80,7 +80,7 @@ class ContentRating:
             output_file.write(str(sentences))
             return sentences
 
-    def algorithm(self, text_string, name):
+    def algorithm(self, text_string):
         """
         Implement the offensive content classification and content rating algorithm.
         :param text_string: A string containing the text to classify and rate.
@@ -92,7 +92,7 @@ class ContentRating:
         #    text_string = input_file.read()
 
         # Step 1: Normalize and Tokenize Text
-        text = Text(self.tokenize(text_string.lower()), name)
+        text = Text(self.tokenize(text_string.lower()))
 
         # Step 2: Extract Features
         text.extract_features()

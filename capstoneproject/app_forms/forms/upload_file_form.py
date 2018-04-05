@@ -54,3 +54,9 @@ class UploadFileForm(forms.Form):
         :return: None.
         """
         self.add_error('file', self.error_messages['no_file'])
+
+    def get_title(self):
+        return 'Uploaded File'
+
+    def get_creator(self):
+        return ''

@@ -1,7 +1,7 @@
 """
 This file contains functions used to provide data from the database to display on the UI.
 """
-from capstoneproject import model_helper
+from capstoneproject.helpers import model_helper
 
 
 def display_categories():

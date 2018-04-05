@@ -47,3 +47,9 @@ class CopyInForm(forms.Form):
         :return: A string containing the text from the user.
         """
         return self.cleaned_data['copy_in_text']
+
+    def get_title(self):
+        return 'Provided Text'
+
+    def get_creator(self):
+        return ''

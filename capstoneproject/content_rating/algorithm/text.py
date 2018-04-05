@@ -1,7 +1,7 @@
 """
 This file contains the Text class to contain data on the classification and rating of a given text.
 """
-from capstoneproject import model_helper
+from capstoneproject.helpers import model_helper
 
 
 class Text:
@@ -9,21 +9,23 @@ class Text:
     Class to represent the text to classify and rate.
     """
 
-    def __init__(self, text_sentences, name):
+    def __init__(self, text_sentences):
         """
         Initialize a Text object
         :param text_sentences: the sentences contained within the text, a list of Sentence objects.
         """
-        self.name = name
-        self.offensive_sentences = dict()
-        self.sentence_list = text_sentences
-        self.total_strongly_offensive_words_dict = dict()
-        self.total_weakly_offensive_words_dict = dict()
-        self.total_number_of_clean_words = 0
-        self.total_number_of_offensive_words = 0
-        self.overall_rating = 1
-        self.category_ratings = dict()
-        self.category_word_counts = dict()
+        self.title = ''     # Title of content
+        self.creator = ''   # Creator/Author of content
+        self.content_type = 4  # Type of content being rating
+        self.offensive_sentences = dict()       # Keys are sentence indices, values are lists of sentences's offensive categories
+        self.sentence_list = text_sentences     # List of sentences in the text
+        self.total_strongly_offensive_words_dict = dict()   # Keys are category names, values are dictionaries with offensive words as keys and counts as values
+        self.total_weakly_offensive_words_dict = dict()     # Keys are category name, values are dictionaries with offensive words as keys and counts as values
+        self.total_number_of_clean_words = 0        # Number of clean words in the text
+        self.total_number_of_offensive_words = 0    # Number of offensive words in the text
+        self.overall_rating = 1                     # Overall offensiveness rating
+        self.category_ratings = dict()              # Keys are category name, values are category offensiveness rating
+        self.category_word_counts = dict()          # Keys are category name, values are dictionaries with offensive words as keys and counts as values
         self.initialize_ratings()
 
     def __str__(self):
@@ -161,6 +163,13 @@ class Text:
         """
         return self.category_word_counts[category]
 
+    def get_word_counts(self):
+        word_counts = dict()
+        for category, value in self.category_word_counts.items():
+            for word, count in value.items():
+                word_counts[word] = count
+        return word_counts
+
     # def get_offensive_words_per_category(self, category: str):
     #     for key, value in self.total_strongly_offensive_words_dict.items():
     #         split_key = key.split(':')
@@ -177,7 +186,7 @@ class Text:
         :return: The numerator divided by the total words, times 10.
         """
         clean_words_fraction = int(self.total_number_of_clean_words/10)
-        if clean_words_fraction < self.total_number_of_offensive_words:
+        if clean_words_fraction <= self.total_number_of_offensive_words:
             clean_words_fraction = self.total_number_of_clean_words
         return numerator / (clean_words_fraction + self.total_number_of_offensive_words) * 10
 
