@@ -36,14 +36,14 @@ class WordQuerySet(QuerySet):
         self.feature_queryset = self.feature_queryset.select_related(
             'category').filter(category=category)
 
-        feature_prefetch = Prefetch(
+        prefetch = Prefetch(
             'word_features',
             queryset=self.feature_queryset,
             to_attr='word_features_list')
 
         words = self.prefetch_related(None).filter(
             word_features__category=category
-            ).prefetch_related(feature_prefetch)
+            ).prefetch_related(prefetch)
         return words
 
     def strength(self, strength):

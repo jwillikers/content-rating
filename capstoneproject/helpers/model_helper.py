@@ -1,8 +1,9 @@
 """
 This file contains functions used to provide data from the database.
 """
-from capstoneproject.models import Word, Weight, Category, Rating, \
-    UserStorage, Content, WordCount, CategoryRating, User
+from capstoneproject.models import Word, Weight, Category, ContentRating, \
+    UserStorage, Content, WordCount, CategoryRating
+from django.contrib.auth.models import User
 from capstoneproject.content_rating.algorithm import text
 import traceback
 
@@ -248,7 +249,7 @@ def delete_oldest_user_rating(user: User):
     # Delete related CategoryRatings
 
 
-def overwrite_oldest_user_rating(user: User, rating: Rating):
+def overwrite_oldest_user_rating(user: User, rating: ContentRating):
     """
     This function overwrites the user's oldest Rating stored in their UserStorage.
     This is used when the User has reached their limit of 5 Ratings to be stored.
@@ -259,4 +260,3 @@ def overwrite_oldest_user_rating(user: User, rating: Rating):
     print("TODO")  # TODO This function will not be needed if we delete the user's oldest Rating instead.
     # Update/Delete WordCounts of overwritten Rating
     # Update/Delete CategoryRatings of overwritten Rating
-
