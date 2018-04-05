@@ -14,8 +14,8 @@
                 <div class="container">
                     <div class="jumbotron">
                         <a title="Check Word Counts" href="{% url 'word-counts' name=name %}"
-                           style="text-align: center;"><h3>{{ name }}</h3></a>
-                        <div style="text-align: center;"><h3>{{ creator }}</h3>
+                           style="text-align: center;"><h3>{{ name|title }}</h3></a>
+                        <div style="text-align: center;"><h3>{{ creator|title }}</h3>
                             <hr class="my-4">
                             <h4>Overall Rating</h4></div>
                         <div class="progress">

@@ -56,14 +56,16 @@ class WordCountField(PositiveIntegerField):
 class Weight(Model):
     """
     The Weight class is a table that stores the offensiveness levels associated
-    with offensive words in specific
-    categories.
+    with offensive words in specific categories.
     """
     WEIGHTS = [(0, 'innocuous'), (1, 'slight'), (2, 'moderate'), (3, 'heavy')]
     weight = PositiveSmallIntegerField(choices=WEIGHTS)
 
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return 'Weight {}'.format(self.weight)
 
 
 class CategoryQuerySet(QuerySet):
@@ -72,9 +74,9 @@ class CategoryQuerySet(QuerySet):
     def user(self, user):
         if isinstance(user, str):
             user = User.objects.get(username=user)
-        elif isinstance(word, int):
+        elif isinstance(user, int):
             user = User.objects.get(pk=user)
-        elif isinstance(word, User):
+        elif isinstance(user, User):
             pass
         else:
             raise TypeError('''{} is not a valid type for user'''.format(user))
@@ -131,6 +133,12 @@ class CategoryRating(Model):
         User, related_name='category_ratings', null=True, blank=True)
     category = ForeignKey(Category, on_delete=CASCADE)
     rating = RatingField()
+
+    def __str__(self):
+        string = 'CategoryRating\n'
+        string += '  User: {}\n'.format(self.user)
+        string += '  Category: {}\n'.format(self.category)
+        string += '  Rating: {}'.format(self.rating)
 
 
 class WordFeature(Weight):
@@ -398,6 +406,9 @@ class WordCount(Model):
     word = ForeignKey(Word, on_delete=CASCADE)
     count = WordCountField(default=1)
 
+    def __str__(self):
+        return "WordCount  {} - {}".format(self.word, self.count)
+
 
 class Content(Model):
     MEDIA_TYPES = [(0, 'song'),
@@ -411,7 +422,7 @@ class Content(Model):
     content = Manager()
 
     def __str__(self):
-        return "{} by {}".format(self.title, self.creator)
+        return "Media Types {}  -  {} by {}".format(self.media, self.title, self.creator)
 
     class Meta:
         default_manager_name = 'content'
@@ -431,6 +442,14 @@ class Rating(Model):
     class Meta:
         default_manager_name = 'ratings'
 
+    def __str__(self):
+        string = 'Rating\n'
+        string += '  Overall Rating: {}\n'.format(self.rating)
+        string += '  Category Ratings: {}\n'.format(self.category_ratings)
+        string += '  Word Counts: {}\n'.format(self.word_counts)
+        string += '  Created: {}    Updated: {}\n'. format(self.created, self.updated)
+        return string
+
 
 class UserStorage(Model):
     user = ForeignKey(User, on_delete=CASCADE)
@@ -446,3 +465,11 @@ class UserStorage(Model):
 
     class Meta:
         default_manager_name = 'user_storage'
+
+    def __str__(self):
+        string = 'User Storage:\n'
+        string += '  User: {}\n'.format(self.user.username)
+        string += '  Ratings: {}\n'.format(self.ratings)
+        string += '  Word Features: {}\n'.format(self.word_features)
+        string += '  Categories: {}\n'.format(self.categories)
+        return string
