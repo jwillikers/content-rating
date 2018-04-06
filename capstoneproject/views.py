@@ -384,23 +384,21 @@ def compare_results(request):
     :param request: The HTML request to handle.
     :return: Renders the compare page.
     """
-    content_compare = request.session['content_compare']  # name of item to be compared, will be Content object in future
+    content_compare = request.session['content_compare']  # name of item to be compared
     request.session['delete'] = True
+    #old_rating = view_helper.get_last_rating(request.user)
+    #previous_rating_context = view_helper.generate_context(old_rating, 'previous')
+    #current_rating_context = view_helper.generate_context(current_rating, 'current')
     current_category_ratings = dict()
     current_category_word_counts = dict()
     previous_category_ratings = dict()
     previous_category_word_counts = dict()
     for category in display_categories():
         current_category_ratings[category.name] = 5
-        previous_category_ratings[category.name] = 8
         current_category_word_counts[category.name] = {'word1': 4,
                                                        'word2': 3,
                                                        'word3': 2
                                                        }
-        previous_category_word_counts[category.name] = {'word1': 7,
-                                                        'word2': 4,
-                                                        'word3': 6
-                                                        }
     context = {'current_name': 'Baby Got Back',
                'current_creator': 'Sir Mix a Lot',
                'previous_name': content_compare,

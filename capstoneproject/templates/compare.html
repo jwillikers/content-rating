@@ -22,8 +22,8 @@
                 <div class="container">
                     <div class="jumbotron">
                         <a title="Check Word Counts" href="{% url 'word-counts' name=current_name %}"
-                           style="text-align: center;"><h3>{{ current_name }}</h3></a>
-                        <h3 style="text-align: center;">{{ current_creator }}</h3>
+                           style="text-align: center;"><h3>{{ current_name|title }}</h3></a>
+                        <h3 style="text-align: center;">{{ current_creator|title }}</h3>
                         <hr class="my-4">
                         <h4>Overall Rating</h4>
                         <div class="progress">
@@ -91,8 +91,8 @@
                 <div class="container">
                     <div class="jumbotron">
                         <a title="Check Word Counts" href="{% url 'word-counts' name=previous_name %}"
-                           style="text-align: center;"><h3>{{ previous_name }}</h3></a>
-                        <h3 style="text-align: center;">{{ previous_creator }}</h3>
+                           style="text-align: center;"><h3>{{ previous_name|title }}</h3></a>
+                        <h3 style="text-align: center;">{{ previous_creator|title }}</h3>
                         <hr class="my-4">
                         <h4>Overall Rating</h4>
                         <div class="progress">

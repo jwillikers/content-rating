@@ -13,37 +13,37 @@
             <div class="col-md-6">
                 <div class="container">
                     <div class="jumbotron">
-                        <a title="Check Word Counts" href="{% url 'word-counts' name=name %}"
-                           style="text-align: center;"><h3>{{ name|title }}</h3></a>
-                        <div style="text-align: center;"><h3>{{ creator|title }}</h3>
+                        <a title="Check Word Counts" href="{% url 'word-counts' name=current_current_name %}"
+                           style="text-align: center;"><h3>{{ current_name|title }}</h3></a>
+                        <div style="text-align: center;"><h3>{{ current_creator|title }}</h3>
                             <hr class="my-4">
                             <h4>Overall Rating</h4></div>
                         <div class="progress">
-                            {% if overall_rating == 1 or overall_rating == 2 %}
+                            {% if current_overall_rating == 1 or current_overall_rating == 2 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                     role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
-                            {% elif overall_rating == 3 or overall_rating == 4 %}
+                                     role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1"
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ current_overall_rating }}</div>
+                            {% elif current_overall_rating == 3 or current_overall_rating == 4 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-                                     role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
-                            {% elif overall_rating == 5 or overall_rating == 6 %}
+                                     role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1"
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ current_overall_rating }}</div>
+                            {% elif current_overall_rating == 5 or current_overall_rating == 6 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                     role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
-                            {% elif overall_rating == 7 or overall_rating == 8 %}
+                                     role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1"
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ current_overall_rating }}</div>
+                            {% elif current_overall_rating == 7 or current_overall_rating == 8 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                                     role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
-                            {% elif overall_rating == 9 or overall_rating == 10 %}
+                                     role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1"
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ current_overall_rating }}</div>
+                            {% elif current_overall_rating == 9 or current_overall_rating == 10 %}
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                                     role="progressbar" aria-valuenow="{{ overall_rating }}" aria-valuemin="1"
-                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ overall_rating }}</div>
+                                     role="progressbar" aria-valuenow="{{ current_overall_rating }}" aria-valuemin="1"
+                                     aria-valuemax="10" style="width: {{ overall_rating }}0%">{{ current_overall_rating }}</div>
                             {% endif %}
                         </div>
                         <hr class="my-4">
                         <div style="text-align: center;"><h5>By Category</h5></div>
-                        {% for category, rating in category_ratings.items %}
+                        {% for category, rating in current_category_ratings.items %}
                             <hr class="my-4">
                             <p class="display-6">{{ category|title }}:</p>
                             {% if rating == 1 or rating == 2 %}
@@ -75,7 +75,7 @@
                 <div class="container">
                     <form action="{% url 'homepage' %}" method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="content_compare" id="content_compare" value="{{ name }}">
+                        <input type="hidden" name="content_compare" id="content_compare" value="{{ current_name }}">
                         <input type="submit" id="compare" class="btn btn-lg btn-block btn-info" value="Compare!">
                     </form>
                 </div>

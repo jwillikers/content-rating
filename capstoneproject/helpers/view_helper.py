@@ -6,7 +6,7 @@ import capstoneproject.content_rating.algorithm.text as text
 import capstoneproject.app_forms.forms as forms
 from capstoneproject.shared import rater
 from capstoneproject import parsing
-from capstoneproject.models import User
+from capstoneproject.models import User, Rating
 from capstoneproject.helpers import model_helper
 
 
@@ -42,7 +42,7 @@ def get_rating_results(content: str, form, user: User):
 
     model_helper.save_rating(rated_content, user)  # Save the user's rating
 
-    return generate_context(rated_content)
+    return generate_context(rated_content, 'current')
 
 
 def get_content_type(form):
@@ -64,17 +64,17 @@ def get_content_type(form):
     return content_type
 
 
-def generate_context(rated_content: text.Text):
+def generate_context(rated_content: text.Text, name: str):
     """
     Generates a dictionary that contains key information from a rated text.
     :param rated_content: The rated text used to create the dictionary.
     :return: A dictionary, containing the rated text's information.
     """
-    context = {'name': rated_content.title,
-               'creator': rated_content.creator,
-               'overall_rating': int(rated_content.overall_rating),
-               'category_ratings': rated_content.category_ratings,
-               'category_word_counts': rated_content.category_word_counts
+    context = {'{}_name'.format(name): rated_content.title,
+               '{}_creator'.format(name): rated_content.creator,
+               '{}_overall_rating'.format(name): int(rated_content.overall_rating),
+               '{}_category_ratings'.format(name): rated_content.category_ratings,
+               '{}_category_word_counts'.format(name): rated_content.category_word_counts
                }
     return context
 
@@ -125,3 +125,19 @@ def parse_file(file_name):
         print('ERROR')  # TODO Handle this error
         file_text = ''
     return file_text
+
+
+def get_last_rating(user: User):
+    """
+    This function creates a Text object from the User's most recent Rating.
+    :param user: A User
+    :return: A Text object containing the data from the User's most recent Rating
+    """
+    last_rating = model_helper.get_most_recent_user_rating(user)
+    rated_text = text.Text([])
+    rated_text.title = last_rating.content.title
+    rated_text.creator = last_rating.content.creator
+    rated_text.overall_rating = last_rating.rating
+    rated_text.category_word_counts = last_rating.word_counts
+    rated_text.category_ratings = last_rating.category_ratings
+    return rated_text
