@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
-from django.db.models import Model, CharField, ForeignKey, Manager, PositiveSmallIntegerField
+from django.db.models import Model, CharField, ForeignKey, Manager, \
+    PositiveSmallIntegerField
+
 
 class Content(Model):
     MEDIA_TYPES = [(0, 'song'),
@@ -9,7 +11,8 @@ class Content(Model):
                    (4, 'document')]
     title = CharField(max_length=125)
     creator = CharField(max_length=70)
-    media = PositiveSmallIntegerField(choices=MEDIA_TYPES)
+    media = PositiveSmallIntegerField(
+        choices=MEDIA_TYPES, null=True, blank=True)
     content = Manager()
 
     def __str__(self):

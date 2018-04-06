@@ -1,16 +1,17 @@
-from django.db.models import ManyToManyField, CharField, Manager
+from django.db.models import ManyToManyField, CharField, Manager, \
+    BooleanField, Model
 from django.contrib.auth.models import User
-from capstoneproject.models.models.weight import Weight
+from capstoneproject.models.fields.weight_field import WeightField
 
 
-class Category(Weight):
+class Category(Model):
     """
     The Category class is a table that stores the offensive category and weight
     associated with an offensive word.
     """
-    user = ManyToManyField(
-        User, related_name='categories', blank=True)
+    default = BooleanField(default=False)
     name = CharField(unique=True, max_length=30)
+    weight = WeightField()
     categories = Manager()
 
     def __str__(self):

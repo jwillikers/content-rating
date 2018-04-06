@@ -2,3 +2,5 @@ from capstoneproject.models.fields.positive_integer_range_field import PositiveI
 from capstoneproject.models.fields.positive_small_integer_range_field import PositiveSmallIntegerRangeField
 from capstoneproject.models.fields.rating_field import RatingField
 from capstoneproject.models.fields.word_count_field import WordCountField
+from capstoneproject.models.fields.strength_field import StrengthField
+from capstoneproject.models.fields.weight_field import WeightField
