@@ -1,9 +1,9 @@
-from django.db.models import RawQuerySet
+from django.db.models import Category
 
 
 class CategoryRawQuerySet(RawQuerySet):
     def user(self, user_id):
-        return self.raw('''
+        return Category.categories.raw('''
 SELECT
     c.id
     c.name
