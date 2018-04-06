@@ -1,6 +1,8 @@
 from django.db.models import QuerySet, Prefetch
 from capstoneproject.models.models.category import Category
 from capstoneproject.models.models.word_feature import WordFeature
+from capstoneproject.models.fields.weight_field import WeightField
+from capstoneproject.models.fields.strength_field import StrengthField
 
 
 class WordQuerySet(QuerySet):
@@ -57,7 +59,7 @@ class WordQuerySet(QuerySet):
         elif isinstance(strength, str):
             strength = strength.lower()
             found = False
-            for val, model_strength in WordFeature.STRENGTHS:
+            for val, model_strength in StrengthField.STRENGTHS:
                 if strength == model_strength:
                     strength = val
                     found = True
@@ -89,7 +91,7 @@ class WordQuerySet(QuerySet):
         """
         if isinstance(weight, int):
             found = False
-            for val, _ in WordFeature.WEIGHTS:
+            for val, _ in WeightField.WEIGHTS:
                 if weight == val:
                     found = True
                     break
@@ -99,7 +101,7 @@ class WordQuerySet(QuerySet):
         elif isinstance(weight, str):
             weight = weight.lower()
             found = False
-            for val, model_weight in WordFeature.WEIGHTS:
+            for val, model_weight in WeightField.WEIGHTS:
                 if weight == model_weight:
                     weight = val
                     found = True

@@ -42,14 +42,10 @@ class UserStorage(Model):
     user_storage = Manager()
 
     @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_user_storage(sender, instance, created, **kwargs):
         if created:
             UserStorage.user_storage.create(
                 user=instance, id=instance.id)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
 
     class Meta:
         default_manager_name = 'user_storage'
