@@ -1,8 +1,8 @@
-from capstoneproject.models.fields.positive_integer_range_field import PositiveIntegerRangeField
+from capstoneproject.models.fields.positive_integer_range_field \
+    import PositiveIntegerRangeField
 
 
 class WordCountField(PositiveIntegerRangeField):
-    def __init__(self, verbose_name=None, name=None, **kwargs):
+    def __init__(self, **kwargs):
         PositiveIntegerRangeField.__init__(
-            self, min_value=1, max_value=None, verbose_name=verbose_name,
-            name=name, **kwargs)
+            self, min_value=1, max_value=None, **kwargs)

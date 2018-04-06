@@ -57,7 +57,8 @@ class Command(BaseCommand):
             try:
                 category = categories.get(name=category_entry['category'])
             except ObjectDoesNotExist:
-                category = Category(name=category_entry['category'])
+                category = Category(
+                    name=category_entry['category'], default=True)
 
             try:
                 category.weight = category_entry['weight']
@@ -98,6 +99,7 @@ class Command(BaseCommand):
 
                     try:
                         word_feature, _ = word_features.get_or_create(
+                            default=True,
                             category_id=category.id,
                             strength=strength,
                             weight=weight)
@@ -112,7 +114,7 @@ class Command(BaseCommand):
             try:
                 word = words.get(name=word_entry['word'])
             except ObjectDoesNotExist:
-                word = Word(name=word_entry['word'])
+                word = Word(default=True, name=word_entry['word'])
             word.save()
 
             for feature in word_feature_list:

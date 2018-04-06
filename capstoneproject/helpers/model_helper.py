@@ -5,6 +5,7 @@ from capstoneproject.models import Word, Weight, Category, ContentRating, \
     UserStorage, Content, WordCount, CategoryRating
 from django.contrib.auth.models import User
 from capstoneproject.content_rating.algorithm import text
+from django.contrib.auth.models import User
 import traceback
 
 
@@ -34,7 +35,7 @@ def get_user_categories(user: User):
     print("TODO")  # TODO
 
 
-def get_user_category(user:User, category: str):
+def get_user_category(user: User, category: str):
     """
     This function returns a Category model associated with
     the given User and category name.
@@ -112,7 +113,7 @@ def get_weights():
     offensiveness levels of the Words.
     :return: a list of the possible offensive weight values
     """
-    return Weight.WEIGHTS
+    return WeightField.WEIGHTS
 
 
 def get_user_category_weight(user: User, category: str):
@@ -139,10 +140,12 @@ def update_user_category_weight(user: User, category: str, weight: int):
     print("TODO")  # TODO
 
 
+# user storage should probably not be transparent
+# to the rest of the system through here.
 def get_user_storage(user: User):
     user_storage_model = None
     try:
-        user_storage_model = UserStorage.user_storage.get_or_create(user=user)
+        user_storage_model = UserStorage.user_storage.get(id=user.id)
     except TypeError:
         print(traceback.print_exc())
     return user_storage_model[0]
@@ -155,7 +158,9 @@ def save_word_count(word: str, count: int):
     :param count: An int, the count associated with the word.
     :return: A WordCount model, newly created.
     """
-    wc = WordCount.objects.create(word=get_word(word), count=count)
+    wc = WordCount.objects.create(
+        word=get_word(word),
+        count=count)
     print(wc)
     return wc
 
@@ -171,7 +176,9 @@ def save_category_ratings(user: User, category: str, rate):
     # TODO: Help here - below statement error statement is:
     # 'TypeError: Direct assignment to the forward side of a
     # many-to-many set is prohibited. Use user.set() instead.'
-    cr = CategoryRating.objects.create(user=user.userstorage_set, category=get_category(category), rating=rate)
+    cr = CategoryRating.objects.get_or_create(
+        category=get_category(category).id,
+        rating=rate)
     print(cr)
     return cr
 
@@ -184,15 +191,19 @@ def save_rating(rated_content: text.Text, user: User):
     :return: None
     """
     # First create Content
-    c = Content.content.create(title=rated_content.title,
-                creator=rated_content.creator,
-                media=rated_content.content_type)
-    # Then create Rating
-    r = Rating.ratings.create(content=c, rating=rated_content.overall_rating)
+    c = Content.content.get_or_create(
+        title=rated_content.title,
+        creator=rated_content.creator,
+        media=rated_content.content_type)
+    # Then create ContentRating
+    r = ContentRating.ratings.get_or_create(
+        content=c.id,
+        rating=rated_content.overall_rating)
     # Next get Word Counts
     for word, count in rated_content.get_word_counts().items():
         wc = save_word_count(word, count)
-        r.word_counts.add(wc)
+        #wc = get_or_create(word=word, count=count)
+        r.word_counts.add(wc.id)
     # Finally get Category Ratings
     for category, rate in rated_content.category_ratings.items():
         cr = save_category_ratings(user, category, rate)
@@ -215,7 +226,7 @@ def get_user_ratings(user: User):
     :param user: A User
     :return: A queryset containing a user's past ratings.
     """
-    print("TODO")  # TODO  Query UserStorage model? Return whatever makes the most sense.
+    return UserStorage.user_storage.get(id=user.id).ratings.all()
 
 
 def get_most_recent_user_rating(user: User):
@@ -224,7 +235,7 @@ def get_most_recent_user_rating(user: User):
     :param user: A User
     :return: A queryset containing a user's most recent rating.
     """
-    print("TODO")  # TODO Query UserStorage mode? Return either queryset or Rating model.
+    return UserStorage.user_storage.get(id=user.id).ratings.latest('updated')
 
 
 def get_user_rating_amount(user: User):
@@ -234,7 +245,7 @@ def get_user_rating_amount(user: User):
     :param user: A User
     :return: An int, the quantity of Ratings in the User's UserStorage.
     """
-    print("TODO")  # TODO
+    return UserStorage.user_storage.get(id=user.id).ratings.count()
 
 
 def delete_oldest_user_rating(user: User):

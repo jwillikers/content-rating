@@ -1,21 +1,22 @@
-from capstoneproject.models.models.weight import Weight
-from capstoneproject.models.models.category import Category
-from django.db.models import ManyToManyField, ForeignKey, BooleanField, Manager, CASCADE
+from django.db.models import ManyToManyField, ForeignKey, BooleanField, \
+    Manager, CASCADE, Model
 from django.contrib.auth.models import User
+from capstoneproject.models.models.category import Category
+from capstoneproject.models.fields.strength_field import StrengthField
+from capstoneproject.models.fields.weight_field import WeightField
 
 
-
-class WordFeature(Weight):
+class WordFeature(Model):
     """
     This class is a table containing the Word Features associated with an
     offensive word. The table contains the overall offensiveness strength
     (strong or weak), the offensive category, and the offensiveness weight of
     the word and category.
     """
-    STRENGTHS = [(True, 'strong'), (False, 'weak')]
-    user = ManyToManyField(User, related_name='word_features', blank=True)
+    default = BooleanField(default=False)
     category = ForeignKey(Category, on_delete=CASCADE)
-    strength = BooleanField(choices=STRENGTHS, default='weak')
+    strength = StrengthField(default='strong')
+    weight = WeightField()
     word_features = Manager()
 
     def __str__(self):

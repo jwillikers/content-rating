@@ -1,4 +1,4 @@
-from django.db.models import Model, ManyToManyField, CharField
+from django.db.models import Model, ManyToManyField, CharField, BooleanField
 from django.contrib.auth.models import User
 from capstoneproject.models.querysets.word_queryset import WordQuerySet
 from capstoneproject.models.models.word_feature import WordFeature
@@ -8,7 +8,7 @@ class Word(Model):
     """
     A class representing the system's table of offensive Words.
     """
-    user = ManyToManyField(User, related_name='words', blank=True)
+    default = BooleanField(default=False)
     word_features = ManyToManyField(WordFeature, related_name='words')
     name = CharField(unique=True, max_length=30)
     words = WordQuerySet.as_manager()
