@@ -1,7 +1,7 @@
 """
 This file contains functions used to provide data from the database.
 """
-from capstoneproject.models import Word, Weight, Category, ContentRating, \
+from capstoneproject.models import Word, Category, ContentRating, \
     UserStorage, Content, WordCount, CategoryRating
 from django.contrib.auth.models import User
 from capstoneproject.content_rating.algorithm import text
