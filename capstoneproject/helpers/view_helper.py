@@ -6,7 +6,7 @@ import capstoneproject.content_rating.algorithm.text as text
 import capstoneproject.app_forms.forms as forms
 from capstoneproject.shared import rater
 from capstoneproject import parsing
-from capstoneproject.models import User, Rating
+from django.contrib.auth.models import User
 from capstoneproject.helpers import model_helper
 
 
