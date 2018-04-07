@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from capstoneproject.models.raw_querysets.dictionary_raw_queryset \
+from capstoneproject.models.db_queries.words_and_features \
     import words_and_features
 from capstoneproject.models.models.category import Category
 from capstoneproject.models.models.word import Word
@@ -8,7 +8,7 @@ from capstoneproject.models.models.word_feature import WordFeature
 from capstoneproject.models.models.user_storage import UserStorage
 
 
-class WordAndFeatureTestCase(TestCase):
+class WordsAndFeaturesTestClass(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.cat1 = Category.categories.create(
@@ -73,21 +73,21 @@ class WordAndFeatureTestCase(TestCase):
         WordFeature.word_features.all().delete()
 
     def setUp(self):
-        self.user1 = WordAndFeatureTestCase.user1
-        self.user_storage1 = WordAndFeatureTestCase.user_storage1
-        self.user2 = WordAndFeatureTestCase.user2
-        self.user_storage2 = WordAndFeatureTestCase.user_storage2
-        self.word1 = WordAndFeatureTestCase.word1
-        self.word2 = WordAndFeatureTestCase.word2
-        self.word3 = WordAndFeatureTestCase.word3
-        self.word4 = WordAndFeatureTestCase.word4
-        self.word5 = WordAndFeatureTestCase.word5
-        self.cat1 = WordAndFeatureTestCase.cat1
-        self.cat2 = WordAndFeatureTestCase.cat2
-        self.feature1 = WordAndFeatureTestCase.feature1
-        self.feature2 = WordAndFeatureTestCase.feature2
-        self.feature4 = WordAndFeatureTestCase.feature4
-        self.feature5 = WordAndFeatureTestCase.feature5
+        self.user1 = WordsAndFeaturesTestClass.user1
+        self.user_storage1 = WordsAndFeaturesTestClass.user_storage1
+        self.user2 = WordsAndFeaturesTestClass.user2
+        self.user_storage2 = WordsAndFeaturesTestClass.user_storage2
+        self.word1 = WordsAndFeaturesTestClass.word1
+        self.word2 = WordsAndFeaturesTestClass.word2
+        self.word3 = WordsAndFeaturesTestClass.word3
+        self.word4 = WordsAndFeaturesTestClass.word4
+        self.word5 = WordsAndFeaturesTestClass.word5
+        self.cat1 = WordsAndFeaturesTestClass.cat1
+        self.cat2 = WordsAndFeaturesTestClass.cat2
+        self.feature1 = WordsAndFeaturesTestClass.feature1
+        self.feature2 = WordsAndFeaturesTestClass.feature2
+        self.feature4 = WordsAndFeaturesTestClass.feature4
+        self.feature5 = WordsAndFeaturesTestClass.feature5
 
     def test_args_none(self):
         results = words_and_features()

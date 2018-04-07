@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 import traceback
 
 
-def get_categories():
+def get_categories(user_id):
     """
     This function returns all categories that are used to classify offensive content.
     :return: A list of categories stored in the database.
