@@ -23,6 +23,9 @@ class ChangeUsernameForm(forms.ModelForm):
         help_text=_("Enter a new username with less than 20 characters."))
 
     class Meta:
+        """
+        Provides additional data to the Meta class.
+        """
         model = User
         fields = ('profile_username', )
 

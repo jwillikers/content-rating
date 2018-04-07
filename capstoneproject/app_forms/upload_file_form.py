@@ -56,7 +56,15 @@ class UploadFileForm(forms.Form):
         self.add_error('file', self.error_messages['no_file'])
 
     def get_title(self):
+        """
+        Returns the default value associated with the title of an uploaded file.
+        :return: A string, the default value associated with the title of an uploaded file.
+        """
         return 'Uploaded File'
 
     def get_creator(self):
+        """
+        Returns the default value associated with the creator of an uploaded file.
+        :return: A string, the default value associated with the creator of an uploaded file.
+        """
         return ''

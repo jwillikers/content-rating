@@ -49,7 +49,15 @@ class CopyInForm(forms.Form):
         return self.cleaned_data['copy_in_text']
 
     def get_title(self):
+        """
+        Returns the default title associated with a copy-in form.
+        :return: A string, the default title
+        """
         return 'Provided Text'
 
     def get_creator(self):
+        """
+        Returns the default creator associated with a copy-in form.
+        :return: A string, the default creator
+        """
         return ''

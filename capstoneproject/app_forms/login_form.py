@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 class LoginForm(forms.ModelForm):
     """
-        A login form.
+    A login form.
     """
     error_messages = {'invalid_login': _("Invalid username or password."),
                       'disabled_account': _("Account is disabled.")}

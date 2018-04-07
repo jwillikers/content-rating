@@ -42,6 +42,9 @@ class ChangeUsernamePasswordForm(forms.ModelForm):
         help_text=("Enter the same password as before, for verification."))
 
     class Meta:
+        """
+        Passes additional data to the Meta class.
+        """
         model = User
         fields = ('profile_username_both', 'profile_password_both', 'profile_confirm_password_both')
 
