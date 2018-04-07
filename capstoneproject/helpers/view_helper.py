@@ -3,46 +3,46 @@ This file contains functions that provide help create the information displayed 
 """
 import os
 import capstoneproject.content_rating.algorithm.text as text
-import capstoneproject.app_forms.forms as forms
 from capstoneproject.shared import rater
 from capstoneproject import parsing
 from django.contrib.auth.models import User
+from capstoneproject.app_forms import CopyInForm, SongSearchForm, WebsiteSearchForm, UploadFileForm
+
 from capstoneproject.helpers import model_helper
 
 
 def perform_rating(content: str, form, request):
     """
-    This function coordinates the ratings of textual content.
+    This function coordinates the ratings of textual content and returns a dictionary containing
+    the rating results.
     :param content: A string, the content to rate
     :param form: A form submitted by the user, contains information about the content.
     :param request: The HTML request.
     :return: A dictionary containing the rating results.
     """
-    context = get_rating_results(content, form, request.user)
-    request.session['category_words'] = context['category_word_counts']
+    rated_content = get_rating_results(content, form)  # Get the rating's results
+    #model_helper.save_rating(rated_content, request.user)  # Save the rating
+    context = generate_context(rated_content, 'current')  # Generate the context
+    request.session['category_words'] = context['current_category_word_counts']
+
     return context
 
 
-def get_rating_results(content: str, form, user: User):
+def get_rating_results(content: str, form):
     """
     This function classifies and rates the given text.
     It then saves the rating information.
     Lastly, it returns a dictionary containing the rating results.
     :param content: A string, the content to rate.
     :param form: A form, submitted by the user and contains information about the content.
-    :param user: A User
     :return: A dictionary containing the rating results
     """
     # TODO handle overall rating of 0
-
     rated_content = rater.algorithm(content)  # Perform algorithm
     rated_content.title = form.get_title()  # Set the rated content's title
     rated_content.creator = form.get_creator()  # Set the rated content's creator
     rated_content.content_type = get_content_type(form)  # Set the content type
-
-    model_helper.save_rating(rated_content, user)  # Save the user's rating
-
-    return generate_context(rated_content, 'current')
+    return rated_content
 
 
 def get_content_type(form):
@@ -52,15 +52,14 @@ def get_content_type(form):
     :return: The content type as a string
     """
     content_type = 4
-    if isinstance(form, forms.copy_in_form.CopyInForm):
+    if isinstance(form, CopyInForm):
         content_type = 4  # 'document'
-    elif isinstance(form, forms.song_search_form.SongSearchForm):
+    elif isinstance(form, SongSearchForm):
         content_type = 0  # 'song'
-    elif isinstance(form, forms.webpage_search_form.WebsiteSearchForm):
+    elif isinstance(form, WebsiteSearchForm):
         content_type = 3  # 'website'
-    elif isinstance(form, forms.upload_file_form.UploadFileForm):
+    elif isinstance(form, UploadFileForm):
         content_type = 4  # 'document'
-
     return content_type
 
 
@@ -68,6 +67,7 @@ def generate_context(rated_content: text.Text, name: str):
     """
     Generates a dictionary that contains key information from a rated text.
     :param rated_content: The rated text used to create the dictionary.
+    :param name: A string to add to the start of every field in the context.
     :return: A dictionary, containing the rated text's information.
     """
     context = {'{}_name'.format(name): rated_content.title,
@@ -89,14 +89,14 @@ def get_file_content(file):
     :param file: A file.
     :return: A string, the file's text.
     """
-    handle_uploaded_file(file)  # Transfer file from HTML Request
+    chunk_uploaded_file(file)  # Transfer file from HTML Request
     file_text = parse_file(file.name)  # Get text from temp file
     # print(text)
     os.remove('capstoneproject/tempfile')  # Delete the temp file after use
     return file_text
 
 
-def handle_uploaded_file(f):
+def chunk_uploaded_file(f):
     """
     This function reads the given file in chunks and writes the file to another file.
     :param f: The file to read.

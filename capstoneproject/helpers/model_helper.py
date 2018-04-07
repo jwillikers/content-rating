@@ -188,7 +188,7 @@ def save_rating(rated_content: text.Text, user: User):
                 creator=rated_content.creator,
                 media=rated_content.content_type)
     # Then create Rating
-    r = Rating.ratings.create(content=c, rating=rated_content.overall_rating)
+    r = ContentRating.content_ratings.create(content=c, rating=rated_content.overall_rating)
     # Next get Word Counts
     for word, count in rated_content.get_word_counts().items():
         wc = save_word_count(word, count)

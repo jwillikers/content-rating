@@ -13,23 +13,18 @@ from django.urls import reverse
 
 from capstoneproject.display import display_categories, display_category_words
 from capstoneproject.content_rating.algorithm import text
-from capstoneproject.helpers import model_helper
+from capstoneproject.helpers import model_helper, form_helper
 from capstoneproject.helpers import view_helper
-from capstoneproject.app_forms import form_handler
-from capstoneproject.app_forms.forms.login_form import LoginForm
-from capstoneproject.app_forms.forms.signup_form import SignUpForm
-from capstoneproject.app_forms.forms.change_password_form import ChangePasswordForm
-from capstoneproject.app_forms.forms.change_username_form import ChangeUsernameForm
-from capstoneproject.app_forms.forms.change_username_password_form import ChangeUsernamePasswordForm
-from capstoneproject.app_forms.forms.song_search_form import SongSearchForm
-from capstoneproject.app_forms.forms.tv_show_search_form import TVShowSearchForm
-from capstoneproject.app_forms.forms.movie_search_form import MovieSearchForm
-from capstoneproject.app_forms.forms.webpage_search_form import WebsiteSearchForm
-from capstoneproject.app_forms.forms.copy_in_form import CopyInForm
-from capstoneproject.app_forms.forms.upload_file_form import UploadFileForm
+from capstoneproject.app_forms.login_form import LoginForm
+from capstoneproject.app_forms.signup_form import SignUpForm
+from capstoneproject.app_forms.change_password_form import ChangePasswordForm
+from capstoneproject.app_forms.change_username_form import ChangeUsernameForm
+from capstoneproject.app_forms.change_username_password_form import ChangeUsernamePasswordForm
+from capstoneproject.app_forms.song_search_form import SongSearchForm
+from capstoneproject.app_forms.webpage_search_form import WebsiteSearchForm
+from capstoneproject.app_forms.copy_in_form import CopyInForm
+from capstoneproject.app_forms.upload_file_form import UploadFileForm
 from capstoneproject import parsing
-from capstoneproject.shared import rater
-import os
 
 global_content = text.Text([])
 
@@ -46,7 +41,7 @@ def login(request):
         if request.POST.get('submit') == 'signup':
             form = SignUpForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                form_handler.signup(form, request)
+                form_helper.signup(form, request)
                 # Go to the home screen if the user is now authenticated and
                 # logged in.
                 return render(request, 'homepage.html')
@@ -57,7 +52,7 @@ def login(request):
         if request.POST.get('submit') == 'login':
             form = LoginForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
-                user = form_handler.authenticate_user(form)
+                user = form_helper.authenticate_user(form)
                 if user is not None:
                     if user.is_active:  # Check if user account is active.
                         auth_login(request, user)
@@ -294,9 +289,6 @@ def words(request, category):
                'weight_dict': weight_dict
                }
     return render(request, 'words.html', context)
-
-
-
 
 
 @login_required(login_url='/login/')
