@@ -74,23 +74,6 @@ class WordsAndFeaturesTestClass(TestCase):
         UserStorage.user_storage.all().delete()
         User.objects.all().delete()
 
-    def setUp(self):
-        self.user1 = WordsAndFeaturesTestClass.user1
-        self.user_storage1 = WordsAndFeaturesTestClass.user_storage1
-        self.user2 = WordsAndFeaturesTestClass.user2
-        self.user_storage2 = WordsAndFeaturesTestClass.user_storage2
-        self.word1 = WordsAndFeaturesTestClass.word1
-        self.word2 = WordsAndFeaturesTestClass.word2
-        self.word3 = WordsAndFeaturesTestClass.word3
-        self.word4 = WordsAndFeaturesTestClass.word4
-        self.word5 = WordsAndFeaturesTestClass.word5
-        self.cat1 = WordsAndFeaturesTestClass.cat1
-        self.cat2 = WordsAndFeaturesTestClass.cat2
-        self.feature1 = WordsAndFeaturesTestClass.feature1
-        self.feature2 = WordsAndFeaturesTestClass.feature2
-        self.feature4 = WordsAndFeaturesTestClass.feature4
-        self.feature5 = WordsAndFeaturesTestClass.feature5
-
     def test_args_none(self):
         results = words_and_features()
         self.assertIsInstance(results, list, msg='result is not a list')
@@ -126,13 +109,13 @@ class WordsAndFeaturesTestClass(TestCase):
              'strength': self.feature2.strength,
              'weight': self.feature2.weight},
             results, msg='missing word3, feature2')
-        self.assertNotIn(
+        self.assertIn(
             {'word_id': self.word4.id,
              'word': self.word4.name,
-             'category_id': self.feature4.category,
+             'category_id': self.feature4.category.id,
              'strength': self.feature4.strength,
              'weight': self.feature4.weight},
-            results, msg='contains word4 which is not linked to a user')
+            results, msg='missing word4')
         self.assertIn(
             {'word_id': self.word5.id,
              'word': self.word5.name,
@@ -198,13 +181,6 @@ class WordsAndFeaturesTestClass(TestCase):
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
-        self.assertNotIn(
-            {'word_id': self.word4.id,
-             'word': self.word4.name,
-             'category_id': self.feature4.category,
-             'strength': self.feature4.strength,
-             'weight': self.feature4.weight},
-            results, msg='contains word4 which is not linked to this user')
         self.assertIn(
             {'word_id': self.word1.id,
              'word': self.word1.name,
@@ -235,13 +211,13 @@ class WordsAndFeaturesTestClass(TestCase):
              'weight': self.feature2.weight},
             results,
             msg='contains category 2 feature in word 3 when it should not')
-        self.assertNotIn(
+        self.assertIn(
             {'word_id': self.word4.id,
              'word': self.word4.name,
-             'category_id': self.feature4.category,
+             'category_id': self.feature4.category.id,
              'strength': self.feature4.strength,
              'weight': self.feature4.weight},
-            results, msg='contains word4 which is not linked to a user')
+            results, msg='missing word4')
         self.assertIn(
             {'word_id': self.word5.id,
              'word': self.word5.name,
@@ -289,6 +265,14 @@ class WordsAndFeaturesTestClass(TestCase):
             results,
             msg='''contains Strength = False feature in word3 when it should not
             ''')
+        self.assertNotIn(
+            {'word_id': self.word4.id,
+             'word': self.word4.name,
+             'category_id': self.feature4.category,
+             'strength': self.feature4.strength,
+             'weight': self.feature4.weight},
+            results,
+            msg='''contains word4 with Strength = False''')
         self.assertNotIn(
             {'word_id': self.word5.id,
              'word': self.word5.name,
