@@ -1,10 +1,10 @@
 """
 This file contains functions used to provide data from the database.
 """
-from capstoneproject.models import Word, Weight, Category, ContentRating, \
-    UserStorage, Content, WordCount, CategoryRating
-from django.contrib.auth.models import User
+from capstoneproject.models import Word, Category, ContentRating, \
+    UserStorage, Content, WordCount, CategoryRating, WeightField
 from capstoneproject.content_rating.algorithm import text
+from django.contrib.auth.models import User
 import traceback
 
 
@@ -16,13 +16,13 @@ def get_categories():
     return Category.categories.all()
 
 
-def get_category(category):
+def get_category(category_name):
     """
     This function returns a Category that matches the given category name.
-    :param category: A string, the category name
+    :param category_name: A string, the category name
     :return: A Category
     """
-    return Category.categories.get(name=category)
+    return Category.categories.get(name=category_name)
 
 
 def get_user_categories(user: User):
@@ -34,12 +34,12 @@ def get_user_categories(user: User):
     print("TODO")  # TODO
 
 
-def get_user_category(user:User, category: str):
+def get_user_category(user: User, category_name: str):
     """
     This function returns a Category model associated with
     the given User and category name.
     :param user: A User
-    :param category: A string, the name of the category
+    :param category_name: A string, the name of the category
     :return: A Category model
     """
     print("TODO")  # TODO
@@ -53,57 +53,57 @@ def get_words():
     return Word.words.all()
 
 
-def get_word(word):
+def get_word(word_name: str):
     """
     Gets a Word model that matches the given string.
-    :param word: A string, the word name to get.
+    :param word_name: A string, the word name to get.
     :return: A Word
     """
     word_model = None
     try:
-        word_model = Word.words.get_word(word=word)
+        word_model = Word.words.get_word(word=word_name)
     except TypeError:
         print(traceback.print_exc())
     return word_model
 
 
-def get_user_word_features(user: User, word: str):
+def get_user_word_features(user: User, word_name: str):
     print("TODO")  # TODO - Need to better define what we will need.
 
 
-def get_word_weight(user: User, word: str, category: str):
+def get_word_weight(user: User, word_name: str, category_name: str):
     """
     This function provides the weight associated with a given User, Word, and Category.
     If the user has stored their own word weight, then this value is returned.
     Otherwise, return the default word weight.
     :param user: A User
-    :param word: A string, the word name
-    :param category: A string, the category name
+    :param word_name: A string, the word name
+    :param category_name: A string, the category name
     :return: An int, the offensiveness weight associated with the given user, word, and category
     """
     print("TODO")  # TODO
 
 
-def update_user_word_weight(user: User, word: str, category: str, weight: int):
+def update_user_word_weight(user: User, word_name: str, category_name: str, weight: int):
     """
     This function updates the weight associated with the WordFeature of the given
     word and given category to be the given weight.
     :param user: A User
-    :param word: A string, the word name
-    :param category: A string, the category name
+    :param word_name: A string, the word name
+    :param category_name: A string, the category name
     :param weight: An int, the new Weight value (0-3)
     :return: None
     """
     print("TODO")  # TODO
 
 
-def get_category_words(category):
+def get_category_words(category_name):
     """
     This function returns all words that are used to classify offensive content from the given category.
-    :param category: The offensive category of words that should be returned.
+    :param category_name: The offensive category of words that should be returned.
     :return: A list of words in the given category stored in the system's dictionary of offensive content.
     """
-    return Word.words.category(category)
+    return Word.words.category(category_name)
 
 
 def get_weights():
@@ -112,66 +112,72 @@ def get_weights():
     offensiveness levels of the Words.
     :return: a list of the possible offensive weight values
     """
-    return Weight.WEIGHTS
+    return WeightField.WEIGHTS
 
 
-def get_user_category_weight(user: User, category: str):
+def get_user_category_weight(user: User, category_name: str):
     """
     This function provides the weight associated with a given User and Category.
     If the user has stored their own category weight, then this value is returned.
     Otherwise return the default category weight.
     :param user: A User
-    :param category: A string, the category name
+    :param category_name: A string, the category name
     :return:
     """
     print("TODO")  # TODO
 
 
-def update_user_category_weight(user: User, category: str, weight: int):
+def update_user_category_weight(user: User, category_name: str, weight: int):
     """
     This function updates Weight associated with the Category in the
     User's UserStorage that matches a given string with the given weight.
     :param user: A User
-    :param category: A string, the category name
+    :param category_name: A string, the category name
     :param weight: An int, the new Weight value (0-3)
     :return: None
     """
     print("TODO")  # TODO
 
 
+# user storage should probably not be transparent
+# to the rest of the system through here.
 def get_user_storage(user: User):
     user_storage_model = None
     try:
-        user_storage_model = UserStorage.user_storage.get_or_create(user=user)
+        user_storage_model = UserStorage.user_storage.get(id=user.id)
     except TypeError:
         print(traceback.print_exc())
     return user_storage_model[0]
 
 
-def save_word_count(word: str, count: int):
+def save_word_count(word_name: str, count_value: int):
     """
     This method creates and saves a new WordCount model into the WordCount table.
-    :param word: A string, the word to store.
-    :param count: An int, the count associated with the word.
+    :param word_name: A string, the word to store.
+    :param count_value: An int, the count associated with the word.
     :return: A WordCount model, newly created.
     """
-    wc = WordCount.objects.create(word=get_word(word), count=count)
+    wc = WordCount.objects.create(
+        word=get_word(word_name),
+        count=count_value)
     print(wc)
     return wc
 
 
-def save_category_ratings(user: User, category: str, rate):
+def save_category_ratings(user: User, category_name: str, rate_value):
     """
     This function created and saves a CategoryRatings model into the CategoryRatings table.
     :param user: A User, the user who performed the associated rating.
-    :param category: A string, the name of the category.
-    :param rate: An int, the rating associated with the category.
+    :param category_name: A string, the name of the category.
+    :param rate_value: An int, the rating associated with the category.
     :return: A CategoryRating model, newly created.
     """
     # TODO: Help here - below statement error statement is:
     # 'TypeError: Direct assignment to the forward side of a
     # many-to-many set is prohibited. Use user.set() instead.'
-    cr = CategoryRating.objects.create(user=user.userstorage_set, category=get_category(category), rating=rate)
+    cr = CategoryRating.objects.get_or_create(
+        category=get_category(category_name).id,
+        rating=rate_value)
     print(cr)
     return cr
 
@@ -184,15 +190,19 @@ def save_rating(rated_content: text.Text, user: User):
     :return: None
     """
     # First create Content
-    c = Content.content.create(title=rated_content.title,
-                creator=rated_content.creator,
-                media=rated_content.content_type)
-    # Then create Rating
-    r = ContentRating.content_ratings.create(content=c, rating=rated_content.overall_rating)
+    c = Content.content.get_or_create(
+        title=rated_content.title,
+        creator=rated_content.creator,
+        media=rated_content.content_type)
+    # Then create ContentRating
+    r = ContentRating.content_ratings.get_or_create(
+        content=c.id,
+        rating=rated_content.overall_rating)
     # Next get Word Counts
     for word, count in rated_content.get_word_counts().items():
         wc = save_word_count(word, count)
-        r.word_counts.add(wc)
+        #wc = get_or_create(word=word, count=count)
+        r.word_counts.add(wc.id)
     # Finally get Category Ratings
     for category, rate in rated_content.category_ratings.items():
         cr = save_category_ratings(user, category, rate)
@@ -215,7 +225,7 @@ def get_user_ratings(user: User):
     :param user: A User
     :return: A queryset containing a user's past ratings.
     """
-    print("TODO")  # TODO  Query UserStorage model? Return whatever makes the most sense.
+    return UserStorage.user_storage.get(id=user.id).ratings.all()
 
 
 def get_most_recent_user_rating(user: User):
@@ -224,7 +234,7 @@ def get_most_recent_user_rating(user: User):
     :param user: A User
     :return: A queryset containing a user's most recent rating.
     """
-    print("TODO")  # TODO Query UserStorage mode? Return either queryset or Rating model.
+    return UserStorage.user_storage.get(id=user.id).ratings.latest('updated')
 
 
 def get_user_rating_amount(user: User):
@@ -234,7 +244,7 @@ def get_user_rating_amount(user: User):
     :param user: A User
     :return: An int, the quantity of Ratings in the User's UserStorage.
     """
-    print("TODO")  # TODO
+    return UserStorage.user_storage.get(id=user.id).ratings.count()
 
 
 def delete_oldest_user_rating(user: User):

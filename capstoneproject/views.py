@@ -26,7 +26,7 @@ from capstoneproject.app_forms.copy_in_form import CopyInForm
 from capstoneproject.app_forms.upload_file_form import UploadFileForm
 from capstoneproject import parsing
 
-global_content = text.Text([])
+#global_content = text.Text([])
 
 def login(request):
     """
@@ -308,7 +308,7 @@ def rating_results(request):
     for category in display_categories():
         category_ratings[category.name] = global_content.get_category_rating(category.name)
         category_word_counts[category.name] = global_content.get_category_word_counts(category.name)
-    
+
     context = {'name': global_content.title,
                'creator': '',
                'overall_rating': global_content.overall_rating,

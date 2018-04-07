@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
-from django.db.models import Model, ForeignKey, ManyToManyField, DateTimeField, Manager, CASCADE
+from django.db.models import Model, ForeignKey, ManyToManyField, \
+    DateTimeField, Manager, CASCADE
 from capstoneproject.models.models.content import Content
 from capstoneproject.models.models.category_rating import CategoryRating
 from capstoneproject.models.models.word_count import WordCount
