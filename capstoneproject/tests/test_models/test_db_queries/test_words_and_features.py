@@ -77,7 +77,7 @@ class WordsAndFeaturesTestClass(TestCase):
     def test_args_none(self):
         results = words_and_features()
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -127,7 +127,7 @@ class WordsAndFeaturesTestClass(TestCase):
     def test_arg_user_id(self):
         results = words_and_features(user_id=self.user1.id)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -177,7 +177,7 @@ class WordsAndFeaturesTestClass(TestCase):
     def test_arg_category_id(self):
         results = words_and_features(category_id=self.cat1.id)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -230,7 +230,7 @@ class WordsAndFeaturesTestClass(TestCase):
     def test_arg_strength(self):
         results = words_and_features(strength=True)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -287,7 +287,7 @@ class WordsAndFeaturesTestClass(TestCase):
             user_id=self.user1.id,
             category_id=self.cat1.id)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -350,7 +350,7 @@ class WordsAndFeaturesTestClass(TestCase):
             category_id=self.cat1.id,
             strength=self.feature1.strength)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')

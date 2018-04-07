@@ -45,7 +45,7 @@ class CategoriesTestClass(TestCase):
     def test_args_none(self):
         results = categories()
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertEqual(len(results), 5)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
