@@ -71,6 +71,8 @@ class WordsAndFeaturesTestClass(TestCase):
         Category.categories.all().delete()
         Word.words.all().delete()
         WordFeature.word_features.all().delete()
+        UserStorage.user_storage.all().delete()
+        User.objects.all().delete()
 
     def setUp(self):
         self.user1 = WordsAndFeaturesTestClass.user1
