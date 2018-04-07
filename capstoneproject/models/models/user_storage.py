@@ -11,13 +11,13 @@ from capstoneproject.models.models.word import Word
 
 class UserStorage(Model):
     def default_categories():
-        return Category.categories.filter(default=True)
+        return Category.categories.filter(default=True).all()
 
     def default_words():
-        return Word.words.filter(default=True)
+        return Word.words.filter(default=True).all()
 
     def default_word_features():
-        return WordFeature.word_features.filter(default=True)
+        return WordFeature.word_features.filter(default=True).all()
 
     user = OneToOneField(User, on_delete=CASCADE)
     categories = ManyToManyField(

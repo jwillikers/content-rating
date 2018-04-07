@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from capstoneproject.models.raw_querysets.dictionary_raw_queryset \
+from capstoneproject.models.db_queries.words_and_features \
     import words_and_features
 from capstoneproject.models.models.category import Category
 from capstoneproject.models.models.word import Word
@@ -8,7 +8,7 @@ from capstoneproject.models.models.word_feature import WordFeature
 from capstoneproject.models.models.user_storage import UserStorage
 
 
-class WordAndFeatureTestCase(TestCase):
+class WordsAndFeaturesTestClass(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.cat1 = Category.categories.create(
@@ -71,28 +71,13 @@ class WordAndFeatureTestCase(TestCase):
         Category.categories.all().delete()
         Word.words.all().delete()
         WordFeature.word_features.all().delete()
-
-    def setUp(self):
-        self.user1 = WordAndFeatureTestCase.user1
-        self.user_storage1 = WordAndFeatureTestCase.user_storage1
-        self.user2 = WordAndFeatureTestCase.user2
-        self.user_storage2 = WordAndFeatureTestCase.user_storage2
-        self.word1 = WordAndFeatureTestCase.word1
-        self.word2 = WordAndFeatureTestCase.word2
-        self.word3 = WordAndFeatureTestCase.word3
-        self.word4 = WordAndFeatureTestCase.word4
-        self.word5 = WordAndFeatureTestCase.word5
-        self.cat1 = WordAndFeatureTestCase.cat1
-        self.cat2 = WordAndFeatureTestCase.cat2
-        self.feature1 = WordAndFeatureTestCase.feature1
-        self.feature2 = WordAndFeatureTestCase.feature2
-        self.feature4 = WordAndFeatureTestCase.feature4
-        self.feature5 = WordAndFeatureTestCase.feature5
+        UserStorage.user_storage.all().delete()
+        User.objects.all().delete()
 
     def test_args_none(self):
         results = words_and_features()
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -124,13 +109,13 @@ class WordAndFeatureTestCase(TestCase):
              'strength': self.feature2.strength,
              'weight': self.feature2.weight},
             results, msg='missing word3, feature2')
-        self.assertNotIn(
+        self.assertIn(
             {'word_id': self.word4.id,
              'word': self.word4.name,
-             'category_id': self.feature4.category,
+             'category_id': self.feature4.category.id,
              'strength': self.feature4.strength,
              'weight': self.feature4.weight},
-            results, msg='contains word4 which is not linked to a user')
+            results, msg='missing word4')
         self.assertIn(
             {'word_id': self.word5.id,
              'word': self.word5.name,
@@ -142,7 +127,7 @@ class WordAndFeatureTestCase(TestCase):
     def test_arg_user_id(self):
         results = words_and_features(user_id=self.user1.id)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -192,17 +177,10 @@ class WordAndFeatureTestCase(TestCase):
     def test_arg_category_id(self):
         results = words_and_features(category_id=self.cat1.id)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
-        self.assertNotIn(
-            {'word_id': self.word4.id,
-             'word': self.word4.name,
-             'category_id': self.feature4.category,
-             'strength': self.feature4.strength,
-             'weight': self.feature4.weight},
-            results, msg='contains word4 which is not linked to this user')
         self.assertIn(
             {'word_id': self.word1.id,
              'word': self.word1.name,
@@ -233,13 +211,13 @@ class WordAndFeatureTestCase(TestCase):
              'weight': self.feature2.weight},
             results,
             msg='contains category 2 feature in word 3 when it should not')
-        self.assertNotIn(
+        self.assertIn(
             {'word_id': self.word4.id,
              'word': self.word4.name,
-             'category_id': self.feature4.category,
+             'category_id': self.feature4.category.id,
              'strength': self.feature4.strength,
              'weight': self.feature4.weight},
-            results, msg='contains word4 which is not linked to a user')
+            results, msg='missing word4')
         self.assertIn(
             {'word_id': self.word5.id,
              'word': self.word5.name,
@@ -252,7 +230,7 @@ class WordAndFeatureTestCase(TestCase):
     def test_arg_strength(self):
         results = words_and_features(strength=True)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -288,6 +266,14 @@ class WordAndFeatureTestCase(TestCase):
             msg='''contains Strength = False feature in word3 when it should not
             ''')
         self.assertNotIn(
+            {'word_id': self.word4.id,
+             'word': self.word4.name,
+             'category_id': self.feature4.category,
+             'strength': self.feature4.strength,
+             'weight': self.feature4.weight},
+            results,
+            msg='''contains word4 with Strength = False''')
+        self.assertNotIn(
             {'word_id': self.word5.id,
              'word': self.word5.name,
              'category_id': self.feature5.category.id,
@@ -301,7 +287,7 @@ class WordAndFeatureTestCase(TestCase):
             user_id=self.user1.id,
             category_id=self.cat1.id)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')
@@ -364,7 +350,7 @@ class WordAndFeatureTestCase(TestCase):
             category_id=self.cat1.id,
             strength=self.feature1.strength)
         self.assertIsInstance(results, list, msg='result is not a list')
-        self.assertGreaterEqual(len(results), 3)
+        self.assertGreaterEqual(len(results), 1, msg='result list is empty')
         self.assertIsInstance(
             results[0], dict,
             msg='result is not a list of dictionaries')

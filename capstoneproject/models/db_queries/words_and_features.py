@@ -1,19 +1,5 @@
 from django.db import connection
-
-
-def dictfetchall(cursor):
-    "Return all rows from a cursor as a dict"
-    columns = [col[0] for col in cursor.description]
-    return [dict(zip(columns, row))
-            for row in cursor.fetchall()]
-
-
-def namedtuplefetchall(cursor):
-    "Return all rows from a cursor as a namedtuple"
-    from collections import namedtuple
-    desc = cursor.description
-    nt_result = namedtuple('Result', [col[0] for col in desc])
-    return [nt_result(*row) for row in cursor.fetchall()]
+from capstoneproject.models.db_queries.cursor_helper import dictfetchall
 
 
 def words_and_features(user_id=None,
@@ -26,7 +12,8 @@ SELECT
     f.category_id,
     f.strength,
     f.weight
-
+'''
+    user_from_query_string = '''
 FROM capstoneproject_userstorage AS u
 INNER JOIN capstoneproject_userstorage_words AS uw
     ON u.id = uw.userstorage_id
@@ -36,32 +23,43 @@ INNER JOIN capstoneproject_userstorage_word_features AS uf
     ON u.id = uf.userstorage_id
 INNER JOIN capstoneproject_wordfeature AS f
     ON uf.wordfeature_id = f.id
-
+'''
+    all_from_query_string = '''
+FROM capstoneproject_word AS w
+INNER JOIN capstoneproject_word_word_features AS wf
+    ON wf.word_id = w.id
+INNER JOIN capstoneproject_wordfeature AS f
+    ON wf.wordfeature_id = f.id
 '''
     first = True
     query_variables = list()
 
-    if user_id:
+    if user_id is not None:
+        query_string += user_from_query_string
+    else:
+        query_string += all_from_query_string
+
+    if user_id is not None:
         query_variables.append(user_id)
         if first:
-            query_string += '\nWHERE'
             first = False
+            query_string += '\nWHERE'
         else:
             query_string += '\nAND'
         query_string += ' uw.userstorage_id = %s'
-    if category_id:
+    if category_id is not None:
         query_variables.append(category_id)
         if first:
-            query_string += '\nWHERE'
             first = False
+            query_string += '\nWHERE'
         else:
             query_string += '\nAND'
         query_string += ' f.category_id = %s'
-    if strength:
+    if strength is not None:
         query_variables.append(strength)
         if first:
-            query_string += '\nWHERE'
             first = False
+            query_string += '\nWHERE'
         else:
             query_string += '\nAND'
         query_string += ' f.strength = %s'
