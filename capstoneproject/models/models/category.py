@@ -2,6 +2,7 @@ from django.db.models import ManyToManyField, CharField, Manager, \
     BooleanField, Model
 from django.contrib.auth.models import User
 from capstoneproject.models.fields.weight_field import WeightField
+from capstoneproject.models.querysets.category_queryset import CategoryQuerySet
 
 
 class Category(Model):
@@ -12,7 +13,7 @@ class Category(Model):
     default = BooleanField(default=False)
     name = CharField(unique=True, max_length=30)
     weight = WeightField()
-    categories = Manager()
+    categories = CategoryQuerySet.as_manager()
 
     def __str__(self):
         """
