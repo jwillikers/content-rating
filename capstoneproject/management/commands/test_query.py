@@ -7,7 +7,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         category = 'excretory'
 
-        words = models.Word.words.category(category)
+        words = models.Word.words.filter(category)
 
         for word in words:
             self.stdout.write(word.__str__())

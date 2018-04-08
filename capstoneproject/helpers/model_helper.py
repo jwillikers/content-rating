@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 import traceback
 
 
-def get_categories(user_id):
+def get_categories():
     """
     This function returns all categories that are used to classify offensive content.
     :return: A list of categories stored in the database.
@@ -27,11 +27,11 @@ def get_category(category_name):
 
 def get_user_categories(user: User):
     """
-    This function returns a queryset of a User's Categories.
+    Retrieves a User's Categories.
     :param user: A User
-    :return: A queryset containing a User's Categories
+    :return: A list of a User's Categories
     """
-    print("TODO")  # TODO
+    return Category.categories.filter(user_storage__id=user.id)
 
 
 def get_user_category(user: User, category_name: str):
@@ -42,7 +42,7 @@ def get_user_category(user: User, category_name: str):
     :param category_name: A string, the name of the category
     :return: A Category model
     """
-    print("TODO")  # TODO
+    return Category.categories.get(name=category, user_storage__id=user.id)
 
 
 def get_words():
@@ -67,8 +67,8 @@ def get_word(word_name: str):
     return word_model
 
 
-def get_user_word_features(user: User, word_name: str):
-    print("TODO")  # TODO - Need to better define what we will need.
+def get_user_word_features(user: User, word: str):
+    return Word.words.get(name=word).word_features.filter(user_storage__id=user.id)
 
 
 def get_word_weight(user: User, word_name: str, category_name: str):
@@ -81,7 +81,8 @@ def get_word_weight(user: User, word_name: str, category_name: str):
     :param category_name: A string, the category name
     :return: An int, the offensiveness weight associated with the given user, word, and category
     """
-    print("TODO")  # TODO
+    return Word.words.get(name=str).word_features.get(
+        user_storage__id=user.id, category__name=category).weight
 
 
 def update_user_word_weight(user: User, word_name: str, category_name: str, weight: int):
@@ -94,7 +95,8 @@ def update_user_word_weight(user: User, word_name: str, category_name: str, weig
     :param weight: An int, the new Weight value (0-3)
     :return: None
     """
-    print("TODO")  # TODO
+    return Word.words.get(name=str).word_features.get(
+        user_storage__id=user.id, category__name=category).update(weight=weight)
 
 
 def get_category_words(category_name):
@@ -124,7 +126,7 @@ def get_user_category_weight(user: User, category_name: str):
     :param category_name: A string, the category name
     :return:
     """
-    print("TODO")  # TODO
+    return Category.categories.get(name=str, user_storage__id=user.id).weight
 
 
 def update_user_category_weight(user: User, category_name: str, weight: int):
@@ -136,7 +138,8 @@ def update_user_category_weight(user: User, category_name: str, weight: int):
     :param weight: An int, the new Weight value (0-3)
     :return: None
     """
-    print("TODO")  # TODO
+    return Category.categories.get(
+        name=str, user_storage__id=user.id).update(weight=weight)
 
 
 # user storage should probably not be transparent
@@ -157,7 +160,7 @@ def save_word_count(word_name: str, count_value: int):
     :param count_value: An int, the count associated with the word.
     :return: A WordCount model, newly created.
     """
-    wc = WordCount.objects.create(
+    wc = WordCount.objects.get_create(
         word=get_word(word_name),
         count=count_value)
     print(wc)
@@ -176,7 +179,7 @@ def save_category_ratings(user: User, category_name: str, rate_value):
     # 'TypeError: Direct assignment to the forward side of a
     # many-to-many set is prohibited. Use user.set() instead.'
     cr = CategoryRating.objects.get_or_create(
-        category=get_category(category_name).id,
+        category=get_category(category_name),
         rating=rate_value)
     print(cr)
     return cr
@@ -201,22 +204,15 @@ def save_rating(rated_content, user: User):
     # Next get Word Counts
     for word, count in rated_content.get_word_counts().items():
         wc = save_word_count(word, count)
-        #wc = get_or_create(word=word, count=count)
-        r.word_counts.add(wc.id)
+        r.word_counts.add(wc)
     # Finally get Category Ratings
     for category, rate in rated_content.category_ratings.items():
         cr = save_category_ratings(user, category, rate)
         r.category_ratings.add(cr)
 
-    r.save()  # Not sure if this is needed.
-    print(r)
-    # TODO Help Here
-    #print(user.userstorage_set.all())
-    #user.userstorage_set.add(r)
-    us = get_user_storage(user)  # Get the user's storage
-    #print(user.userstorage_set.all())
-    us.ratings.add(r)  # Add the rating to the user's list of ratings
-    #print(us)
+    r.save()
+    UserStorage.user_storage.get(
+        user=user.id).ratings.add(r)
 
 
 def get_user_ratings(user: User):
@@ -225,7 +221,7 @@ def get_user_ratings(user: User):
     :param user: A User
     :return: A queryset containing a user's past ratings.
     """
-    return UserStorage.user_storage.get(id=user.id).ratings.all()
+    return ContentRating.content_ratings.filter(user_storage__id=user.id)
 
 
 def get_user_rating_at_position(user: User, pos: int):
@@ -238,7 +234,8 @@ def get_user_rating_at_position(user: User, pos: int):
     :return: A queryset containing a user's most recent rating.
     """
     try:
-        return UserStorage.user_storage.get(id=user.id).ratings.get[pos]  # TODO make this more efficient
+        return ContentRating.content_ratings.filter(
+            user_storage__id=user.id).all()[pos]  # TODO make this more efficient
     except IndexError:
         return None
 
@@ -250,7 +247,8 @@ def get_user_rating_amount(user: User):
     :param user: A User
     :return: An int, the quantity of Ratings in the User's UserStorage.
     """
-    return UserStorage.user_storage.get(id=user.id).ratings.count()
+    return ContentRating.content_ratings.filter(
+        user_storage__id=user.id).count()
 
 
 def delete_oldest_user_rating(user: User):
@@ -260,19 +258,8 @@ def delete_oldest_user_rating(user: User):
     :param user: A User
     :return: None
     """
-    print("TODO")  # TODO This function will not be needed if we just overwrite the user's oldest Rating.
-    # Delete related WordCounts
-    # Delete related CategoryRatings
-
-
-def overwrite_oldest_user_rating(user: User, rating: ContentRating):
-    """
-    This function overwrites the user's oldest Rating stored in their UserStorage.
-    This is used when the User has reached their limit of 5 Ratings to be stored.
-    :param user: A User
-    :param rating: A Rating model
-    :return: None
-    """
-    print("TODO")  # TODO This function will not be needed if we delete the user's oldest Rating instead.
-    # Update/Delete WordCounts of overwritten Rating
-    # Update/Delete CategoryRatings of overwritten Rating
+    oldest_rating = ContentRating.content_ratings.filter(
+        user_storage__id=user.id).earliest('updated')
+    oldest_rating.word_counts.delete()
+    oldest_rating.category_ratings.delete()
+    oldest_rating.delete()
