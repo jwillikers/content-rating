@@ -3,7 +3,7 @@ This file contains functions used to provide data from the database.
 """
 from capstoneproject.models import Word, Category, ContentRating, \
     UserStorage, Content, WordCount, CategoryRating, WeightField
-from capstoneproject.content_rating.algorithm import text
+#from capstoneproject.content_rating.algorithm import text
 from django.contrib.auth.models import User
 import traceback
 
@@ -182,7 +182,7 @@ def save_category_ratings(user: User, category_name: str, rate_value):
     return cr
 
 
-def save_rating(rated_content: text.Text, user: User):
+def save_rating(rated_content, user: User):
     """
     This functions saves the data associated with a user's rating into the database.
     :param rated_content: The data to store.
@@ -228,13 +228,19 @@ def get_user_ratings(user: User):
     return UserStorage.user_storage.get(id=user.id).ratings.all()
 
 
-def get_most_recent_user_rating(user: User):
+def get_user_rating_at_position(user: User, pos: int):
     """
-    This function returns a user's most recent Rating
+    This function returns a user's rating at a given index position from a list
+    ordered so the most recently updated rating is first.
+
     :param user: A User
+    :param pos: An int, the position in the user's past ratings that should be returned.
     :return: A queryset containing a user's most recent rating.
     """
-    return UserStorage.user_storage.get(id=user.id).ratings.latest('updated')
+    try:
+        return UserStorage.user_storage.get(id=user.id).ratings.get[pos]  # TODO make this more efficient
+    except IndexError:
+        return None
 
 
 def get_user_rating_amount(user: User):

@@ -127,13 +127,16 @@ def parse_file(file_name):
     return file_text
 
 
-def get_last_rating(user: User):
+def get_rating(user: User, pos: int):
     """
     This function creates a Text object from the User's most recent Rating.
     :param user: A User
+    :param pos: the position to retrieve in the list of the user's ratings.
     :return: A Text object containing the data from the User's most recent Rating
     """
-    last_rating = model_helper.get_most_recent_user_rating(user)
+    last_rating = model_helper.get_user_rating_at_position(user, pos)
+    if not last_rating:
+        return None
     rated_text = text.Text([])
     rated_text.title = last_rating.content.title
     rated_text.creator = last_rating.content.creator

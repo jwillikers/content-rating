@@ -79,7 +79,8 @@ def homepage(request):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     if request.method == "POST":
         request.session['content_compare'] = request.POST['content_compare']
     return render(request, 'homepage.html')
@@ -105,7 +106,8 @@ def profile(request):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     weight_dict = dict()
     for weight in model_helper.get_weights():
         weight_dict[weight[0]] = weight[1]
@@ -171,7 +173,8 @@ def search(request):
 
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
 
     if request.method == 'GET':
         if request.session.get('invalid_song'):  # Check if the user submitted an invalid search of a song.
@@ -209,7 +212,8 @@ def upload(request):
 
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
 
     if request.method == 'GET':
         if request.session.get('invalid_file'):  # Check if the last provided file was invalid.
@@ -231,7 +235,8 @@ def copy_in(request):
     context = {'copy_in_form': forms.CopyInForm()}
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
 
     if request.method == 'GET':
         if request.session.get('invalid_content'):  # Check if the last copy-in text provided was invalid.
@@ -251,7 +256,8 @@ def about_algorithm(request):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     return render(request, 'algorithm.html')
 
 
@@ -263,7 +269,8 @@ def about_page(request):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     return render(request, 'about.html')
 
 
@@ -278,7 +285,8 @@ def words(request, category):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     weight_dict = dict()
     for weight in model_helper.get_weights():
         weight_dict[weight[0]] = weight[1]
@@ -363,12 +371,19 @@ def compare_results(request):
     :param request: The HTML request to handle.
     :return: Renders the compare page.
     """
-    content_compare = request.session['content_compare']  # name of item to be compared
+    if request.session.get('content_compare'):
+        content_compare = request.session['content_compare']  # name of item to be compared
     request.session['delete'] = True
-    # old_rating = view_helper.get_last_rating(request.user)
-    # previous_rating_context = view_helper.generate_context(old_rating, 'previous')
-    # current_rating_context = view_helper.generate_context(current_rating, 'current')
-    current_category_ratings = dict()
+    context = dict()
+    # previous_rating = view_helper.get_rating(request.user, 1)
+    # if previous_rating:
+        # previous_context = view_helper.generate_context(previous_rating, 'previous')
+        # context.update(previous_context)
+    # current_rating = view_helper.get_rating(request.user, 0)
+    # if current_rating:
+        # current_context = view_helper.generate_context(current_rating, 'current')
+        # context.update(current_context)
+    '''current_category_ratings = dict()
     current_category_word_counts = dict()
     previous_category_ratings = dict()
     previous_category_word_counts = dict()
@@ -389,6 +404,7 @@ def compare_results(request):
                'previous_category_ratings': previous_category_ratings,
                'previous_category_word_counts': previous_category_word_counts
                }
+    '''
     return render(request, 'compare.html', context)
 
 
