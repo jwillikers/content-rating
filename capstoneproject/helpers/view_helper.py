@@ -21,9 +21,8 @@ def perform_rating(content: str, form, request):
     :return: A dictionary containing the rating results.
     """
     rated_content = get_rating_results(content, form)  # Get the rating's results
-    #model_helper.save_rating(rated_content, request.user)  # Save the rating
+    model_helper.update_user_ratings(rated_content, request.user)  # Save the rating
     context = generate_context(rated_content, 'current')  # Generate the context
-    request.session['category_words'] = context['current_category_word_counts']
 
     return context
 
@@ -91,7 +90,6 @@ def get_file_content(file):
     """
     chunk_uploaded_file(file)  # Transfer file from HTML Request
     file_text = parse_file(file.name)  # Get text from temp file
-    # print(text)
     os.remove('capstoneproject/tempfile')  # Delete the temp file after use
     return file_text
 
@@ -127,17 +125,70 @@ def parse_file(file_name):
     return file_text
 
 
-def get_last_rating(user: User):
+def create_category_ratings_dict(category_ratings_queryset):
+    category_ratings = dict()
+    for query in category_ratings_queryset:
+        category_ratings[query.category.name] = query.rating
+    return category_ratings
+
+
+def create_word_count_dict(word_count_queryset):
+    word_count = dict()
+    for query in word_count_queryset:
+        word_count[query.word.name] = query.count
+    return word_count
+
+
+def create_word_count_category_dict(word_count_dict: dict):
+    word_count_category_dict = dict()  # Initialize the dictionary.
+    for cat in model_helper.get_categories():  # Add a key for each category.
+        word_count_category_dict[cat.name] = dict()
+
+    for word, count in word_count_dict.items():
+        word_model = model_helper.get_word(word)
+        for word_cat in word_model.get_categories():  # each category.
+            word_count_category_dict[word_cat][word] = count
+    return word_count_category_dict
+
+
+def get_rating(user: User, pos: int):
     """
     This function creates a Text object from the User's most recent Rating.
     :param user: A User
+    :param pos: the position to retrieve in the list of the user's ratings.
     :return: A Text object containing the data from the User's most recent Rating
     """
-    last_rating = model_helper.get_most_recent_user_rating(user)
+    rating = model_helper.get_user_rating_at_position(user, pos)
+    if not rating:
+        return None
     rated_text = text.Text([])
-    rated_text.title = last_rating.content.title
-    rated_text.creator = last_rating.content.creator
-    rated_text.overall_rating = last_rating.rating
-    rated_text.category_word_counts = last_rating.word_counts
-    rated_text.category_ratings = last_rating.category_ratings
+    rated_text.title = rating.content.title
+    rated_text.creator = rating.content.creator
+    rated_text.overall_rating = rating.rating
+    rated_text.category_word_counts = rating.get_word_count_category()
+    rated_text.category_ratings = rating.get_category_ratings()
+
     return rated_text
+
+
+def get_word_counts_context(user: User, pos: int):
+    """
+    This function creates the context dictionary to pass to the
+    word counts page. The dictionary contains keys for the content
+    title and for the category word counts dictionary.
+    :param user: A User
+    :param pos: An int, the position in the user's past rated
+    content ordered where the most recent are at the top to
+    retrieve word counts for
+    :return: A dictionary
+    """
+    context = {'name': '',
+               'category_word_counts': dict()
+               }
+    rating = model_helper.get_user_rating_at_position(user, pos)
+    if not rating:
+        return context
+    context['name'] = rating.content.title
+    context['category_word_counts'] = rating.get_word_count_category()
+    return context
+

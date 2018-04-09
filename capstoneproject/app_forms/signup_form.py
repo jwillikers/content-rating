@@ -42,6 +42,9 @@ class SignUpForm(forms.ModelForm):
         help_text=("Enter the same password as before, for verification."))
 
     class Meta:
+        """
+        Passes additional data to the Meta class.
+        """
         model = User
         fields = ('username', 'password1', 'password2')
 

@@ -26,4 +26,4 @@ def display_category_words(category):
     :param category: The offensive category of words that should be returned.
     :return: A list of words in the given category stored in the system's dictionary of offensive content.
     """
-    return model_helper.get_category_words(category)
+    return model_helper.get_category_words(category_name=category)

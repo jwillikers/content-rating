@@ -11,22 +11,11 @@ from django.template.context_processors import csrf
 from django.contrib.auth import views as auth_views
 from django.urls import reverse
 
-from capstoneproject.display import display_categories, display_category_words
 from capstoneproject.content_rating.algorithm import text
-from capstoneproject.helpers import model_helper, form_helper
-from capstoneproject.helpers import view_helper
-from capstoneproject.app_forms.login_form import LoginForm
-from capstoneproject.app_forms.signup_form import SignUpForm
-from capstoneproject.app_forms.change_password_form import ChangePasswordForm
-from capstoneproject.app_forms.change_username_form import ChangeUsernameForm
-from capstoneproject.app_forms.change_username_password_form import ChangeUsernamePasswordForm
-from capstoneproject.app_forms.song_search_form import SongSearchForm
-from capstoneproject.app_forms.webpage_search_form import WebsiteSearchForm
-from capstoneproject.app_forms.copy_in_form import CopyInForm
-from capstoneproject.app_forms.upload_file_form import UploadFileForm
+from capstoneproject.helpers import model_helper, form_helper, view_helper
 from capstoneproject import parsing
+import capstoneproject.app_forms as forms
 
-#global_content = text.Text([])
 
 def login(request):
     """
@@ -34,12 +23,12 @@ def login(request):
     :param request: The HTML request containing the user's action.
     :return: Renders the proper HTML page depending on the user's actions.
     """
-    context = {'login_form': LoginForm(),
-               'signup_form': SignUpForm()}
+    context = {'login_form': forms.LoginForm(),
+               'signup_form': forms.SignUpForm()}
 
     if request.method == 'POST':
         if request.POST.get('submit') == 'signup':
-            form = SignUpForm(request.POST)
+            form = forms.SignUpForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 form_helper.signup(form, request)
                 # Go to the home screen if the user is now authenticated and
@@ -50,7 +39,7 @@ def login(request):
                 return render(request, 'login.html', context)
 
         if request.POST.get('submit') == 'login':
-            form = LoginForm(request.POST)
+            form = forms.LoginForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 user = form_helper.authenticate_user(form)
                 if user is not None:
@@ -68,7 +57,7 @@ def login(request):
     else:
         c = {}
         c.update((csrf(request)))
-        c.update(({'login_form': LoginForm(), 'signup_form': SignUpForm()}))
+        c.update(({'login_form': forms.LoginForm(), 'signup_form': forms.SignUpForm()}))
         return render_to_response('login.html', c)
 
 
@@ -90,7 +79,8 @@ def homepage(request):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     if request.method == "POST":
         request.session['content_compare'] = request.POST['content_compare']
     return render(request, 'homepage.html')
@@ -104,7 +94,7 @@ def logout(request):
     """
     auth_views.logout(request=request, next_page='login/')
     return render(request, 'login.html',
-                  {'login_form': LoginForm(), 'signup_form': SignUpForm()})
+                  {'login_form': forms.LoginForm(), 'signup_form': forms.SignUpForm()})
 
 
 @login_required(login_url='/login/')
@@ -116,7 +106,8 @@ def profile(request):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     weight_dict = dict()
     for weight in model_helper.get_weights():
         weight_dict[weight[0]] = weight[1]
@@ -127,17 +118,17 @@ def profile(request):
                       'My First Song': 3
                       }
 
-    context = {'categories': display_categories(),
+    context = {'categories': model_helper.get_categories(),
                'recently_rated': recently_rated,
                'weight_levels': len(weight_dict) - 1,
                'weight_dict': weight_dict,
-               'change_username_form': ChangeUsernameForm(),
-               'change_password_form': ChangePasswordForm(),
-               'change_username_password_form': ChangeUsernamePasswordForm()}
+               'change_username_form': forms.ChangeUsernameForm(),
+               'change_password_form': forms.ChangePasswordForm(),
+               'change_username_password_form': forms.ChangeUsernamePasswordForm()}
 
     if request.method == 'POST':
         if request.POST.get('submit_username') == 'username':
-            form = ChangeUsernameForm(request.POST)
+            form = forms.ChangeUsernameForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 if form.update_username(request):  # Update the username and return to profile page
                     return render(request, 'profile.html', context)
@@ -149,7 +140,7 @@ def profile(request):
                 return render(request, 'profile.html', context)
 
         elif request.POST.get('submit_password') == 'password':
-            form = ChangePasswordForm(request.POST)
+            form = forms.ChangePasswordForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 form.update_password(request)  # Update the user's password and return to profile page
                 return render(request, 'profile.html', context)
@@ -158,7 +149,7 @@ def profile(request):
                 return render(request, 'profile.html', context)
 
         elif request.POST.get('submit_both') == 'both':
-            form = ChangeUsernamePasswordForm(request.POST)
+            form = forms.ChangeUsernamePasswordForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 form.update_profile(request)  # Update the username and password and return to profile page
                 return render(request, 'profile.html', context)
@@ -177,22 +168,33 @@ def search(request):
     :param request: The HTML request to handle.
     :return: Renders the search page.
     """
-    context = {'song_search_form': SongSearchForm(),
-               'website_search_form': WebsiteSearchForm()}
+    context = {'song_search_form': forms.SongSearchForm(),
+               'website_search_form': forms.WebsiteSearchForm()}
 
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
 
     if request.method == 'GET':
         if request.session.get('invalid_song'):  # Check if the user submitted an invalid search of a song.
             del request.session['invalid_song']
-            form = SongSearchForm(request.GET)
+            form = forms.SongSearchForm(request.GET)
             form.is_valid()
+            context['song_search_form'] = form
+        elif request.session.get('song_not_found'):  # Check if the previous song search was not found.
+            del request.session['song_not_found']
+            form = forms.SongSearchForm(request.GET)
+            if request.session.get('song_title'):  # Fill in the song title field with the user's past request
+                form.song_title = request.session.get('song_title')
+            if request.session.get('song_artist'):  # Fill in the song artist field with the user's past request
+                form.song_artist = request.session.get('song_artist')
+            form.is_valid()
+            form.not_found_error()  # Error since the song-artist combo did not match a song
             context['song_search_form'] = form
         elif request.session.get('invalid_website'):  # Check if the user submitted an invalid search of a website
             del request.session['invalid_website']
-            form = WebsiteSearchForm(request.GET)
+            form = forms.WebsiteSearchForm(request.GET)
             form.is_valid()
             context['website_search_form'] = form
 
@@ -206,16 +208,17 @@ def upload(request):
     :param request: The HTML request to handle.
     :return: Renders the upload page.
     """
-    context = {'upload_file_form': UploadFileForm()}
+    context = {'upload_file_form': forms.UploadFileForm()}
 
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
 
     if request.method == 'GET':
         if request.session.get('invalid_file'):  # Check if the last provided file was invalid.
             del request.session['invalid_file']
-            form = UploadFileForm(request.GET)
+            form = forms.UploadFileForm(request.GET)
             form.is_valid()
             context['upload_file_form'] = form
 
@@ -229,15 +232,16 @@ def copy_in(request):
     :param request: The HTML request to handle.
     :return: Renders the copy-in page.
     """
-    context = {'copy_in_form': CopyInForm()}
+    context = {'copy_in_form': forms.CopyInForm()}
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
 
     if request.method == 'GET':
         if request.session.get('invalid_content'):  # Check if the last copy-in text provided was invalid.
             del request.session['invalid_content']
-            form = CopyInForm(request.GET)
+            form = forms.CopyInForm(request.GET)
             form.is_valid()
             context['copy_in_form'] = form
 
@@ -252,7 +256,8 @@ def about_algorithm(request):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     return render(request, 'algorithm.html')
 
 
@@ -264,7 +269,8 @@ def about_page(request):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     return render(request, 'about.html')
 
 
@@ -279,12 +285,13 @@ def words(request, category):
     """
     if request.session.get('delete'):
         del request.session['delete']
-        del request.session['content_compare']
+        if request.session.get('content_compare'):
+            del request.session['content_compare']
     weight_dict = dict()
     for weight in model_helper.get_weights():
         weight_dict[weight[0]] = weight[1]
     context = {'category': category,
-               'words': display_category_words(category),
+               'words': model_helper.get_category_words(category_name=category),
                'weight_levels': len(weight_dict) - 1,
                'weight_dict': weight_dict
                }
@@ -298,55 +305,43 @@ def rating_results(request):
     :param request: The HTML request to handle.
     :return: Renders the rating results page.
     """
-    global global_content
+    context = dict()  # initialize default context
 
-    if 'content_compare' in request.session:
-        return redirect('compare')
-    '''
-    category_ratings = global_content.category_ratings
-    category_word_counts = global_content.category_word_counts
-    for category in display_categories():
-        category_ratings[category.name] = global_content.get_category_rating(category.name)
-        category_word_counts[category.name] = global_content.get_category_word_counts(category.name)
-
-    context = {'name': global_content.title,
-               'creator': '',
-               'overall_rating': global_content.overall_rating,
-               'category_ratings': category_ratings,
-               'category_word_counts': category_word_counts
-               }
-    '''
     if request.method == 'POST':
-        if request.POST.get('submit') == 'copy-in':
-            form = CopyInForm(request.POST)
+        if request.POST.get('submit') == 'copy-in':  # Copy in request
+            form = forms.CopyInForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 # Rate text here
-                text_str = form.cleaned_data.get('copy_in_text')  # Get text
+                text_str = form.get_text()  # Get text
                 context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_content'] = True
                 return HttpResponseRedirect(reverse('copy'))
-        elif request.POST.get('submit') == 'song':
-            form = SongSearchForm(request.POST)
+        elif request.POST.get('submit') == 'song':  # Song request
+            form = forms.SongSearchForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 title = form.get_title()  # Get title
                 artist = form.get_creator()  # Get artist
                 text_str = parsing.search_songs(title, artist)  # Get text
 
-                if text_str == 0:  # TODO Handle no matching song better
-                    request.session['invalid_song'] = True
+                if text_str == 0:  # No song matched the song title and artist, return to Search page
+                    request.session['song_not_found'] = True
+                    request.session['song_artist'] = artist
+                    request.session['song_title'] = title
                     return HttpResponseRedirect(reverse('search'))
 
                 context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_song'] = True
                 return HttpResponseRedirect(reverse('search'))
-        elif request.POST.get('submit') == 'webpage':
-            form = WebsiteSearchForm(request.POST)
+        elif request.POST.get('submit') == 'webpage':  # Webpage request
+            form = forms.WebsiteSearchForm(request.POST)
             if form.is_valid():
                 # Find if user wanted to search url or website title
-                url = form.cleaned_data.get('url')
-                website_title = form.cleaned_data.get('website_name')
+                url = form.get_url()
+                website_title = form.get_website_name()
                 text_str = ''
                 if url:  # Get text from url
                     text_str = parsing.search_website(url)
@@ -354,18 +349,22 @@ def rating_results(request):
                     text_str = ''
 
                 context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_website'] = True
                 return HttpResponseRedirect(reverse('search'))
-        elif request.POST.get('submit') == 'file':
-            form = UploadFileForm(request.POST, request.FILES)
+        elif request.POST.get('submit') == 'file':  # File request
+            form = forms.UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
                 text_str = view_helper.get_file_content(request.FILES['file'])  # Get text from file
                 context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
     print(context)
+    if request.session.get('content_compare'):  # Go to compare screen if the user last clicked Compare
+        return redirect('compare')
     return render(request, 'rating-result.html', context)
 
 
@@ -376,32 +375,24 @@ def compare_results(request):
     :param request: The HTML request to handle.
     :return: Renders the compare page.
     """
-    content_compare = request.session['content_compare']  # name of item to be compared
+    context = dict()
+
+    if request.session.get('content_compare'):
+        content_compare = request.session['content_compare']  # name of item to be compared.
+        del request.session['content_compare']
+
+        previous_rating = view_helper.get_rating(request.user, 1)  # Get the older rating.
+        if previous_rating:
+            previous_context = view_helper.generate_context(previous_rating, 'previous')
+            context.update(previous_context)
+
+        current_rating = view_helper.get_rating(request.user, 0)  # Get the newer rating.
+        if current_rating:
+            current_context = view_helper.generate_context(current_rating, 'current')
+            context.update(current_context)
+
     request.session['delete'] = True
-    #old_rating = view_helper.get_last_rating(request.user)
-    #previous_rating_context = view_helper.generate_context(old_rating, 'previous')
-    #current_rating_context = view_helper.generate_context(current_rating, 'current')
-    current_category_ratings = dict()
-    current_category_word_counts = dict()
-    previous_category_ratings = dict()
-    previous_category_word_counts = dict()
-    for category in display_categories():
-        current_category_ratings[category.name] = 5
-        current_category_word_counts[category.name] = {'word1': 4,
-                                                       'word2': 3,
-                                                       'word3': 2
-                                                       }
-    context = {'current_name': 'Baby Got Back',
-               'current_creator': 'Sir Mix a Lot',
-               'previous_name': content_compare,
-               'previous_creator': "Lil' Dicky (feat. BRAIN)",
-               'current_overall_rating': 7,
-               'previous_overall_rating': 5,
-               'current_category_ratings': current_category_ratings,
-               'current_category_word_counts': current_category_word_counts,
-               'previous_category_ratings': previous_category_ratings,
-               'previous_category_word_counts': previous_category_word_counts
-               }
+
     return render(request, 'compare.html', context)
 
 
@@ -410,25 +401,19 @@ def word_counts(request, name):
     """
     Function to handle requests to the word counts page.
     :param request: The HTML request to handle.
+    :param name: a String, the name of the value of which to display the words counts.
     :return: Renders the word-counts page.
     """
-    global global_content
+
+    if name == 'current':
+        context = view_helper.get_word_counts_context(request.user, 0)  # Get the newer rating.
+    elif name == 'previous':
+        context = view_helper.get_word_counts_context(request.user, 1)  # Get the older rating from comparison.
+    else:
+        context = dict()
 
     if request.session.get('category_words'):
         category_words = request.session['category_words']
         del request.session['category_words']
-        context = {'name': '',
-                   'category_word_counts': category_words
-                   }
-    else:
-        category_word_counts = dict()
-        for category in display_categories():
-            category_word_counts[category.name] = {'word1': 4,
-                                               'word2': 3,
-                                               'word3': 2
-                                               }
-        context = {'name': name,
-               'category_word_counts': category_word_counts
-               }
-    context['category_word_counts'] = global_content.category_word_counts
+
     return render(request, 'word-counts.html', context)

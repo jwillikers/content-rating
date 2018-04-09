@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 class WebsiteSearchForm(forms.Form):
     """
-        A search song form.
+    A search song form.
     """
     error_messages = {'website_not_found': _("No website using the given website name was found"),
                       'url_not_found': _("No website using the given URL was found"),
@@ -82,16 +82,32 @@ class WebsiteSearchForm(forms.Form):
         self.add_error('website_name', self.error_messages['no_website'])
 
     def get_website_name(self):
+        """
+        Returns the value from the website name field.
+        :return: A string, the value from the website name field.
+        """
         return self.cleaned_data['website_name']
 
     def get_url(self):
+        """
+        Returns the value from the url field.
+        :return: A string, the value from the url field.
+        """
         return self.cleaned_data['url']
 
     def get_title(self):
+        """
+        Returns the value from either the url field or the website name field, whichever field was submitted.
+        :return: A string, the url or website name.
+        """
         if self.cleaned_data.get('url'):
             return self.get_url()
         else:
             return self.get_website_name()
 
     def get_creator(self):
+        """
+        Returns the default value associated with the creator.
+        :return: A string, the default value associated with the creator.
+        """
         return ''

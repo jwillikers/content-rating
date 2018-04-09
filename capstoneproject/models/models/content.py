@@ -4,6 +4,9 @@ from django.db.models import Model, CharField, ForeignKey, Manager, \
 
 
 class Content(Model):
+    """
+    This Model contains data to identify rated content.
+    """
     MEDIA_TYPES = [(0, 'song'),
                    (1, 'movie'),
                    (2, 'book'),
@@ -16,7 +19,12 @@ class Content(Model):
     content = Manager()
 
     def __str__(self):
-        return "{} by {}".format(self.title, self.creator)
+        """
+        This method overwrites the __str__ function and
+        returns a string containing information about the Content.
+        :return: A string, containing information about the Content.
+        """
+        return "Media Types {}  -  {} by {}".format(self.media, self.title, self.creator)
 
     class Meta:
         default_manager_name = 'content'

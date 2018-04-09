@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 class SongSearchForm(forms.Form):
     """
-        A search song form.
+    A search song form.
     """
     error_messages = {'not_found': _("No song using the given title and given artist was found"),
                       'no_title': _("No song title was provided")}
@@ -58,8 +58,16 @@ class SongSearchForm(forms.Form):
         self.add_error('song_artist', self.error_messages['no_title'])
 
     def get_title(self):
+        """
+        Returns the song title.
+        :return: A string, the song title.
+        """
         return self.cleaned_data['song_title']
 
     def get_creator(self):
+        """
+        Returns the song artist.
+        :return: A string, the song artist.
+        """
         return self.cleaned_data['song_artist']
 
