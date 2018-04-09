@@ -291,7 +291,7 @@ def words(request, category):
     for weight in model_helper.get_weights():
         weight_dict[weight[0]] = weight[1]
     context = {'category': category,
-               'words': model_helper.get_category_words(category),
+               'words': model_helper.get_category_words(category_name=category),
                'weight_levels': len(weight_dict) - 1,
                'weight_dict': weight_dict
                }
@@ -308,7 +308,7 @@ def rating_results(request):
     context = dict()  # initialize default context
 
     if request.method == 'POST':
-        if request.POST.get('submit') == 'copy-in':
+        if request.POST.get('submit') == 'copy-in':  # Copy in request
             form = forms.CopyInForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 # Rate text here
@@ -317,7 +317,7 @@ def rating_results(request):
             else:
                 request.session['invalid_content'] = True
                 return HttpResponseRedirect(reverse('copy'))
-        elif request.POST.get('submit') == 'song':
+        elif request.POST.get('submit') == 'song':  # Song request
             form = forms.SongSearchForm(request.POST)
             if form.is_valid():  # Check if the form is valid.
                 title = form.get_title()  # Get title
@@ -334,7 +334,7 @@ def rating_results(request):
             else:
                 request.session['invalid_song'] = True
                 return HttpResponseRedirect(reverse('search'))
-        elif request.POST.get('submit') == 'webpage':
+        elif request.POST.get('submit') == 'webpage':  # Webpage request
             form = forms.WebsiteSearchForm(request.POST)
             if form.is_valid():
                 # Find if user wanted to search url or website title
@@ -350,7 +350,7 @@ def rating_results(request):
             else:
                 request.session['invalid_website'] = True
                 return HttpResponseRedirect(reverse('search'))
-        elif request.POST.get('submit') == 'file':
+        elif request.POST.get('submit') == 'file':  # File request
             form = forms.UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
                 text_str = view_helper.get_file_content(request.FILES['file'])  # Get text from file
@@ -359,7 +359,7 @@ def rating_results(request):
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
     print(context)
-    if 'content_compare' in request.session:  # Go to compare screen if the user last clicked Compare
+    if request.session.get('content_compare'):  # Go to compare screen if the user last clicked Compare
         return redirect('compare')
     return render(request, 'rating-result.html', context)
 
@@ -372,39 +372,20 @@ def compare_results(request):
     :return: Renders the compare page.
     """
     if request.session.get('content_compare'):
-        content_compare = request.session['content_compare']  # name of item to be compared
+        content_compare = request.session['content_compare']  # name of item to be compared.
+        del request.session['content_compare']
     request.session['delete'] = True
+
     context = dict()
-    # previous_rating = view_helper.get_rating(request.user, 1)
-    # if previous_rating:
-        # previous_context = view_helper.generate_context(previous_rating, 'previous')
-        # context.update(previous_context)
-    # current_rating = view_helper.get_rating(request.user, 0)
-    # if current_rating:
-        # current_context = view_helper.generate_context(current_rating, 'current')
-        # context.update(current_context)
-    '''current_category_ratings = dict()
-    current_category_word_counts = dict()
-    previous_category_ratings = dict()
-    previous_category_word_counts = dict()
-    for category in model_helper.get_categories():
-        current_category_ratings[category.name] = 5
-        current_category_word_counts[category.name] = {'word1': 4,
-                                                       'word2': 3,
-                                                       'word3': 2
-                                                       }
-    context = {'current_name': 'Baby Got Back',
-               'current_creator': 'Sir Mix a Lot',
-               'previous_name': content_compare,
-               'previous_creator': "Lil' Dicky (feat. BRAIN)",
-               'current_overall_rating': 7,
-               'previous_overall_rating': 5,
-               'current_category_ratings': current_category_ratings,
-               'current_category_word_counts': current_category_word_counts,
-               'previous_category_ratings': previous_category_ratings,
-               'previous_category_word_counts': previous_category_word_counts
-               }
-    '''
+    previous_rating = view_helper.get_rating(request.user, 1)  # Get the older rating.
+    if previous_rating:
+        previous_context = view_helper.generate_context(previous_rating, 'previous')
+        context.update(previous_context)
+
+    current_rating = view_helper.get_rating(request.user, 0)  # Get the newer rating.
+    if current_rating:
+        current_context = view_helper.generate_context(current_rating, 'current')
+        context.update(current_context)
     return render(request, 'compare.html', context)
 
 

@@ -31,6 +31,7 @@ class UploadFileForm(forms.Form):
         :param kwargs:
         """
         super().__init__(*args, **kwargs)
+        self.title = ''
 
     def _post_clean(self):
         """
@@ -40,6 +41,8 @@ class UploadFileForm(forms.Form):
         super()._post_clean()
         if self.cleaned_data.get("file") is None:
             self.no_file_error()
+        else:  # Set title field
+            self.title = self.cleaned_data.get('file').name
 
     def unknown_filetype_error(self):
         """
@@ -58,9 +61,9 @@ class UploadFileForm(forms.Form):
     def get_title(self):
         """
         Returns the default value associated with the title of an uploaded file.
-        :return: A string, the default value associated with the title of an uploaded file.
+        :return: A string, the name of the uploaded file.
         """
-        return 'Uploaded File'
+        return self.title
 
     def get_creator(self):
         """

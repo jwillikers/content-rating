@@ -42,7 +42,7 @@ def get_user_category(user: User, category_name: str):
     :param category_name: A string, the name of the category
     :return: A Category model
     """
-    return Category.categories.get(name=category, user_storage__id=user.id)
+    return Category.categories.get(name=category_name, user_storage__id=user.id)
 
 
 def get_words():
@@ -81,8 +81,8 @@ def get_word_weight(user: User, word_name: str, category_name: str):
     :param category_name: A string, the category name
     :return: An int, the offensiveness weight associated with the given user, word, and category
     """
-    return Word.words.get(name=str).word_features.get(
-        user_storage__id=user.id, category__name=category).weight
+    return Word.words.get(name=word_name).word_features.get(
+        user_storage__id=user.id, category__name=category_name).weight
 
 
 def update_user_word_weight(user: User, word_name: str, category_name: str, weight: int):
@@ -95,8 +95,8 @@ def update_user_word_weight(user: User, word_name: str, category_name: str, weig
     :param weight: An int, the new Weight value (0-3)
     :return: None
     """
-    return Word.words.get(name=str).word_features.get(
-        user_storage__id=user.id, category__name=category).update(weight=weight)
+    return Word.words.get(name=word_name).word_features.get(
+        user_storage__id=user.id, category__name=category_name).update(weight=weight)
 
 
 def get_category_words(category_name):
@@ -126,7 +126,7 @@ def get_user_category_weight(user: User, category_name: str):
     :param category_name: A string, the category name
     :return:
     """
-    return Category.categories.get(name=str, user_storage__id=user.id).weight
+    return Category.categories.get(name=category_name, user_storage__id=user.id).weight
 
 
 def update_user_category_weight(user: User, category_name: str, weight: int):
@@ -139,7 +139,7 @@ def update_user_category_weight(user: User, category_name: str, weight: int):
     :return: None
     """
     return Category.categories.get(
-        name=str, user_storage__id=user.id).update(weight=weight)
+        name=category_name, user_storage__id=user.id).update(weight=weight)
 
 
 # user storage should probably not be transparent
@@ -160,55 +160,78 @@ def save_word_count(word_name: str, count_value: int):
     :param count_value: An int, the count associated with the word.
     :return: A WordCount model, newly created.
     """
-    wc = WordCount.objects.get_create(
-        word=get_word(word_name),
+    wc, _ = WordCount.objects.get_or_create(
+        word=get_word(word_name=word_name),
         count=count_value)
-    print(wc)
     return wc
 
 
-def save_category_ratings(user: User, category_name: str, rate_value):
+def save_category_ratings(category_name: str, rate_value):
     """
     This function created and saves a CategoryRatings model into the CategoryRatings table.
-    :param user: A User, the user who performed the associated rating.
     :param category_name: A string, the name of the category.
     :param rate_value: An int, the rating associated with the category.
     :return: A CategoryRating model, newly created.
     """
-    # TODO: Help here - below statement error statement is:
-    # 'TypeError: Direct assignment to the forward side of a
-    # many-to-many set is prohibited. Use user.set() instead.'
-    cr = CategoryRating.objects.get_or_create(
-        category=get_category(category_name),
+    category_model = get_category(category_name=category_name)
+    cr, created = CategoryRating.objects.get_or_create(
+        category=category_model,
         rating=rate_value)
-    print(cr)
     return cr
+
+
+def clear_databases():
+    """
+    This function clears the Content, ContentRating,
+    CategoryRating, and WordCount tables.
+    :return: None.
+    """
+    Content.content.all().delete()
+    ContentRating.content_ratings.all().delete()
+    CategoryRating.objects.all().delete()
+    WordCount.objects.all().delete()
+
+
+def update_user_ratings(rated_content, user: User):
+    """
+    This function updates the user's saved ratings by
+    adding the given rating to the user's storage.
+    If the user already has 5 or more past ratings saved,
+    then the oldest updated reviews are removed until
+    the user can save their newest review.
+    :param rated_content: The data to store
+    :param user: A User, the current User
+    :return: None
+    """
+    while get_user_rating_amount(user) >= 5:  # Check if the user has reached their limit.
+        delete_oldest_user_rating(user)  # Remove oldest ratings if so.
+    save_rating(rated_content, user)  # Save the new rating
 
 
 def save_rating(rated_content, user: User):
     """
     This functions saves the data associated with a user's rating into the database.
     :param rated_content: The data to store.
-    :param user: The current User.
+    :param user: A User, the current User.
     :return: None
     """
     # First create Content
-    c = Content.content.get_or_create(
+    c, _ = Content.content.get_or_create(
         title=rated_content.title,
         creator=rated_content.creator,
         media=rated_content.content_type)
     # Then create ContentRating
-    r = ContentRating.content_ratings.get_or_create(
-        content=c.id,
+    r, _ = ContentRating.content_ratings.get_or_create(
+        content=c,
         rating=rated_content.overall_rating)
     # Next get Word Counts
     for word, count in rated_content.get_word_counts().items():
-        wc = save_word_count(word, count)
+        wc = save_word_count(word_name=word, count_value=count)
         r.word_counts.add(wc)
     # Finally get Category Ratings
-    for category, rate in rated_content.category_ratings.items():
-        cr = save_category_ratings(user, category, rate)
-        r.category_ratings.add(cr)
+    for category_name, rate_value in rated_content.category_ratings.items():
+        cr = save_category_ratings(category_name=category_name, rate_value=rate_value)
+        r.category_ratings.add(cr.id)
 
     r.save()
     UserStorage.user_storage.get(
@@ -235,7 +258,7 @@ def get_user_rating_at_position(user: User, pos: int):
     """
     try:
         return ContentRating.content_ratings.filter(
-            user_storage__id=user.id).all()[pos]  # TODO make this more efficient
+            user_storage__id=user.id).order_by('updated')[pos]
     except IndexError:
         return None
 

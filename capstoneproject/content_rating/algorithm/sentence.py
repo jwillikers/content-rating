@@ -133,7 +133,7 @@ class Sentence:
         :return: a set of lexical features.
         """
         for word, POS_tag in self.sentence_tokens:
-            off_word = model_helper.get_word(word=word)
+            off_word = model_helper.get_word(word_name=word)
             if not off_word:  # Not an offensive word
                 # Update the total number of clean words in the sentence.
                 self.number_of_clean_words += 1

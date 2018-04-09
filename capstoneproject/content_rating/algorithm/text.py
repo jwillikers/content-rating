@@ -106,6 +106,15 @@ class Text:
         self.total_number_of_clean_words += number_of_clean_words
 
     def update_offensive_sentences(self, sent_num: int, offensive_categories: list):
+        """
+        This function updates the dictionary of offensive sentences
+        to set the value at the key given by the sentence index to map
+        to a list of offensive categories that the sentence violates.
+        :param sent_num: An int, the sentence index in the original document.
+        :param offensive_categories: A list, containing strings of names of categories
+        that the sentence is classified as.
+        :return: None
+        """
         self.offensive_sentences[sent_num] = offensive_categories
 
     def extract_features(self):
@@ -164,6 +173,12 @@ class Text:
         return self.category_word_counts[category]
 
     def get_word_counts(self):
+        """
+        This function returns a dictionary of all offensive words and
+        their occurrences in the document, ignoring categories.
+        :return: A dictionary where the key is the name of the offensive word
+        and the value is the number of occurrences of the word in the document.
+        """
         word_counts = dict()
         for category, value in self.category_word_counts.items():
             for word, count in value.items():
