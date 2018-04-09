@@ -314,6 +314,7 @@ def rating_results(request):
                 # Rate text here
                 text_str = form.get_text()  # Get text
                 context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_content'] = True
                 return HttpResponseRedirect(reverse('copy'))
@@ -331,6 +332,7 @@ def rating_results(request):
                     return HttpResponseRedirect(reverse('search'))
 
                 context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_song'] = True
                 return HttpResponseRedirect(reverse('search'))
@@ -347,6 +349,7 @@ def rating_results(request):
                     text_str = ''
 
                 context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_website'] = True
                 return HttpResponseRedirect(reverse('search'))
@@ -355,6 +358,7 @@ def rating_results(request):
             if form.is_valid():
                 text_str = view_helper.get_file_content(request.FILES['file'])  # Get text from file
                 context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
@@ -371,21 +375,24 @@ def compare_results(request):
     :param request: The HTML request to handle.
     :return: Renders the compare page.
     """
+    context = dict()
+
     if request.session.get('content_compare'):
         content_compare = request.session['content_compare']  # name of item to be compared.
         del request.session['content_compare']
+
+        previous_rating = view_helper.get_rating(request.user, 1)  # Get the older rating.
+        if previous_rating:
+            previous_context = view_helper.generate_context(previous_rating, 'previous')
+            context.update(previous_context)
+
+        current_rating = view_helper.get_rating(request.user, 0)  # Get the newer rating.
+        if current_rating:
+            current_context = view_helper.generate_context(current_rating, 'current')
+            context.update(current_context)
+
     request.session['delete'] = True
 
-    context = dict()
-    previous_rating = view_helper.get_rating(request.user, 1)  # Get the older rating.
-    if previous_rating:
-        previous_context = view_helper.generate_context(previous_rating, 'previous')
-        context.update(previous_context)
-
-    current_rating = view_helper.get_rating(request.user, 0)  # Get the newer rating.
-    if current_rating:
-        current_context = view_helper.generate_context(current_rating, 'current')
-        context.update(current_context)
     return render(request, 'compare.html', context)
 
 
@@ -394,22 +401,19 @@ def word_counts(request, name):
     """
     Function to handle requests to the word counts page.
     :param request: The HTML request to handle.
+    :param name: a String, the name of the value of which to display the words counts.
     :return: Renders the word-counts page.
     """
+
+    if name == 'current':
+        context = view_helper.get_word_counts_context(request.user, 0)  # Get the newer rating.
+    elif name == 'previous':
+        context = view_helper.get_word_counts_context(request.user, 1)  # Get the older rating from comparison.
+    else:
+        context = dict()
+
     if request.session.get('category_words'):
         category_words = request.session['category_words']
         del request.session['category_words']
-        context = {'name': '',
-                   'category_word_counts': category_words
-                   }
-    else:
-        category_word_counts = dict()
-        for category in model_helper.get_categories():
-            category_word_counts[category.name] = {'word1': 4,
-                                                   'word2': 3,
-                                                   'word3': 2
-                                                   }
-        context = {'name': name,
-                   'category_word_counts': category_word_counts
-                   }
+
     return render(request, 'word-counts.html', context)

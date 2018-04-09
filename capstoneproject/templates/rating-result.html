@@ -14,7 +14,7 @@
                 <div class="container">
                     <div class="jumbotron">
                         <div style="text-align: center;">
-                            <a title="Check Word Counts" href="{% url 'word-counts' name=current_name %}">
+                            <a title="Check Word Counts" href="{% url 'word-counts' name='current' %}">
                                 <h3>{{ current_name|title }}</h3>
                             </a>
                             <h3>{{ current_creator|title }}</h3>
@@ -85,7 +85,7 @@
                 <div class="container">
                     <form action="{% url 'homepage' %}" method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="content_compare" id="content_compare" value="{{ current_name }}">
+                        <input type="hidden" name="content_compare" id="content_compare" value=True>
                         <input type="submit" id="compare" class="btn btn-lg btn-block btn-info" value="Compare!">
                     </form>
                 </div>

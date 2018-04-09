@@ -257,8 +257,10 @@ def get_user_rating_at_position(user: User, pos: int):
     :return: A queryset containing a user's most recent rating.
     """
     try:
+        print(ContentRating.content_ratings.filter(
+            user_storage__id=user.id).order_by('-updated'))
         return ContentRating.content_ratings.filter(
-            user_storage__id=user.id).order_by('updated')[pos]
+            user_storage__id=user.id).order_by('-updated')[pos]
     except IndexError:
         return None
 
@@ -283,6 +285,12 @@ def delete_oldest_user_rating(user: User):
     """
     oldest_rating = ContentRating.content_ratings.filter(
         user_storage__id=user.id).earliest('updated')
-    oldest_rating.word_counts.delete()
-    oldest_rating.category_ratings.delete()
+    #word_counts = oldest_rating.word_counts.all()
+    #for wc in word_counts:
+    #    WordCount.delete(wc)
+    #category_rating = oldest_rating.category_ratings.all()
+    #for cr in category_rating:
+    #    CategoryRating.delete(cr)
+    # oldest_rating.word_counts.delete() #
+    # oldest_rating.category_ratings.delete()
     oldest_rating.delete()

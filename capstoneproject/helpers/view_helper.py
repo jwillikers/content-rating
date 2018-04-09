@@ -23,7 +23,6 @@ def perform_rating(content: str, form, request):
     rated_content = get_rating_results(content, form)  # Get the rating's results
     model_helper.update_user_ratings(rated_content, request.user)  # Save the rating
     context = generate_context(rated_content, 'current')  # Generate the context
-    request.session['category_words'] = context['current_category_word_counts']
 
     return context
 
@@ -159,14 +158,37 @@ def get_rating(user: User, pos: int):
     :param pos: the position to retrieve in the list of the user's ratings.
     :return: A Text object containing the data from the User's most recent Rating
     """
-    last_rating = model_helper.get_user_rating_at_position(user, pos)
-    if not last_rating:
+    rating = model_helper.get_user_rating_at_position(user, pos)
+    if not rating:
         return None
     rated_text = text.Text([])
-    rated_text.title = last_rating.content.title
-    rated_text.creator = last_rating.content.creator
-    rated_text.overall_rating = last_rating.rating
-    rated_text.category_word_counts = last_rating.get_word_count_category()
-    rated_text.category_ratings = last_rating.get_category_ratings()
+    rated_text.title = rating.content.title
+    rated_text.creator = rating.content.creator
+    rated_text.overall_rating = rating.rating
+    rated_text.category_word_counts = rating.get_word_count_category()
+    rated_text.category_ratings = rating.get_category_ratings()
 
     return rated_text
+
+
+def get_word_counts_context(user: User, pos: int):
+    """
+    This function creates the context dictionary to pass to the
+    word counts page. The dictionary contains keys for the content
+    title and for the category word counts dictionary.
+    :param user: A User
+    :param pos: An int, the position in the user's past rated
+    content ordered where the most recent are at the top to
+    retrieve word counts for
+    :return: A dictionary
+    """
+    context = {'name': '',
+               'category_word_counts': dict()
+               }
+    rating = model_helper.get_user_rating_at_position(user, pos)
+    if not rating:
+        return context
+    context['name'] = rating.content.title
+    context['category_word_counts'] = rating.get_word_count_category()
+    return context
+
