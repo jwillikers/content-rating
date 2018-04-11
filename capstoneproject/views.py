@@ -108,24 +108,8 @@ def profile(request):
         del request.session['delete']
         if request.session.get('content_compare'):
             del request.session['content_compare']
-    weight_dict = dict()
-    for weight in model_helper.get_weights():
-        weight_dict[weight[0]] = weight[1]
-    recently_rated = {'Pillow Talkin': 9,
-                      'Baby Got Back': 7,
-                      'Africa': 1,
-                      'Freebird': 5,
-                      'My First Song': 3
-                      }
 
-    context = {'categories': model_helper.get_categories(),
-               'recently_rated': recently_rated,
-               'weight_levels': len(weight_dict) - 1,
-               'weight_dict': weight_dict,
-               'change_username_form': forms.ChangeUsernameForm(),
-               'change_password_form': forms.ChangePasswordForm(),
-               'change_username_password_form': forms.ChangeUsernamePasswordForm()}
-
+    context = view_helper.get_profile_context(request.user)
     if request.method == 'POST':
         if request.POST.get('submit_username') == 'username':
             form = forms.ChangeUsernameForm(request.POST)
@@ -156,6 +140,10 @@ def profile(request):
             else:  # Go back to the profile page and display errors
                 context['change_username_password_form'] = form
                 return render(request, 'profile.html', context)
+
+        elif request.POST.get('submit_category_weights') == 'category_weights':
+            view_helper.update_user_category_weights(request)
+
 
     return render(request, 'profile.html', context)
 
@@ -287,14 +275,13 @@ def words(request, category):
         del request.session['delete']
         if request.session.get('content_compare'):
             del request.session['content_compare']
-    weight_dict = dict()
-    for weight in model_helper.get_weights():
-        weight_dict[weight[0]] = weight[1]
-    context = {'category': category,
-               'words': model_helper.get_category_words(category_name=category),
-               'weight_levels': len(weight_dict) - 1,
-               'weight_dict': weight_dict
-               }
+
+    context = view_helper.get_words_context(request.user, category)
+
+    if request.method == 'POST':
+        if request.POST.get('submit_word_weights') == 'word_weights':
+            print(request)
+
     return render(request, 'words.html', context)
 
 
@@ -383,12 +370,12 @@ def compare_results(request):
 
         previous_rating = view_helper.get_rating(request.user, 1)  # Get the older rating.
         if previous_rating:
-            previous_context = view_helper.generate_context(previous_rating, 'previous')
+            previous_context = view_helper.get_rating_results_context(previous_rating, 'previous')
             context.update(previous_context)
 
         current_rating = view_helper.get_rating(request.user, 0)  # Get the newer rating.
         if current_rating:
-            current_context = view_helper.generate_context(current_rating, 'current')
+            current_context = view_helper.get_rating_results_context(current_rating, 'current')
             context.update(current_context)
 
     request.session['delete'] = True

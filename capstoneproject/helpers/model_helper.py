@@ -139,7 +139,7 @@ def update_user_category_weight(user: User, category_name: str, weight: int):
     :return: None
     """
     return Category.categories.get(
-        name=category_name, user_storage__id=user.id).update(weight=weight)
+        name=category_name, user_storage__id=user.id).update(weight=weight)  # TODO: Fix capstoneproject.models.models.category.DoesNotExist: Category matching query does not exist.
 
 
 # user storage should probably not be transparent
@@ -285,12 +285,4 @@ def delete_oldest_user_rating(user: User):
     """
     oldest_rating = ContentRating.content_ratings.filter(
         user_storage__id=user.id).earliest('updated')
-    #word_counts = oldest_rating.word_counts.all()
-    #for wc in word_counts:
-    #    WordCount.delete(wc)
-    #category_rating = oldest_rating.category_ratings.all()
-    #for cr in category_rating:
-    #    CategoryRating.delete(cr)
-    # oldest_rating.word_counts.delete() #
-    # oldest_rating.category_ratings.delete()
     oldest_rating.delete()

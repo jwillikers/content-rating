@@ -6,9 +6,12 @@ import capstoneproject.content_rating.algorithm.text as text
 from capstoneproject.shared import rater
 from capstoneproject import parsing
 from django.contrib.auth.models import User
-from capstoneproject.app_forms import CopyInForm, SongSearchForm, WebsiteSearchForm, UploadFileForm
-
+from capstoneproject.app_forms import CopyInForm, SongSearchForm, WebsiteSearchForm, UploadFileForm, \
+    ChangeUsernameForm, ChangePasswordForm, ChangeUsernamePasswordForm, WordsForm
 from capstoneproject.helpers import model_helper
+
+from capstoneproject.models import Word, Category, ContentRating, \
+    UserStorage, Content, WordCount, CategoryRating, WeightField
 
 
 def perform_rating(content: str, form, request):
@@ -22,8 +25,7 @@ def perform_rating(content: str, form, request):
     """
     rated_content = get_rating_results(content, form)  # Get the rating's results
     model_helper.update_user_ratings(rated_content, request.user)  # Save the rating
-    context = generate_context(rated_content, 'current')  # Generate the context
-
+    context = get_rating_results_context(rated_content, 'current')  # Generate the context
     return context
 
 
@@ -36,7 +38,6 @@ def get_rating_results(content: str, form):
     :param form: A form, submitted by the user and contains information about the content.
     :return: A dictionary containing the rating results
     """
-    # TODO handle overall rating of 0
     rated_content = rater.algorithm(content)  # Perform algorithm
     rated_content.title = form.get_title()  # Set the rated content's title
     rated_content.creator = form.get_creator()  # Set the rated content's creator
@@ -62,7 +63,7 @@ def get_content_type(form):
     return content_type
 
 
-def generate_context(rated_content: text.Text, name: str):
+def get_rating_results_context(rated_content: text.Text, name: str):
     """
     Generates a dictionary that contains key information from a rated text.
     :param rated_content: The rated text used to create the dictionary.
@@ -191,4 +192,61 @@ def get_word_counts_context(user: User, pos: int):
     context['name'] = rating.content.title
     context['category_word_counts'] = rating.get_word_count_category()
     return context
+
+
+def get_past_ratings_dict(user: User):
+    recently_rated = dict()
+    past_ratings = model_helper.get_user_ratings(user)
+    print(past_ratings)
+    for count, r in enumerate(past_ratings):
+        title = '{} - {}'.format(count+1, r.content.title)
+        recently_rated[title] = r.rating
+    return recently_rated
+
+
+def get_weight_dict():
+    weight_dict = dict()
+    for weight in model_helper.get_weights():
+        weight_dict[weight[0]] = weight[1]
+    return weight_dict
+
+
+def get_profile_context(user: User):
+    weight_dict = get_weight_dict()
+    recently_rated = get_past_ratings_dict(user)
+    print(model_helper.get_user_categories(user))
+    context = {'categories': model_helper.get_categories(),
+               'recently_rated': recently_rated,
+               'weight_levels': len(weight_dict) - 1,
+               'weight_dict': weight_dict,
+               'change_username_form': ChangeUsernameForm(),
+               'change_password_form': ChangePasswordForm(),
+               'change_username_password_form': ChangeUsernamePasswordForm()}
+    return context
+
+
+def get_words_context(user: User, category):
+    weight_dict = get_weight_dict()
+    context = {'category': category,
+               'words': model_helper.get_category_words(category_name=category),
+               'weight_levels': len(weight_dict) - 1,
+               'weight_dict': weight_dict,
+               'words_form': WordsForm(category)
+               }
+    return context
+
+
+def create_category_dictionary(post):
+    cat_dict = dict()
+    for key, value in post.items():
+        if key.endswith('_cat'):
+            cat_dict[key[:-4]] = value
+    return cat_dict
+
+
+def update_user_category_weights(request):
+    user = request.user
+    cat_dict = create_category_dictionary(request.POST)
+    for cat, weight in cat_dict.items():
+        x = model_helper.update_user_category_weight(user, cat, weight)
 

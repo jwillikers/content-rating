@@ -190,23 +190,25 @@
             <div class="col-md-6">
                 <div class="container">
                     <div class="jumbotron">
-                        <form>
+                        <div style="text-align: center;"><h1 class="display-5">My Rating Settings</h1></div>
+                        <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="POST">
                             <fieldset>
-                                <div style="text-align: center;"><h1 class="display-5">My Rating Settings</h1></div>
+                                {% csrf_token %}
                                 {% for category in categories %}
-                                    <hr class="my-4">
+                                    <hr class="my-2">
                                     <a class="lead"
                                        href="{% url 'words' category=category.name %}">{{ category.name|title }}</a>
                                     <div class="slidecontainer">
-                                        <input type="range" id="{{ category.name }}" name="{{ category.name }}" min="0"
+                                        <input type="range" id="{{ category.name }}_cat" name="{{ category.name }}_cat" min="0"
                                                max="{{ weight_levels }}" value="{{ category.weight }}" class="slider"
                                                oninput="update_output('{{ category.name }}')">
                                         <output name="{{ category.name }}_amount" id="{{ category.name }}_amount"
-                                                for="{{ category.name }}">{{ weight_dict|get_item:category.weight }}</output>
+                                                for="{{ category.name }}_cat">{{ weight_dict|get_item:category.weight }}</output>
                                     </div>
-                                    &nbsp;{% endfor %}
+                                    &nbsp;
+                                {% endfor %}
                                 <div style="text-align: center;">
-                                    <button type="submit" class="btn btn-primary">Update category weights</button>
+                                    <button type="submit" class="btn btn-primary" name="submit_category_weights" value="category_weights">Update category weights</button>
                                 </div>
                             </fieldset>
                         </form>
@@ -221,7 +223,7 @@
             {% for weight in weight_dict %}
                 text[{{ weight }}] = "{{ weight_dict|get_item:weight }}";
             {% endfor %}
-            document.getElementById(category + '_amount').value = text[document.getElementById(category).value];
+            document.getElementById(category + '_amount').value = text[document.getElementById(category+'_cat').value];
         }
     </script>
 {% endblock %}
