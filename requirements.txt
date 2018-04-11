@@ -12,3 +12,5 @@ bs4>=0.0.1
 selenium>=3.11.0
 chromedriver>=2.24.1
 requests
+whitenoise
+psycopg2
