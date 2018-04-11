@@ -1,8 +1,10 @@
+from django.dispatch import receiver
 from django.db.models import ManyToManyField, CharField, Manager, \
     BooleanField, Model
 from django.contrib.auth.models import User
 from capstoneproject.models.fields.weight_field import WeightField
 from capstoneproject.models.querysets.category_queryset import CategoryQuerySet
+from django.db.models.signals import m2m_changed
 
 
 class Category(Model):
@@ -11,7 +13,7 @@ class Category(Model):
     associated with an offensive word.
     """
     default = BooleanField(default=False)
-    name = CharField(unique=True, max_length=30)
+    name = CharField(max_length=30)
     weight = WeightField()
     categories = CategoryQuerySet.as_manager()
 
@@ -38,6 +40,12 @@ class Category(Model):
         :return: A dictionary value containing the category name and weight.
         """
         return {self.name: self.weight}
+
+    @receiver(m2m_changed)
+    def def_autoremove_user_categories(sender, instance, action, **kwargs):
+        from capstoneproject.models.models.user_storage import UserStorage
+        if sender == UserStorage.categories.through and action == 'post_remove' and instance:
+            Category.categories.delete(category=instance)
 
     class Meta:
         default_manager_name = 'categories'
