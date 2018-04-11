@@ -11,10 +11,9 @@ from django.template.context_processors import csrf
 from django.contrib.auth import views as auth_views
 from django.urls import reverse
 
-from capstoneproject.helpers import form_helper
+from capstoneproject.helpers import form_helper, parsing, file_helper
 from capstoneproject.helpers.view_helpers import profile_view_helper, ratings_view_helper, view_helper, \
     word_counts_view_helper, words_view_helper
-from capstoneproject import parsing
 import capstoneproject.app_forms as forms
 
 
@@ -343,7 +342,7 @@ def rating_results(request):
         elif request.POST.get('submit') == 'file':  # File request
             form = forms.UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
-                text_str = view_helper.get_file_content(request.FILES['file'])  # Get text from file
+                text_str = file_helper.get_file_content(request.FILES['file'])  # Get text from file
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
                 request.session['category_words'] = context['current_category_word_counts']
             else:
