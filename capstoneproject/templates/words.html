@@ -85,11 +85,11 @@
                         <hr class="my-2">
                         <p class="lead">{{ word }}</p>
                         <div class="slidecontainer">
-                            <input type="range" id="{{ word.name }}" name="{{ word.name }}" min="0"
+                            <input type="range" id="word_{{ word.name }}" name="word_{{ word.name }}" min="0"
                                    max="{{ weight_levels }}" value="{{ word.word_features.first.weight }}"
                                    class="slider" oninput="update_output('{{ word.name }}')">
                             <output name="{{ word.name }}_amount" id="{{ word.name }}_amount"
-                                    for="{{ word.name }}">{{ weight_dict|get_item:word.word_features.first.weight }}</output>
+                                    for="word_{{ word.name }}">{{ weight_dict|get_item:word.word_features.first.weight }}</output>
                         </div>
                     {% endfor %}
                 <div style="text-align: center;">
@@ -105,7 +105,7 @@
             {% for weight in weight_dict %}
                 text[{{ weight }}] = "{{ weight_dict|get_item:weight }}";
             {% endfor %}
-            document.getElementById(word + '_amount').value = text[document.getElementById(word).value];
+            document.getElementById(word + '_amount').value = text[document.getElementById('word_' + word).value];
         }
     </script>
 {% endblock %}

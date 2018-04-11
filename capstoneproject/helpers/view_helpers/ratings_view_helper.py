@@ -1,13 +1,10 @@
 """
-This file contains functions that provide help create the information displayed in the various views.
+This file contains helper functions for the ratings results view
 """
-import os
 import capstoneproject.content_rating.algorithm.text as text
 from capstoneproject.shared import rater
-from capstoneproject import parsing
 from django.contrib.auth.models import User
-from capstoneproject.app_forms import CopyInForm, SongSearchForm, WebsiteSearchForm, UploadFileForm, \
-    ChangeUsernameForm, ChangePasswordForm, ChangeUsernamePasswordForm, WordsForm
+from capstoneproject.app_forms import CopyInForm, SongSearchForm, WebsiteSearchForm, UploadFileForm
 from capstoneproject.helpers import model_helper
 
 from capstoneproject.models import Word, Category, ContentRating, \
@@ -79,54 +76,14 @@ def get_rating_results_context(rated_content: text.Text, name: str):
     return context
 
 
-def get_file_content(file):
-    """
-    This function coordinates the collection of text from a file.
-    It firsts unloads the file which is originally from the HTML request into a temp file.
-    Then it parses the temp file to obtain its text.
-    Then it deletes the temp file.
-    Lastly it returns the file's text.
-    :param file: A file.
-    :return: A string, the file's text.
-    """
-    chunk_uploaded_file(file)  # Transfer file from HTML Request
-    file_text = parse_file(file.name)  # Get text from temp file
-    os.remove('capstoneproject/tempfile')  # Delete the temp file after use
-    return file_text
-
-
-def chunk_uploaded_file(f):
-    """
-    This function reads the given file in chunks and writes the file to another file.
-    :param f: The file to read.
-    :return: None.
-    """
-    with open('capstoneproject/tempfile', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-
-
-def parse_file(file_name):
-    """
-    This function parses the contents of a temporary file based on the type of the file.
-    :param file_name: A string, the file name.
-    :return: A string, the contents of the file.
-    """
-    if file_name.endswith('.pdf'):
-        file_text = parsing.parse_pdf('capstoneproject/tempfile')
-    elif file_name.endswith('.epub'):
-        file_text = parsing.parse_epub('capstoneproject/tempfile')
-    elif file_name.endswith('docx'):
-        file_text = parsing.parse_docx('capstoneproject/tempfile')
-    elif file_name.endswith('txt'):
-        file_text = parsing.parse_txt('capstoneproject/tempfile')
-    else:
-        print('ERROR')  # TODO Handle this error
-        file_text = ''
-    return file_text
-
-
 def create_category_ratings_dict(category_ratings_queryset):
+    """
+    This function creates a dictionary where the keys are category names
+    and the values are category ratings from a given queryset.
+    :param category_ratings_queryset: A CategoryRatingsQueryset which contains
+    category names and their associated category rating.
+    :return: A dictionary containing the data from the given queryset.
+    """
     category_ratings = dict()
     for query in category_ratings_queryset:
         category_ratings[query.category.name] = query.rating
@@ -134,6 +91,13 @@ def create_category_ratings_dict(category_ratings_queryset):
 
 
 def create_word_count_dict(word_count_queryset):
+    """
+    This function creates a dictionary where the keys are word names
+    and the values are word counts from a given queryset.
+    :param word_count_queryset: A WordCountQueryset containing word names
+    and their associated word counts.
+    :return: A dictionary containing the data from the given queryset.
+    """
     word_count = dict()
     for query in word_count_queryset:
         word_count[query.word.name] = query.count
@@ -141,6 +105,14 @@ def create_word_count_dict(word_count_queryset):
 
 
 def create_word_count_category_dict(word_count_dict: dict):
+    """
+    This function creates a dictionary where the keys are category names
+    and the values are another dictionary, in which the keys are word names
+    and the values are word counts.
+    :param word_count_dict: A dictionary containing words and their counts.
+    :return: A dictionary that maps categories to words and counts associated
+    with the category.
+    """
     word_count_category_dict = dict()  # Initialize the dictionary.
     for cat in model_helper.get_categories():  # Add a key for each category.
         word_count_category_dict[cat.name] = dict()
@@ -168,85 +140,4 @@ def get_rating(user: User, pos: int):
     rated_text.overall_rating = rating.rating
     rated_text.category_word_counts = rating.get_word_count_category()
     rated_text.category_ratings = rating.get_category_ratings()
-
     return rated_text
-
-
-def get_word_counts_context(user: User, pos: int):
-    """
-    This function creates the context dictionary to pass to the
-    word counts page. The dictionary contains keys for the content
-    title and for the category word counts dictionary.
-    :param user: A User
-    :param pos: An int, the position in the user's past rated
-    content ordered where the most recent are at the top to
-    retrieve word counts for
-    :return: A dictionary
-    """
-    context = {'name': '',
-               'category_word_counts': dict()
-               }
-    rating = model_helper.get_user_rating_at_position(user, pos)
-    if not rating:
-        return context
-    context['name'] = rating.content.title
-    context['category_word_counts'] = rating.get_word_count_category()
-    return context
-
-
-def get_past_ratings_dict(user: User):
-    recently_rated = dict()
-    past_ratings = model_helper.get_user_ratings(user)
-    print(past_ratings)
-    for count, r in enumerate(past_ratings):
-        title = '{} - {}'.format(count+1, r.content.title)
-        recently_rated[title] = r.rating
-    return recently_rated
-
-
-def get_weight_dict():
-    weight_dict = dict()
-    for weight in model_helper.get_weights():
-        weight_dict[weight[0]] = weight[1]
-    return weight_dict
-
-
-def get_profile_context(user: User):
-    weight_dict = get_weight_dict()
-    recently_rated = get_past_ratings_dict(user)
-    print(model_helper.get_user_categories(user))
-    context = {'categories': model_helper.get_categories(),
-               'recently_rated': recently_rated,
-               'weight_levels': len(weight_dict) - 1,
-               'weight_dict': weight_dict,
-               'change_username_form': ChangeUsernameForm(),
-               'change_password_form': ChangePasswordForm(),
-               'change_username_password_form': ChangeUsernamePasswordForm()}
-    return context
-
-
-def get_words_context(user: User, category):
-    weight_dict = get_weight_dict()
-    context = {'category': category,
-               'words': model_helper.get_category_words(category_name=category),
-               'weight_levels': len(weight_dict) - 1,
-               'weight_dict': weight_dict,
-               'words_form': WordsForm(category)
-               }
-    return context
-
-
-def create_category_dictionary(post):
-    cat_dict = dict()
-    for key, value in post.items():
-        if key.endswith('_cat'):
-            cat_dict[key[:-4]] = value
-    return cat_dict
-
-
-def update_user_category_weights(request):
-    user = request.user
-    cat_dict = create_category_dictionary(request.POST)
-    for cat, weight in cat_dict.items():
-        x = model_helper.update_user_category_weight(user, cat, weight)
-
