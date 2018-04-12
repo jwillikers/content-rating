@@ -1,7 +1,6 @@
 from django.dispatch import receiver
 from django.db.models import ManyToManyField, CharField, Manager, \
     BooleanField, Model
-from django.contrib.auth.models import User
 from capstoneproject.models.fields.weight_field import WeightField
 from capstoneproject.models.querysets.category_queryset import CategoryQuerySet
 from django.db.models.signals import m2m_changed
@@ -45,7 +44,7 @@ class Category(Model):
     def def_autoremove_user_categories(sender, instance, action, **kwargs):
         from capstoneproject.models.models.user_storage import UserStorage
         if sender == UserStorage.categories.through and action == 'post_remove' and instance:
-            Category.categories.delete(category=instance)
+            Category.categories.delete(category=instance)  # TODO This Doesn't work: AttributeError: 'ManagerFromCategoryQuerySet' object has no attribute 'delete'
 
     class Meta:
         default_manager_name = 'categories'

@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from capstoneproject.app_forms import WordsForm
 from capstoneproject.helpers import model_helper
 from capstoneproject.helpers.view_helpers import view_helper
+from capstoneproject.models import Word, Category, ContentRating, \
+    UserStorage, Content, WordCount, CategoryRating, WeightField
 
 
 def get_words_context(user: User, category):

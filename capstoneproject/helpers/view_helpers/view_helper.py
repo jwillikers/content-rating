@@ -5,12 +5,8 @@ import capstoneproject.content_rating.algorithm.text as text
 from capstoneproject.shared import rater
 from django.contrib.auth.models import User
 from capstoneproject.helpers import model_helper
-
 from capstoneproject.models import Word, Category, ContentRating, \
     UserStorage, Content, WordCount, CategoryRating, WeightField
-
-
-
 
 
 def get_weight_dict():
