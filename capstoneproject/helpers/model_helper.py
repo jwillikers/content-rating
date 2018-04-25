@@ -13,7 +13,7 @@ def get_categories():
     This function returns all categories that are used to classify offensive content.
     :return: A list of categories stored in the database.
     """
-    return Category.categories.all()
+    return Category.categories.filter(default=True)
 
 
 def get_category(category_name):
@@ -22,7 +22,7 @@ def get_category(category_name):
     :param category_name: A string, the category name
     :return: A Category
     """
-    return Category.categories.get(name=category_name)
+    return Category.categories.get(name=category_name, default=True)
 
 
 def get_user_categories(user: User):
@@ -31,7 +31,7 @@ def get_user_categories(user: User):
     :param user: A User
     :return: A list of a User's Categories
     """
-    return Category.categories.filter(user_storage__id=user.id)
+    return Category.categories.filter(user_storage__id=user.id, default=True)
 
 
 def get_user_category(user: User, category_name: str):
@@ -42,7 +42,7 @@ def get_user_category(user: User, category_name: str):
     :param category_name: A string, the name of the category
     :return: A Category model
     """
-    return Category.categories.get(name=category_name, user_storage__id=user.id)
+    return Category.categories.get(name=category_name, user_storage__id=user.id, default=True)
 
 
 def get_words():
@@ -51,7 +51,6 @@ def get_words():
     :return: A list of all words stored in the system's dictionary of offensive content.
     """
     return Word.words.all()
-
 
 def get_word(word_name: str):
     """
