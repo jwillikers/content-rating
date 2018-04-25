@@ -2,7 +2,6 @@
 This file contains functions to help the words view.
 """
 from django.contrib.auth.models import User
-from capstoneproject.app_forms import WordsForm
 from capstoneproject.helpers import model_helper
 from capstoneproject.helpers.view_helpers import view_helper
 from capstoneproject.models import Word, Category, ContentRating, \
@@ -21,8 +20,8 @@ def get_words_context(user: User, category):
     context = {'category': category,
                'words': model_helper.get_category_words(category_name=category),
                'weight_levels': len(weight_dict) - 1,
-               'weight_dict': weight_dict,
-               'words_form': WordsForm(category)
+               'weight_dict': weight_dict
+               #'words_form': WordsForm(category)
                }
     return context
 

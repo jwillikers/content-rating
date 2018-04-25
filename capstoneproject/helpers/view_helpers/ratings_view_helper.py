@@ -20,22 +20,23 @@ def perform_rating(content: str, form, request):
     :param request: The HTML request.
     :return: A dictionary containing the rating results.
     """
-    rated_content = get_rating_results(content, form)  # Get the rating's results
+    rated_content = rate(content, form, request.user)  # Get the rating's results
     model_helper.update_user_ratings(rated_content, request.user)  # Save the rating
     context = get_rating_results_context(rated_content, 'current')  # Generate the context
     return context
 
 
-def get_rating_results(content: str, form):
+def rate(content: str, form, user: User):
     """
     This function classifies and rates the given text.
     It then saves the rating information.
     Lastly, it returns a dictionary containing the rating results.
     :param content: A string, the content to rate.
     :param form: A form, submitted by the user and contains information about the content.
+    :param user: A User
     :return: A dictionary containing the rating results
     """
-    rated_content = rater.algorithm(content)  # Perform algorithm
+    rated_content = rater.algorithm(content, user)  # Perform algorithm
     rated_content.title = form.get_title()  # Set the rated content's title
     rated_content.creator = form.get_creator()  # Set the rated content's creator
     rated_content.content_type = get_content_type(form)  # Set the content type
@@ -73,6 +74,7 @@ def get_rating_results_context(rated_content: text.Text, name: str):
                '{}_category_ratings'.format(name): rated_content.category_ratings,
                '{}_category_word_counts'.format(name): rated_content.category_word_counts
                }
+    print('Context ' + str(context))
     return context
 
 

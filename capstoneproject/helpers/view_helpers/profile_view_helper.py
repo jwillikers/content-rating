@@ -18,7 +18,7 @@ def get_profile_context(user: User):
     """
     weight_dict = view_helper.get_weight_dict()
     recently_rated = get_past_ratings_dict(user)
-    print(model_helper.get_user_categories(user))
+    print('Get_profile_context ' + str(model_helper.get_user_categories(user)))
     context = {'categories': model_helper.get_categories(),
                'recently_rated': recently_rated,
                'weight_levels': len(weight_dict) - 1,

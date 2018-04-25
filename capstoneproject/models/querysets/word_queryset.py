@@ -19,7 +19,7 @@ class WordQuerySet(QuerySet):
         """
         if isinstance(category, str):
             try:
-                category = Category.categories.get(name=category.lower())
+                category = Category.categories.get(name=category.lower(), default=True)
             except Category.DoesNotExist:
                 return self.none()
         elif isinstance(category, int):

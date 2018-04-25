@@ -13,7 +13,7 @@ def get_categories():
     This function returns all categories that are used to classify offensive content.
     :return: A list of categories stored in the database.
     """
-    return Category.categories.all()
+    return Category.categories.filter(default=True)
 
 
 def get_category(category_name):
@@ -22,7 +22,7 @@ def get_category(category_name):
     :param category_name: A string, the category name
     :return: A Category
     """
-    return Category.categories.get(name=category_name)
+    return Category.categories.get(name=category_name, default=True)
 
 
 def get_user_categories(user: User):
@@ -95,6 +95,14 @@ def update_user_word_weight(user: User, word_name: str, category_name: str, weig
     :param weight: An int, the new Weight value (0-3)
     :return: None
     """
+    # TODO Change this
+    # Get the word related to the word_name.
+    # Get the WordFeature associated with that word and that category name and weight.
+    # If this is already in the UserStorage WordFeature list, stop.
+    # Else
+    # If no WordFeature with the category name and weight do not exist, create it.
+    # Remove the old WordFeature for the given word and category from the UserStorage WordFeature list.
+    # Add the new WordFeature for the given word, category, weight to the UserStorage WordFeature list.
     return Word.words.get(name=word_name).word_features.get(
         user_storage__id=user.id, category__name=category_name).update(weight=weight)
 
@@ -140,12 +148,17 @@ def update_user_category_weight(user: User, category_name: str, weight: int):
     """
     # Get the user's storage
     user_query = UserStorage.user_storage.get(user=user.id)
+    print(user_query)
     print(user_query.categories.all())
     # Check if the correct category name and weight are already linked to the user.
     try:
         cat = user_query.categories.get(name=category_name)
+        print("CAT: " + str(cat))
     except Category.DoesNotExist:
         cat = Category.categories.get(name=category_name, default=True)
+        print("Except")
+    # TODO Fix this
+    '''
     if cat.weight != weight:
         # Get or create category matching name and weight.
         new_cat = Category.categories.get_or_create(name=category_name, weight=weight)
@@ -153,11 +166,17 @@ def update_user_category_weight(user: User, category_name: str, weight: int):
         user_query.categories.remove(cat)
         # Link the user's storage to the new category.
         user_query.categories.add(new_cat)
+    '''
     print(user_query.categories.all())
 
 # user storage should probably not be transparent
 # to the rest of the system through here.
 def get_user_storage(user: User):
+    """
+    This function returns the UserStorage model associated with the given User.
+    :param user: A User
+    :return: A UserStorage model or None
+    """
     user_storage_model = None
     try:
         user_storage_model = UserStorage.user_storage.get(id=user.id)
@@ -217,6 +236,7 @@ def update_user_ratings(rated_content, user: User):
     :return: None
     """
     while get_user_rating_amount(user) >= 5:  # Check if the user has reached their limit.
+        print("DELETE")
         delete_oldest_user_rating(user)  # Remove oldest ratings if so.
     save_rating(rated_content, user)  # Save the new rating
 
@@ -249,6 +269,8 @@ def save_rating(rated_content, user: User):
     r.save()
     UserStorage.user_storage.get(
         user=user.id).ratings.add(r)
+    print("USER RATINGS")
+    print(UserStorage.user_storage.get(user=user.id).ratings.all())
 
 
 def get_user_ratings(user: User):
@@ -285,6 +307,8 @@ def get_user_rating_amount(user: User):
     :param user: A User
     :return: An int, the quantity of Ratings in the User's UserStorage.
     """
+    print('USER AMOUNT: ' + str(ContentRating.content_ratings.filter(
+        user_storage__id=user.id).count()))
     return ContentRating.content_ratings.filter(
         user_storage__id=user.id).count()
 
@@ -299,3 +323,11 @@ def delete_oldest_user_rating(user: User):
     oldest_rating = ContentRating.content_ratings.filter(
         user_storage__id=user.id).earliest('updated')
     oldest_rating.delete()
+
+
+def get_num_categories():
+    """
+    This function returns the number of unique category names identified by the system.
+    :return: An int
+    """
+    return len(get_categories())  # TODO Is this most efficient?

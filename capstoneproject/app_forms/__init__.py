@@ -8,4 +8,3 @@ from capstoneproject.app_forms.signup_form import SignUpForm
 from capstoneproject.app_forms.song_search_form import SongSearchForm
 from capstoneproject.app_forms.upload_file_form import UploadFileForm
 from capstoneproject.app_forms.webpage_search_form import WebsiteSearchForm
-from capstoneproject.app_forms.words_form import WordsForm
