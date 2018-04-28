@@ -2,7 +2,6 @@
 This file contains functions to help the words view.
 """
 from django.contrib.auth.models import User
-from capstoneproject.app_forms import WordsForm
 from capstoneproject.helpers import model_helper
 from capstoneproject.helpers.view_helpers import view_helper
 from capstoneproject.models.models.word import Word
