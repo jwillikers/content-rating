@@ -13,7 +13,10 @@ class ContentRating(Model):
     from capstoneproject.models.models.content import Content
     from capstoneproject.models.models.word_count import WordCount
     from capstoneproject.models.fields.rating_field import RatingField
-    content = ForeignKey('Content', on_delete=CASCADE)
+    content = ForeignKey(
+        'Content',
+        related_name='content_ratings',
+        on_delete=CASCADE)
     rating = RatingField(default=0)
     category_ratings = ManyToManyField(
         CategoryRating,
