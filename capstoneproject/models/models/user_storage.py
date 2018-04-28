@@ -58,7 +58,8 @@ class UserStorage(Model):
 
     @receiver(post_delete, sender=User)
     def delete_user_storage(sender, instance, **kwargs):
-        if instance and UserStorage.user_storage.filter(id=instance.id).exists():
+        if instance and UserStorage.user_storage.filter(
+                id=instance.id).exists():
             my_user_storage = UserStorage.user_storage.get(id=instance.id)
             my_user_storage.delete_relatives()
             my_user_storage.delete()
@@ -70,7 +71,7 @@ class UserStorage(Model):
         for rating in ratings:
             if rating.isOrphaned():
                 rating.delete_relatives()
-                rating.delete()
+                rating.delete_with_dependencies()
 
         # delete WordFeatures before Words and Categories
         word_features = list(self.word_features.filter(default=False))

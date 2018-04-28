@@ -4,6 +4,10 @@ from capstoneproject.models.models.user_storage import UserStorage
 from capstoneproject.models.models.word import Word
 from capstoneproject.models.models.category import Category
 from capstoneproject.models.models.word_feature import WordFeature
+from capstoneproject.models.models.content import Content
+from capstoneproject.models.models.content_rating import ContentRating
+from capstoneproject.models.models.category_rating import CategoryRating
+from capstoneproject.models.models.word_count import WordCount
 
 
 class UserStorageTestClass(TestCase):
@@ -82,6 +86,18 @@ class UserStorageTestClass(TestCase):
                 category=user_category, weight=1, strength=True, default=False)
         self.user_storage.word_features.add(user_feature)
         user_word.word_features.add(user_feature)
+
+        user_content = Content.content.create(title='Title', creator='Creator')
+        user_content_rating = ContentRating.content_ratings.create(
+            content=user_content)
+        user_word_count = WordCount.word_counts.create(
+            word=user_word, count=10)
+        user_content_rating.word_counts.add(user_word_count)
+        user_category_rating = CategoryRating.category_ratings.create(
+            category=user_category, rating=5)
+        user_content_rating.category_ratings.add(user_category_rating)
+        self.user_storage.ratings.add(user_content_rating)
+
         self.assertTrue(
             Word.words.filter(
                 id=user_word.id).exists(), msg='Word user_word should exist')
@@ -93,6 +109,22 @@ class UserStorageTestClass(TestCase):
             WordFeature.word_features.filter(
                 id=user_feature.id).exists(),
             msg='WordFeature user_feature should exist')
+        self.assertTrue(
+            Content.content.filter(
+                id=user_content.id).exists(),
+            msg='Content user_content should exist')
+        self.assertTrue(
+            WordCount.word_counts.filter(
+                id=user_word_count.id).exists(),
+            msg='WordCount user_word_count should exist')
+        self.assertTrue(
+            CategoryRating.category_ratings.filter(
+                id=user_category_rating.id).exists(),
+            msg='CategoryRating user_category_rating should exist')
+        self.assertTrue(
+            ContentRating.content_ratings.filter(
+                id=user_content_rating.id).exists(),
+            msg='ContentRating user_content_rating should exist')
         self.user_storage.delete_relatives()
         self.assertFalse(
             Word.words.filter(
@@ -106,6 +138,22 @@ class UserStorageTestClass(TestCase):
             WordFeature.word_features.filter(
                 id=user_feature.id).exists(),
             msg='WordFeature user_feature should not exist')
+        self.assertFalse(
+            Content.content.filter(
+                id=user_content.id).exists(),
+            msg='Content user_content should not exist')
+        self.assertFalse(
+            WordCount.word_counts.filter(
+                id=user_word_count.id).exists(),
+            msg='WordCount user_word_count should not exist')
+        self.assertFalse(
+            CategoryRating.category_ratings.filter(
+                id=user_category_rating.id).exists(),
+            msg='CategoryRating user_category_rating should not exist')
+        self.assertFalse(
+            ContentRating.content_ratings.filter(
+                id=user_content_rating.id).exists(),
+            msg='ContentRating user_content_rating should not exist')
 
     def test_delete_user(self):
         pass

@@ -1,4 +1,5 @@
-from django.db.models import Model, ManyToManyField, ForeignKey, CASCADE
+from django.db.models \
+    import Model, ManyToManyField, ForeignKey, CASCADE, Manager
 from django.contrib.auth.models import User
 
 
@@ -12,6 +13,7 @@ class CategoryRating(Model):
     category = ForeignKey('Category', related_name='category_ratings',
                           on_delete=CASCADE)
     rating = RatingField()
+    category_ratings = Manager()
 
     def isRelated(self):
         return len(self.content_ratings.all()) > 0
@@ -24,3 +26,6 @@ class CategoryRating(Model):
         string += '  Category: {}  Rating: {}'.format(
             self.category.name, self.rating)
         return string
+
+    class Meta:
+        default_manager_name = 'category_ratings'

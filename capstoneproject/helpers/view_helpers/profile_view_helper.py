@@ -2,11 +2,18 @@
 This file contains helper functions for the profile view
 """
 from django.contrib.auth.models import User
-from capstoneproject.app_forms import ChangeUsernameForm, ChangePasswordForm, ChangeUsernamePasswordForm
+from capstoneproject.app_forms \
+    import ChangeUsernameForm, ChangePasswordForm, ChangeUsernamePasswordForm
 from capstoneproject.helpers import model_helper
 from capstoneproject.helpers.view_helpers import view_helper
-from capstoneproject.models import Word, Category, ContentRating, \
-    UserStorage, Content, WordCount, CategoryRating, WeightField
+from capstoneproject.models.models.word import Word
+from capstoneproject.models.models.category import Category
+from capstoneproject.models.models.content_rating import ContentRating
+from capstoneproject.models.models.user_storage import UserStorage
+from capstoneproject.models.models.content import Content
+from capstoneproject.models.models.word_count import WordCount
+from capstoneproject.models.models.category_rating import CategoryRating
+from capstoneproject.models.fields.weight_field import WeightField
 
 
 def get_profile_context(user: User):
@@ -69,5 +76,3 @@ def update_user_category_weights(request):
     cat_dict = create_category_dictionary(request.POST)
     for cat, weight in cat_dict.items():
         x = model_helper.update_user_category_weight(user=request.user, category_name=cat, weight=weight)
-
-

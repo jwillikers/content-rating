@@ -18,6 +18,12 @@ class Content(Model):
         choices=MEDIA_TYPES, null=True, blank=True)
     content = Manager()
 
+    def isRelated(self):
+        return len(self.content_ratings.all()) > 0
+
+    def isOrphaned(self):
+        return len(self.content_ratings.all()) == 0
+
     def __str__(self):
         """
         This method overwrites the __str__ function and

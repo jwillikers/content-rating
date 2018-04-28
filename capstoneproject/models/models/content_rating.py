@@ -56,6 +56,12 @@ class ContentRating(Model):
             if word_count.isOrphaned():
                 word_count.delete()
 
+    def delete_with_dependencies(self):
+        old_content = self.content
+        self.delete()
+        if old_content.isOrphaned():
+            old_content.delete()
+
     def get_category_ratings(self):
         category_ratings = dict()
         for cat_rating in self.category_ratings.all():
