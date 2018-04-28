@@ -1,14 +1,14 @@
 """
-This file contains functions that provide help create the information displayed in the various views.
+This file contains helper functions for the ratings results view
 """
-import os
 import capstoneproject.content_rating.algorithm.text as text
 from capstoneproject.shared import rater
-from capstoneproject import parsing
 from django.contrib.auth.models import User
 from capstoneproject.app_forms import CopyInForm, SongSearchForm, WebsiteSearchForm, UploadFileForm
-
 from capstoneproject.helpers import model_helper
+
+from capstoneproject.models import Word, Category, ContentRating, \
+    UserStorage, Content, WordCount, CategoryRating, WeightField
 
 
 def perform_rating(content: str, form, request):
@@ -22,8 +22,7 @@ def perform_rating(content: str, form, request):
     """
     rated_content = get_rating_results(content, form)  # Get the rating's results
     model_helper.update_user_ratings(rated_content, request.user)  # Save the rating
-    context = generate_context(rated_content, 'current')  # Generate the context
-
+    context = get_rating_results_context(rated_content, 'current')  # Generate the context
     return context
 
 
@@ -36,7 +35,6 @@ def get_rating_results(content: str, form):
     :param form: A form, submitted by the user and contains information about the content.
     :return: A dictionary containing the rating results
     """
-    # TODO handle overall rating of 0
     rated_content = rater.algorithm(content)  # Perform algorithm
     rated_content.title = form.get_title()  # Set the rated content's title
     rated_content.creator = form.get_creator()  # Set the rated content's creator
@@ -62,7 +60,7 @@ def get_content_type(form):
     return content_type
 
 
-def generate_context(rated_content: text.Text, name: str):
+def get_rating_results_context(rated_content: text.Text, name: str):
     """
     Generates a dictionary that contains key information from a rated text.
     :param rated_content: The rated text used to create the dictionary.
@@ -78,54 +76,14 @@ def generate_context(rated_content: text.Text, name: str):
     return context
 
 
-def get_file_content(file):
-    """
-    This function coordinates the collection of text from a file.
-    It firsts unloads the file which is originally from the HTML request into a temp file.
-    Then it parses the temp file to obtain its text.
-    Then it deletes the temp file.
-    Lastly it returns the file's text.
-    :param file: A file.
-    :return: A string, the file's text.
-    """
-    chunk_uploaded_file(file)  # Transfer file from HTML Request
-    file_text = parse_file(file.name)  # Get text from temp file
-    os.remove('capstoneproject/tempfile')  # Delete the temp file after use
-    return file_text
-
-
-def chunk_uploaded_file(f):
-    """
-    This function reads the given file in chunks and writes the file to another file.
-    :param f: The file to read.
-    :return: None.
-    """
-    with open('capstoneproject/tempfile', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-
-
-def parse_file(file_name):
-    """
-    This function parses the contents of a temporary file based on the type of the file.
-    :param file_name: A string, the file name.
-    :return: A string, the contents of the file.
-    """
-    if file_name.endswith('.pdf'):
-        file_text = parsing.parse_pdf('capstoneproject/tempfile')
-    elif file_name.endswith('.epub'):
-        file_text = parsing.parse_epub('capstoneproject/tempfile')
-    elif file_name.endswith('docx'):
-        file_text = parsing.parse_docx('capstoneproject/tempfile')
-    elif file_name.endswith('txt'):
-        file_text = parsing.parse_txt('capstoneproject/tempfile')
-    else:
-        print('ERROR')  # TODO Handle this error
-        file_text = ''
-    return file_text
-
-
 def create_category_ratings_dict(category_ratings_queryset):
+    """
+    This function creates a dictionary where the keys are category names
+    and the values are category ratings from a given queryset.
+    :param category_ratings_queryset: A CategoryRatingsQueryset which contains
+    category names and their associated category rating.
+    :return: A dictionary containing the data from the given queryset.
+    """
     category_ratings = dict()
     for query in category_ratings_queryset:
         category_ratings[query.category.name] = query.rating
@@ -133,6 +91,13 @@ def create_category_ratings_dict(category_ratings_queryset):
 
 
 def create_word_count_dict(word_count_queryset):
+    """
+    This function creates a dictionary where the keys are word names
+    and the values are word counts from a given queryset.
+    :param word_count_queryset: A WordCountQueryset containing word names
+    and their associated word counts.
+    :return: A dictionary containing the data from the given queryset.
+    """
     word_count = dict()
     for query in word_count_queryset:
         word_count[query.word.name] = query.count
@@ -140,6 +105,14 @@ def create_word_count_dict(word_count_queryset):
 
 
 def create_word_count_category_dict(word_count_dict: dict):
+    """
+    This function creates a dictionary where the keys are category names
+    and the values are another dictionary, in which the keys are word names
+    and the values are word counts.
+    :param word_count_dict: A dictionary containing words and their counts.
+    :return: A dictionary that maps categories to words and counts associated
+    with the category.
+    """
     word_count_category_dict = dict()  # Initialize the dictionary.
     for cat in model_helper.get_categories():  # Add a key for each category.
         word_count_category_dict[cat.name] = dict()
@@ -167,28 +140,4 @@ def get_rating(user: User, pos: int):
     rated_text.overall_rating = rating.rating
     rated_text.category_word_counts = rating.get_word_count_category()
     rated_text.category_ratings = rating.get_category_ratings()
-
     return rated_text
-
-
-def get_word_counts_context(user: User, pos: int):
-    """
-    This function creates the context dictionary to pass to the
-    word counts page. The dictionary contains keys for the content
-    title and for the category word counts dictionary.
-    :param user: A User
-    :param pos: An int, the position in the user's past rated
-    content ordered where the most recent are at the top to
-    retrieve word counts for
-    :return: A dictionary
-    """
-    context = {'name': '',
-               'category_word_counts': dict()
-               }
-    rating = model_helper.get_user_rating_at_position(user, pos)
-    if not rating:
-        return context
-    context['name'] = rating.content.title
-    context['category_word_counts'] = rating.get_word_count_category()
-    return context
-

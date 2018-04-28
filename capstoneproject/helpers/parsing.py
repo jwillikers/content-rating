@@ -3,7 +3,6 @@ This file contains functions for parsing different forms of text.
 The functions convert the various text formats into simple strings.
 """
 import os
-
 import PyPDF2
 import docx
 import ebooklib

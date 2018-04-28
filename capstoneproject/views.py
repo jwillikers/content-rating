@@ -11,9 +11,9 @@ from django.template.context_processors import csrf
 from django.contrib.auth import views as auth_views
 from django.urls import reverse
 
-from capstoneproject.content_rating.algorithm import text
-from capstoneproject.helpers import model_helper, form_helper, view_helper
-from capstoneproject import parsing
+from capstoneproject.helpers import form_helper, parsing, file_helper
+from capstoneproject.helpers.view_helpers import profile_view_helper, ratings_view_helper, view_helper, \
+    word_counts_view_helper, words_view_helper
 import capstoneproject.app_forms as forms
 
 
@@ -108,24 +108,8 @@ def profile(request):
         del request.session['delete']
         if request.session.get('content_compare'):
             del request.session['content_compare']
-    weight_dict = dict()
-    for weight in model_helper.get_weights():
-        weight_dict[weight[0]] = weight[1]
-    recently_rated = {'Pillow Talkin': 9,
-                      'Baby Got Back': 7,
-                      'Africa': 1,
-                      'Freebird': 5,
-                      'My First Song': 3
-                      }
 
-    context = {'categories': model_helper.get_categories(),
-               'recently_rated': recently_rated,
-               'weight_levels': len(weight_dict) - 1,
-               'weight_dict': weight_dict,
-               'change_username_form': forms.ChangeUsernameForm(),
-               'change_password_form': forms.ChangePasswordForm(),
-               'change_username_password_form': forms.ChangeUsernamePasswordForm()}
-
+    context = profile_view_helper.get_profile_context(request.user)
     if request.method == 'POST':
         if request.POST.get('submit_username') == 'username':
             form = forms.ChangeUsernameForm(request.POST)
@@ -156,6 +140,9 @@ def profile(request):
             else:  # Go back to the profile page and display errors
                 context['change_username_password_form'] = form
                 return render(request, 'profile.html', context)
+
+        elif request.POST.get('submit_category_weights') == 'category_weights':
+            profile_view_helper.update_user_category_weights(request)
 
     return render(request, 'profile.html', context)
 
@@ -287,14 +274,13 @@ def words(request, category):
         del request.session['delete']
         if request.session.get('content_compare'):
             del request.session['content_compare']
-    weight_dict = dict()
-    for weight in model_helper.get_weights():
-        weight_dict[weight[0]] = weight[1]
-    context = {'category': category,
-               'words': model_helper.get_category_words(category_name=category),
-               'weight_levels': len(weight_dict) - 1,
-               'weight_dict': weight_dict
-               }
+
+    context = words_view_helper.get_words_context(request.user, category)
+
+    if request.method == 'POST':
+        if request.POST.get('submit_word_weights') == 'word_weights':
+            words_view_helper.update_user_word_weights(request, category)
+
     return render(request, 'words.html', context)
 
 
@@ -313,7 +299,7 @@ def rating_results(request):
             if form.is_valid():  # Check if the form is valid.
                 # Rate text here
                 text_str = form.get_text()  # Get text
-                context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
                 request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_content'] = True
@@ -331,7 +317,7 @@ def rating_results(request):
                     request.session['song_title'] = title
                     return HttpResponseRedirect(reverse('search'))
 
-                context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
                 request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_song'] = True
@@ -348,7 +334,7 @@ def rating_results(request):
                 elif website_title:  # Get text from website title
                     text_str = ''
 
-                context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
                 request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_website'] = True
@@ -356,8 +342,8 @@ def rating_results(request):
         elif request.POST.get('submit') == 'file':  # File request
             form = forms.UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
-                text_str = view_helper.get_file_content(request.FILES['file'])  # Get text from file
-                context = view_helper.perform_rating(text_str, form, request)  # Rate content and get results
+                text_str = file_helper.get_file_content(request.FILES['file'])  # Get text from file
+                context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
                 request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_file'] = True
@@ -381,14 +367,14 @@ def compare_results(request):
         content_compare = request.session['content_compare']  # name of item to be compared.
         del request.session['content_compare']
 
-        previous_rating = view_helper.get_rating(request.user, 1)  # Get the older rating.
+        previous_rating = ratings_view_helper.get_rating(request.user, 1)  # Get the older rating.
         if previous_rating:
-            previous_context = view_helper.generate_context(previous_rating, 'previous')
+            previous_context = ratings_view_helper.get_rating_results_context(previous_rating, 'previous')
             context.update(previous_context)
 
-        current_rating = view_helper.get_rating(request.user, 0)  # Get the newer rating.
+        current_rating = ratings_view_helper.get_rating(request.user, 0)  # Get the newer rating.
         if current_rating:
-            current_context = view_helper.generate_context(current_rating, 'current')
+            current_context = ratings_view_helper.get_rating_results_context(current_rating, 'current')
             context.update(current_context)
 
     request.session['delete'] = True
@@ -406,9 +392,9 @@ def word_counts(request, name):
     """
 
     if name == 'current':
-        context = view_helper.get_word_counts_context(request.user, 0)  # Get the newer rating.
+        context = word_counts_view_helper.get_word_counts_context(request.user, 0)  # Get the newer rating.
     elif name == 'previous':
-        context = view_helper.get_word_counts_context(request.user, 1)  # Get the older rating from comparison.
+        context = word_counts_view_helper.get_word_counts_context(request.user, 1)  # Get the older rating from comparison.
     else:
         context = dict()
 

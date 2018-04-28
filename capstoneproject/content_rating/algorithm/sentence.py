@@ -134,12 +134,16 @@ class Sentence:
         """
         for word, POS_tag in self.sentence_tokens:
             off_word = model_helper.get_word(word_name=word)
+            print("OFFWORD")
+            print(off_word)
             if not off_word:  # Not an offensive word
                 # Update the total number of clean words in the sentence.
                 self.number_of_clean_words += 1
             else:
                 # Update the total number of strongly offensive words in the sentence.
                 self.number_of_offensive_words += 1
+                print("WORD FEATURES")
+                print(off_word.get_word_features())
                 for word_cat in off_word.get_word_features():  # each category.
                     if word_cat['strength']:  # Check if the word is strongly or weakly offensive
                         self.add_strongly_offensive_word(word=word, category=word_cat['category'])

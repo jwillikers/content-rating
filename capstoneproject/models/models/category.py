@@ -1,7 +1,6 @@
 from django.dispatch import receiver
 from django.db.models import ManyToManyField, CharField, Manager, \
     BooleanField, Model
-from django.contrib.auth.models import User
 from capstoneproject.models.fields.weight_field import WeightField
 from capstoneproject.models.querysets.category_queryset import CategoryQuerySet
 from django.db.models.signals import m2m_changed

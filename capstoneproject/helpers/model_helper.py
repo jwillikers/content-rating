@@ -144,9 +144,22 @@ def update_user_category_weight(user: User, category_name: str, weight: int):
     :param weight: An int, the new Weight value (0-3)
     :return: None
     """
-    return Category.categories.get(
-        name=category_name, user_storage__id=user.id).update(weight=weight)
-
+    # Get the user's storage
+    user_query = UserStorage.user_storage.get(user=user.id)
+    print(user_query.categories.all())
+    # Check if the correct category name and weight are already linked to the user.
+    try:
+        cat = user_query.categories.get(name=category_name)
+    except Category.DoesNotExist:
+        cat = Category.categories.get(name=category_name, default=True)
+    if cat.weight != weight:
+        # Get or create category matching name and weight.
+        new_cat = Category.categories.get_or_create(name=category_name, weight=weight)
+        # Remove the user's current category with
+        user_query.categories.remove(cat)
+        # Link the user's storage to the new category.
+        user_query.categories.add(new_cat)
+    print(user_query.categories.all())
 
 # user storage should probably not be transparent
 # to the rest of the system through here.
@@ -291,12 +304,4 @@ def delete_oldest_user_rating(user: User):
     """
     oldest_rating = ContentRating.content_ratings.filter(
         user_storage__id=user.id).earliest('updated')
-    #word_counts = oldest_rating.word_counts.all()
-    #for wc in word_counts:
-    #    WordCount.delete(wc)
-    #category_rating = oldest_rating.category_ratings.all()
-    #for cr in category_rating:
-    #    CategoryRating.delete(cr)
-    # oldest_rating.word_counts.delete() #
-    # oldest_rating.category_ratings.delete()
     oldest_rating.delete()
