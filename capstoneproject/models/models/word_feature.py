@@ -1,9 +1,8 @@
 from django.db.models import ManyToManyField, ForeignKey, BooleanField, \
     Manager, CASCADE, Model
 from django.contrib.auth.models import User
-from capstoneproject.models.models.category import Category
-from capstoneproject.models.fields.strength_field import StrengthField
-from capstoneproject.models.fields.weight_field import WeightField
+from capstoneproject.models.querysets.word_feature_queryset \
+    import WordFeatureQuerySet
 
 
 class WordFeature(Model):
@@ -13,11 +12,15 @@ class WordFeature(Model):
     (strong or weak), the offensive category, and the offensiveness weight of
     the word and category.
     """
+    from capstoneproject.models.models.category import Category
+    from capstoneproject.models.fields.strength_field import StrengthField
+    from capstoneproject.models.fields.weight_field import WeightField
     default = BooleanField(default=False)
-    category = ForeignKey(Category, on_delete=CASCADE)
+    category = ForeignKey('Category', related_name='word_features',
+                          on_delete=CASCADE)
     strength = StrengthField(default='strong')
     weight = WeightField()
-    word_features = Manager()
+    word_features = WordFeatureQuerySet.as_manager()
 
     def __str__(self):
         """
@@ -52,6 +55,26 @@ class WordFeature(Model):
         dictionary['strength'] = {self.get_strength_display(): self.strength}
         dictionary['weight'] = {self.get_weight_display(): self.weight}
         return dictionary
+
+    def isDefault(self):
+        return self.default
+
+    def isCustom(self):
+        return not self.default
+
+    def isRelated(self):
+        """
+        Determines if any many-to-many fields point to this object.
+        :return: a boolean whether this field belongs to any many-to-many relationships
+        """
+        return len(self.user_storage.all()) > 0
+
+    def isOrphaned(self):
+        """
+        Determines if no many-to-many fields point to this object.
+        :return: a boolean, true, if no many-to-many fields point to this WordFeature
+        """
+        return len(self.user_storage.all()) == 0
 
     class Meta:
         default_manager_name = 'word_features'

@@ -2,6 +2,9 @@ from django.db.models import QuerySet
 
 
 class CategoryQuerySet(QuerySet):
+    def default(self):
+        return self.filter(default=True)
+
     def of_user(self, user_id):
         from capstoneproject.models.models.category import Category
         return self.raw('''

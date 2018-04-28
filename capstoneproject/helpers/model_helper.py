@@ -1,8 +1,14 @@
 """
 This file contains functions used to provide data from the database.
 """
-from capstoneproject.models import Word, Category, ContentRating, \
-    UserStorage, Content, WordCount, CategoryRating, WeightField
+from capstoneproject.models.models.word import Word
+from capstoneproject.models.models.category import Category
+from capstoneproject.models.models.content_rating import ContentRating
+from capstoneproject.models.models.user_storage import UserStorage
+from capstoneproject.models.models.content import Content
+from capstoneproject.models.models.word_count import WordCount
+from capstoneproject.models.models.category_rating import CategoryRating
+from capstoneproject.models.fields.weight_field import WeightField
 #from capstoneproject.content_rating.algorithm import text
 from django.contrib.auth.models import User
 import traceback

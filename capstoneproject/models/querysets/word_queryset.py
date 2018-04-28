@@ -158,3 +158,6 @@ class WordQuerySet(QuerySet):
         else:
             raise TypeError('''{} is not a valid type for word'''.format(word))
         return word
+
+    def default(self):
+        return self.filter(default=True)
