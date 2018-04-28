@@ -98,62 +98,119 @@ class UserStorageTestClass(TestCase):
         user_content_rating.category_ratings.add(user_category_rating)
         self.user_storage.ratings.add(user_content_rating)
 
-        self.assertTrue(
-            Word.words.filter(
-                id=user_word.id).exists(), msg='Word user_word should exist')
-        self.assertTrue(
-            Category.categories.filter(
-                id=user_category.id).exists(),
+        self.assertIn(
+            user_word,
+            Word.words.all(),
+            msg='Word user_word should exist')
+        self.assertIn(
+            user_word,
+            self.user_storage.words.all(),
+            msg='Word user_word should belong to the user')
+        self.assertIn(
+            user_category,
+            Category.categories.all(),
             msg='Category user_category should exist')
-        self.assertTrue(
-            WordFeature.word_features.filter(
-                id=user_feature.id).exists(),
+        self.assertIn(
+            user_category,
+            self.user_storage.categories.all(),
+            msg='Category user_category should belong to the user')
+        self.assertIn(
+            user_feature,
+            WordFeature.word_features.all(),
             msg='WordFeature user_feature should exist')
-        self.assertTrue(
-            Content.content.filter(
-                id=user_content.id).exists(),
+        self.assertIn(
+            user_feature,
+            self.user_storage.word_features.all(),
+            msg='WordFeature user_feature should belong to the user')
+        self.assertIn(
+            user_content,
+            Content.content.all(),
             msg='Content user_content should exist')
-        self.assertTrue(
-            WordCount.word_counts.filter(
-                id=user_word_count.id).exists(),
+        self.assertEqual(
+            user_content,
+            user_content_rating.content,
+            msg='Content user_content should exist')
+        self.assertIn(
+            user_word_count,
+            WordCount.word_counts.all(),
             msg='WordCount user_word_count should exist')
-        self.assertTrue(
-            CategoryRating.category_ratings.filter(
-                id=user_category_rating.id).exists(),
+        self.assertIn(
+            user_word_count,
+            user_content_rating.word_counts.all(),
+            msg='WordCount user_word_count should be related to the ContentRating table')
+        self.assertIn(
+            user_category_rating,
+            CategoryRating.category_ratings.all(),
             msg='CategoryRating user_category_rating should exist')
-        self.assertTrue(
-            ContentRating.content_ratings.filter(
-                id=user_content_rating.id).exists(),
+        self.assertIn(
+            user_category_rating,
+            user_content_rating.category_ratings.all(),
+            msg='CategoryRating user_category_rating should be related to the ContentRating table')
+        self.assertIn(
+            user_content_rating,
+            ContentRating.content_ratings.all(),
             msg='ContentRating user_content_rating should exist')
+        self.assertIn(
+            user_content_rating,
+            self.user_storage.ratings.all(),
+            msg='ContentRating user_content_rating should belong to the user')
         self.user_storage.delete_relatives()
-        self.assertFalse(
-            Word.words.filter(
-                id=user_word.id).exists(),
+        self.assertNotIn(
+            user_word,
+            Word.words.all(),
             msg='Word user_word was not deleted')
-        self.assertFalse(
-            Category.categories.filter(
-                id=user_category.id).exists(),
+        self.assertNotIn(
+            user_word,
+            self.user_storage.words.all(),
+            msg='Word user_word was not removed from UserStorage')
+        self.assertNotIn(
+            user_category,
+            Category.categories.all(),
             msg='Category user_category should not exist')
-        self.assertFalse(
-            WordFeature.word_features.filter(
-                id=user_feature.id).exists(),
+        self.assertNotIn(
+            user_category,
+            self.user_storage.categories.all(),
+            msg='Category user_category was not removed from UserStorage')
+        self.assertNotIn(
+            user_feature,
+            WordFeature.word_features.all(),
             msg='WordFeature user_feature should not exist')
-        self.assertFalse(
-            Content.content.filter(
-                id=user_content.id).exists(),
+        self.assertNotIn(
+            user_feature,
+            self.user_storage.word_features.all(),
+            msg='WordFeature user_feature was not removed from UserStorage')
+        self.assertNotIn(
+            user_content,
+            Content.content.all(),
             msg='Content user_content should not exist')
-        self.assertFalse(
-            WordCount.word_counts.filter(
-                id=user_word_count.id).exists(),
+        self.assertNotEqual(
+            user_content,
+            ContentRating.content,
+            msg='Content user_content should not be related to ContentRating')
+        self.assertNotIn(
+            user_word_count,
+            WordCount.word_counts.all(),
             msg='WordCount user_word_count should not exist')
-        self.assertFalse(
-            CategoryRating.category_ratings.filter(
-                id=user_category_rating.id).exists(),
+        self.assertNotIn(
+            user_word_count,
+            user_content_rating.word_counts.all(),
+            msg='WordCount user_word_count should not be related to the ContentRating model')
+        self.assertNotIn(
+            user_category_rating,
+            CategoryRating.category_ratings.all(),
             msg='CategoryRating user_category_rating should not exist')
-        self.assertFalse(
-            ContentRating.content_ratings.filter(
-                id=user_content_rating.id).exists(),
+        self.assertNotIn(
+            user_category_rating,
+            user_content_rating.category_ratings.all(),
+            msg='CategoryRating user_category_rating should not be related to the ContentRating table')
+        self.assertNotIn(
+            user_content_rating,
+            ContentRating.content_ratings.all(),
             msg='ContentRating user_content_rating should not exist')
+        self.assertNotIn(
+            user_content_rating,
+            self.user_storage.ratings.all(),
+            msg='ContentRating user_content_rating should not belong to the user')
 
     def test_delete_user(self):
         pass
