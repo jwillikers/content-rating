@@ -157,7 +157,7 @@
                                 {% for song, rating in recently_rated.items %}
                                     <hr class="my-4">
                                     <!-- Default colors: bg-success (1-2), bg-info (3-4), bg-warning (5-6), bg-primary (7-8), bg-danger (9-10) -->
-                                    <p class="lead">{{ song }}:</p>
+                                    <p class="lead">{{ song|title }}:</p>
                                     <div class="progress">
                                         {% if rating == 1 or rating == 2 %}
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"

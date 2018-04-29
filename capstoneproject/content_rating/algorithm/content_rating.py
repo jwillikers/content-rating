@@ -1,10 +1,9 @@
 """
-This file contains classes and function to implement the content offensiveness classification and content rating
-algorithm.
+This file contains classes and function to implement the content
+offensiveness classification and content rating algorithm.
 """
 import nltk
 import string
-
 from nltk.probability import FreqDist
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import TweetTokenizer
@@ -80,7 +79,7 @@ class ContentRating:
             output_file.write(str(sentences))
             return sentences
 
-    def algorithm(self, text_string):
+    def algorithm(self, text_string, user):
         """
         Implement the offensive content classification and content rating algorithm.
         :param text_string: A string containing the text to classify and rate.
@@ -96,6 +95,6 @@ class ContentRating:
         # text.calculate_offensiveness()
 
         # Step 4: Generate rating
-        text.generate_rating()
+        text.generate_rating(user)
 
         return text
