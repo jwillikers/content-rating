@@ -157,7 +157,7 @@
                                 {% for song, rating in recently_rated.items %}
                                     <hr class="my-4">
                                     <!-- Default colors: bg-success (1-2), bg-info (3-4), bg-warning (5-6), bg-primary (7-8), bg-danger (9-10) -->
-                                    <p class="lead">{{ song|title }}:</p>
+                                    <p class="lead">{{ song }}:</p>
                                     <div class="progress">
                                         {% if rating == 1 or rating == 2 %}
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
@@ -194,21 +194,23 @@
                         <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="POST">
                             <fieldset>
                                 {% csrf_token %}
-                                {% for category in categories %}
+                                {% for cat in categories %}
                                     <hr class="my-2">
                                     <a class="lead"
-                                       href="{% url 'words' category=category.name %}">{{ category.name|title }}</a>
+                                        href="{% url 'words' category=cat.name %}">
+                                        <h5>{{ cat.name|title }}</h5>
+                                    </a>
                                     <div class="slidecontainer">
-                                        <input type="range" id="{{ category.name }}_cat" name="{{ category.name }}_cat" min="0"
-                                               max="{{ weight_levels }}" value="{{ category.weight }}" class="slider"
-                                               oninput="update_output('{{ category.name }}')">
-                                        <output name="{{ category.name }}_amount" id="{{ category.name }}_amount"
-                                                for="{{ category.name }}_cat">{{ weight_dict|get_item:category.weight }}</output>
+                                        <input type="range" id="{{ cat.name }}_cat" name="{{ cat.name }}_cat" min="0"
+                                               max="{{ weight_levels }}" value="{{ cat.weight }}" class="slider"
+                                               oninput="update_output('{{ cat.name }}')">
+                                        <output name="{{ cat.name }}_amount" id="{{ cat.name }}_amount"
+                                                for="{{ cat.name }}_cat">{{ weight_dict|get_item:cat.weight }}</output>
                                     </div>
                                     &nbsp;
                                 {% endfor %}
                                 <div style="text-align: center;">
-                                    <button type="submit" class="btn btn-primary" name="submit_category_weights" value="category_weights">Update category weights</button>
+                                    <button type="submit" class="btn btn-primary" name="submit_category_weights" value="category_weights">Update Category Weights</button>
                                 </div>
                             </fieldset>
                         </form>

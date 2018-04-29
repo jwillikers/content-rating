@@ -62,12 +62,12 @@ class SongSearchForm(forms.Form):
         Returns the song title.
         :return: A string, the song title.
         """
-        return self.cleaned_data['song_title']
+        return self.cleaned_data['song_title'].title()
 
     def get_creator(self):
         """
         Returns the song artist.
         :return: A string, the song artist.
         """
-        return self.cleaned_data['song_artist']
+        return self.cleaned_data['song_artist'].title()
 
