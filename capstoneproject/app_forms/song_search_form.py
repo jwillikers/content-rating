@@ -9,6 +9,7 @@ class SongSearchForm(forms.Form):
     """
     A search song form.
     """
+    not_found = False
     error_messages = {'not_found': _("No song using the given title and given artist was found"),
                       'no_title': _("No song title was provided")}
 
@@ -40,7 +41,9 @@ class SongSearchForm(forms.Form):
         :return: None.
         """
         super()._post_clean()
-        if self.cleaned_data.get("song_title") is not None and self.cleaned_data.get("song_title").strip() == '':
+        if self.cleaned_data.get("song_title") is not None \
+                and self.cleaned_data.get("song_title").strip() == '' \
+                and not self.not_found:
             self.no_title_error()
 
     def not_found_error(self):
@@ -49,13 +52,14 @@ class SongSearchForm(forms.Form):
         :return: None.
         """
         self.add_error('song_artist', self.error_messages['not_found'])
+        self.not_found = False
 
     def no_title_error(self):
         """
         Add a no title error to the song title field if no song title was given.
         :return: None.
         """
-        self.add_error('song_artist', self.error_messages['no_title'])
+        self.add_error('song_title', self.error_messages['no_title'])
 
     def get_title(self):
         """
