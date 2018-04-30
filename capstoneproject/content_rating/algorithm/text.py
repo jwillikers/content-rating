@@ -3,7 +3,9 @@ This file contains the Text class to contain data on the classification
 and rating of a given text.
 """
 from capstoneproject.helpers import model_helper
+from capstoneproject.helpers.model_helpers import category_helper
 from django.contrib.auth.models import User
+
 
 class Text:
     """
@@ -57,7 +59,7 @@ class Text:
         and each value is another dictionary.
         :return: None.
         """
-        for category in model_helper.get_categories():
+        for category in category_helper.get_default_categories():
             self.category_ratings['{}'.format(category.name)] = 1
             self.category_word_counts['{}'.format(category.name)] = dict()
             self.total_strongly_offensive_words_dict['{}'.format(category.name)] = dict()
@@ -136,7 +138,6 @@ class Text:
         for sent in self.sentence_list:
             sent.extract_lexical_features()  # Extract the lexical features from each sentence.
             print(sent)
-            feature_file.write(str(sent) + '\n\n')
             # sent.extract_syntactic_features()  # Extract the syntactic features from each sentence.
             self.add_strongly_offensive_words(sent.strongly_offensive_words)
             self.add_weakly_offensive_words(sent.weakly_offensive_words)
@@ -212,20 +213,21 @@ class Text:
         clean_words_fraction = int(self.total_number_of_clean_words/10)
         if clean_words_fraction <= self.total_number_of_offensive_words:
             clean_words_fraction = self.total_number_of_clean_words
-        return numerator / (clean_words_fraction + self.total_number_of_offensive_words) * 10
+        return int(numerator / (clean_words_fraction + self.total_number_of_offensive_words) * 10)
 
-    def _generate_category_ratings(self):
+    def _generate_category_ratings(self, user:User):
         """
         This function generates the category rating for
         every category in the database.
         :return: None
         """
-        for category in model_helper.get_categories():
+        for category in category_helper.get_default_categories():
             strongly_offensive_category_words = 0
             for word, word_count in self.category_word_counts[category.name].items():
                 strongly_offensive_category_words += word_count
             ratio = self.calculate_offensive_ratio(strongly_offensive_category_words)
-            ratio = int(ratio) % 10 + 1
+            if int(ratio) == 0:
+                ratio = 1
             self.category_ratings[category.name] = ratio
 
     def _generate_overall_rating(self, user: User):
@@ -238,19 +240,18 @@ class Text:
         # strongly_offensive_word_rate = self._calculate_offensive_ratio(self.total_number_of_offensive_words)
         # self.overall_rating = int(strongly_offensive_word_rate) % 10 + 1
 
-        max_rate = 10 * model_helper.get_num_categories()
+        max_rate = 10 * category_helper.get_num_default_categories() * len(model_helper.get_weights()) + 3
         rate_total = 0
 
         for cat, rate in self.category_ratings.items():
-            cat_weight = model_helper.get_category(category_name=cat).weight
-            # get_user_category_weight(user=user, category_name=cat) + 1
-            rate_total += cat_weight * rate
+            cat_weight = category_helper.get_default_category(category_name=cat).weight
+            user_weight = category_helper.get_user_category_weight(user=user, category_name=cat) + 4
+            rate_total += cat_weight * rate * user_weight
 
+        print("RATE TOTAL: " + str(rate_total))
         if rate_total > 0:
-            print(rate_total)
-            print(max_rate)
             self.overall_rating = int(10 * rate_total / max_rate)
-        else:
+        if self.overall_rating == 0:
             self.overall_rating = 1
 
     def generate_rating(self, user:User):
@@ -258,6 +259,5 @@ class Text:
         This function generates an offensiveness rating using the text's classification data.
         :return: None.
         """
-        self._generate_overall_rating(user)
         self._generate_category_ratings(user)
-        print(self.overall_rating)
+        self._generate_overall_rating(user)
