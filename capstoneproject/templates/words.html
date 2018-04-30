@@ -51,46 +51,23 @@
                 </div>
             </div>
             <div style="text-align: center;"><h1>Customize Word Weights</h1>
-                <p class="lead">Edit each individual word weight in category: {{ category|title }}.</p></div>
-
-            <form lpformnum="1" _lpchecked="1" action="{% url 'words' category=category.name %}" method="post">
-                <fieldset>
-                    {% csrf_token %}
-                    <div style="text-align: center;">
-                        <legend class="display-6">{{ category|title }} Words</legend>
-                    </div>
-                    {% for field in words_form %}
-                        <div class="form-group">
-                            {{ field.label_tag|title }} <br>
-                            {{ field }}
-                            {% if field.help_text %}
-                                <small style="color: grey">{{ field.help_text }}</small>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                    <div style="text-align: center;">
-                        <button type="submit" class="btn btn-primary"
-                                name="update_words" value="update_words">Update words
-                        </button>
-                    </div>
-                </fieldset>
-            </form>
-
+                <p class="lead">Edit each individual word weight in category: {{ category|title }}.</p>
+            </div>
             <form lpformnum="1" _lpchecked="1" action="{% url 'words' category=category.name %}" method="POST">
                 <fieldset>
                     {% csrf_token %}
                     <div style="text-align: center;">
                         <legend class="display-6">{{ category|title }} Words</legend>
                     </div>
-                    {% for word in words %}
+                    {% for word, weight in words.items %}
                         <hr class="my-2">
                         <p class="lead">{{ word }}</p>
                         <div class="slidecontainer">
-                            <input type="range" id="word_{{ word.name }}" name="word_{{ word.name }}" min="0"
-                                   max="{{ weight_levels }}" value="{{ word.word_features.first.weight }}"
-                                   class="slider" oninput="update_output('{{ word.name }}')">
-                            <output name="{{ word.name }}_amount" id="{{ word.name }}_amount"
-                                    for="word_{{ word.name }}">{{ weight_dict|get_item:word.word_features.first.weight }}</output>
+                            <input type="range" id="word_{{ word }}" name="word_{{ word }}" min="0"
+                                   max="{{ weight_levels }}" value="{{ weight }}"
+                                   class="slider" oninput="update_output('{{ word }}')">
+                            <output name="{{ word }}_amount" id="{{ word }}_amount"
+                                    for="word_{{ word }}">{{ weight_dict|get_item:weight }}</output>
                         </div>
                     {% endfor %}
                     <div style="text-align: center;">
