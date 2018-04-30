@@ -10,7 +10,7 @@ class Sentence:
     The class represents a sentence within the text to be classified and rated.
     """
 
-    def __init__(self, sentence: list, number: int):
+    def __init__(self, sentence: list, number: int, user):
         """
         Initialize Sentence object
         :param sentence: A list of (word, part of speech tag) tuples of the sentence represented.
@@ -26,7 +26,8 @@ class Sentence:
         # pairs and the number of occurrences in the sentence.
         self.number_of_clean_words = 0  # Number of clean words within the sentence.
         self.number_of_offensive_words = 0  # Number of offensive words within the sentence.
-        self.initialize_word_dictionaries()
+        self.number_of_weak_words = 0  # Number of weakly offensive words within the sentence.
+        self.initialize_word_dictionaries(user)
 
     def __str__(self):
         """
@@ -41,14 +42,14 @@ class Sentence:
         string += '  Offensive Categories: {}\n'.format(self.offensive_categories)
         return string
 
-    def initialize_word_dictionaries(self):
+    def initialize_word_dictionaries(self, user):
         """
         Initialize the weakly_offensive_words dictionary and strongly_offensive_words dictionary to have the keys
         be the categories name and each value is another dictionary that will store the word and word counts in the
         appropriate category.
         :return: None.
         """
-        for category in category_helper.get_default_categories():
+        for category in category_helper.get_user_categories(user):
             self.weakly_offensive_words['{}'.format(category.name)] = dict()
             self.strongly_offensive_words['{}'.format(category.name)] = dict()
 
@@ -127,7 +128,7 @@ class Sentence:
             features['offensive:{}'.format(category)] = True
         return features
 
-    def extract_lexical_features(self):
+    def extract_lexical_features(self, user):
         """
         This function derives lexical features from the tokenized sentence.
         :return: a set of lexical features.
@@ -140,20 +141,47 @@ class Sentence:
                 # Update the total number of clean words in the sentence.
                 self.number_of_clean_words += 1
             else:
-                # Update the total number of strongly offensive words in the sentence.
-                self.number_of_offensive_words += 1
                 #print("WORD FEATURES")
                 #print(off_word.get_word_features())
+                strong = False
                 for word_cat in off_word.get_word_features():  # each category.
                     if word_cat['strength']:  # Check if the word is strongly or weakly offensive
                         self.add_strongly_offensive_word(word=word, category=word_cat['category'])
+                        strong = True
                     else:
+                        print("WEAK: " + str(off_word))
                         self.add_weakly_offensive_word(word=word, category=word_cat['category'])
+                if strong:
+                    # Update the total number of strongly offensive words in the sentence.
+                    self.number_of_offensive_words += 1
+                else:
+                    self.number_of_weak_words += 1
+        self.extract_syntactic_features(user)
 
-    def extract_syntactic_features(self):
+    def extract_syntactic_features(self, user):
         """
         This function extracts the syntactic features from the sentence to determine if it is offensive given data on
         the sentence's weakly offensive words.
         :return: None.
         """
-        print("To Do")
+        weak_ratio = self.number_of_weak_words / len(self.sentence_tokens)
+        print("WEAK RATIO: " + str(weak_ratio))
+        if weak_ratio >= 0.20 or (self.number_of_offensive_words > 1 and self.number_of_weak_words > 0):
+            for cat, word_dic in self.weakly_offensive_words.items():
+                for word, count in word_dic.items():
+                    self.add_strongly_offensive_word(word=word, category=cat)
+            print("NUM OFF WORDS: " + str(self.number_of_offensive_words))
+            self.number_of_offensive_words += self.weakly_offensive_words
+            self._reset_weak_resources(user)
+            print("NUM OFF WORDS: " + str(self.number_of_offensive_words))
+
+    def _reset_weak_resources(self, user):
+        """
+        This function resets the weakly_offensive_words dictionary
+        and the number of weakly offensive words.
+        :param user: A User
+        :return: None
+        """
+        for category in category_helper.get_user_categories(user):
+            self.weakly_offensive_words['{}'.format(category.name)] = dict()
+        self.number_of_weak_words = 0

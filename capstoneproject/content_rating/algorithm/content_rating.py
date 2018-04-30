@@ -57,10 +57,11 @@ class ContentRating:
                 spell_words.append(word)  # Add the original word to the edited sentence if it was not a typo.
         return spell_words
 
-    def tokenize(self, text, content_type):
+    def tokenize(self, text, content_type, user):
         """
         Perform the first phase of the content rating algorithm by tokenizing and normalizing the text.
         :param text: The text, given as a string, to tokenize and normalize.
+        :param content_type: an int, 0-4, 0=song, 1=movie, 2=book, 3=website, 4=document
         :return: The list of tokenized sentences.
         """
         # Use tweet tokenizer to tokenize individual words within sentences.
@@ -71,24 +72,23 @@ class ContentRating:
             words = [word for word in tweet_tokenizer.tokenize(sent) if isalphanum(word)]
             if content_type == 3 or content_type == 4:
                 words = self.correct_spelling(words)
-            sentences.append(Sentence(words, count))
+            sentences.append(Sentence(words, count, user))
         #    tagged_tokenized_text = nltk.pos_tag_sents(tokenized_sents)
-        print("\n\nSENTENCES:")
-        for sent in sentences:
-            print(sent)
         return sentences
 
     def algorithm(self, text_string, user, content_type):
         """
         Implement the offensive content classification and content rating algorithm.
         :param text_string: A string containing the text to classify and rate.
+        :param user: A User
+        :param content_type: an int, 0-4, 0=song, 1=movie, 2=book, 3=website, 4=document
         :return: a Text object, containing the results.
         """
         # Step 1: Normalize, Tokenize, and perform Spelling Correction on Text
-        text = Text(self.tokenize(text_string.lower(), content_type))
+        text = Text(self.tokenize(text_string.lower(), content_type, user))
 
         # Step 2: Extract Features
-        text.extract_features()
+        text.extract_features(user)
 
         # Step 3: Determine offensiveness
         # text.calculate_offensiveness()

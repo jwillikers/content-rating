@@ -132,7 +132,7 @@ class Text:
         """
         self.offensive_sentences[sent_num] = offensive_categories
 
-    def extract_features(self):
+    def extract_features(self, user):
         """
         This function extracts the lexical and syntactic
         features from each sentence.
@@ -140,14 +140,15 @@ class Text:
         """
         text_features = {}
         for sent in self.sentence_list:
-            sent.extract_lexical_features()  # Extract the lexical features from each sentence.
+            sent.extract_lexical_features(user)  # Extract the lexical features from each sentence.
             print(sent)
             # sent.extract_syntactic_features()  # Extract the syntactic features from each sentence.
             self.add_strongly_offensive_words(sent.strongly_offensive_words)
             self.add_weakly_offensive_words(sent.weakly_offensive_words)
             self.add_offensive_words(sent.number_of_offensive_words)
             self.add_clean_words(sent.number_of_clean_words)
-            self.update_offensive_sentences(sent_num=sent.sentence_number, offensive_categories=sent.offensive_categories)
+            self.update_offensive_sentences(sent_num=sent.sentence_number,
+                                            offensive_categories=sent.offensive_categories)
         text_features['Number of offensive words'] = self.total_number_of_offensive_words
         text_features['Number of clean words'] = self.total_number_of_clean_words
         # print(str(text_features))

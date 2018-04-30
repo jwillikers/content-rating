@@ -86,6 +86,5 @@ def update_user_category_weight(user: User, category_name: str, weight: int):
     # Get or create category matching name and weight.
     new_cat, created = Category.categories.get_or_create(name=category_name, weight=int(weight))
     # Link the user's storage to the new category.
-    if created:
-        user_query.categories.add(new_cat)
+    user_query.categories.add(new_cat)
 
