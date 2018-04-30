@@ -41,6 +41,10 @@ class Text:
         :return: A string giving information about the sentence.
         """
         string = 'Text:\n'
+        string += '  Title: {}'.format(self.title)
+        string += '  Creator: {}'.format(self.creator)
+        string += '  Content Type: {}'.format(self.content_type)
+        string += '  Senteces: {}'.format(self.sentence_list)
         string += '  Total Clean Words: {}'.format(self.total_number_of_clean_words)
         string += '  Total Offensive Words: {}\n'.format(self.total_number_of_offensive_words)
         string += '  Offensive Sentences: {}\n'.format(self.offensive_sentences)

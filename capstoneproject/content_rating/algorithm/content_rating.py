@@ -33,13 +33,11 @@ class ContentRating:
         """
         Initialize the ContentRating class by initializing the spell checker.
         """
-#        self.spellchecker = SpellChecker()
+        self.spellchecker = SpellChecker()
         # Load extra texts to the dictionary used by the SpellChecker to make it more similar to the content that the
         # system will be exposed to.
-#        self.spellchecker.word_frequency.load_text_file('capstoneproject/testing_resources/Pillow_Talking')
+        self.spellchecker.word_frequency.load_text_file('capstoneproject/testing_resources/Pillow_Talking')
 
-
-    '''
     def correct_spelling(self, words):
         """"
         This function performs the spelling correction functionality by identifying words within a given sentence that
@@ -57,36 +55,37 @@ class ContentRating:
                 # sentence if it was a typo.
             else:
                 spell_words.append(word)  # Add the original word to the edited sentence if it was not a typo.
-       '''
+        return spell_words
 
-    def tokenize(self, text):
+    def tokenize(self, text, content_type):
         """
         Perform the first phase of the content rating algorithm by tokenizing and normalizing the text.
         :param text: The text, given as a string, to tokenize and normalize.
         :return: The list of tokenized sentences.
         """
-        output_path = 'capstoneproject/testing_resources/Tokens'
-        with open(output_path, 'w') as output_file:
-            # Use tweet tokenizer to tokenize individual words within sentences.
-            # Reduce_len will compact words where letters occur 3 or more times due to typos.
-            tweet_tokenizer = TweetTokenizer(reduce_len=True)
-            sentences = []
-            for count, sent in enumerate(nltk.sent_tokenize(text)):
-                words = [word for word in tweet_tokenizer.tokenize(sent) if isalphanum(word)]
-                #correct_spelling_sent = self.correct_spelling(words)
-                sentences.append(Sentence(words, count))
+        # Use tweet tokenizer to tokenize individual words within sentences.
+        # Reduce_len will compact words where letters occur 3 or more times due to typos.
+        tweet_tokenizer = TweetTokenizer(reduce_len=True)
+        sentences = []
+        for count, sent in enumerate(nltk.sent_tokenize(text)):
+            words = [word for word in tweet_tokenizer.tokenize(sent) if isalphanum(word)]
+            if content_type == 3 or content_type == 4:
+                words = self.correct_spelling(words)
+            sentences.append(Sentence(words, count))
         #    tagged_tokenized_text = nltk.pos_tag_sents(tokenized_sents)
-            output_file.write(str(sentences))
-            return sentences
+        print("\n\nSENTENCES:")
+        for sent in sentences:
+            print(sent)
+        return sentences
 
-    def algorithm(self, text_string, user):
+    def algorithm(self, text_string, user, content_type):
         """
         Implement the offensive content classification and content rating algorithm.
         :param text_string: A string containing the text to classify and rate.
         :return: a Text object, containing the results.
         """
-        # Step 1: Normalize and Tokenize Text
-        text = Text(self.tokenize(text_string.lower()))
+        # Step 1: Normalize, Tokenize, and perform Spelling Correction on Text
+        text = Text(self.tokenize(text_string.lower(), content_type))
 
         # Step 2: Extract Features
         text.extract_features()
