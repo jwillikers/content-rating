@@ -4,16 +4,8 @@ This file contains helper functions for the profile view
 from django.contrib.auth.models import User
 from capstoneproject.app_forms \
     import ChangeUsernameForm, ChangePasswordForm, ChangeUsernamePasswordForm
-from capstoneproject.helpers import model_helper
 from capstoneproject.helpers.view_helpers import view_helper
-from capstoneproject.models.models.word import Word
-from capstoneproject.models.models.category import Category
-from capstoneproject.models.models.content_rating import ContentRating
-from capstoneproject.models.models.user_storage import UserStorage
-from capstoneproject.models.models.content import Content
-from capstoneproject.models.models.word_count import WordCount
-from capstoneproject.models.models.category_rating import CategoryRating
-from capstoneproject.models.fields.weight_field import WeightField
+from capstoneproject.helpers.model_helpers import category_helper, rating_helper
 
 
 def get_profile_context(user: User):
@@ -25,8 +17,8 @@ def get_profile_context(user: User):
     """
     weight_dict = view_helper.get_weight_dict()
     recently_rated = get_past_ratings_dict(user)
-    print('Get_profile_context ' + str(model_helper.get_user_categories(user)))
-    context = {'categories': model_helper.get_categories(),
+    print('\n\nUSER CATEGORIES ' + str(category_helper.get_user_categories(user)))
+    context = {'categories': category_helper.get_user_categories(user),
                'recently_rated': recently_rated,
                'weight_levels': len(weight_dict) - 1,
                'weight_dict': weight_dict,
@@ -44,7 +36,8 @@ def get_past_ratings_dict(user: User):
     :return: A dict
     """
     recently_rated = dict()
-    past_ratings = model_helper.get_user_ratings(user)
+    past_ratings = rating_helper.get_user_ratings(user)
+    print("\n\nPAST RATINGS")
     print(past_ratings)
     for count, r in enumerate(past_ratings):
         title = '{} - {}'.format(count+1, r.content.title)
@@ -75,4 +68,4 @@ def update_user_category_weights(request):
     """
     cat_dict = create_category_dictionary(request.POST)
     for cat, weight in cat_dict.items():
-        x = model_helper.update_user_category_weight(user=request.user, category_name=cat, weight=weight)
+        category_helper.update_user_category_weight(user=request.user, category_name=cat, weight=weight)

@@ -2,7 +2,7 @@
 This file contains the Sentence class which contains data on individual sentences within a given text.
 """
 import nltk
-from capstoneproject.helpers import model_helper
+from capstoneproject.helpers.model_helpers import category_helper, word_helper
 
 
 class Sentence:
@@ -48,7 +48,7 @@ class Sentence:
         appropriate category.
         :return: None.
         """
-        for category in model_helper.get_categories():
+        for category in category_helper.get_default_categories():
             self.weakly_offensive_words['{}'.format(category.name)] = dict()
             self.strongly_offensive_words['{}'.format(category.name)] = dict()
 
@@ -133,17 +133,17 @@ class Sentence:
         :return: a set of lexical features.
         """
         for word, POS_tag in self.sentence_tokens:
-            off_word = model_helper.get_word(word_name=word)
-            print("OFFWORD")
-            print(off_word)
+            off_word = word_helper.get_word(word_name=word)
+            #print("OFFWORD")
+            #print(off_word)
             if not off_word:  # Not an offensive word
                 # Update the total number of clean words in the sentence.
                 self.number_of_clean_words += 1
             else:
                 # Update the total number of strongly offensive words in the sentence.
                 self.number_of_offensive_words += 1
-                print("WORD FEATURES")
-                print(off_word.get_word_features())
+                #print("WORD FEATURES")
+                #print(off_word.get_word_features())
                 for word_cat in off_word.get_word_features():  # each category.
                     if word_cat['strength']:  # Check if the word is strongly or weakly offensive
                         self.add_strongly_offensive_word(word=word, category=word_cat['category'])

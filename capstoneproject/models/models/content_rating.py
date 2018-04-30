@@ -31,6 +31,7 @@ class ContentRating(Model):
 
     def __str__(self):
         string = 'Rating\n'
+        string += '  Content: {}\n'.format(self.content)
         string += '  Overall Rating: {}\n'.format(self.rating)
         string += '  Category Ratings: {}\n'.format(self.category_ratings)
         string += '  Word Counts: {}\n'.format(self.word_counts)
