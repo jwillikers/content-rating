@@ -1,4 +1,73 @@
 {% extends "navbar-notloggedin.html" %}
 
 {% block content %}
+    <div>
+        <h1>Classification and Rating Algorithm</h1>
+        <p>
+            The system implemented a text classification method based on the methodology proposed by Ying Chen,
+            Yilu Zhou, Sencun Zhu, and Heng Xu in their report titled "Detecting Offensive Language in Social Media
+            to Protect Adolescent Online Safety". This report proposed a Lexical Syntactic Feature architecture to
+            detect offensive content. The architecture evaluates the contribution of various forms of profanities
+            and obscenities to determines the offensiveness level of sentences in some content. The steps of the
+            sentence offensiveness calculation and rating are the following:
+        </p>
+        <h2>Algorithm Steps</h2>
+        <ul>
+            <li>Data Acquisition and Preprocessing</li>
+            <li>Feature Extraction</li>
+            <li>Classification</li>
+            <li>Rating Generation</li>
+        </ul>
+
+        <div>
+            <h2>Data Acquisition and Preprocessing</h2>
+            <p>
+                This step is responsible for obtaining and normalizing the textual content to evaluate. The content
+                is obtained from the user through a variety of methods outlined in the About the Application section.
+                The text is then preprocessed by tokenizing sentences and words within sentences, performing spelling
+                correction to eliminate unknown words, normalizing words by changing all words to lowercase, removing
+                punctuation, and removing words with non-alpha characters, and tagging the words with Part-Of-Speech
+                tags.
+            </p>
+        </div>
+
+        <div>
+            <h2>Feature Extraction</h2>
+            <p>
+                The Feature Extraction phase extracts features from the processed input which are used to evaluate a
+                sentence's offensiveness level. This process uses a combination of lexical and syntactic features to
+                evaluate a sentence. A dictionary of strongly and weakly offensive words per category is used by the
+                system to identify words that could potentially be offensive. The words that match strongly or weakly
+                offensive words in the dictionary are flagged, along with their location.
+            </p>
+        </div>
+
+        <div>
+            <h2>Classification</h2>
+            <p>
+                Once all strongly and weakly offensive words have been extracted, the algorithm attempts to classify
+                the sentence containing the offensive words as offensive in various categories. A sentence is
+                immediately classified as offensive in any category in which it has an strongly offensive word in.
+                A sentence can also be classified as offensive if the number of weakly offensive
+                words within a certain distance from each other passes a threshold. All sentences within a given
+                content are classified in this manner.
+            </p>
+        </div>
+
+        <div>
+            <h2>Rating Generation</h2>
+            <p>
+                Once all sentences are classified according the the various offensive categories, the rating generation
+                creates category ratings and an overall rating. The ratings are ratio based, however since
+                non-offensive words are much more common than offensive words, non-offensive words have a smaller
+                impact on the ratio. Ratios are calculated to identify the number of offensive sentences for a given
+                category out of all sentences, as well as the number of offensive words for a given category out of all
+                words. These ratios are used to generate category ratings. Then, the category ratings are used to
+                create an overall rating. The overall rating incorporates the category ratings and the user's
+                weight severity per category. The algorithm's output is category ratings, an overall rating, and the
+                words flagged as offensive for each category.
+            </p>
+        </div>
+    </div>
+
 {% endblock %}
