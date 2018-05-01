@@ -310,7 +310,6 @@ def rating_results(request):
                 # Rate text here
                 text_str = form.get_text()  # Get text
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
-                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_content'] = True
                 return HttpResponseRedirect(reverse('copy'))
@@ -328,7 +327,6 @@ def rating_results(request):
                     return HttpResponseRedirect(reverse('search'))
 
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
-                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_song'] = True
                 return HttpResponseRedirect(reverse('search'))
@@ -341,7 +339,6 @@ def rating_results(request):
                 if url:  # Get text from url
                     text_str = parsing.search_website(url)
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
-                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_website'] = True
                 return HttpResponseRedirect(reverse('search'))
@@ -350,11 +347,10 @@ def rating_results(request):
             if form.is_valid():
                 text_str = file_helper.get_file_content(request.FILES['file'])  # Get text from file
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
-                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
-    print(context)
+    # print(context)
     if request.session.get('content_compare'):  # Go to compare screen if the user last clicked Compare
         return redirect('compare')
     return render(request, 'rating-result.html', context)
@@ -403,9 +399,4 @@ def word_counts(request, name):
         context = word_counts_view_helper.get_word_counts_context(request.user, 1)  # Get the older rating from comparison.
     else:
         context = dict()
-
-    if request.session.get('category_words'):
-        category_words = request.session['category_words']
-        del request.session['category_words']
-
     return render(request, 'word-counts.html', context)

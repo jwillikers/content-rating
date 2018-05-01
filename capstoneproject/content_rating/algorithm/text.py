@@ -136,6 +136,7 @@ class Text:
         """
         This function extracts the lexical and syntactic
         features from each sentence.
+        :param user: a User
         :return: None.
         """
         text_features = {}
@@ -152,21 +153,6 @@ class Text:
         text_features['Number of offensive words'] = self.total_number_of_offensive_words
         text_features['Number of clean words'] = self.total_number_of_clean_words
         # print(str(text_features))
-
-    def get_text_features(self):
-        """
-        This function provides the offensive features of the text.
-        :return: None
-        """
-        print("To do")
-
-    def calculate_offensiveness(self):
-        """
-        This function calculates the offensiveness of each
-        sentence within the text.
-        :return: None.
-        """
-        print("To do")
 
     def get_category_rating(self, category: str):
         """
@@ -199,14 +185,6 @@ class Text:
                 word_counts[word] = count
         return word_counts
 
-    # def get_offensive_words_per_category(self, category: str):
-    #     for key, value in self.total_strongly_offensive_words_dict.items():
-    #         split_key = key.split(':')
-    #         word = split_key[0]
-    #         word_category = split_key[1]
-    #         if word_category.lower() == category.lower():
-    #             print()
-
     def calculate_offensive_ratio(self, numerator: int):
         """
         Calculates the ratio given the numerator and the denominator
@@ -224,6 +202,7 @@ class Text:
         """
         This function generates the category rating for
         every category in the database.
+        :param user: a User
         :return: None
         """
         for category in category_helper.get_default_categories():
@@ -259,9 +238,10 @@ class Text:
         if self.overall_rating == 0:
             self.overall_rating = 1
 
-    def generate_rating(self, user:User):
+    def generate_rating(self, user: User):
         """
         This function generates an offensiveness rating using the text's classification data.
+        :param user: a User
         :return: None.
         """
         self._generate_category_ratings(user)

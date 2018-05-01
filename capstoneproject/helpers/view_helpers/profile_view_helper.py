@@ -17,7 +17,7 @@ def get_profile_context(user: User):
     """
     weight_dict = view_helper.get_weight_dict()
     recently_rated = get_past_ratings_dict(user)
-    print('\n\nUSER CATEGORIES ' + str(category_helper.get_user_categories(user)))
+    # print('\n\nUSER CATEGORIES ' + str(category_helper.get_user_categories(user)))
     context = {'categories': category_helper.get_user_categories(user),
                'recently_rated': recently_rated,
                'weight_levels': len(weight_dict) - 1,
@@ -37,8 +37,8 @@ def get_past_ratings_dict(user: User):
     """
     recently_rated = dict()
     past_ratings = rating_helper.get_user_ratings(user)
-    print("\n\nPAST RATINGS")
-    print(past_ratings)
+    # print("\n\nPAST RATINGS")
+    # print(past_ratings)
     for count, r in enumerate(past_ratings):
         title = '{} - {}'.format(count+1, r.content.title)
         recently_rated[title] = r.rating

@@ -75,7 +75,7 @@ def get_rating_results_context(rated_content: text.Text, name: str):
                '{}_category_ratings'.format(name): rated_content.category_ratings,
                '{}_category_word_counts'.format(name): rated_content.category_word_counts
                }
-    print('\n\nContext ' + str(context))
+    # print('\n\nContext ' + str(context))
     return context
 
 

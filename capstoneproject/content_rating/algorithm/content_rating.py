@@ -4,10 +4,7 @@ offensiveness classification and content rating algorithm.
 """
 import nltk
 import string
-from nltk.probability import FreqDist
-from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import TweetTokenizer
-from nltk.corpus import stopwords
 from capstoneproject.content_rating.spelling_correction import SpellChecker
 from capstoneproject.content_rating.algorithm.sentence import Sentence
 from capstoneproject.content_rating.algorithm.text import Text
@@ -62,6 +59,7 @@ class ContentRating:
         Perform the first phase of the content rating algorithm by tokenizing and normalizing the text.
         :param text: The text, given as a string, to tokenize and normalize.
         :param content_type: an int, 0-4, 0=song, 1=movie, 2=book, 3=website, 4=document
+        :param user: a User
         :return: The list of tokenized sentences.
         """
         # Use tweet tokenizer to tokenize individual words within sentences.
@@ -73,7 +71,6 @@ class ContentRating:
             if content_type == 3 or content_type == 4:
                 words = self.correct_spelling(words)
             sentences.append(Sentence(words, count, user))
-        #    tagged_tokenized_text = nltk.pos_tag_sents(tokenized_sents)
         return sentences
 
     def algorithm(self, text_string, user, content_type):
@@ -86,14 +83,8 @@ class ContentRating:
         """
         # Step 1: Normalize, Tokenize, and perform Spelling Correction on Text
         text = Text(self.tokenize(text_string.lower(), content_type, user))
-
         # Step 2: Extract Features
         text.extract_features(user)
-
-        # Step 3: Determine offensiveness
-        # text.calculate_offensiveness()
-
-        # Step 4: Generate rating
+        # Step 3: Generate rating
         text.generate_rating(user)
-
         return text

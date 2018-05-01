@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import include, re_path, re_path
+from django.urls import re_path
 
 import capstoneproject.views as views
 

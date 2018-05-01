@@ -20,7 +20,7 @@ def get_words_context(user: User, category):
     :return: A dictionary, the context
     """
     weight_dict = view_helper.get_weight_dict()
-    print("\nCATEGORY: " + str(category))
+    # print("\nCATEGORY: " + str(category))
     context = {'category': category,
                'words': create_user_word_dictionary(user, category),
                'weight_levels': len(weight_dict) - 1,
@@ -30,13 +30,20 @@ def get_words_context(user: User, category):
 
 
 def create_user_word_dictionary(user: User, category):
+    """
+    This method creates a dictionary containing the words
+    associated with a user's category and the word weights.
+    :param user: a User
+    :param category: a string, the category name
+    :return: a dictionary with word names as the keys and word weights as the values.
+    """
     word_dict = {}
     words = word_helper.get_user_category_words(category_name=category, user=user)
     for word in words:
         word_dict[word.name] = word.word_features.get(
             user_storage__user_id=user.id,
             category=category_helper.get_default_category(category_name=category)).weight
-    print('\n\n' + str(word_dict))
+    # print('\n\n' + str(word_dict))
     return word_dict
 
 
@@ -63,6 +70,6 @@ def update_user_word_weights(request, category):
     :return: None
     """
     word_dict = create_word_weight_dictionary(request.POST)
-    print("\n\nWORD DICT: " + str(word_dict))
+    # print("\n\nWORD DICT: " + str(word_dict))
     for word, weight in word_dict.items():
         word_helper.update_user_word_weight(user=request.user, word_name=word, category_name=category, weight=weight)

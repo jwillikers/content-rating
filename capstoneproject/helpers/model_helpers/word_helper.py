@@ -34,14 +34,21 @@ def get_user_category_words(category_name, user: User):
     """
     This function returns all words that are used to classify offensive content from the given category.
     :param category_name: The offensive category of words that should be returned.
+    :param user: a User
     :return: A list of words in the given category stored in the system's dictionary of offensive content.
     """
-    #print("\n\nUSER WORDS IN CATEGORY")
-    #print(Word.words.category(category_name).filter(user_storage__user_id=user))
+    # print("\n\nUSER WORDS IN CATEGORY")
+    # print(Word.words.category(category_name).filter(user_storage__user_id=user))
     return Word.words.category(category_name).filter(user_storage__user_id=user).order_by('name')
 
 
 def get_user_word_features(user: User, word: str):
+    """
+    This function returns all word features associated with the given word and user.
+    :param user: A User
+    :param word: A string, the name of a word
+    :return: A queryset of all word features associated with the word and user.
+    """
     return Word.words.get(name=word).word_features.filter(user_storage__id=user.id)
 
 

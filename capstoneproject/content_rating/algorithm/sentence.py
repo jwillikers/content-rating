@@ -15,6 +15,7 @@ class Sentence:
         Initialize Sentence object
         :param sentence: A list of (word, part of speech tag) tuples of the sentence represented.
         :param number: The position in the original text that this sentence can be found.
+        :param user: a User
         """
         self.sentence_tokens = nltk.pos_tag(
             sentence)  # List of tuples in the form of (word, part of speech tag) in the sentence.
@@ -44,9 +45,10 @@ class Sentence:
 
     def initialize_word_dictionaries(self, user):
         """
-        Initialize the weakly_offensive_words dictionary and strongly_offensive_words dictionary to have the keys
-        be the categories name and each value is another dictionary that will store the word and word counts in the
-        appropriate category.
+        Initialize the weakly_offensive_words dictionary and strongly_offensive_words
+        dictionary to have the keys be the categories name and each value is another
+        dictionary that will store the word and word counts in the appropriate category.
+        :param user: a User
         :return: None.
         """
         for category in category_helper.get_user_categories(user):
@@ -131,18 +133,19 @@ class Sentence:
     def extract_lexical_features(self, user):
         """
         This function derives lexical features from the tokenized sentence.
+        :param user: a User
         :return: a set of lexical features.
         """
         for word, POS_tag in self.sentence_tokens:
             off_word = word_helper.get_word(word_name=word)
-            #print("OFFWORD")
-            #print(off_word)
+            # print("OFFWORD")
+            # print(off_word)
             if not off_word:  # Not an offensive word
                 # Update the total number of clean words in the sentence.
                 self.number_of_clean_words += 1
             else:
-                #print("WORD FEATURES")
-                #print(off_word.get_word_features())
+                # print("WORD FEATURES")
+                # print(off_word.get_word_features())
                 strong = False
                 for word_cat in off_word.get_word_features():  # each category.
                     if word_cat['strength']:  # Check if the word is strongly or weakly offensive
@@ -160,8 +163,9 @@ class Sentence:
 
     def extract_syntactic_features(self, user):
         """
-        This function extracts the syntactic features from the sentence to determine if it is offensive given data on
-        the sentence's weakly offensive words.
+        This function extracts the syntactic features from the sentence to
+        determine if it is offensive given data on the sentence's weakly offensive words.
+        :param user: a User
         :return: None.
         """
         weak_ratio = self.number_of_weak_words / len(self.sentence_tokens)

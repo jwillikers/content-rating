@@ -61,7 +61,7 @@ def update_user_ratings(rated_content, user: User):
     :return: None
     """
     while get_user_rating_amount(user) >= 5:  # Check if the user has reached their limit.
-        print("\nDELETE\n")
+        # print("\nDELETE\n")
         delete_oldest_user_rating(user)  # Remove oldest ratings if so.
     save_rating(rated_content, user)  # Save the new rating
 
@@ -78,15 +78,15 @@ def save_rating(rated_content, user: User):
         title=rated_content.title,
         creator=rated_content.creator,
         media=rated_content.content_type)
-    print("\n\nCONTENT")
-    print(c)
+    # print("\n\nCONTENT")
+    # print(c)
     # Then create ContentRating
     r = ContentRating.content_ratings.create(
         content=c,
         rating=rated_content.overall_rating
     )
-    print("\n\nCONTENT RATING")
-    print(r)
+    # print("\n\nCONTENT RATING")
+    # print(r)
     # Next get Word Counts
     for word, count in rated_content.get_word_counts().items():
         wc = save_word_count(word_name=word, count_value=count)
@@ -99,8 +99,8 @@ def save_rating(rated_content, user: User):
     r.save()
     UserStorage.user_storage.get(
         user=user.id).ratings.add(r)
-    print("\n\nUSER RATINGS")
-    print(UserStorage.user_storage.get(user=user.id).ratings.all())
+    # print("\n\nUSER RATINGS")
+    # print(UserStorage.user_storage.get(user=user.id).ratings.all())
 
 
 def get_user_ratings(user: User):
@@ -122,9 +122,9 @@ def get_user_rating_at_position(user: User, pos: int):
     :return: A queryset containing a user's most recent rating.
     """
     try:
-        print("\n\nOrdered User Ratings")
-        print(ContentRating.content_ratings.filter(
-            user_storage__id=user.id).order_by('-updated'))
+        # print("\n\nOrdered User Ratings")
+        # print(ContentRating.content_ratings.filter(
+        #     user_storage__id=user.id).order_by('-updated'))
         return ContentRating.content_ratings.filter(
             user_storage__id=user.id).order_by('-updated')[pos]
     except IndexError:
@@ -138,8 +138,8 @@ def get_user_rating_amount(user: User):
     :param user: A User
     :return: An int, the quantity of Ratings in the User's UserStorage.
     """
-    print('\n\nUSER AMOUNT: ' + str(ContentRating.content_ratings.filter(
-        user_storage__id=user.id).count()))
+    # print('\n\nUSER AMOUNT: ' + str(ContentRating.content_ratings.filter(
+    #    user_storage__id=user.id).count()))
     return ContentRating.content_ratings.filter(
         user_storage__id=user.id).count()
 

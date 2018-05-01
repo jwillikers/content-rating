@@ -60,7 +60,7 @@ def get_user_category_weight(user: User, category_name: str):
     :param category_name: A string, the category name
     :return:
     """
-    print(get_user_categories(user))
+    # print(get_user_categories(user))
     try:
         return Category.categories.get(name=category_name, user_storage__id=user.id).weight
     except Category.DoesNotExist:
