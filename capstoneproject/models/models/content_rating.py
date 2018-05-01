@@ -34,7 +34,8 @@ class ContentRating(Model):
         string += '  Overall Rating: {}\n'.format(self.rating)
         string += '  Category Ratings: {}\n'.format(self.category_ratings)
         string += '  Word Counts: {}\n'.format(self.word_counts)
-        string += '  Created: {}    Updated: {}\n'. format(self.created, self.updated)
+        string += '  Created: {}    Updated: {}\n'. format(
+            self.created, self.updated)
         return string
 
     def isRelated(self):

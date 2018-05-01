@@ -1,6 +1,5 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.db.models.signals import post_delete
 from django.db.models import Model, OneToOneField, ManyToManyField, Manager, \
     CASCADE
 from django.contrib.auth.models import User
@@ -56,14 +55,6 @@ class UserStorage(Model):
         if created:
             UserStorage.user_storage.autocreate(instance)
 
-    @receiver(post_delete, sender=User)
-    def delete_user_storage(sender, instance, **kwargs):
-        if instance and UserStorage.user_storage.filter(
-                id=instance.id).exists():
-            my_user_storage = UserStorage.user_storage.get(id=instance.id)
-            my_user_storage.delete_relatives()
-            my_user_storage.delete()
-
     def delete_relatives(self):
         # delete ContentRatings first
         ratings = list(self.ratings.all())
@@ -73,24 +64,22 @@ class UserStorage(Model):
                 rating.delete_relatives()
                 rating.delete_with_dependencies()
 
-        # delete WordFeatures before Words and Categories
-        word_features = list(self.word_features.filter(default=False))
-        self.word_features.clear()
-        for word_feature in word_features:
-            if word_feature.isOrphaned() and word_feature.isCustom():
-                word_feature.delete()
-
-        categories = list(self.categories.filter(default=False))
+        categories = list(self.categories.all())
         self.categories.clear()
         for category in categories:
             if category.isOrphaned() and category.isCustom():
                 category.delete()
 
-        words = list(self.words.filter(default=False))
+        words = list(self.words.all())
         self.words.clear()
         for word in words:
             if word.isOrphaned() and word.isCustom():
+                word.delete_relatives()
                 word.delete()
+
+    def delete(self, *args, **kwargs):
+        self.delete_relatives()
+        super().delete(*args, **kwargs)
 
     class Meta:
         default_manager_name = 'user_storage'

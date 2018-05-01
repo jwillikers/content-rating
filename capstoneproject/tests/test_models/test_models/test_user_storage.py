@@ -11,28 +11,20 @@ from capstoneproject.models.models.word_count import WordCount
 
 
 class UserStorageTestClass(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.category1 = Category.categories.create(
+    def setUp(self):
+        self.category1 = Category.categories.create(
             default=True,
             name='category1',
             weight=1)
-        cls.word1 = Word.words.create(
+        self.word1 = Word.words.create(
             default=True,
             name='word1')
-        cls.word_feature1 = WordFeature.word_features.create(
+        self.word_feature1 = WordFeature.word_features.create(
             default=True,
-            category=cls.category1,
+            category=self.category1,
             strength=True,
             weight=1)
 
-    @classmethod
-    def tearDownClass(cls):
-        Word.words.all().delete()
-        Category.categories.all().delete()
-        WordFeature.word_features.all().delete()
-
-    def setUp(self):
         self.user = User.objects.create(username='user1', password='123456')
         self.user.save()
         self.user_storage = UserStorage.user_storage.get(user=self.user.id)
@@ -40,7 +32,16 @@ class UserStorageTestClass(TestCase):
     def tearDown(self):
         if self.user_storage.id is not None:
             self.user_storage.delete()
-        self.user.delete()
+        if self.user.id is not None:
+            self.user.delete()
+        Word.words.all().delete()
+        Category.categories.all().delete()
+        WordFeature.word_features.all().delete()
+        ContentRating.content_ratings.all().delete()
+        Content.content.all().delete()
+        CategoryRating.category_ratings.all().delete()
+        WordCount.word_counts.all().delete()
+        UserStorage.user_storage.all().delete()
 
     def test_autocreate(self):
         self.assertIsNotNone(
@@ -86,6 +87,7 @@ class UserStorageTestClass(TestCase):
                 category=user_category, weight=1, strength=True, default=False)
         self.user_storage.word_features.add(user_feature)
         user_word.word_features.add(user_feature)
+        user_word.save()
 
         user_content = Content.content.create(title='Title', creator='Creator')
         user_content_rating = ContentRating.content_ratings.create(
@@ -97,6 +99,7 @@ class UserStorageTestClass(TestCase):
             category=user_category, rating=5)
         user_content_rating.category_ratings.add(user_category_rating)
         self.user_storage.ratings.add(user_content_rating)
+        self.user_storage.save()
 
         self.assertIn(
             user_word,
@@ -137,7 +140,8 @@ class UserStorageTestClass(TestCase):
         self.assertIn(
             user_word_count,
             user_content_rating.word_counts.all(),
-            msg='WordCount user_word_count should be related to the ContentRating table')
+            msg='WordCount user_word_count should be \
+            related to the ContentRating model')
         self.assertIn(
             user_category_rating,
             CategoryRating.category_ratings.all(),
@@ -145,7 +149,8 @@ class UserStorageTestClass(TestCase):
         self.assertIn(
             user_category_rating,
             user_content_rating.category_ratings.all(),
-            msg='CategoryRating user_category_rating should be related to the ContentRating table')
+            msg='CategoryRating user_category_rating should \
+            be related to the ContentRating model')
         self.assertIn(
             user_content_rating,
             ContentRating.content_ratings.all(),
@@ -194,7 +199,8 @@ class UserStorageTestClass(TestCase):
         self.assertNotIn(
             user_word_count,
             user_content_rating.word_counts.all(),
-            msg='WordCount user_word_count should not be related to the ContentRating model')
+            msg='WordCount user_word_count should not be \
+            related to the ContentRating model')
         self.assertNotIn(
             user_category_rating,
             CategoryRating.category_ratings.all(),
@@ -202,7 +208,8 @@ class UserStorageTestClass(TestCase):
         self.assertNotIn(
             user_category_rating,
             user_content_rating.category_ratings.all(),
-            msg='CategoryRating user_category_rating should not be related to the ContentRating table')
+            msg='CategoryRating user_category_rating should \
+            not be related to the ContentRating table')
         self.assertNotIn(
             user_content_rating,
             ContentRating.content_ratings.all(),
@@ -210,7 +217,5 @@ class UserStorageTestClass(TestCase):
         self.assertNotIn(
             user_content_rating,
             self.user_storage.ratings.all(),
-            msg='ContentRating user_content_rating should not belong to the user')
-
-    def test_delete_user(self):
-        pass
+            msg='ContentRating user_content_rating should \
+            not belong to the user')

@@ -65,14 +65,16 @@ class WordFeature(Model):
     def isRelated(self):
         """
         Determines if any many-to-many fields point to this object.
-        :return: a boolean whether this field belongs to any many-to-many relationships
+        :return: a boolean whether this field belongs to any \
+        many-to-many relationships
         """
         return len(self.user_storage.all()) > 0
 
     def isOrphaned(self):
         """
         Determines if no many-to-many fields point to this object.
-        :return: a boolean, true, if no many-to-many fields point to this WordFeature
+        :return: a boolean, true, if no many-to-many fields \
+        point to this WordFeature
         """
         return len(self.user_storage.all()) == 0
 

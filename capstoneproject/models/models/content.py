@@ -30,7 +30,8 @@ class Content(Model):
         returns a string containing information about the Content.
         :return: A string, containing information about the Content.
         """
-        return "Media Types {}  -  {} by {}".format(self.media, self.title, self.creator)
+        return "Media Types {}  -  {} by {}".format(
+            self.media, self.title, self.creator)
 
     class Meta:
         default_manager_name = 'content'

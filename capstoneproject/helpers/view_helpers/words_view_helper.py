@@ -24,7 +24,8 @@ def get_words_context(user: User, category):
     """
     weight_dict = view_helper.get_weight_dict()
     context = {'category': category,
-               'words': model_helper.get_category_words(category_name=category),
+               'words': model_helper.get_category_words(
+                category_name=category),
                'weight_levels': len(weight_dict) - 1,
                'weight_dict': weight_dict,
                'words_form': WordsForm(category)
@@ -56,4 +57,8 @@ def update_user_word_weights(request, category):
     """
     word_dict = create_word_weight_dictionary(request.POST)
     for word, weight in word_dict.items():
-        x = model_helper.update_user_word_weight(user=request.user, word_name=word, category_name=category, weight=weight)
+        x = model_helper.update_user_word_weight(
+            user=request.user,
+            word_name=word,
+            category_name=category,
+            weight=weight)
