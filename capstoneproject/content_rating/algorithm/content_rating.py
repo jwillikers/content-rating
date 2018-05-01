@@ -17,9 +17,9 @@ def isalphanum(word):
     :return: True if the word contains letters or digits
     """
     for char in word:
-        if char in string.ascii_letters or char in string.digits:
-            return True
-    return False
+        if char not in string.ascii_letters and char not in string.digits:
+            return False
+    return True
 
 
 class ContentRating:
@@ -68,9 +68,14 @@ class ContentRating:
         sentences = []
         for count, sent in enumerate(nltk.sent_tokenize(text)):
             words = [word for word in tweet_tokenizer.tokenize(sent) if isalphanum(word)]
+            print("WORDS: " + str(words))
             if content_type == 3 or content_type == 4:
                 words = self.correct_spelling(words)
+                print("WORDS: " + str(words))
             sentences.append(Sentence(words, count, user))
+        print("SENTENCES:")
+        for sent in sentences:
+            print(sent)
         return sentences
 
     def algorithm(self, text_string, user, content_type):

@@ -338,6 +338,7 @@ def rating_results(request):
                 text_str = ''
                 if url:  # Get text from url
                     text_str = parsing.search_website(url)
+                    print("TEXT_STR: " + text_str)
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
             else:
                 request.session['invalid_website'] = True

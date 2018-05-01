@@ -46,7 +46,7 @@ def create_user_word_dictionary(user: User, category):
             user_storage__user_id=user.id,
             category=category_helper.get_default_category(
                 category_name=category)).weight
-    # print('\n\n' + str(word_dict))
+    print('\n\n' + str(word_dict))
     return word_dict
 
 
@@ -59,24 +59,23 @@ def create_word_weight_dictionary(post):
     """
     word_dict = dict()
     for key, value in post.items():
-        key = ''
         if key.startswith('word_'):
             word_dict[key[5:]] = value
     return word_dict
 
 
-def update_user_word_weights(request, category):
+def update_user_word_weights(request, cat):
     """
     This function updates a user's word weights
     :param request: An HTTP Request
-    :param category: A string, the category name whose words are being updated.
+    :param cat: A string, the category name whose words are being updated.
     :return: None
     """
     word_dict = create_word_weight_dictionary(request.POST)
-    # print("\n\nWORD DICT: " + str(word_dict))
+    print("\n\nWORD DICT: " + str(word_dict))
     for word, weight in word_dict.items():
         word_helper.update_user_word_weight(
             user=request.user,
             word_name=word,
-            category_name=category,
+            category_name=cat,
             weight=weight)

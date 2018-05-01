@@ -152,7 +152,7 @@ class Text:
                                             offensive_categories=sent.offensive_categories)
         text_features['Number of offensive words'] = self.total_number_of_offensive_words
         text_features['Number of clean words'] = self.total_number_of_clean_words
-        # print(str(text_features))
+        print(str(text_features))
 
     def get_category_rating(self, category: str):
         """

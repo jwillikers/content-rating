@@ -168,16 +168,17 @@ class Sentence:
         :param user: a User
         :return: None.
         """
-        weak_ratio = self.number_of_weak_words / len(self.sentence_tokens)
-        print("WEAK RATIO: " + str(weak_ratio))
-        if weak_ratio >= 0.20 or (self.number_of_offensive_words > 1 and self.number_of_weak_words > 0):
-            for cat, word_dic in self.weakly_offensive_words.items():
-                for word, count in word_dic.items():
-                    self.add_strongly_offensive_word(word=word, category=cat)
-            print("NUM OFF WORDS: " + str(self.number_of_offensive_words))
-            self.number_of_offensive_words += self.weakly_offensive_words
-            self._reset_weak_resources(user)
-            print("NUM OFF WORDS: " + str(self.number_of_offensive_words))
+        if len(self.sentence_tokens) != 0:
+            weak_ratio = self.number_of_weak_words / len(self.sentence_tokens)
+            print("WEAK RATIO: " + str(weak_ratio))
+            if weak_ratio >= 0.20 or (self.number_of_offensive_words > 1 and self.number_of_weak_words > 0):
+                for cat, word_dic in self.weakly_offensive_words.items():
+                    for word, count in word_dic.items():
+                        self.add_strongly_offensive_word(word=word, category=cat)
+                print("NUM OFF WORDS: " + str(self.number_of_offensive_words))
+                self.number_of_offensive_words += self.weakly_offensive_words
+                self._reset_weak_resources(user)
+                print("NUM OFF WORDS: " + str(self.number_of_offensive_words))
 
     def _reset_weak_resources(self, user):
         """
