@@ -61,8 +61,7 @@ class UserStorage(Model):
         self.ratings.clear()
         for rating in ratings:
             if rating.isOrphaned():
-                rating.delete_relatives()
-                rating.delete_with_dependencies()
+                rating.delete()
 
         categories = list(self.categories.all())
         self.categories.clear()
@@ -74,7 +73,6 @@ class UserStorage(Model):
         self.words.clear()
         for word in words:
             if word.isOrphaned() and word.isCustom():
-                word.delete_relatives()
                 word.delete()
 
     def delete(self, *args, **kwargs):

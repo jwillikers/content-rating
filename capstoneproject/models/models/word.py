@@ -77,5 +77,9 @@ class Word(Model):
             cats.append(word_feature.category.name)
         return cats
 
+    def delete(self, *args, **kwargs):
+        self.delete_relatives()
+        super().delete(*args, **kwargs)
+
     class Meta:
         default_manager_name = 'words'

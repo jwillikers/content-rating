@@ -58,9 +58,10 @@ class ContentRating(Model):
             if word_count.isOrphaned():
                 word_count.delete()
 
-    def delete_with_dependencies(self):
+    def delete(self, *args, **kwargs):
+        self.delete_relatives()
         old_content = self.content
-        self.delete()
+        super().delete(*args, **kwargs)
         if old_content.isOrphaned():
             old_content.delete()
 
@@ -77,15 +78,16 @@ class ContentRating(Model):
         return word_counts
 
     def get_word_count_category(self):
-        word_count_category_dict = dict()  # Initialize the dictionary.
+        word_count_category_dict = dict()
         from capstoneproject.models.models.category import Category
-        for cat in Category.categories.all():  # Add a key for each category.
+        for cat in Category.categories.all():
             word_count_category_dict[cat.name] = dict()
 
         word_count_dict = self._create_word_count_dict()
         for word, count in word_count_dict.items():
             from capstoneproject.models.models.word import Word
-            word_model = Word.words.get_word(word=word)  # Get Word model
-            for word_cat in word_model.get_categories():  # For each category.
+            word_model = Word.words.get_word(word=word)
+            for word_cat in word_model.get_categories():
                 word_count_category_dict[word_cat][word] = count
+
         return word_count_category_dict
