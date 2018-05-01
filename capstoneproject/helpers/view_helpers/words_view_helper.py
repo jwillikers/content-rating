@@ -2,16 +2,13 @@
 This file contains functions to help the words view.
 """
 from django.contrib.auth.models import User
-from capstoneproject.helpers import model_helper
-from capstoneproject.helpers.view_helpers import view_helper
 from capstoneproject.models.models.word import Word
+from capstoneproject.models.models.word_feature import WordFeature
+from capstoneproject.models.models.word_feature import WordFeatureQuerySet
 from capstoneproject.models.models.category import Category
-from capstoneproject.models.models.content_rating import ContentRating
-from capstoneproject.models.models.user_storage import UserStorage
-from capstoneproject.models.models.content import Content
-from capstoneproject.models.models.word_count import WordCount
-from capstoneproject.models.models.category_rating import CategoryRating
-from capstoneproject.models.fields.weight_field import WeightField
+from capstoneproject.helpers.view_helpers import view_helper
+from capstoneproject.helpers.model_helpers import word_helper
+from capstoneproject.helpers.model_helpers import category_helper
 
 
 def get_words_context(user: User, category):
@@ -23,14 +20,34 @@ def get_words_context(user: User, category):
     :return: A dictionary, the context
     """
     weight_dict = view_helper.get_weight_dict()
+    # print("\nCATEGORY: " + str(category))
     context = {'category': category,
-               'words': model_helper.get_category_words(
-                category_name=category),
+               'words': create_user_word_dictionary(user, category),
                'weight_levels': len(weight_dict) - 1,
-               'weight_dict': weight_dict,
-               'words_form': WordsForm(category)
+               'weight_dict': weight_dict
                }
     return context
+
+
+def create_user_word_dictionary(user: User, category):
+    """
+    This method creates a dictionary containing the words
+    associated with a user's category and the word weights.
+    :param user: a User
+    :param category: a string, the category name
+    :return: a dictionary with word names as the keys and \
+    word weights as the values.
+    """
+    word_dict = {}
+    words = word_helper.get_user_category_words(
+        category_name=category, user=user)
+    for word in words:
+        word_dict[word.name] = word.word_features.get(
+            user_storage__user_id=user.id,
+            category=category_helper.get_default_category(
+                category_name=category)).weight
+    # print('\n\n' + str(word_dict))
+    return word_dict
 
 
 def create_word_weight_dictionary(post):
@@ -56,8 +73,9 @@ def update_user_word_weights(request, category):
     :return: None
     """
     word_dict = create_word_weight_dictionary(request.POST)
+    # print("\n\nWORD DICT: " + str(word_dict))
     for word, weight in word_dict.items():
-        x = model_helper.update_user_word_weight(
+        word_helper.update_user_word_weight(
             user=request.user,
             word_name=word,
             category_name=category,

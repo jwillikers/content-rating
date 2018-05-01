@@ -2,7 +2,7 @@
 This file provides helper functions for the word counts view.
 """
 from django.contrib.auth.models import User
-from capstoneproject.helpers import model_helper
+from capstoneproject.helpers.model_helpers import rating_helper
 
 
 def get_word_counts_context(user: User, pos: int):
@@ -19,7 +19,7 @@ def get_word_counts_context(user: User, pos: int):
     context = {'name': '',
                'category_word_counts': dict()
                }
-    rating = model_helper.get_user_rating_at_position(user, pos)
+    rating = rating_helper.get_user_rating_at_position(user, pos)
     if not rating:
         return context
     context['name'] = rating.content.title

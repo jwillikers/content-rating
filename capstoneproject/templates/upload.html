@@ -10,7 +10,7 @@
                     <form action="{% url 'results' %}" method="POST" enctype="multipart/form-data">
                         <fieldset>
                             <div style="text-align: center;">
-                                <legend class="display-4">Upload a File</legend>
+                                <legend class="display-4">Upload A File</legend>
                             </div>
                             {% csrf_token %}
                             {% for field in upload_file_form %}

@@ -6,15 +6,7 @@ from capstoneproject.shared import rater
 from django.contrib.auth.models import User
 from capstoneproject.app_forms \
     import CopyInForm, SongSearchForm, WebsiteSearchForm, UploadFileForm
-from capstoneproject.helpers import model_helper
-from capstoneproject.models.models.word import Word
-from capstoneproject.models.models.category import Category
-from capstoneproject.models.models.content_rating import ContentRating
-from capstoneproject.models.models.user_storage import UserStorage
-from capstoneproject.models.models.content import Content
-from capstoneproject.models.models.word_count import WordCount
-from capstoneproject.models.models.category_rating import CategoryRating
-from capstoneproject.models.fields.weight_field import WeightField
+from capstoneproject.helpers.model_helpers import category_helper, word_helper, rating_helper
 
 
 def perform_rating(content: str, form, request):
@@ -26,25 +18,29 @@ def perform_rating(content: str, form, request):
     :param request: The HTML request.
     :return: A dictionary containing the rating results.
     """
-    rated_content = get_rating_results(content, form)  # Get the rating's results
-    model_helper.update_user_ratings(rated_content, request.user)  # Save the rating
+    rated_content = rate(content, form, request.user)  # Get the rating's results
+    rating_helper.update_user_ratings(rated_content, request.user)  # Save the rating
     context = get_rating_results_context(rated_content, 'current')  # Generate the context
     return context
 
 
-def get_rating_results(content: str, form):
+def rate(content: str, form, user: User):
     """
     This function classifies and rates the given text.
     It then saves the rating information.
     Lastly, it returns a dictionary containing the rating results.
     :param content: A string, the content to rate.
     :param form: A form, submitted by the user and contains information about the content.
+    :param user: A User
     :return: A dictionary containing the rating results
     """
-    rated_content = rater.algorithm(content)  # Perform algorithm
+    content_type = get_content_type(form)
+    rated_content = rater.algorithm(content, user, content_type)  # Perform algorithm
     rated_content.title = form.get_title()  # Set the rated content's title
     rated_content.creator = form.get_creator()  # Set the rated content's creator
-    rated_content.content_type = get_content_type(form)  # Set the content type
+    rated_content.content_type = content_type  # Set the content type
+    if rated_content.content_type == 4:
+        rated_content.creator = user.username
     return rated_content
 
 
@@ -79,6 +75,7 @@ def get_rating_results_context(rated_content: text.Text, name: str):
                '{}_category_ratings'.format(name): rated_content.category_ratings,
                '{}_category_word_counts'.format(name): rated_content.category_word_counts
                }
+    # print('\n\nContext ' + str(context))
     return context
 
 
@@ -120,11 +117,11 @@ def create_word_count_category_dict(word_count_dict: dict):
     with the category.
     """
     word_count_category_dict = dict()  # Initialize the dictionary.
-    for cat in model_helper.get_categories():  # Add a key for each category.
+    for cat in category_helper.get_default_categories():  # Add a key for each category.
         word_count_category_dict[cat.name] = dict()
 
     for word, count in word_count_dict.items():
-        word_model = model_helper.get_word(word)
+        word_model = word_helper.get_word(word)
         for word_cat in word_model.get_categories():  # each category.
             word_count_category_dict[word_cat][word] = count
     return word_count_category_dict
@@ -137,7 +134,7 @@ def get_rating(user: User, pos: int):
     :param pos: the position to retrieve in the list of the user's ratings.
     :return: A Text object containing the data from the User's most recent Rating
     """
-    rating = model_helper.get_user_rating_at_position(user, pos)
+    rating = rating_helper.get_user_rating_at_position(user, pos)
     if not rating:
         return None
     rated_text = text.Text([])

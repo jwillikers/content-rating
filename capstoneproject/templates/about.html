@@ -1,4 +1,89 @@
 {% extends "navbar-notloggedin.html" %}
 
 {% block content %}
+    <div>
+        <h2>Background</h2>
+        <p>
+            This application was made by a group of three students at the University of Nebraska at Omaha as their
+            senior capstone project in Spring 2018. This system was developed for a client at the Creighton University
+            as an experimental project to explored the classification and rating of offensive content in various forms
+            of entertainment.
+        </p>
+    </div>
+
+    <div>
+        <div>
+            <h2>About the Application</h2>
+            <p>
+                The application's goal is to classify various categories of offensive content within forms of
+                entertainment,
+                and then provide an numerical rating to describe the content's degree of offensiveness. The application
+                currently supports several methods to provide content to classify and rate from the home page.<br>
+                The methods are:
+            </p>
+            <h4>Methods to Classify and Rate Content</h4>
+            <ul>
+                <li>Search For Content</li>
+                <li>Upload A File</li>
+                <li>Copy It In</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Search For Content</h3>
+            <p>
+                The Search For Content option allows the user to search for a song or a webpage to evaluate. To rate a
+                song, a song title must be given. An artist name can be provided to clarify between different songs with
+                the same title. The lyrics to the specified song will then be retrieved for evaluation.<br>
+                To rate a webpage, a URL must be provided. The URL will then be used to extract the text from the
+                website,
+                which will then be classified.
+            </p>
+        </div>
+
+        <div>
+            <h3>Upload A File</h3>
+            <p>
+                The Upload A File option provides the user the option to provide textual content to evaluate by
+                uploading a
+                file. The system currently supports the evaluation of several file types:
+            </p>
+            <h4>Supported File Types</h4>
+            <ul>
+                <li>DOCX (ending in .docx)</li>
+                <li>PDF (ending in .pdf)</li>
+                <li>EPUB (ending in .epub)</li>
+                <li>TEXT (ending in .txt)</li>
+                <li>SRT (ending in .srt)</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Copy It In</h3>
+            <p>
+                The Copy It In option enables the user to directly enter text to classify. This option can be used if
+                the
+                user desires to evaluate content that is provided in one of the previous two options.
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <h2>User Customization</h2>
+        <p>This application enables a degree of user customization by allowing the user to customize the overall
+            rating to better reflect their needs or preferences.
+        </p>
+        <h3>Category Weights</h3>
+        <p>
+            The Profile page provides functionality for the user to change the severity weight associated with each
+            offensive category that is classified by the system. The overall rating accounts for the user's
+            preferences when creating the overall rating result.
+        </p>
+        <h3>Word Weights</h3>
+        <p>
+            The Profile page also provides functionality for the user to change the severity weight associated with
+            each offensive word stored in the application's dictionary of offensive words. The user can change the
+            weights by clicking on the category that they want to edit, and then adjusting the word weight's sliders.
+        </p>
+    </div>
 {% endblock %}
