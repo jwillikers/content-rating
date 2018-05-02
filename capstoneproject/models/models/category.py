@@ -40,11 +40,17 @@ class Category(Model):
         """
         return {self.name: self.weight}
 
-    @receiver(m2m_changed)
-    def def_autoremove_user_categories(sender, instance, action, **kwargs):
-        from capstoneproject.models.models.user_storage import UserStorage
-        if sender == UserStorage.categories.through and action == 'post_remove' and instance:
-            Category.categories.delete(category=instance)  # TODO This Doesn't work: AttributeError: 'ManagerFromCategoryQuerySet' object has no attribute 'delete'
+    def isDefault(self):
+        return self.default
+
+    def isCustom(self):
+        return not self.default
+
+    def isRelated(self):
+        return len(self.user_storage.all()) > 0
+
+    def isOrphaned(self):
+        return len(self.user_storage.all()) == 0
 
     class Meta:
         default_manager_name = 'categories'

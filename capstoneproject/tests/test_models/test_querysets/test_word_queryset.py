@@ -1,7 +1,7 @@
 from django.test import TestCase
-from capstoneproject.models import Category
-from capstoneproject.models import Word
-from capstoneproject.models import WordFeature
+from capstoneproject.models.models.category import Category
+from capstoneproject.models.models.word import Word
+from capstoneproject.models.models.word_feature import WordFeature
 
 
 class TestWordQuerySet(TestCase):

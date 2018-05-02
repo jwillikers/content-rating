@@ -36,6 +36,26 @@ class Word(Model):
         """
         return {self.name: self.get_word_features()}
 
+    def isDefault(self):
+        return self.default
+
+    def isCustom(self):
+        return not self.default
+
+    def isRelated(self):
+        return len(self.user_storage.all()) > 0 \
+            or len(self.word_features.all()) > 0
+
+    def isOrphaned(self):
+        return len(self.user_storage.all()) == 0 \
+            and len(self.word_features.all()) == 0
+
+    def delete_relatives(self):
+        word_features = list(self.word_features.all())
+        for word_feature in word_features:
+            if word_feature.isOrphaned() and word_feature.isCustom():
+                word_feature.delete()
+
     def get_word_features(self):
         """
         Provides the word's features
@@ -56,6 +76,10 @@ class Word(Model):
         for word_feature in self.word_features.all():
             cats.append(word_feature.category.name)
         return cats
+
+    def delete(self, *args, **kwargs):
+        self.delete_relatives()
+        super().delete(*args, **kwargs)
 
     class Meta:
         default_manager_name = 'words'

@@ -4,8 +4,8 @@
 {% block content %}
     <div class="container">
         <div class="jumbotron">
-            <a href="{% url 'results' %}" class="btn btn-lg btn-block btn-info">Back to Results</a>
-            <div style="text-align: center;"><h1>Word Counts for {{ name }}</h1>
+            <a href="{% url 'results' %}" class="btn btn-lg btn-block btn-info">Back To Results</a>
+            <div style="text-align: center;"><h1>Word Counts for {{ name|title }}</h1>
                 <p class="lead">Check word counts by category.</p></div>
             <hr class="my-4">
             <ul class="nav nav-tabs">

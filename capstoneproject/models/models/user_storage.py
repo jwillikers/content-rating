@@ -7,32 +7,32 @@ from capstoneproject.models.models.content_rating import ContentRating
 from capstoneproject.models.models.word_feature import WordFeature
 from capstoneproject.models.models.category import Category
 from capstoneproject.models.models.word import Word
+from capstoneproject.models.querysets.user_storage_queryset \
+    import UserStorageQuerySet
 
 
 class UserStorage(Model):
     """
     This Model contains data that is specific to each user.
     """
-    def default_categories(self):
-        """
-        Returns the default Categories from the database.
-        :return: A list of all Categories.
-        """
-        return Category.categories.filter(default=True).all()
-
-    def default_words(self):
-        """
-        Returns all default Words from the database.
-        :return: A list of all Words
-        """
-        return Word.words.filter(default=True).all()
-
-    def default_word_features(self):
-        """
-        Returns all default Word Features from the database.
-        :return: A list of all Word Features
-        """
-        return WordFeature.word_features.filter(default=True).all()
+    user = OneToOneField(User, on_delete=CASCADE)
+    categories = ManyToManyField(
+        Category,
+        related_name='user_storage',
+        blank=True)
+    words = ManyToManyField(
+        Word,
+        related_name='user_storage',
+        blank=True)
+    word_features = ManyToManyField(
+        WordFeature,
+        related_name='user_storage',
+        blank=True)
+    ratings = ManyToManyField(
+        ContentRating,
+        related_name='user_storage',
+        blank=True)
+    user_storage = UserStorageQuerySet.as_manager()
 
     def __str__(self):
         string = 'User Storage:\n'
@@ -42,40 +42,42 @@ class UserStorage(Model):
         string += '  Categories: {}\n'.format(self.categories)
         return string
 
-    user = OneToOneField(User, on_delete=CASCADE)
-    categories = ManyToManyField(
-        Category,
-        related_name='user_storage',
-        blank=True,
-        default=default_categories)
-    words = ManyToManyField(
-        Word,
-        related_name='user_storage',
-        blank=True,
-        default=default_words)
-    word_features = ManyToManyField(
-        WordFeature,
-        related_name='user_storage',
-        blank=True,
-        default=default_word_features)
-    ratings = ManyToManyField(
-        ContentRating,
-        related_name='user_storage',
-        blank=True)
-    user_storage = Manager()
-
     @receiver(post_save, sender=User)
     def create_user_storage(sender, instance, created, **kwargs):
         """
-        This method creates a new user storage model.
+        Creates a new user storage model upon
+        creation of a new user.
         :param instance:
         :param created:
         :param kwargs:
         :return:
         """
         if created:
-            UserStorage.user_storage.create(
-                user=instance, id=instance.id)
+            UserStorage.user_storage.autocreate(instance)
+
+    def delete_relatives(self):
+        # delete ContentRatings first
+        ratings = list(self.ratings.all())
+        self.ratings.clear()
+        for rating in ratings:
+            if rating.isOrphaned():
+                rating.delete()
+
+        categories = list(self.categories.all())
+        self.categories.clear()
+        for category in categories:
+            if category.isOrphaned() and category.isCustom():
+                category.delete()
+
+        words = list(self.words.all())
+        self.words.clear()
+        for word in words:
+            if word.isOrphaned() and word.isCustom():
+                word.delete()
+
+    def delete(self, *args, **kwargs):
+        self.delete_relatives()
+        super().delete(*args, **kwargs)
 
     class Meta:
         default_manager_name = 'user_storage'

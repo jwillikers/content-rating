@@ -4,17 +4,11 @@
     <div class="container">
         <div class="jumbotron">
             <div style="text-align: center;"><h1 class="display-5">Find Content Online</h1>
-                <p class="lead">Search for song, TV Show, Movie, or Webpage.</p></div>
+                <p class="lead">Search for Song or Webpage.</p></div>
             <hr class="my-4">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="nav-link active show" data-toggle="tab" href="#song">Song</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#tv">TV Show</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#movie">Movie</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#webpage">Webpage</a>
@@ -47,62 +41,11 @@
                         </fieldset>
                     </form>
                 </div>
-                <div class="tab-pane fade" id="tv">
-                    <form action="{% url 'results' %}" method="POST">
-                        <fieldset>
-                            <div style="text-align: center;">
-                                <legend class="display-6">Search for a TV Show</legend>
-                            </div>
-                            {% csrf_token %}
-                            {% for field in tv_search_form %}
-                                <div class="form-group">
-                                    {{ field.label_tag }} <br>
-                                    {{ field }}
-                                    {% if field.help_text %}
-                                        <small style="color: grey">{{ field.help_text }}</small>
-                                    {% endif %}
-                                    {% for error in field.errors %}
-                                        <p style="color: red">{{ error }}</p>
-                                    {% endfor %}
-                                </div>
-                            {% endfor %}
-                            <div style="text-align: center;">
-                                <button type="submit" class="btn btn-primary" name="submit" value="tv_show">RATE!
-                                </button>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="tab-pane fade" id="movie">
-                    <form action="{% url 'results' %}" method="POST">
-                        <fieldset>
-                            <div style="text-align: center;">
-                                <legend class="display-6">Search for a Movie</legend>
-                            </div>
-                            {% csrf_token %}
-                            {% for field in movie_search_form %}
-                                <div class="form-group">
-                                    {{ field.label_tag }} <br>
-                                    {{ field }}
-                                    {% if field.help_text %}
-                                        <small style="color: grey">{{ field.help_text }}</small>
-                                    {% endif %}
-                                    {% for error in field.errors %}
-                                        <p style="color: red">{{ error }}</p>
-                                    {% endfor %}
-                                </div>
-                            {% endfor %}
-                            <div style="text-align: center;">
-                                <button type="submit" class="btn btn-primary" name="submit" value="movie">RATE!</button>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
                 <div class="tab-pane fade" id="webpage">
                     <form action="{% url 'results' %}" method="POST">
                         <fieldset>
                             <div style="text-align: center;">
-                                <legend class="display-6">Search for a Webpage or Specific Post</legend>
+                                <legend class="display-6">Search for a Webpage</legend>
                             </div>
                             {% csrf_token %}
                             {% for field in website_search_form %}

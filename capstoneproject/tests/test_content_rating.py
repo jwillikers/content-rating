@@ -13,7 +13,6 @@ class TestIsalphanum(TestCase):
             self.assertTrue(isalphanum('1'))
             self.assertTrue(isalphanum('12'))
             self.assertTrue(isalphanum(' 1'))
-            self.assertTrue(isalphanum('=-/1'))
 
     def test_isalphanum_false(self):
             self.assertFalse(isalphanum(' '))

@@ -1,7 +1,10 @@
 """
-This file contains the Text class to contain data on the classification and rating of a given text.
+This file contains the Text class to contain data on the classification
+and rating of a given text.
 """
 from capstoneproject.helpers import model_helper
+from capstoneproject.helpers.model_helpers import category_helper
+from django.contrib.auth.models import User
 
 
 class Text:
@@ -17,15 +20,19 @@ class Text:
         self.title = ''     # Title of content
         self.creator = ''   # Creator/Author of content
         self.content_type = 4  # Type of content being rating
-        self.offensive_sentences = dict()       # Keys are sentence indices, values are lists of sentences's offensive categories
+        self.offensive_sentences = dict()       # Keys are sentence indices, values are lists
+                                                # of sentences's offensive categories
         self.sentence_list = text_sentences     # List of sentences in the text
-        self.total_strongly_offensive_words_dict = dict()   # Keys are category names, values are dictionaries with offensive words as keys and counts as values
-        self.total_weakly_offensive_words_dict = dict()     # Keys are category name, values are dictionaries with offensive words as keys and counts as values
+        self.total_strongly_offensive_words_dict = dict()   # Keys are category names, values are dictionaries with
+                                                            # offensive words as keys and counts as values
+        self.total_weakly_offensive_words_dict = dict()     # Keys are category name, values are dictionaries with
+                                                            # offensive words as keys and counts as values
         self.total_number_of_clean_words = 0        # Number of clean words in the text
         self.total_number_of_offensive_words = 0    # Number of offensive words in the text
         self.overall_rating = 1                     # Overall offensiveness rating
         self.category_ratings = dict()              # Keys are category name, values are category offensiveness rating
-        self.category_word_counts = dict()          # Keys are category name, values are dictionaries with offensive words as keys and counts as values
+        self.category_word_counts = dict()          # Keys are category name, values are dictionaries with
+                                                    # offensive words as keys and counts as values
         self.initialize_ratings()
 
     def __str__(self):
@@ -34,6 +41,10 @@ class Text:
         :return: A string giving information about the sentence.
         """
         string = 'Text:\n'
+        string += '  Title: {}'.format(self.title)
+        string += '  Creator: {}'.format(self.creator)
+        string += '  Content Type: {}'.format(self.content_type)
+        string += '  Senteces: {}'.format(self.sentence_list)
         string += '  Total Clean Words: {}'.format(self.total_number_of_clean_words)
         string += '  Total Offensive Words: {}\n'.format(self.total_number_of_offensive_words)
         string += '  Offensive Sentences: {}\n'.format(self.offensive_sentences)
@@ -46,12 +57,13 @@ class Text:
 
     def initialize_ratings(self):
         """
-        Initialize the category_ratings, category_word_counts, total_strongly_offensive_words, and
-        total_weakly_offensive_words dictionaries to have the keys be the names of all categories, and each value
-        is another dictionary.
+        Initialize the category_ratings, category_word_counts,
+        total_strongly_offensive_words, and total_weakly_offensive_words
+        dictionaries to have the keys be the names of all categories,
+        and each value is another dictionary.
         :return: None.
         """
-        for category in model_helper.get_categories():
+        for category in category_helper.get_default_categories():
             self.category_ratings['{}'.format(category.name)] = 1
             self.category_word_counts['{}'.format(category.name)] = dict()
             self.total_strongly_offensive_words_dict['{}'.format(category.name)] = dict()
@@ -60,10 +72,11 @@ class Text:
 
     def add_strongly_offensive_words(self, offensive_words: dict):
         """
-        Use a dictionary of strongly offensive words and their quantities from a single sentence to update the
-        text's total count.
-        :param offensive_words: A dictionary where the key contains the strongly offensive word and its category
-        and the value is the number of times the word occurred within a sentence.
+        Use a dictionary of strongly offensive words and their quantities
+        from a single sentence to update the text's total count.
+        :param offensive_words: A dictionary where the key contains the
+        strongly offensive word and its category and the value is the
+        number of times the word occurred within a sentence.
         :return: None
         """
         for category, value in offensive_words.items():
@@ -75,10 +88,11 @@ class Text:
 
     def add_weakly_offensive_words(self, offensive_words: dict):
         """
-        Use a dictionary of weakly offensive words and their quantities from a single sentence to update the
-        text's total count.
-        :param offensive_words: A dictionary where the key contains the weakly offensive word and its category
-        and the value is the number of times the word occurred within a sentence.
+        Use a dictionary of weakly offensive words and their quantities
+        from a single sentence to update the text's total count.
+        :param offensive_words: A dictionary where the key contains the
+        weakly offensive word and its category and the value is the
+        number of times the word occurred within a sentence.
         :return: None.
         """
         for category, value in offensive_words.items():
@@ -91,8 +105,8 @@ class Text:
     def add_offensive_words(self, number_of_offensive_words: int):
         """
         Update the text's total number of offensive words by adding the given amount.
-        :param number_of_offensive_words: The number of offensive words to increase the total number of offensive words
-        by.
+        :param number_of_offensive_words: The number of offensive words to
+        increase the total number of offensive words by.
         :return: None.
         """
         self.total_number_of_offensive_words += number_of_offensive_words
@@ -100,7 +114,8 @@ class Text:
     def add_clean_words(self, number_of_clean_words: int):
         """
         Update the text's total number of clean words by adding the given amount.
-        :param number_of_clean_words: The number of clean words to increase the total number of clean words by.
+        :param number_of_clean_words: The number of clean words to
+        increase the total number of clean words by.
         :return: None.
         """
         self.total_number_of_clean_words += number_of_clean_words
@@ -117,44 +132,27 @@ class Text:
         """
         self.offensive_sentences[sent_num] = offensive_categories
 
-    def extract_features(self):
+    def extract_features(self, user):
         """
-        This function extracts the lexical and syntactic features from each sentence.
+        This function extracts the lexical and syntactic
+        features from each sentence.
+        :param user: a User
         :return: None.
         """
-        features_path = 'capstoneproject/testing_resources/TotalTextFeatures'
-        with open(features_path, 'w') as total_text_feature_file:
-            text_features = {}
-            features_path = 'capstoneproject/testing_resources/Features'
-            with open(features_path, 'w') as feature_file:
-                for sent in self.sentence_list:
-                    sent.extract_lexical_features()  # Extract the lexical features from each sentence.
-                    print(sent)
-                    feature_file.write(str(sent) + '\n\n')
-                    # sent.extract_syntactic_features()  # Extract the syntactic features from each sentence.
-                    self.add_strongly_offensive_words(sent.strongly_offensive_words)
-                    self.add_weakly_offensive_words(sent.weakly_offensive_words)
-                    self.add_offensive_words(sent.number_of_offensive_words)
-                    self.add_clean_words(sent.number_of_clean_words)
-                    self.update_offensive_sentences(sent_num=sent.sentence_number, offensive_categories=sent.offensive_categories)
-                text_features['Number of offensive words'] = self.total_number_of_offensive_words
-                text_features['Number of clean words'] = self.total_number_of_clean_words
-            # print(str(text_features))
-            total_text_feature_file.write(str(text_features))
-
-    def get_text_features(self):
-        """
-        This function provides the offensive features of the text.
-        :return: None
-        """
-        print("To do")
-
-    def calculate_offensiveness(self):
-        """
-        This function calculates the offensiveness of each sentence within the text.
-        :return: None.
-        """
-        print("To do")
+        text_features = {}
+        for sent in self.sentence_list:
+            sent.extract_lexical_features(user)  # Extract the lexical features from each sentence.
+            print(sent)
+            # sent.extract_syntactic_features()  # Extract the syntactic features from each sentence.
+            self.add_strongly_offensive_words(sent.strongly_offensive_words)
+            self.add_weakly_offensive_words(sent.weakly_offensive_words)
+            self.add_offensive_words(sent.number_of_offensive_words)
+            self.add_clean_words(sent.number_of_clean_words)
+            self.update_offensive_sentences(sent_num=sent.sentence_number,
+                                            offensive_categories=sent.offensive_categories)
+        text_features['Number of offensive words'] = self.total_number_of_offensive_words
+        text_features['Number of clean words'] = self.total_number_of_clean_words
+        print(str(text_features))
 
     def get_category_rating(self, category: str):
         """
@@ -166,9 +164,11 @@ class Text:
 
     def get_category_word_counts(self, category: str):
         """
-        This function provides a dictionary containing the words and word counts for a given category.
+        This function provides a dictionary containing the words
+        and word counts for a given category.
         :param category: The category to return the information for.
-        :return: A dictionary containing the category's offensive words and their counts.
+        :return: A dictionary containing the category's offensive
+        words and their counts.
         """
         return self.category_word_counts[category]
 
@@ -185,17 +185,10 @@ class Text:
                 word_counts[word] = count
         return word_counts
 
-    # def get_offensive_words_per_category(self, category: str):
-    #     for key, value in self.total_strongly_offensive_words_dict.items():
-    #         split_key = key.split(':')
-    #         word = split_key[0]
-    #         word_category = split_key[1]
-    #         if word_category.lower() == category.lower():
-    #             print()
-
     def calculate_offensive_ratio(self, numerator: int):
         """
-        Calculates the ratio given the numerator and the denominator will be the total number of words in the document.
+        Calculates the ratio given the numerator and the denominator
+        will be the total number of words in the document.
         This value is multiplied by 10 to provide a number between 0-10.
         :param numerator: An int, the numerator value.
         :return: The numerator divided by the total words, times 10.
@@ -203,26 +196,53 @@ class Text:
         clean_words_fraction = int(self.total_number_of_clean_words/10)
         if clean_words_fraction <= self.total_number_of_offensive_words:
             clean_words_fraction = self.total_number_of_clean_words
-        return numerator / (clean_words_fraction + self.total_number_of_offensive_words) * 10
+        return int(numerator / (clean_words_fraction + self.total_number_of_offensive_words) * 10)
 
-    def generate_category_ratings(self):
+    def _generate_category_ratings(self, user:User):
         """
-        This function generates the category rating for every category in the database.
+        This function generates the category rating for
+        every category in the database.
+        :param user: a User
         :return: None
         """
-        for category in model_helper.get_categories():
+        for category in category_helper.get_default_categories():
             strongly_offensive_category_words = 0
             for word, word_count in self.category_word_counts[category.name].items():
                 strongly_offensive_category_words += word_count
             ratio = self.calculate_offensive_ratio(strongly_offensive_category_words)
-            ratio = int(ratio) % 10 + 1
+            if int(ratio) == 0:
+                ratio = 1
             self.category_ratings[category.name] = ratio
 
-    def generate_rating(self):
+    def _generate_overall_rating(self, user: User):
         """
-        This function generates an offensiveness rating using the text's classification data.
+        This function generates the overall rating for the text using user's
+        category weights. The overall rating is an int between 1-10.
+        :param user: An User
         :return: None.
         """
-        strongly_offensive_word_rate = self.calculate_offensive_ratio(self.total_number_of_offensive_words)
-        self.overall_rating = int(strongly_offensive_word_rate) % 10 + 1
-        self.generate_category_ratings()
+        # strongly_offensive_word_rate = self._calculate_offensive_ratio(self.total_number_of_offensive_words)
+        # self.overall_rating = int(strongly_offensive_word_rate) % 10 + 1
+
+        max_rate = 10 * category_helper.get_num_default_categories() * len(model_helper.get_weights()) + 3
+        rate_total = 0
+
+        for cat, rate in self.category_ratings.items():
+            cat_weight = category_helper.get_default_category(category_name=cat).weight
+            user_weight = category_helper.get_user_category_weight(user=user, category_name=cat) + 4
+            rate_total += cat_weight * rate * user_weight
+
+        print("RATE TOTAL: " + str(rate_total))
+        if rate_total > 0:
+            self.overall_rating = int(10 * rate_total / max_rate)
+        if self.overall_rating == 0:
+            self.overall_rating = 1
+
+    def generate_rating(self, user: User):
+        """
+        This function generates an offensiveness rating using the text's classification data.
+        :param user: a User
+        :return: None.
+        """
+        self._generate_category_ratings(user)
+        self._generate_overall_rating(user)

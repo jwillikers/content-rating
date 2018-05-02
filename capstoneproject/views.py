@@ -171,11 +171,20 @@ def search(request):
             context['song_search_form'] = form
         elif request.session.get('song_not_found'):  # Check if the previous song search was not found.
             del request.session['song_not_found']
-            form = forms.SongSearchForm(request.GET)
             if request.session.get('song_title'):  # Fill in the song title field with the user's past request
-                form.song_title = request.session.get('song_title')
+                title = request.session.get('song_title')
+                del request.session['song_title']
+            else:
+                title = ''
             if request.session.get('song_artist'):  # Fill in the song artist field with the user's past request
-                form.song_artist = request.session.get('song_artist')
+                artist = request.session.get('song_artist')
+                del request.session['song_artist']
+            else:
+                artist = ''
+            form = forms.SongSearchForm(request.GET,
+                                        initial={'song_title': str(title),
+                                                 'song_artist': str(artist)})
+            form.not_found = True
             form.is_valid()
             form.not_found_error()  # Error since the song-artist combo did not match a song
             context['song_search_form'] = form
@@ -275,11 +284,12 @@ def words(request, category):
         if request.session.get('content_compare'):
             del request.session['content_compare']
 
-    context = words_view_helper.get_words_context(request.user, category)
-
     if request.method == 'POST':
         if request.POST.get('submit_word_weights') == 'word_weights':
             words_view_helper.update_user_word_weights(request, category)
+            return HttpResponseRedirect(reverse('profile'))
+
+    context = words_view_helper.get_words_context(request.user, category)
 
     return render(request, 'words.html', context)
 
@@ -300,7 +310,6 @@ def rating_results(request):
                 # Rate text here
                 text_str = form.get_text()  # Get text
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
-                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_content'] = True
                 return HttpResponseRedirect(reverse('copy'))
@@ -318,7 +327,6 @@ def rating_results(request):
                     return HttpResponseRedirect(reverse('search'))
 
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
-                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_song'] = True
                 return HttpResponseRedirect(reverse('search'))
@@ -327,15 +335,11 @@ def rating_results(request):
             if form.is_valid():
                 # Find if user wanted to search url or website title
                 url = form.get_url()
-                website_title = form.get_website_name()
                 text_str = ''
                 if url:  # Get text from url
                     text_str = parsing.search_website(url)
-                elif website_title:  # Get text from website title
-                    text_str = ''
-
+                    print("TEXT_STR: " + text_str)
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
-                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_website'] = True
                 return HttpResponseRedirect(reverse('search'))
@@ -344,11 +348,10 @@ def rating_results(request):
             if form.is_valid():
                 text_str = file_helper.get_file_content(request.FILES['file'])  # Get text from file
                 context = ratings_view_helper.perform_rating(text_str, form, request)  # Rate content and get results
-                request.session['category_words'] = context['current_category_word_counts']
             else:
                 request.session['invalid_file'] = True
                 return HttpResponseRedirect(reverse('upload'))
-    print(context)
+    # print(context)
     if request.session.get('content_compare'):  # Go to compare screen if the user last clicked Compare
         return redirect('compare')
     return render(request, 'rating-result.html', context)
@@ -397,9 +400,4 @@ def word_counts(request, name):
         context = word_counts_view_helper.get_word_counts_context(request.user, 1)  # Get the older rating from comparison.
     else:
         context = dict()
-
-    if request.session.get('category_words'):
-        category_words = request.session['category_words']
-        del request.session['category_words']
-
     return render(request, 'word-counts.html', context)

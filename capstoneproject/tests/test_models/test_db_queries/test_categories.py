@@ -18,7 +18,7 @@ class CategoriesTestClass(TestCase):
         cls.cat4 = Category.categories.create(
             name='test_category4', weight=0, default=False)
         cls.cat5 = Category.categories.create(
-            name='test_category5', weight=1, default=True)
+            name='test_category5', weight=1, default=False)
         cls.user1 = User.objects.create_user(
             username='user1', password='12345')
         cls.user1.save()
@@ -135,7 +135,7 @@ class CategoriesTestClass(TestCase):
              'name': self.cat4.name,
              'weight': self.cat4.weight},
             results, msg='non-default cat4 does not belong in the results')
-        self.assertIn(
+        self.assertNotIn(
             {'id': self.cat5.id,
              'name': self.cat5.name,
              'weight': self.cat5.weight},

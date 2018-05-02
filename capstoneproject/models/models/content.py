@@ -18,13 +18,20 @@ class Content(Model):
         choices=MEDIA_TYPES, null=True, blank=True)
     content = Manager()
 
+    def isRelated(self):
+        return len(self.content_ratings.all()) > 0
+
+    def isOrphaned(self):
+        return len(self.content_ratings.all()) == 0
+
     def __str__(self):
         """
         This method overwrites the __str__ function and
         returns a string containing information about the Content.
         :return: A string, containing information about the Content.
         """
-        return "Media Types {}  -  {} by {}".format(self.media, self.title, self.creator)
+        return "Media Types {}  -  {} by {}".format(
+            self.media, self.title, self.creator)
 
     class Meta:
         default_manager_name = 'content'

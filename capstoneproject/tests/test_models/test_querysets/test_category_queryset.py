@@ -48,4 +48,4 @@ class CategoryQuerySetTestClass(TestCase):
         self.assertIn(self.cat2, results)
         self.assertIn(self.cat3, results)
         self.assertNotIn(self.cat4, results)
-        self.assertNotIn(self.cat5, results)
+        self.assertIn(self.cat5, results)
