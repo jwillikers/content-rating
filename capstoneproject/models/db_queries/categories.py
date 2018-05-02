@@ -1,4 +1,4 @@
-"""Cursor-based retrieval of Categories per User"""
+"""Cursor-based retrieval of Categories per User."""
 from django.db import connection
 from capstoneproject.models.db_queries.cursor_helper import dictfetchall
 

@@ -1,11 +1,11 @@
-"""Utilities for Django Database Cursors"""
+"""Utilities for Django Database Cursors."""
 from django.db import connection
 
 
 def dictfetchall(cursor):
     """
     Return all rows from a cursor as a dict.
-    :param cursor:
+    :param cursor: a database cursor.
     :return: the results from the cursor as a dictionary.
     """
     columns = [col[0] for col in cursor.description]
