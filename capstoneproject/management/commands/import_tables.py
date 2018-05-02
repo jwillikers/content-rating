@@ -128,7 +128,8 @@ class Command(BaseCommand):
     def import_tables(self, root_folder='', category_path='', word_path=''):
         """
         Import the tables from the csv files into the dictionary tables.
-        :param root_folder: a string, the path to the folder where the csv's are located.
+        :param root_folder: a string, the path to the folder
+        where the csv's are located.
         :param category_path: a string, the path to the category csv file.
         :param word_path: a string, the path to the word csv file.
         :return: None
