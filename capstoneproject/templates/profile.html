@@ -86,7 +86,18 @@
                                             {% endfor %}
                                             <div style="text-align: center;">
                                                 <button type="submit" value="username" name="submit_username"
-                                                        class="btn btn-primary">Update credentials
+                                                        class="btn btn-primary">Update Credentials
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                    <br>
+                                    <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="post">
+                                        <fieldset>
+                                            {% csrf_token %}
+                                            <div style="text-align: center;">
+                                                <button type="submit" value="delete" name="delete_account"
+                                                        class="btn btn-primary">Delete Account
                                                 </button>
                                             </div>
                                         </fieldset>
@@ -113,12 +124,24 @@
                                             {% endfor %}
                                             <div style="text-align: center;">
                                                 <button type="submit" value="password" name="submit_password"
-                                                        class="btn btn-primary">Update credentials
+                                                        class="btn btn-primary">Update Credentials
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                    <br>
+                                    <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="post">
+                                        <fieldset>
+                                            {% csrf_token %}
+                                            <div style="text-align: center;">
+                                                <button type="submit" value="delete" name="delete_account"
+                                                        class="btn btn-primary">Delete Account
                                                 </button>
                                             </div>
                                         </fieldset>
                                     </form>
                                 </div>
+
                                 <div class="tab-pane fade" id="userandpass">
                                     <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="post">
                                         <fieldset>
@@ -141,7 +164,18 @@
                                             <div style="text-align: center;">
                                                 <button type="submit" value="both" name="submit_both"
                                                         class="btn btn-primary">
-                                                    Update credentials
+                                                    Update Credentials
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                    <br>
+                                    <form lpformnum="1" _lpchecked="1" action="{% url 'profile' %}" method="post">
+                                        <fieldset>
+                                            {% csrf_token %}
+                                            <div style="text-align: center;">
+                                                <button type="submit" value="delete" name="delete_account"
+                                                        class="btn btn-primary">Delete Account
                                                 </button>
                                             </div>
                                         </fieldset>
@@ -197,7 +231,7 @@
                                 {% for cat in categories %}
                                     <hr class="my-2">
                                     <a class="lead"
-                                        href="{% url 'words' category=cat.name %}">
+                                       href="{% url 'words' category=cat.name %}">
                                         <h5>{{ cat.name|title }}</h5>
                                     </a>
                                     <div class="slidecontainer">
@@ -210,7 +244,9 @@
                                     &nbsp;
                                 {% endfor %}
                                 <div style="text-align: center;">
-                                    <button type="submit" class="btn btn-primary" name="submit_category_weights" value="category_weights">Update Category Weights</button>
+                                    <button type="submit" class="btn btn-primary" name="submit_category_weights"
+                                            value="category_weights">Update Category Weights
+                                    </button>
                                 </div>
                             </fieldset>
                         </form>
@@ -225,7 +261,7 @@
             {% for weight in weight_dict %}
                 text[{{ weight }}] = "{{ weight_dict|get_item:weight }}";
             {% endfor %}
-            document.getElementById(category + '_amount').value = text[document.getElementById(category+'_cat').value];
+            document.getElementById(category + '_amount').value = text[document.getElementById(category + '_cat').value];
         }
     </script>
 {% endblock %}

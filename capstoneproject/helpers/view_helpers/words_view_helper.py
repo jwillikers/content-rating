@@ -39,13 +39,21 @@ def create_user_word_dictionary(user: User, category):
     word weights as the values.
     """
     word_dict = {}
+    #cat = Category.categories.get(name=category, default=True)
     words = word_helper.get_user_category_words(
         category_name=category, user=user)
     for word in words:
-        word_dict[word.name] = word.word_features.get(
-            user_storage__user_id=user.id,
-            category=category_helper.get_default_category(
-                category_name=category)).weight
+        try:
+         #   word_feature = WordFeature.word_features.get(
+         #       user_storage__id=user.id,
+         #       words=Word.words.get(name=word),
+         #       category=cat)
+            word_dict[word.name] = WordFeature.word_features.get(
+                user_storage__id=user.id,
+                words=word,
+                category=Category.categories.get(name=category, default=True)).weight
+        except WordFeature.DoesNotExist:
+            print(str(word) + " does not exist")
     print('\n\n' + str(word_dict))
     return word_dict
 
@@ -72,7 +80,6 @@ def update_user_word_weights(request, cat):
     :return: None
     """
     word_dict = create_word_weight_dictionary(request.POST)
-    print("\n\nWORD DICT: " + str(word_dict))
     for word, weight in word_dict.items():
         word_helper.update_user_word_weight(
             user=request.user,
