@@ -16,9 +16,17 @@ class CategoryRating(Model):
     category_ratings = Manager()
 
     def isRelated(self):
+        """
+        Determines if any relatives rely on this model instance.
+        :return: True if relatives rely on this model instance.
+        """
         return len(self.content_ratings.all()) > 0
 
     def isOrphaned(self):
+        """
+        Determines if no relatives rely on this model instance.
+        :return: True if no relatives rely on this model instance.
+        """
         return len(self.content_ratings.all()) == 0
 
     def __str__(self):
@@ -28,4 +36,5 @@ class CategoryRating(Model):
         return string
 
     class Meta:
+        """Settings for the CategoryRating model."""
         default_manager_name = 'category_ratings'

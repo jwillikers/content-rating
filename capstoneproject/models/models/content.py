@@ -19,9 +19,17 @@ class Content(Model):
     content = Manager()
 
     def isRelated(self):
+        """
+        Determines if any relatives rely on this model instance.
+        :return: True if relatives rely on this model instance.
+        """
         return len(self.content_ratings.all()) > 0
 
     def isOrphaned(self):
+        """
+        Determines if no relatives rely on this model instance.
+        :return: True if no relatives rely on this model instance.
+        """
         return len(self.content_ratings.all()) == 0
 
     def __str__(self):
@@ -34,4 +42,5 @@ class Content(Model):
             self.media, self.title, self.creator)
 
     class Meta:
+        """Settings for the Content model."""
         default_manager_name = 'content'

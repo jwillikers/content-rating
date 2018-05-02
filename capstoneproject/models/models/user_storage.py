@@ -45,17 +45,20 @@ class UserStorage(Model):
     @receiver(post_save, sender=User)
     def create_user_storage(sender, instance, created, **kwargs):
         """
-        Creates a new user storage model upon
-        creation of a new user.
-        :param instance:
-        :param created:
-        :param kwargs:
+        Creates a new user storage model upon creation of a new user.
+        :param instance: the newly created User instance.
+        :param created: Whether or not the User was successfully created.
+        :param kwargs: Other arguments.
         :return:
         """
         if created:
             UserStorage.user_storage.autocreate(instance)
 
     def delete_relatives(self):
+        """
+        Deletes this model instance's related model instances.
+        :return:
+        """
         # delete ContentRatings first
         ratings = list(self.ratings.all())
         self.ratings.clear()
@@ -76,8 +79,16 @@ class UserStorage(Model):
                 word.delete()
 
     def delete(self, *args, **kwargs):
+        """
+        Deletes this model instance along with any relatives that \
+        are only related to it.
+        :param *args: Possible arguments to the default delete method.
+        :param *kwargs: Possible arguments to the default delete method.
+        :return:
+        """
         self.delete_relatives()
         super().delete(*args, **kwargs)
 
     class Meta:
+        """Settings for the UserStorage model."""
         default_manager_name = 'user_storage'
