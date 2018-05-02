@@ -1,10 +1,19 @@
+"""Raw SQL for retrieving the Words and their Features belonging to a User"""
 from django.db import connection
 from capstoneproject.models.db_queries.cursor_helper import dictfetchall
 
 
-def words_and_features(user_id=None,
-                       category_id=None, strength=None):
-    """All Words and their Features belonging to Users."""
+def words_and_features(
+        user_id=None,
+        category_id=None,
+        strength=None):
+    """
+    Retrieve Words and their Features belonging to Users.
+    :param user_id: User that owns the Words and Features
+    :param category_id: WordFeatures belonging to a specific Category
+    :param strength: Strength of the WordFeature to retrieve
+    :return: a dictionary of objects representing the WordFeature.
+    """
     query_string = '''
 SELECT
     w.id AS word_id,
