@@ -1,9 +1,16 @@
+"""Cursor-based retrieval of Categories per User"""
 from django.db import connection
 from capstoneproject.models.db_queries.cursor_helper import dictfetchall
 
 
 def categories(user_id=None, default=False):
-    """Categories within the Capstone project_Categories table."""
+    """
+    Return the categories for the given user.
+    :param user_id: the id of the user that owns the Categories.
+    :param default: whether or not to include the default Categories.
+    :return: a list of Category object 3-tuples \
+    containing id, name, and weight.
+    """
     query_string = '''
 SELECT
     c.id,
