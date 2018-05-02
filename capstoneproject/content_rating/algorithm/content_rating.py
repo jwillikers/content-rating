@@ -22,7 +22,7 @@ def isalphanum(word):
     return True
 
 
-class ContentRating:
+class ContentRatingAlgorithm:
     """
     Class to implement the content rating algorithm and contain relevant methods.
     """

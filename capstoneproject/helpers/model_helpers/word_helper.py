@@ -2,6 +2,7 @@
 This file contains functions used to provide data from the database.
 """
 from capstoneproject.models.models.word import Word
+from capstoneproject.models.models.category import Category
 from capstoneproject.models.models.word_feature import WordFeature
 from capstoneproject.models.models.user_storage import UserStorage
 from django.contrib.auth.models import User
@@ -89,24 +90,29 @@ def update_user_word_weight(
     :param weight: An int, the new Weight value (0-3)
     :return: None
     """
+    return
+    cat = Category.categories.get(name=category_name, default=True)
     try:
         word_feature = WordFeature.word_features.get(
             user_storage__id=user.id,
-            words__name=word_name,
-            category__name=category_name)
-    except WordFeature.DoesNotExist:   # TODO Check this out
+            words=Word.words.get(name=word_name),
+            category=cat)
+    except WordFeature.DoesNotExist:
         return
-    print("OLD WORD FEATURE: " + str(word_feature))
-    if weight == word_feature.weight:
+    if int(weight) == word_feature.weight:
         return
     else:
         strength = word_feature.strength
-        word_feature.delete()
-        word_feature, _ = WordFeature.word_features.get_or_create(
-            category__name=category_name,
-            strength=strength,
-            weight=weight)
-        print("NEW WORD FEATURE: " + str(word_feature))
         user_storage = UserStorage.user_storage.get(id=user.id)
-        user_storage.word_feature.add(word_feature)
+        user_storage.word_features.remove(word_feature)
+        if word_feature.isOrphaned() and word_feature.isCustom():
+            word_feature.delete()
+        word_feature, _ = WordFeature.word_features.get_or_create(
+            category=cat,
+            strength=strength,
+            weight=int(weight))
+        user_storage.word_features.add(word_feature)
         user_storage.save()
+        word = Word.words.get(name=word_name, default=True)
+        word.word_features.add(word_feature)
+        word.save()

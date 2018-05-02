@@ -144,6 +144,10 @@ def profile(request):
         elif request.POST.get('submit_category_weights') == 'category_weights':
             profile_view_helper.update_user_category_weights(request)
 
+        elif request.POST.get('delete_account') == 'delete':
+            profile_view_helper.delete_user(request.user)
+            return logout(request)
+
     return render(request, 'profile.html', context)
 
 
@@ -285,8 +289,8 @@ def words(request, category):
             del request.session['content_compare']
 
     if request.method == 'POST':
-        if request.POST.get('submit_word_weights') == 'word_weights':
-            words_view_helper.update_user_word_weights(request, category)
+        if request.POST.get('submit_word_weights'):
+            words_view_helper.update_user_word_weights(request, request.POST.get('submit_word_weights'))
             return HttpResponseRedirect(reverse('profile'))
 
     context = words_view_helper.get_words_context(request.user, category)

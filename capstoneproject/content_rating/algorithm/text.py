@@ -2,8 +2,7 @@
 This file contains the Text class to contain data on the classification
 and rating of a given text.
 """
-from capstoneproject.helpers import model_helper
-from capstoneproject.helpers.model_helpers import category_helper
+from capstoneproject.helpers.model_helpers import category_helper, model_helper
 from django.contrib.auth.models import User
 
 

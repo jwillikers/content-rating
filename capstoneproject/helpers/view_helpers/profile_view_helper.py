@@ -6,6 +6,7 @@ from capstoneproject.app_forms \
     import ChangeUsernameForm, ChangePasswordForm, ChangeUsernamePasswordForm
 from capstoneproject.helpers.view_helpers import view_helper
 from capstoneproject.helpers.model_helpers import category_helper, rating_helper
+from capstoneproject.models.models.user_storage import UserStorage
 
 
 def get_profile_context(user: User):
@@ -69,3 +70,13 @@ def update_user_category_weights(request):
     cat_dict = create_category_dictionary(request.POST)
     for cat, weight in cat_dict.items():
         category_helper.update_user_category_weight(user=request.user, category_name=cat, weight=weight)
+
+
+def delete_user(user: User):
+    """
+    This method deletes the user's UserStorage model and deletes the user's account.
+    :param user: A User
+    :return: None
+    """
+    UserStorage.user_storage.get(user=user).delete()
+    User.objects.get(pk=user.pk).delete()

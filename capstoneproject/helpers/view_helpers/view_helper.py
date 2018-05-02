@@ -1,7 +1,7 @@
 """
 This file contains functions that provide help create the information displayed in the various views.
 """
-from capstoneproject.helpers import model_helper
+from capstoneproject.helpers.model_helpers import model_helper
 
 
 def get_weight_dict():
