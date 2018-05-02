@@ -26,9 +26,6 @@ class ContentRating(Model):
     updated = DateTimeField(auto_now=True)
     content_ratings = Manager()
 
-    class Meta:
-        default_manager_name = 'content_ratings'
-
     def __str__(self):
         string = 'Rating\n'
         string += '  Content: {}\n'.format(self.content)
@@ -40,12 +37,24 @@ class ContentRating(Model):
         return string
 
     def isRelated(self):
+        """
+        Determines if any relatives rely on this model instance.
+        :return: True if relatives rely on this model instance.
+        """
         return len(self.user_storage.all()) > 0
 
     def isOrphaned(self):
+        """
+        Determines if no relatives rely on this model instance.
+        :return: True if no relatives rely on this model instance.
+        """
         return len(self.user_storage.all()) == 0
 
     def delete_relatives(self):
+        """
+        Deletes relatives to this model.
+        :return:
+        """
         category_ratings = list(self.category_ratings.all())
         self.category_ratings.clear()
         for category_rating in category_ratings:
@@ -59,6 +68,10 @@ class ContentRating(Model):
                 word_count.delete()
 
     def delete(self, *args, **kwargs):
+        """
+        Deletes this model after deleting its relatives.
+        :return:
+        """
         self.delete_relatives()
         old_content = self.content
         super().delete(*args, **kwargs)
@@ -66,18 +79,31 @@ class ContentRating(Model):
             old_content.delete()
 
     def get_category_ratings(self):
+        """
+        Retrieves the CategoryRatings for this Category.
+        :return: a dict of CategoryRatings.
+        """
         category_ratings = dict()
         for cat_rating in self.category_ratings.all():
             category_ratings[cat_rating.category.name] = cat_rating.rating
         return category_ratings
 
     def _create_word_count_dict(self):
+        """
+        Compile a dictionary of the WordCounts for this ContentRating.
+        :return: a dictionary of Words and their Counts.
+        """
         word_counts = dict()
         for wc in self.word_counts.all():
             word_counts[wc.word.name] = wc.count
         return word_counts
 
     def get_word_count_category(self):
+        """
+        Compile a dictionary of the WordCounts for this ContentRating's \
+        Categories.
+        :return: a dictionary of Categories, Words, and their Counts.
+        """
         word_count_category_dict = dict()
         from capstoneproject.models.models.category import Category
         for cat in Category.categories.all():
@@ -91,3 +117,7 @@ class ContentRating(Model):
                 word_count_category_dict[word_cat][word] = count
 
         return word_count_category_dict
+
+    class Meta:
+        """Settings for the ContentRating model."""
+        default_manager_name = 'content_ratings'

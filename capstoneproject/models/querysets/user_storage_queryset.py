@@ -2,7 +2,14 @@ from django.db.models import QuerySet
 
 
 class UserStorageQuerySet(QuerySet):
+    """A custom QuerySet for the UserStorage model."""
+
     def autocreate(self, user):
+        """
+        Create and initialize a new UserStorage instance.
+        :param user: The User that will own this UserStorage.
+        :return:
+        """
         from capstoneproject.models.models.category import Category
         from capstoneproject.models.models.word import Word
         from capstoneproject.models.models.word_feature import WordFeature

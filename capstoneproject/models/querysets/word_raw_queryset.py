@@ -2,7 +2,14 @@ from django.db.models import RawQuerySet
 
 
 class WordRawQuerySet(RawQuerySet):
+    """A RawQuerySet for the Word model."""
+
     def user(self, user_id):
+        """
+        Filter based on the user_id.
+        :param user_id: Id of the User for whom to include Words.
+        :return: A WordRawQuerySet containing Words of the given User.
+        """
         return self.raw('''
 SELECT
     w.id

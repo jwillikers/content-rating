@@ -13,13 +13,22 @@ class WordCount(Model):
     word_counts = Manager()
 
     def isRelated(self):
+        """
+        Determines if any relatives rely on this model instance.
+        :return: True if relatives rely on this model instance.
+        """
         return len(self.content_ratings.all()) > 0
 
     def isOrphaned(self):
+        """
+        Determines if no relatives rely on this model instance.
+        :return: True if no relatives rely on this model instance.
+        """
         return len(self.content_ratings.all()) == 0
 
     def __str__(self):
         return "WordCount  {} - {}".format(self.word, self.count)
 
     class Meta:
+        """Settings for the WordCount model."""
         default_manager_name = 'word_counts'

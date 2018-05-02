@@ -57,26 +57,33 @@ class WordFeature(Model):
         return dictionary
 
     def isDefault(self):
+        """
+        Determines if this model instance is a default.
+        :return: True if this model instance is a default.
+        """
         return self.default
 
     def isCustom(self):
+        """
+        Determines if this model instance is User created.
+        :return: True if this model instance is User created.
+        """
         return not self.default
 
     def isRelated(self):
         """
-        Determines if any many-to-many fields point to this object.
-        :return: a boolean whether this field belongs to any \
-        many-to-many relationships
+        Determines if any relatives rely on this model instance.
+        :return: True if relatives rely on this model instance.
         """
         return len(self.user_storage.all()) > 0
 
     def isOrphaned(self):
         """
-        Determines if no many-to-many fields point to this object.
-        :return: a boolean, true, if no many-to-many fields \
-        point to this WordFeature
+        Determines if no relatives rely on this model instance.
+        :return: True if no relatives rely on this model instance.
         """
         return len(self.user_storage.all()) == 0
 
     class Meta:
+        """Settings for the WordFeature model."""
         default_manager_name = 'word_features'

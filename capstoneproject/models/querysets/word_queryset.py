@@ -7,7 +7,7 @@ from capstoneproject.models.fields.strength_field import StrengthField
 
 class WordQuerySet(QuerySet):
     """
-    This class represents a QuerySet of a Word
+    Custom QuerySet for the Word model.
     """
     feature_queryset = None
 
@@ -19,7 +19,9 @@ class WordQuerySet(QuerySet):
         """
         if isinstance(category, str):
             try:
-                category = Category.categories.get(name=category.lower(), default=True)
+                category = Category.categories.get(
+                    name=category.lower(),
+                    default=True)
             except Category.DoesNotExist:
                 return self.none()
         elif isinstance(category, int):
@@ -106,7 +108,8 @@ class WordQuerySet(QuerySet):
                     weight = val
                     found = True
             if not found:
-                raise ValueError('''{} is not one of the 4 valid weight choices:
+                raise ValueError(
+                    '''{} is not one of the 4 valid weight choices:
                     innocuous, slight, moderate, or heavy.'''.format(weight))
         else:
             raise TypeError('''{} is not a valid type for weight

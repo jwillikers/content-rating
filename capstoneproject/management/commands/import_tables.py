@@ -19,10 +19,9 @@ import os
 import django
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-import capstoneproject.models as models
-from capstoneproject.models import Category
-from capstoneproject.models import Word
-from capstoneproject.models import WordFeature
+from capstoneproject.models.models.category import Category
+from capstoneproject.models.models.word import Word
+from capstoneproject.models.models.word_feature import WordFeature
 
 # setup simple aliases for the model objects
 categories = Category.categories
@@ -55,7 +54,8 @@ class Command(BaseCommand):
 
         for category_entry in reader:
             try:
-                category = categories.get(name=category_entry['category'])
+                category = categories.get(
+                    name=category_entry['category'], default=True)
             except ObjectDoesNotExist:
                 category = Category(
                     name=category_entry['category'], default=True)
@@ -89,7 +89,9 @@ class Command(BaseCommand):
                     and strength is not None \
                         and weight is not None:
                     try:
-                        category = categories.get(name=category_name)
+                        category = categories.get(
+                            name=category_name,
+                            default=True)
                     except ObjectDoesNotExist:
                         self.stdout.write(
                             '''skipping category for {}\t\t: category {} does
@@ -126,7 +128,8 @@ class Command(BaseCommand):
     def import_tables(self, root_folder='', category_path='', word_path=''):
         """
         Import the tables from the csv files into the dictionary tables.
-        :param root_folder: a string, the path to the folder where the csv's are located.
+        :param root_folder: a string, the path to the folder
+        where the csv's are located.
         :param category_path: a string, the path to the category csv file.
         :param word_path: a string, the path to the word csv file.
         :return: None
