@@ -1,26 +1,29 @@
 {% extends "navbar-notloggedin.html" %}
 
 {% block content %}
-    <div>
-        <h1>Classification and Rating Algorithm</h1>
-        <p>
-            The system implemented a text classification method based on the methodology proposed by Ying Chen,
-            Yilu Zhou, Sencun Zhu, and Heng Xu in their report titled "Detecting Offensive Language in Social Media
-            to Protect Adolescent Online Safety". This report proposed a Lexical Syntactic Feature architecture to
-            detect offensive content. The architecture evaluates the contribution of various forms of profanities
-            and obscenities to determines the offensiveness level of sentences in some content. The steps of the
-            sentence offensiveness calculation and rating are the following:
-        </p>
-        <h2>Algorithm Steps</h2>
-        <ul>
-            <li>Data Acquisition and Preprocessing</li>
-            <li>Feature Extraction</li>
-            <li>Classification</li>
-            <li>Rating Generation</li>
-        </ul>
-
-        <div>
-            <h2>Data Acquisition and Preprocessing</h2>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 style="text-align: center;">Classification and Rating Algorithm</h1>
+            <p>
+                The system implemented a text classification method based on the methodology proposed by Ying Chen,
+                Yilu Zhou, Sencun Zhu, and Heng Xu in their report titled "Detecting Offensive Language in Social Media
+                to Protect Adolescent Online Safety". This report proposed a Lexical Syntactic Feature architecture to
+                detect offensive content. The architecture evaluates the contribution of various forms of profanities
+                and obscenities to determines the offensiveness level of sentences in some content. The steps of the
+                sentence offensiveness calculation and rating are the following:
+            </p>
+        </div>
+        <div class="jumbotron">
+        <h2 style="text-align: center;">Algorithm Steps</h2>
+            <ul>
+                <li>Data Acquisition and Preprocessing</li>
+                <li>Feature Extraction</li>
+                <li>Classification</li>
+                <li>Rating Generation</li>
+            </ul>
+        </div>
+        <div class="jumbotron">
+            <h2 style="text-align: center;">Data Acquisition and Preprocessing</h2>
             <p>
                 This step is responsible for obtaining and normalizing the textual content to evaluate. The content
                 is obtained from the user through a variety of methods outlined in the About the Application section.
@@ -30,9 +33,8 @@
                 tags.
             </p>
         </div>
-
-        <div>
-            <h2>Feature Extraction</h2>
+        <div class="jumbotron">
+            <h2 style="text-align: center;">Feature Extraction</h2>
             <p>
                 The Feature Extraction phase extracts features from the processed input which are used to evaluate a
                 sentence's offensiveness level. This process uses a combination of lexical and syntactic features to
@@ -42,8 +44,8 @@
             </p>
         </div>
 
-        <div>
-            <h2>Classification</h2>
+        <div class="jumbotron">
+            <h2 style="text-align: center;">Classification</h2>
             <p>
                 Once all strongly and weakly offensive words have been extracted, the algorithm attempts to classify
                 the sentence containing the offensive words as offensive in various categories. A sentence is
@@ -54,8 +56,8 @@
             </p>
         </div>
 
-        <div>
-            <h2>Rating Generation</h2>
+        <div class="jumbotron">
+            <h2 style="text-align: center;">Rating Generation</h2>
             <p>
                 Once all sentences are classified according the the various offensive categories, the rating generation
                 creates category ratings and an overall rating. The ratings are ratio based, however since
