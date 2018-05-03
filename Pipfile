@@ -13,11 +13,21 @@ python_version = "3.6"
 [packages]
 
 dj-database-url = "==0.4.2"
-django = "*"
-gunicorn = "==19.7.1"
-"psycopg2" = "==2.7.3.2"
+django = "==2.0.2"
+pytz = "==2018.3"
+pyspellchecker = "==0.1.1"
+nltk = "==3.2.5"
+pypdf2 = ">=1.26.0"
+python-docx = ">=0.8.6"
+ebooklib = ">=0.16"
+html2text = ">=2018.1.9"
+pysrt = ">=1.1.1"
+bs4 = ">=0.0.1"
+selenium = ">=3.11.0"
+chromedriver = ">=2.24.1"
+requests = "*"
 whitenoise = "*"
-
+psycopg2 = "*"
 
 [dev-packages]
 
