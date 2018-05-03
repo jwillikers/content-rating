@@ -2,15 +2,20 @@ from django.db.models import PositiveIntegerField
 
 
 class PositiveIntegerRangeField(PositiveIntegerField):
-    """Field for Integers in a specific, positive range."""
+    """Field for Integers in a specific, positive range.
+
+    This class was based off of <a href="
+    https://stackoverflow.com/questions/849142/how-to-limit-the-maximum-value-of-a-numeric-field-in-a-django-model
+    ">this stackoverflow answer</a> by NathanD.
+    """
 
     def __init__(
             self,
             min_value=None,
             max_value=None,
             **kwargs):
-        """
-        Constructor for the Field.
+        """Constructor for the Field.
+
         :param min_value: The minimum acceptable value for the field.
         :param max_value: The maximum acceptable value for the field.
         :param **kwargs: Arguments supplied for the constructor.
@@ -21,8 +26,8 @@ class PositiveIntegerRangeField(PositiveIntegerField):
             self, **kwargs)
 
     def formfield(self, **kwargs):
-        """
-        Sanitizes User inputted field.
+        """Sanitizes User inputted field.
+
         :param **kwargs: arguments supplied for the constructor.
         :return: the result of PositiveIntegerField's formfield.
         """
