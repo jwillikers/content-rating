@@ -1,0 +1,131 @@
+\hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content}{}\section{capstoneproject.\+models.\+models.\+content.\+Content Class Reference}
+\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content}\index{capstoneproject.\+models.\+models.\+content.\+Content@{capstoneproject.\+models.\+models.\+content.\+Content}}
+Inheritance diagram for capstoneproject.\+models.\+models.\+content.\+Content\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_aef00f5f6aaba41b1b808ac8cf8327dd2}{is\+Related}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_acf1686cea94ff68e24d969a43b7ee453}{is\+Orphaned}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_a2a41e3455e60f9c3dc3d46783381cc36}{\+\_\+\+\_\+str\+\_\+\+\_\+}} (self)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+list {\bfseries M\+E\+D\+I\+A\+\_\+\+T\+Y\+P\+ES}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_aac895642300266917e51aa15f9d74a32}\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_aac895642300266917e51aa15f9d74a32}} 
+{\bfseries title} = Char\+Field(max\+\_\+length=125)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_a465a9cc9b0c363d3f96175b23bf04ca5}\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_a465a9cc9b0c363d3f96175b23bf04ca5}} 
+{\bfseries creator} = Char\+Field(max\+\_\+length=70)
+\item 
+{\bfseries media}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_a2a5941500501dfbd81d13fdb788794d6}\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_a2a5941500501dfbd81d13fdb788794d6}} 
+{\bfseries content} = Manager()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This Model contains data to identify rated content.
+\end{DoxyVerb}
+ 
+
+Definition at line 6 of file content.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_a2a41e3455e60f9c3dc3d46783381cc36}\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_a2a41e3455e60f9c3dc3d46783381cc36}} 
+\index{capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}!\+\_\+\+\_\+str\+\_\+\+\_\+@{\+\_\+\+\_\+str\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+str\+\_\+\+\_\+@{\+\_\+\+\_\+str\+\_\+\+\_\+}!capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+str\+\_\+\+\_\+()}{\_\_str\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content.\+Content.\+\_\+\+\_\+str\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This method overwrites the __str__ function and
+returns a string containing information about the Content.
+:return: A string, containing information about the Content.
+\end{DoxyVerb}
+ 
+
+Definition at line 35 of file content.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_acf1686cea94ff68e24d969a43b7ee453}\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_acf1686cea94ff68e24d969a43b7ee453}} 
+\index{capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}!is\+Orphaned@{is\+Orphaned}}
+\index{is\+Orphaned@{is\+Orphaned}!capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}}
+\subsubsection{\texorpdfstring{is\+Orphaned()}{isOrphaned()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content.\+Content.\+is\+Orphaned (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if no relatives rely on this model instance.
+:return: True if no relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 28 of file content.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_aef00f5f6aaba41b1b808ac8cf8327dd2}\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_aef00f5f6aaba41b1b808ac8cf8327dd2}} 
+\index{capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}!is\+Related@{is\+Related}}
+\index{is\+Related@{is\+Related}!capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}}
+\subsubsection{\texorpdfstring{is\+Related()}{isRelated()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content.\+Content.\+is\+Related (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if any relatives rely on this model instance.
+:return: True if relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 21 of file content.\+py.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_ae743d845fe08789f7c5a5109b9893c29}\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_ae743d845fe08789f7c5a5109b9893c29}} 
+\index{capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}!media@{media}}
+\index{media@{media}!capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}}
+\subsubsection{\texorpdfstring{media}{media}}
+{\footnotesize\ttfamily capstoneproject.\+models.\+models.\+content.\+Content.\+media\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  PositiveSmallIntegerField(
+        choices=MEDIA\_TYPES, null=\textcolor{keyword}{True}, blank=\textcolor{keyword}{True})
+\end{DoxyCode}
+
+
+Definition at line 17 of file content.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_afaa6a89a6aefb251aca7323b4fdea5c1}\label{classcapstoneproject_1_1models_1_1models_1_1content_1_1_content_afaa6a89a6aefb251aca7323b4fdea5c1}} 
+\index{capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}!M\+E\+D\+I\+A\+\_\+\+T\+Y\+P\+ES@{M\+E\+D\+I\+A\+\_\+\+T\+Y\+P\+ES}}
+\index{M\+E\+D\+I\+A\+\_\+\+T\+Y\+P\+ES@{M\+E\+D\+I\+A\+\_\+\+T\+Y\+P\+ES}!capstoneproject\+::models\+::models\+::content\+::\+Content@{capstoneproject\+::models\+::models\+::content\+::\+Content}}
+\subsubsection{\texorpdfstring{M\+E\+D\+I\+A\+\_\+\+T\+Y\+P\+ES}{MEDIA\_TYPES}}
+{\footnotesize\ttfamily list capstoneproject.\+models.\+models.\+content.\+Content.\+M\+E\+D\+I\+A\+\_\+\+T\+Y\+P\+ES\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  [(0, \textcolor{stringliteral}{'song'}),
+                   (1, \textcolor{stringliteral}{'movie'}),
+                   (2, \textcolor{stringliteral}{'book'}),
+                   (3, \textcolor{stringliteral}{'website'}),
+                   (4, \textcolor{stringliteral}{'document'})]
+\end{DoxyCode}
+
+
+Definition at line 10 of file content.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/models/models/content.\+py\end{DoxyCompactItemize}

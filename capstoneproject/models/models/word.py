@@ -5,19 +5,18 @@ from capstoneproject.models.models.word_feature import WordFeature
 
 
 class Word(Model):
-    """
-    A class representing the system's table of offensive Words.
-    """
+    """A class representing the system's table of offensive Words."""
     default = BooleanField(default=False)
     word_features = ManyToManyField(WordFeature, related_name='words')
     name = CharField(unique=True, max_length=30)
     words = WordQuerySet.as_manager()
 
     def __str__(self):
-        """
-        Overwrites the __str__ function to provide a string containing the
+        """Overwrites the __str__ function to provide a string containing the
         word's name.
-        :return: The word's name as a String.
+
+        Return:
+            str: The word's name.
         """
         return 'Word: {}'.format(self.name)
 

@@ -1,0 +1,61 @@
+Customizable content-\/rating system for rating the textual, objectionablecontent in music, TV episodes, movies, and books.
+
+\section*{Heroku Django Starter Template}
+
+An utterly fantastic project starter template for Django 2.\+0.
+
+\subsection*{Features}
+
+
+\begin{DoxyItemize}
+\item Production-\/ready configuration for Static Files, Database Settings, Gunicorn, etc.
+\item Enhancements to Django\textquotesingle{}s static file serving functionality via White\+Noise.
+\item Latest Python 3.\+6 runtime environment.
+\end{DoxyItemize}
+
+\subsection*{How to Use}
+
+To use this project, follow these steps\+:
+
+
+\begin{DoxyEnumerate}
+\item Create your working environment.
+\item Install Django ({\ttfamily \$ pipenv install django})
+\item Create a new project using this template
+\end{DoxyEnumerate}
+
+\subsection*{Creating Your Project}
+
+Using this template to create a new Django app is easy\+:\+: \begin{DoxyVerb}$ django-admin.py startproject --template=https://github.com/heroku/heroku-django-template/archive/master.zip --name=Procfile helloworld
+\end{DoxyVerb}
+
+
+(If this doesn\textquotesingle{}t work on windows, replace {\ttfamily django-\/admin.\+py} with {\ttfamily django-\/admin})
+
+You can replace {\ttfamily helloworld} with your desired project name.
+
+\subsection*{Deployment to Heroku}
+
+\begin{DoxyVerb}$ git init
+$ git add -A
+$ git commit -m "Initial commit"
+
+$ heroku create
+$ git push heroku master
+
+$ heroku run python manage.py migrate
+\end{DoxyVerb}
+
+
+See also, a \href{https://github.com/heroku/python-getting-started}{\tt ready-\/made application}, ready to deploy.
+
+\subsection*{License\+: M\+IT}
+
+\subsection*{Further Reading}
+
+
+\begin{DoxyItemize}
+\item \href{https://warehouse.python.org/project/gunicorn/}{\tt Gunicorn}
+\item \href{https://warehouse.python.org/project/whitenoise/}{\tt White\+Noise}
+\item \href{https://warehouse.python.org/project/dj-database-url/}{\tt dj-\/database-\/url} 
+\end{DoxyItemize}

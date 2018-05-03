@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['candidates',['candidates',['../classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker.html#a82729e9d8e408975c17a24832e7fc81c',1,'capstoneproject::content_rating::spelling_correction::spellchecker::SpellChecker']]],
+  ['categories',['categories',['../namespacecapstoneproject_1_1models_1_1db__queries_1_1categories.html#ae9c91142ad827e3ab30b69c51e7535c9',1,'capstoneproject::models::db_queries::categories']]],
+  ['category',['category',['../classcapstoneproject_1_1models_1_1querysets_1_1word__queryset_1_1_word_query_set.html#a2ef3ee38bf66a89886b7e20144758321',1,'capstoneproject::models::querysets::word_queryset::WordQuerySet']]],
+  ['chunk_5fuploaded_5ffile',['chunk_uploaded_file',['../namespacecapstoneproject_1_1helpers_1_1file__helper.html#a45deda865e5e8c475e447d08f0051d11',1,'capstoneproject::helpers::file_helper']]],
+  ['clean_5fpassword2',['clean_password2',['../classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form.html#ace45969945cdf655e4d95de522c51bbd',1,'capstoneproject::app_forms::signup_form::SignUpForm']]],
+  ['clean_5fprofile_5fconfirm_5fpassword',['clean_profile_confirm_password',['../classcapstoneproject_1_1app__forms_1_1change__password__form_1_1_change_password_form.html#ade7b5d4ded8d094aa2086b6d73bb0f0a',1,'capstoneproject::app_forms::change_password_form::ChangePasswordForm']]],
+  ['clean_5fprofile_5fconfirm_5fpassword_5fboth',['clean_profile_confirm_password_both',['../classcapstoneproject_1_1app__forms_1_1change__username__password__form_1_1_change_username_password_form.html#a33508aa9c9deef2bad9e6ed467702d5b',1,'capstoneproject::app_forms::change_username_password_form::ChangeUsernamePasswordForm']]],
+  ['clear_5fratings_5fdatabases',['clear_ratings_databases',['../namespacecapstoneproject_1_1helpers_1_1model__helpers_1_1rating__helper.html#a9c0e180a3be0ce11bd0ace717766f1ea',1,'capstoneproject::helpers::model_helpers::rating_helper']]],
+  ['compare_5fresults',['compare_results',['../namespacecapstoneproject_1_1views.html#adcc34573c7064f83eb5e310efbb2c0c4',1,'capstoneproject::views']]],
+  ['copy_5fin',['copy_in',['../namespacecapstoneproject_1_1views.html#aa623cff0d3f233b251fbbcc14e8aa86f',1,'capstoneproject::views']]],
+  ['correct_5fspelling',['correct_spelling',['../classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm.html#ac7a8c6b8bbe2a3f79cbbbcc7d1867fc4',1,'capstoneproject::content_rating::algorithm::content_rating::ContentRatingAlgorithm']]],
+  ['correction',['correction',['../classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker.html#a4e7085f88c7caf33686e956c14fb435a',1,'capstoneproject::content_rating::spelling_correction::spellchecker::SpellChecker']]],
+  ['create_5fcategory_5fdictionary',['create_category_dictionary',['../namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper.html#a3abb91199b4a640e7e8b022e5a932bbe',1,'capstoneproject::helpers::view_helpers::profile_view_helper']]],
+  ['create_5fcategory_5fratings_5fdict',['create_category_ratings_dict',['../namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1ratings__view__helper.html#acb139c5d06d2ee9d1df2479641e6ca31',1,'capstoneproject::helpers::view_helpers::ratings_view_helper']]],
+  ['create_5fuser_5fstorage',['create_user_storage',['../classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage.html#acee64beae981948db0a3decdf8f1033b',1,'capstoneproject::models::models::user_storage::UserStorage']]],
+  ['create_5fword_5fcount_5fdict',['create_word_count_dict',['../namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1ratings__view__helper.html#a89961e5544cbcf87fb0f66b15e980169',1,'capstoneproject::helpers::view_helpers::ratings_view_helper']]],
+  ['create_5fword_5fweight_5fdictionary',['create_word_weight_dictionary',['../namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper.html#a362c0ecf28b7a5716290e719e527af6a',1,'capstoneproject::helpers::view_helpers::words_view_helper']]]
+];

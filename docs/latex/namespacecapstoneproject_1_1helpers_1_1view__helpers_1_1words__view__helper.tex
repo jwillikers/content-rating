@@ -1,0 +1,53 @@
+\hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper}{}\section{capstoneproject.\+helpers.\+view\+\_\+helpers.\+words\+\_\+view\+\_\+helper Namespace Reference}
+\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper}\index{capstoneproject.\+helpers.\+view\+\_\+helpers.\+words\+\_\+view\+\_\+helper@{capstoneproject.\+helpers.\+view\+\_\+helpers.\+words\+\_\+view\+\_\+helper}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_a2bc61b55517c3ea1b6e3089184abc23c}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_a2bc61b55517c3ea1b6e3089184abc23c}} 
+def {\bfseries get\+\_\+words\+\_\+context}
+\item 
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_ac5bf0c5c569025d897867cdf370dbc3a}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_ac5bf0c5c569025d897867cdf370dbc3a}} 
+def {\bfseries create\+\_\+user\+\_\+word\+\_\+dictionary}
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_a362c0ecf28b7a5716290e719e527af6a}{create\+\_\+word\+\_\+weight\+\_\+dictionary}} (post)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_a50ed50e19563f60d831edbac4f876f0a}{update\+\_\+user\+\_\+word\+\_\+weights}} (request, cat)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This file contains functions to help the words view.
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_a362c0ecf28b7a5716290e719e527af6a}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_a362c0ecf28b7a5716290e719e527af6a}} 
+\index{capstoneproject\+::helpers\+::view\+\_\+helpers\+::words\+\_\+view\+\_\+helper@{capstoneproject\+::helpers\+::view\+\_\+helpers\+::words\+\_\+view\+\_\+helper}!create\+\_\+word\+\_\+weight\+\_\+dictionary@{create\+\_\+word\+\_\+weight\+\_\+dictionary}}
+\index{create\+\_\+word\+\_\+weight\+\_\+dictionary@{create\+\_\+word\+\_\+weight\+\_\+dictionary}!capstoneproject\+::helpers\+::view\+\_\+helpers\+::words\+\_\+view\+\_\+helper@{capstoneproject\+::helpers\+::view\+\_\+helpers\+::words\+\_\+view\+\_\+helper}}
+\subsubsection{\texorpdfstring{create\+\_\+word\+\_\+weight\+\_\+dictionary()}{create\_word\_weight\_dictionary()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+view\+\_\+helpers.\+words\+\_\+view\+\_\+helper.\+create\+\_\+word\+\_\+weight\+\_\+dictionary (\begin{DoxyParamCaption}\item[{}]{post }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function creates a word weight dictionary whose keys are
+word names and the values are word weights.
+:param post: A dict, the Post dictionary from an HTTP Request
+:return: A dict, containing word names and associated word weights
+\end{DoxyVerb}
+ 
+
+Definition at line 61 of file words\+\_\+view\+\_\+helper.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_a50ed50e19563f60d831edbac4f876f0a}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1words__view__helper_a50ed50e19563f60d831edbac4f876f0a}} 
+\index{capstoneproject\+::helpers\+::view\+\_\+helpers\+::words\+\_\+view\+\_\+helper@{capstoneproject\+::helpers\+::view\+\_\+helpers\+::words\+\_\+view\+\_\+helper}!update\+\_\+user\+\_\+word\+\_\+weights@{update\+\_\+user\+\_\+word\+\_\+weights}}
+\index{update\+\_\+user\+\_\+word\+\_\+weights@{update\+\_\+user\+\_\+word\+\_\+weights}!capstoneproject\+::helpers\+::view\+\_\+helpers\+::words\+\_\+view\+\_\+helper@{capstoneproject\+::helpers\+::view\+\_\+helpers\+::words\+\_\+view\+\_\+helper}}
+\subsubsection{\texorpdfstring{update\+\_\+user\+\_\+word\+\_\+weights()}{update\_user\_word\_weights()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+view\+\_\+helpers.\+words\+\_\+view\+\_\+helper.\+update\+\_\+user\+\_\+word\+\_\+weights (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{cat }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function updates a user's word weights
+:param request: An HTTP Request
+:param cat: A string, the category name whose words are being updated.
+:return: None
+\end{DoxyVerb}
+ 
+
+Definition at line 75 of file words\+\_\+view\+\_\+helper.\+py.
+

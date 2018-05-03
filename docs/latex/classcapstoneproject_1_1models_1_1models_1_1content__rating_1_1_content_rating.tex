@@ -1,0 +1,187 @@
+\hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating}{}\section{capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating Class Reference}
+\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating}\index{capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating@{capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating}}
+Inheritance diagram for capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a52aa37bea815a2e4c6f3feb59a09f253}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a52aa37bea815a2e4c6f3feb59a09f253}} 
+def {\bfseries \+\_\+\+\_\+str\+\_\+\+\_\+} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a1a4c74dc2d2b659db1f127819ff0e37c}{is\+Related}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a90cb62281932167c282b0494195c5a7f}{is\+Orphaned}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ad2677eea30196cd809803f2dffc40767}{delete\+\_\+relatives}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a51bddb1978f6388fdfd71ed6befda9bd}{delete}} (self, args, kwargs)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a7dbc3b35b8a4a6489ae0fd9b31819794}{get\+\_\+category\+\_\+ratings}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_aa7de27c1a4d3133161bbfab07eba8e85}{get\+\_\+word\+\_\+count\+\_\+category}} (self)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries content}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ac0d1570fda3a7a30a566587b8f791df3}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ac0d1570fda3a7a30a566587b8f791df3}} 
+{\bfseries rating} = \mbox{\hyperlink{classcapstoneproject_1_1models_1_1fields_1_1rating__field_1_1_rating_field}{Rating\+Field}}(default=0)
+\item 
+{\bfseries category\+\_\+ratings}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a7b722d9c1409540415af57f53ef33626}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a7b722d9c1409540415af57f53ef33626}} 
+{\bfseries word\+\_\+counts} = Many\+To\+Many\+Field(Word\+Count, related\+\_\+name=\textquotesingle{}content\+\_\+ratings\textquotesingle{})
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ae7495529d275dd1d30db23609d527f5f}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ae7495529d275dd1d30db23609d527f5f}} 
+{\bfseries created} = Date\+Time\+Field(auto\+\_\+now\+\_\+add=True)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_abd74e4d4b7338b52bafcae8eec461de2}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_abd74e4d4b7338b52bafcae8eec461de2}} 
+{\bfseries updated} = Date\+Time\+Field(auto\+\_\+now=True)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a47b03ebc053ae48c29a43bada1502fb8}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a47b03ebc053ae48c29a43bada1502fb8}} 
+{\bfseries content\+\_\+ratings} = Manager()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This Model contains data related to one rated content,
+its overall rating, category ratings, word counts,
+and created and updated dates.
+\end{DoxyVerb}
+ 
+
+Definition at line 6 of file content\+\_\+rating.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a51bddb1978f6388fdfd71ed6befda9bd}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a51bddb1978f6388fdfd71ed6befda9bd}} 
+\index{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}!delete@{delete}}
+\index{delete@{delete}!capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}}
+\subsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating.\+delete (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{args,  }\item[{}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Deletes this model after deleting its relatives.
+:return:
+\end{DoxyVerb}
+ 
+
+Definition at line 70 of file content\+\_\+rating.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ad2677eea30196cd809803f2dffc40767}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ad2677eea30196cd809803f2dffc40767}} 
+\index{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}!delete\+\_\+relatives@{delete\+\_\+relatives}}
+\index{delete\+\_\+relatives@{delete\+\_\+relatives}!capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}}
+\subsubsection{\texorpdfstring{delete\+\_\+relatives()}{delete\_relatives()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating.\+delete\+\_\+relatives (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Deletes relatives to this model.
+:return:
+\end{DoxyVerb}
+ 
+
+Definition at line 53 of file content\+\_\+rating.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a7dbc3b35b8a4a6489ae0fd9b31819794}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a7dbc3b35b8a4a6489ae0fd9b31819794}} 
+\index{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}!get\+\_\+category\+\_\+ratings@{get\+\_\+category\+\_\+ratings}}
+\index{get\+\_\+category\+\_\+ratings@{get\+\_\+category\+\_\+ratings}!capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}}
+\subsubsection{\texorpdfstring{get\+\_\+category\+\_\+ratings()}{get\_category\_ratings()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating.\+get\+\_\+category\+\_\+ratings (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Retrieves the CategoryRatings for this Category.
+:return: a dict of CategoryRatings.
+\end{DoxyVerb}
+ 
+
+Definition at line 81 of file content\+\_\+rating.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_aa7de27c1a4d3133161bbfab07eba8e85}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_aa7de27c1a4d3133161bbfab07eba8e85}} 
+\index{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}!get\+\_\+word\+\_\+count\+\_\+category@{get\+\_\+word\+\_\+count\+\_\+category}}
+\index{get\+\_\+word\+\_\+count\+\_\+category@{get\+\_\+word\+\_\+count\+\_\+category}!capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}}
+\subsubsection{\texorpdfstring{get\+\_\+word\+\_\+count\+\_\+category()}{get\_word\_count\_category()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating.\+get\+\_\+word\+\_\+count\+\_\+category (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Compile a dictionary of the WordCounts for this ContentRating's \
+Categories.
+:return: a dictionary of Categories, Words, and their Counts.
+\end{DoxyVerb}
+ 
+
+Definition at line 101 of file content\+\_\+rating.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a90cb62281932167c282b0494195c5a7f}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a90cb62281932167c282b0494195c5a7f}} 
+\index{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}!is\+Orphaned@{is\+Orphaned}}
+\index{is\+Orphaned@{is\+Orphaned}!capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}}
+\subsubsection{\texorpdfstring{is\+Orphaned()}{isOrphaned()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating.\+is\+Orphaned (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if no relatives rely on this model instance.
+:return: True if no relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 46 of file content\+\_\+rating.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a1a4c74dc2d2b659db1f127819ff0e37c}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a1a4c74dc2d2b659db1f127819ff0e37c}} 
+\index{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}!is\+Related@{is\+Related}}
+\index{is\+Related@{is\+Related}!capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}}
+\subsubsection{\texorpdfstring{is\+Related()}{isRelated()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating.\+is\+Related (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if any relatives rely on this model instance.
+:return: True if relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 39 of file content\+\_\+rating.\+py.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ab2007bbf16532760e5c20d10dee9adb8}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_ab2007bbf16532760e5c20d10dee9adb8}} 
+\index{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}!category\+\_\+ratings@{category\+\_\+ratings}}
+\index{category\+\_\+ratings@{category\+\_\+ratings}!capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}}
+\subsubsection{\texorpdfstring{category\+\_\+ratings}{category\_ratings}}
+{\footnotesize\ttfamily capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating.\+category\+\_\+ratings\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  ManyToManyField(
+        CategoryRating,
+        related\_name=\textcolor{stringliteral}{'content\_ratings'})
+\end{DoxyCode}
+
+
+Definition at line 21 of file content\+\_\+rating.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a5240f3755ad71d33087cf98744b86394}\label{classcapstoneproject_1_1models_1_1models_1_1content__rating_1_1_content_rating_a5240f3755ad71d33087cf98744b86394}} 
+\index{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}!content@{content}}
+\index{content@{content}!capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating@{capstoneproject\+::models\+::models\+::content\+\_\+rating\+::\+Content\+Rating}}
+\subsubsection{\texorpdfstring{content}{content}}
+{\footnotesize\ttfamily capstoneproject.\+models.\+models.\+content\+\_\+rating.\+Content\+Rating.\+content\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  ForeignKey(
+        \textcolor{stringliteral}{'Content'},
+        related\_name=\textcolor{stringliteral}{'content\_ratings'},
+        on\_delete=CASCADE)
+\end{DoxyCode}
+
+
+Definition at line 16 of file content\+\_\+rating.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/models/models/content\+\_\+rating.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,100 @@
+\hypertarget{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm}{}\section{capstoneproject.\+content\+\_\+rating.\+algorithm.\+content\+\_\+rating.\+Content\+Rating\+Algorithm Class Reference}
+\label{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm}\index{capstoneproject.\+content\+\_\+rating.\+algorithm.\+content\+\_\+rating.\+Content\+Rating\+Algorithm@{capstoneproject.\+content\+\_\+rating.\+algorithm.\+content\+\_\+rating.\+Content\+Rating\+Algorithm}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_abc5f346185684c1797fbd7338662deac}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_ac7a8c6b8bbe2a3f79cbbbcc7d1867fc4}{correct\+\_\+spelling}} (self, words)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_aa1231998b1d540c0ea6979ccb241ac4f}{tokenize}} (self, text, content\+\_\+type, user)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_a6c04fa093b9f7582a97aeb9d4d453048}{algorithm}} (self, text\+\_\+string, user, content\+\_\+type)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_a9ab4b8322dccb24ddd553eca33ddac85}\label{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_a9ab4b8322dccb24ddd553eca33ddac85}} 
+{\bfseries spellchecker}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Class to implement the content rating algorithm and contain relevant methods.
+\end{DoxyVerb}
+ 
+
+Definition at line 25 of file content\+\_\+rating.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_abc5f346185684c1797fbd7338662deac}\label{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_abc5f346185684c1797fbd7338662deac}} 
+\index{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm@{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm@{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+algorithm.\+content\+\_\+rating.\+Content\+Rating\+Algorithm.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Initialize the ContentRating class by initializing the spell checker.
+\end{DoxyVerb}
+ 
+
+Definition at line 29 of file content\+\_\+rating.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_a6c04fa093b9f7582a97aeb9d4d453048}\label{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_a6c04fa093b9f7582a97aeb9d4d453048}} 
+\index{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm@{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm}!algorithm@{algorithm}}
+\index{algorithm@{algorithm}!capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm@{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm}}
+\subsubsection{\texorpdfstring{algorithm()}{algorithm()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+algorithm.\+content\+\_\+rating.\+Content\+Rating\+Algorithm.\+algorithm (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{text\+\_\+string,  }\item[{}]{user,  }\item[{}]{content\+\_\+type }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Implement the offensive content classification and content rating algorithm.
+:param text_string: A string containing the text to classify and rate.
+:param user: A User
+:param content_type: an int, 0-4, 0=song, 1=movie, 2=book, 3=website, 4=document
+:return: a Text object, containing the results.
+\end{DoxyVerb}
+ 
+
+Definition at line 81 of file content\+\_\+rating.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_ac7a8c6b8bbe2a3f79cbbbcc7d1867fc4}\label{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_ac7a8c6b8bbe2a3f79cbbbcc7d1867fc4}} 
+\index{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm@{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm}!correct\+\_\+spelling@{correct\+\_\+spelling}}
+\index{correct\+\_\+spelling@{correct\+\_\+spelling}!capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm@{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm}}
+\subsubsection{\texorpdfstring{correct\+\_\+spelling()}{correct\_spelling()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+algorithm.\+content\+\_\+rating.\+Content\+Rating\+Algorithm.\+correct\+\_\+spelling (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{words }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}"
+This function performs the spelling correction functionality by identifying words within a given sentence that
+do not appear within the dictionary. If the word does not appear, it corrects the word to its most probable
+match.
+:param words: A list containing the words within a sentence.
+:return: A list of the sentence's words with no typos.
+\end{DoxyVerb}
+ 
+
+Definition at line 38 of file content\+\_\+rating.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_aa1231998b1d540c0ea6979ccb241ac4f}\label{classcapstoneproject_1_1content__rating_1_1algorithm_1_1content__rating_1_1_content_rating_algorithm_aa1231998b1d540c0ea6979ccb241ac4f}} 
+\index{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm@{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm}!tokenize@{tokenize}}
+\index{tokenize@{tokenize}!capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm@{capstoneproject\+::content\+\_\+rating\+::algorithm\+::content\+\_\+rating\+::\+Content\+Rating\+Algorithm}}
+\subsubsection{\texorpdfstring{tokenize()}{tokenize()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+algorithm.\+content\+\_\+rating.\+Content\+Rating\+Algorithm.\+tokenize (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{text,  }\item[{}]{content\+\_\+type,  }\item[{}]{user }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Perform the first phase of the content rating algorithm by tokenizing and normalizing the text.
+:param text: The text, given as a string, to tokenize and normalize.
+:param content_type: an int, 0-4, 0=song, 1=movie, 2=book, 3=website, 4=document
+:param user: a User
+:return: The list of tokenized sentences.
+\end{DoxyVerb}
+ 
+
+Definition at line 57 of file content\+\_\+rating.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/content\+\_\+rating/algorithm/content\+\_\+rating.\+py\end{DoxyCompactItemize}

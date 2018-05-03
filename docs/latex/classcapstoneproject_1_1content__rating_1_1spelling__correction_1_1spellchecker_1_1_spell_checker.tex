@@ -1,0 +1,230 @@
+\hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker}{}\section{capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker Class Reference}
+\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker}\index{capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker@{capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker}}
+Inheritance diagram for capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a6ec738f704c42932bedb9d09be9392dc}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, language=\textquotesingle{}en\textquotesingle{}, local\+\_\+dictionary=None)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ae287b020e8ecf3dffe0c05ad2db51937}{\+\_\+\+\_\+contains\+\_\+\+\_\+}} (self, key)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_adb5b222940adf8f86d931735144577b5}{\+\_\+\+\_\+getitem\+\_\+\+\_\+}} (self, key)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a7365ff0037585d9ebd00eadae513e96a}{word\+\_\+frequency}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a7a2a7289252188ae289e4cd9f46d6b25}{word\+\_\+probability}} (self, word, total\+\_\+words=None)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a4e7085f88c7caf33686e956c14fb435a}{correction}} (self, word)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a82729e9d8e408975c17a24832e7fc81c}{candidates}} (self, word)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ac2a86129d68d74a40fe7f76960320cff}{known}} (self, \mbox{\hyperlink{namespacecapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_a4ab1d9ccddc3e0703cea49bc4b51df88}{words}})
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a431c13f3fa86a5c60ad715e3f910f4c4}{unknown}} (self, \mbox{\hyperlink{namespacecapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_a4ab1d9ccddc3e0703cea49bc4b51df88}{words}})
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a4b066ee1bc74ebd8008513db4032da7d}{edit\+\_\+distance\+\_\+1}} (self, word)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ab7f996fc76aae3a1d9de0fcf07e2864b}{edit\+\_\+distance\+\_\+2}} (self, word)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}The SpellChecker class encapsulates the basics needed to accomplish a simple spell checking algorithm.
+It is based on the work by Peter Norvig (https://norvig.com/spell-correct.html).
+
+    Args:
+        language (str): The language of the dictionary to load or None for no dictionary. Defaults to `en`.
+        local_dictionary (str): The path to a locally stored word frequency dictionary.
+\end{DoxyVerb}
+ 
+
+Definition at line 15 of file spellchecker.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a6ec738f704c42932bedb9d09be9392dc}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a6ec738f704c42932bedb9d09be9392dc}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{language = {\ttfamily \textquotesingle{}en\textquotesingle{}},  }\item[{}]{local\+\_\+dictionary = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Overwrites the __init__ function and loads the system's dictionary.
+:param language: the dictionary's language, set to English.
+:param local_dictionary: the local_dictionary containing the words and word frequencies to be used.
+\end{DoxyVerb}
+ 
+
+Definition at line 25 of file spellchecker.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ae287b020e8ecf3dffe0c05ad2db51937}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ae287b020e8ecf3dffe0c05ad2db51937}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!\+\_\+\+\_\+contains\+\_\+\+\_\+@{\+\_\+\+\_\+contains\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+contains\+\_\+\+\_\+@{\+\_\+\+\_\+contains\+\_\+\+\_\+}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+contains\+\_\+\+\_\+()}{\_\_contains\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+\_\+\+\_\+contains\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{key }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}setup easier known checks \end{DoxyVerb}
+ 
+
+Definition at line 43 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_adb5b222940adf8f86d931735144577b5}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_adb5b222940adf8f86d931735144577b5}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!\+\_\+\+\_\+getitem\+\_\+\+\_\+@{\+\_\+\+\_\+getitem\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+getitem\+\_\+\+\_\+@{\+\_\+\+\_\+getitem\+\_\+\+\_\+}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+getitem\+\_\+\+\_\+()}{\_\_getitem\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+\_\+\+\_\+getitem\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{key }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}setup easier frequency checks \end{DoxyVerb}
+ 
+
+Definition at line 47 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a82729e9d8e408975c17a24832e7fc81c}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a82729e9d8e408975c17a24832e7fc81c}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!candidates@{candidates}}
+\index{candidates@{candidates}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{candidates()}{candidates()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+candidates (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{word }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Generate possible spelling corrections for the provided word up to an edit distance of two, if and
+only when needed.
+
+    Args:
+word (str): The word for which to calculate candidate spellings.
+    Returns:
+set: The set of words that are possible candidates.
+\end{DoxyVerb}
+ 
+
+Definition at line 85 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a4e7085f88c7caf33686e956c14fb435a}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a4e7085f88c7caf33686e956c14fb435a}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!correction@{correction}}
+\index{correction@{correction}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{correction()}{correction()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+correction (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{word }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The most probable correct spelling for the word.
+
+    Args:
+word (str): The word to correct
+    Returns:
+str: The most likely candidate
+\end{DoxyVerb}
+ 
+
+Definition at line 74 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a4b066ee1bc74ebd8008513db4032da7d}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a4b066ee1bc74ebd8008513db4032da7d}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!edit\+\_\+distance\+\_\+1@{edit\+\_\+distance\+\_\+1}}
+\index{edit\+\_\+distance\+\_\+1@{edit\+\_\+distance\+\_\+1}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{edit\+\_\+distance\+\_\+1()}{edit\_distance\_1()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+edit\+\_\+distance\+\_\+1 (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{word }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Compute all strings that are one edit away from `word` using only the letters in the corpus.
+
+    Args:
+word (str): The word for which to calculate the edit distance.
+    Returns:
+set: The set of strings that are edit distance two from the provided word.
+\end{DoxyVerb}
+ 
+
+Definition at line 121 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ab7f996fc76aae3a1d9de0fcf07e2864b}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ab7f996fc76aae3a1d9de0fcf07e2864b}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!edit\+\_\+distance\+\_\+2@{edit\+\_\+distance\+\_\+2}}
+\index{edit\+\_\+distance\+\_\+2@{edit\+\_\+distance\+\_\+2}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{edit\+\_\+distance\+\_\+2()}{edit\_distance\_2()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+edit\+\_\+distance\+\_\+2 (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{word }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Compute all strings that are two edits away from `word` using only the letters in the corpus.
+
+    Args:
+word (str): The word for which to calculate the edit distance.
+    Returns:
+set: The set of strings that are edit distance one from the provided word.
+\end{DoxyVerb}
+ 
+
+Definition at line 138 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ac2a86129d68d74a40fe7f76960320cff}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_ac2a86129d68d74a40fe7f76960320cff}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!known@{known}}
+\index{known@{known}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{known()}{known()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+known (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{words }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The subset of `words` that appear in the dictionary of words.
+
+    Args:
+words (list): List of words to determine which are in the corpus
+    Returns:
+set: The set of those words from the input that are in the corpus
+\end{DoxyVerb}
+ 
+
+Definition at line 98 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a431c13f3fa86a5c60ad715e3f910f4c4}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a431c13f3fa86a5c60ad715e3f910f4c4}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!unknown@{unknown}}
+\index{unknown@{unknown}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{unknown()}{unknown()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+unknown (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{words }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The subset of `words` that do not appear in the dictionary.
+
+    Args:
+words (list): List of words to determine which are not in the \
+corpus
+    Returns:
+set: The set of those words from the input that are not in \
+the corpus \end{DoxyVerb}
+ 
+
+Definition at line 109 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a7365ff0037585d9ebd00eadae513e96a}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a7365ff0037585d9ebd00eadae513e96a}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!word\+\_\+frequency@{word\+\_\+frequency}}
+\index{word\+\_\+frequency@{word\+\_\+frequency}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{word\+\_\+frequency()}{word\_frequency()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+word\+\_\+frequency (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}An encapsulation of the word frequency dictionary
+:return: The word's frequency
+\end{DoxyVerb}
+ 
+
+Definition at line 52 of file spellchecker.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a7a2a7289252188ae289e4cd9f46d6b25}\label{classcapstoneproject_1_1content__rating_1_1spelling__correction_1_1spellchecker_1_1_spell_checker_a7a2a7289252188ae289e4cd9f46d6b25}} 
+\index{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}!word\+\_\+probability@{word\+\_\+probability}}
+\index{word\+\_\+probability@{word\+\_\+probability}!capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker@{capstoneproject\+::content\+\_\+rating\+::spelling\+\_\+correction\+::spellchecker\+::\+Spell\+Checker}}
+\subsubsection{\texorpdfstring{word\+\_\+probability()}{word\_probability()}}
+{\footnotesize\ttfamily def capstoneproject.\+content\+\_\+rating.\+spelling\+\_\+correction.\+spellchecker.\+Spell\+Checker.\+word\+\_\+probability (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{word,  }\item[{}]{total\+\_\+words = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the probability of the `word` being the desired, correct word.
+
+    Args:
+word (str): The word for which the word probability is calculated.
+total_words (int): The total number of words to use in the calculation; use the default for using
+the whole word frequency
+    Returns:
+float: The probability that the word is the correct word
+\end{DoxyVerb}
+ 
+
+Definition at line 59 of file spellchecker.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/content\+\_\+rating/spelling\+\_\+correction/spellchecker.\+py\end{DoxyCompactItemize}

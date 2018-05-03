@@ -1,0 +1,65 @@
+\hypertarget{namespacecapstoneproject_1_1helpers_1_1file__helper}{}\section{capstoneproject.\+helpers.\+file\+\_\+helper Namespace Reference}
+\label{namespacecapstoneproject_1_1helpers_1_1file__helper}\index{capstoneproject.\+helpers.\+file\+\_\+helper@{capstoneproject.\+helpers.\+file\+\_\+helper}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1file__helper_aba707ec8463cda5c19569a87d3becb36}{get\+\_\+file\+\_\+content}} (file)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1file__helper_a45deda865e5e8c475e447d08f0051d11}{chunk\+\_\+uploaded\+\_\+file}} (f)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1file__helper_a918cbaf95eec5aae9430d616de3ed087}{parse\+\_\+file}} (file\+\_\+name)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This file contains helper functions for interacting with files.
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1file__helper_a45deda865e5e8c475e447d08f0051d11}\label{namespacecapstoneproject_1_1helpers_1_1file__helper_a45deda865e5e8c475e447d08f0051d11}} 
+\index{capstoneproject\+::helpers\+::file\+\_\+helper@{capstoneproject\+::helpers\+::file\+\_\+helper}!chunk\+\_\+uploaded\+\_\+file@{chunk\+\_\+uploaded\+\_\+file}}
+\index{chunk\+\_\+uploaded\+\_\+file@{chunk\+\_\+uploaded\+\_\+file}!capstoneproject\+::helpers\+::file\+\_\+helper@{capstoneproject\+::helpers\+::file\+\_\+helper}}
+\subsubsection{\texorpdfstring{chunk\+\_\+uploaded\+\_\+file()}{chunk\_uploaded\_file()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+file\+\_\+helper.\+chunk\+\_\+uploaded\+\_\+file (\begin{DoxyParamCaption}\item[{}]{f }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function reads the given file in chunks and writes the file to another file.
+:param f: The file to read.
+:return: None.
+\end{DoxyVerb}
+ 
+
+Definition at line 24 of file file\+\_\+helper.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1file__helper_aba707ec8463cda5c19569a87d3becb36}\label{namespacecapstoneproject_1_1helpers_1_1file__helper_aba707ec8463cda5c19569a87d3becb36}} 
+\index{capstoneproject\+::helpers\+::file\+\_\+helper@{capstoneproject\+::helpers\+::file\+\_\+helper}!get\+\_\+file\+\_\+content@{get\+\_\+file\+\_\+content}}
+\index{get\+\_\+file\+\_\+content@{get\+\_\+file\+\_\+content}!capstoneproject\+::helpers\+::file\+\_\+helper@{capstoneproject\+::helpers\+::file\+\_\+helper}}
+\subsubsection{\texorpdfstring{get\+\_\+file\+\_\+content()}{get\_file\_content()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+file\+\_\+helper.\+get\+\_\+file\+\_\+content (\begin{DoxyParamCaption}\item[{}]{file }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function coordinates the collection of text from a file.
+It firsts unloads the file which is originally from the HTML request into a temp file.
+Then it parses the temp file to obtain its text.
+Then it deletes the temp file.
+Lastly it returns the file's text.
+:param file: A file.
+:return: A string, the file's text.
+\end{DoxyVerb}
+ 
+
+Definition at line 8 of file file\+\_\+helper.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1file__helper_a918cbaf95eec5aae9430d616de3ed087}\label{namespacecapstoneproject_1_1helpers_1_1file__helper_a918cbaf95eec5aae9430d616de3ed087}} 
+\index{capstoneproject\+::helpers\+::file\+\_\+helper@{capstoneproject\+::helpers\+::file\+\_\+helper}!parse\+\_\+file@{parse\+\_\+file}}
+\index{parse\+\_\+file@{parse\+\_\+file}!capstoneproject\+::helpers\+::file\+\_\+helper@{capstoneproject\+::helpers\+::file\+\_\+helper}}
+\subsubsection{\texorpdfstring{parse\+\_\+file()}{parse\_file()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+file\+\_\+helper.\+parse\+\_\+file (\begin{DoxyParamCaption}\item[{}]{file\+\_\+name }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function parses the contents of a temporary file based on the type of the file.
+:param file_name: A string, the file name.
+:return: A string, the contents of the file.
+\end{DoxyVerb}
+ 
+
+Definition at line 35 of file file\+\_\+helper.\+py.
+

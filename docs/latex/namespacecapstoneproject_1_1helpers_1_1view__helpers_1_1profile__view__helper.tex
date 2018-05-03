@@ -1,0 +1,56 @@
+\hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper}{}\section{capstoneproject.\+helpers.\+view\+\_\+helpers.\+profile\+\_\+view\+\_\+helper Namespace Reference}
+\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper}\index{capstoneproject.\+helpers.\+view\+\_\+helpers.\+profile\+\_\+view\+\_\+helper@{capstoneproject.\+helpers.\+view\+\_\+helpers.\+profile\+\_\+view\+\_\+helper}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_ac8e82ad5bd5540c4bad58cc277200a7f}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_ac8e82ad5bd5540c4bad58cc277200a7f}} 
+def {\bfseries get\+\_\+profile\+\_\+context}
+\item 
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_ae916831ca5fb1354396c987d392edf67}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_ae916831ca5fb1354396c987d392edf67}} 
+def {\bfseries get\+\_\+past\+\_\+ratings\+\_\+dict}
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_a3abb91199b4a640e7e8b022e5a932bbe}{create\+\_\+category\+\_\+dictionary}} (post)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_a525487a0bcbba6157d364edc5cab00f7}{update\+\_\+user\+\_\+category\+\_\+weights}} (request)
+\item 
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_a6003d8d07de17b1e9d63c4a6318f9d82}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_a6003d8d07de17b1e9d63c4a6318f9d82}} 
+def {\bfseries delete\+\_\+user}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This file contains helper functions for the profile view
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_a3abb91199b4a640e7e8b022e5a932bbe}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_a3abb91199b4a640e7e8b022e5a932bbe}} 
+\index{capstoneproject\+::helpers\+::view\+\_\+helpers\+::profile\+\_\+view\+\_\+helper@{capstoneproject\+::helpers\+::view\+\_\+helpers\+::profile\+\_\+view\+\_\+helper}!create\+\_\+category\+\_\+dictionary@{create\+\_\+category\+\_\+dictionary}}
+\index{create\+\_\+category\+\_\+dictionary@{create\+\_\+category\+\_\+dictionary}!capstoneproject\+::helpers\+::view\+\_\+helpers\+::profile\+\_\+view\+\_\+helper@{capstoneproject\+::helpers\+::view\+\_\+helpers\+::profile\+\_\+view\+\_\+helper}}
+\subsubsection{\texorpdfstring{create\+\_\+category\+\_\+dictionary()}{create\_category\_dictionary()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+view\+\_\+helpers.\+profile\+\_\+view\+\_\+helper.\+create\+\_\+category\+\_\+dictionary (\begin{DoxyParamCaption}\item[{}]{post }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function creates a dictionary from an HTTP Request Post
+that contains category names as keys and their weights as values.
+:param post: A dict, the POST from the HTTP Request
+:return: A dict
+\end{DoxyVerb}
+ 
+
+Definition at line 49 of file profile\+\_\+view\+\_\+helper.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_a525487a0bcbba6157d364edc5cab00f7}\label{namespacecapstoneproject_1_1helpers_1_1view__helpers_1_1profile__view__helper_a525487a0bcbba6157d364edc5cab00f7}} 
+\index{capstoneproject\+::helpers\+::view\+\_\+helpers\+::profile\+\_\+view\+\_\+helper@{capstoneproject\+::helpers\+::view\+\_\+helpers\+::profile\+\_\+view\+\_\+helper}!update\+\_\+user\+\_\+category\+\_\+weights@{update\+\_\+user\+\_\+category\+\_\+weights}}
+\index{update\+\_\+user\+\_\+category\+\_\+weights@{update\+\_\+user\+\_\+category\+\_\+weights}!capstoneproject\+::helpers\+::view\+\_\+helpers\+::profile\+\_\+view\+\_\+helper@{capstoneproject\+::helpers\+::view\+\_\+helpers\+::profile\+\_\+view\+\_\+helper}}
+\subsubsection{\texorpdfstring{update\+\_\+user\+\_\+category\+\_\+weights()}{update\_user\_category\_weights()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+view\+\_\+helpers.\+profile\+\_\+view\+\_\+helper.\+update\+\_\+user\+\_\+category\+\_\+weights (\begin{DoxyParamCaption}\item[{}]{request }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function updates the weights associated with the user's
+category weight values.
+:param request: An HTTP Request
+:return: None
+\end{DoxyVerb}
+ 
+
+Definition at line 63 of file profile\+\_\+view\+\_\+helper.\+py.
+

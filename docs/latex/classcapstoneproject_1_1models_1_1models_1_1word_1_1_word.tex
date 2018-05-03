@@ -1,0 +1,204 @@
+\hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word}{}\section{capstoneproject.\+models.\+models.\+word.\+Word Class Reference}
+\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word}\index{capstoneproject.\+models.\+models.\+word.\+Word@{capstoneproject.\+models.\+models.\+word.\+Word}}
+Inheritance diagram for capstoneproject.\+models.\+models.\+word.\+Word\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_af88bfd4c2f40177ad2dcca0df1f105b5}{\+\_\+\+\_\+str\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a0023cc31fbc8ecd7badc10b6dbf28dfe}{\+\_\+\+\_\+repr\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a89f963526b4f20842edea51501506e57}{is\+Default}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a3a9a46943c7d9b829b0d2cf4edc91f96}{is\+Custom}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a6f831976b471d46e49404bceb2e591e9}{is\+Related}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a2ce1740d8a560020d9421af52f740bcd}{is\+Orphaned}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_ac58fb1a2a3c08e9268f571f299089084}{delete\+\_\+relatives}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a341fd09dc63e4f208ac0d1fc1669e7fe}{get\+\_\+word\+\_\+features}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a8ca06cbae5ad6c06c1cb4bb14e63a582}{get\+\_\+categories}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a650416daf4d5819e51ade1c960193174}{delete}} (self, args, kwargs)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_aa5a74600c7d5ecf8c42887672922cfd1}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_aa5a74600c7d5ecf8c42887672922cfd1}} 
+{\bfseries default} = Boolean\+Field(default=False)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a2fdde1fd4fa3d43b78f0a7e7984773d2}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a2fdde1fd4fa3d43b78f0a7e7984773d2}} 
+{\bfseries word\+\_\+features} = Many\+To\+Many\+Field(\mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word__feature_1_1_word_feature}{Word\+Feature}}, related\+\_\+name=\textquotesingle{}words\textquotesingle{})
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a9c51389998e665f38a20587dce68787a}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a9c51389998e665f38a20587dce68787a}} 
+{\bfseries name} = Char\+Field(unique=True, max\+\_\+length=30)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_ade3a1aaf6828879393d5fe7b13dab22b}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_ade3a1aaf6828879393d5fe7b13dab22b}} 
+{\bfseries words} = Word\+Query\+Set.\+as\+\_\+manager()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}A class representing the system's table of offensive Words.\end{DoxyVerb}
+ 
+
+Definition at line 7 of file word.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a0023cc31fbc8ecd7badc10b6dbf28dfe}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a0023cc31fbc8ecd7badc10b6dbf28dfe}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!\+\_\+\+\_\+repr\+\_\+\+\_\+@{\+\_\+\+\_\+repr\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+repr\+\_\+\+\_\+@{\+\_\+\+\_\+repr\+\_\+\+\_\+}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+repr\+\_\+\+\_\+()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Overwrites the __repr__ function to provide the name and features of
+the word.
+:return: A string containing the word's name and word features
+\end{DoxyVerb}
+ 
+
+Definition at line 23 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_af88bfd4c2f40177ad2dcca0df1f105b5}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_af88bfd4c2f40177ad2dcca0df1f105b5}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!\+\_\+\+\_\+str\+\_\+\+\_\+@{\+\_\+\+\_\+str\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+str\+\_\+\+\_\+@{\+\_\+\+\_\+str\+\_\+\+\_\+}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+str\+\_\+\+\_\+()}{\_\_str\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+\_\+\+\_\+str\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Overwrites the __str__ function to provide a string containing the
+word's name.
+
+Return:
+    str: The word's name.
+\end{DoxyVerb}
+ 
+
+Definition at line 14 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a650416daf4d5819e51ade1c960193174}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a650416daf4d5819e51ade1c960193174}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!delete@{delete}}
+\index{delete@{delete}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+delete (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{args,  }\item[{}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Deletes this model instance along with any relatives that \
+are only related to it.
+:param *args: Possible arguments to the default delete method.
+:param *kwargs: Possible arguments to the default delete method.
+:return:
+\end{DoxyVerb}
+ 
+
+Definition at line 99 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_ac58fb1a2a3c08e9268f571f299089084}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_ac58fb1a2a3c08e9268f571f299089084}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!delete\+\_\+relatives@{delete\+\_\+relatives}}
+\index{delete\+\_\+relatives@{delete\+\_\+relatives}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{delete\+\_\+relatives()}{delete\_relatives()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+delete\+\_\+relatives (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Deletes this model instance's related model instances.
+:return:
+\end{DoxyVerb}
+ 
+
+Definition at line 68 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a8ca06cbae5ad6c06c1cb4bb14e63a582}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a8ca06cbae5ad6c06c1cb4bb14e63a582}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!get\+\_\+categories@{get\+\_\+categories}}
+\index{get\+\_\+categories@{get\+\_\+categories}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{get\+\_\+categories()}{get\_categories()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+get\+\_\+categories (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Provides a list of the offensive categories of which the word belongs.
+:return: A list of offensive categories that the word is classified as.
+\end{DoxyVerb}
+ 
+
+Definition at line 89 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a341fd09dc63e4f208ac0d1fc1669e7fe}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a341fd09dc63e4f208ac0d1fc1669e7fe}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!get\+\_\+word\+\_\+features@{get\+\_\+word\+\_\+features}}
+\index{get\+\_\+word\+\_\+features@{get\+\_\+word\+\_\+features}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{get\+\_\+word\+\_\+features()}{get\_word\_features()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+get\+\_\+word\+\_\+features (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Provides the word's features
+:return: A dictionary mapping a word to its features.
+\end{DoxyVerb}
+ 
+
+Definition at line 78 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a3a9a46943c7d9b829b0d2cf4edc91f96}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a3a9a46943c7d9b829b0d2cf4edc91f96}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!is\+Custom@{is\+Custom}}
+\index{is\+Custom@{is\+Custom}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{is\+Custom()}{isCustom()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+is\+Custom (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if this model instance is User created.
+:return: True if this model instance is User created.
+\end{DoxyVerb}
+ 
+
+Definition at line 45 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a89f963526b4f20842edea51501506e57}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a89f963526b4f20842edea51501506e57}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!is\+Default@{is\+Default}}
+\index{is\+Default@{is\+Default}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{is\+Default()}{isDefault()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+is\+Default (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if this model instance is a default.
+:return: True if this model instance is a default.
+\end{DoxyVerb}
+ 
+
+Definition at line 38 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a2ce1740d8a560020d9421af52f740bcd}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a2ce1740d8a560020d9421af52f740bcd}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!is\+Orphaned@{is\+Orphaned}}
+\index{is\+Orphaned@{is\+Orphaned}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{is\+Orphaned()}{isOrphaned()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+is\+Orphaned (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if no relatives rely on this model instance.
+:return: True if no relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 60 of file word.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a6f831976b471d46e49404bceb2e591e9}\label{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word_a6f831976b471d46e49404bceb2e591e9}} 
+\index{capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}!is\+Related@{is\+Related}}
+\index{is\+Related@{is\+Related}!capstoneproject\+::models\+::models\+::word\+::\+Word@{capstoneproject\+::models\+::models\+::word\+::\+Word}}
+\subsubsection{\texorpdfstring{is\+Related()}{isRelated()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word.\+Word.\+is\+Related (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if any relatives rely on this model instance.
+:return: True if relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 52 of file word.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/models/models/word.\+py\end{DoxyCompactItemize}

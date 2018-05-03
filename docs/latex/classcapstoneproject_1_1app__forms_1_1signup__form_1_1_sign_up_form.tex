@@ -1,0 +1,175 @@
+\hypertarget{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form}{}\section{capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form Class Reference}
+\label{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form}\index{capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form@{capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form}}
+Inheritance diagram for capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_af4a56ce83a41432e702f9ad60f0254a5}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, args, kwargs)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_ace45969945cdf655e4d95de522c51bbd}{clean\+\_\+password2}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_aebbe9f53bbd5b9093bc862739b254b94}{save}} (self, commit=True)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+dictionary {\bfseries error\+\_\+messages}
+\item 
+{\bfseries username}
+\item 
+{\bfseries password1}
+\item 
+{\bfseries password2}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}    A form that creates a user, with no privileges, from the given username and
+    password.
+\end{DoxyVerb}
+ 
+
+Definition at line 10 of file signup\+\_\+form.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_af4a56ce83a41432e702f9ad60f0254a5}\label{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_af4a56ce83a41432e702f9ad60f0254a5}} 
+\index{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{args,  }\item[{}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Initialize a signup form.
+:param args:
+:param kwargs:
+\end{DoxyVerb}
+ 
+
+Definition at line 51 of file signup\+\_\+form.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_ace45969945cdf655e4d95de522c51bbd}\label{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_ace45969945cdf655e4d95de522c51bbd}} 
+\index{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}!clean\+\_\+password2@{clean\+\_\+password2}}
+\index{clean\+\_\+password2@{clean\+\_\+password2}!capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}}
+\subsubsection{\texorpdfstring{clean\+\_\+password2()}{clean\_password2()}}
+{\footnotesize\ttfamily def capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form.\+clean\+\_\+password2 (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Clean the sign up form. Raise an error if the passwords do not match, otherwise return the password.
+:return: The password provided.
+\end{DoxyVerb}
+ 
+
+Definition at line 59 of file signup\+\_\+form.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_aebbe9f53bbd5b9093bc862739b254b94}\label{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_aebbe9f53bbd5b9093bc862739b254b94}} 
+\index{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}!save@{save}}
+\index{save@{save}!capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}}
+\subsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily def capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form.\+save (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{commit = {\ttfamily True} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Saves a new account if the information is valid.
+:param commit: Saves the user if True.
+:return: The user.
+\end{DoxyVerb}
+ 
+
+Definition at line 87 of file signup\+\_\+form.\+py.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_ac68ce8b69e6cf0465f7a5860b07d2b67}\label{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_ac68ce8b69e6cf0465f7a5860b07d2b67}} 
+\index{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}!error\+\_\+messages@{error\+\_\+messages}}
+\index{error\+\_\+messages@{error\+\_\+messages}!capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}}
+\subsubsection{\texorpdfstring{error\+\_\+messages}{error\_messages}}
+{\footnotesize\ttfamily dictionary capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form.\+error\+\_\+messages\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  \{
+        \textcolor{stringliteral}{'password\_mismatch'}: \_(\textcolor{stringliteral}{"The two password fields didn't match."})\}
+\end{DoxyCode}
+
+
+Definition at line 15 of file signup\+\_\+form.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_a65d435fb709b56a0b919632c0eeb7095}\label{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_a65d435fb709b56a0b919632c0eeb7095}} 
+\index{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}!password1@{password1}}
+\index{password1@{password1}!capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}}
+\subsubsection{\texorpdfstring{password1}{password1}}
+{\footnotesize\ttfamily capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form.\+password1\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  forms.CharField(
+        label=\_(\textcolor{stringliteral}{"Password"}),
+        max\_length=20,
+        strip=\textcolor{keyword}{False},
+        widget=forms.PasswordInput(
+            attrs=\{\textcolor{stringliteral}{'class'}: \textcolor{stringliteral}{'form-control'},
+                   \textcolor{stringliteral}{'placeholder'}: \textcolor{stringliteral}{'Enter password'}\}))
+\end{DoxyCode}
+
+
+Definition at line 27 of file signup\+\_\+form.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_a8b8032d9871205cab440dab3ce99440a}\label{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_a8b8032d9871205cab440dab3ce99440a}} 
+\index{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}!password2@{password2}}
+\index{password2@{password2}!capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}}
+\subsubsection{\texorpdfstring{password2}{password2}}
+{\footnotesize\ttfamily capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form.\+password2\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  forms.CharField(
+        label=(\textcolor{stringliteral}{"Password Confirmation"}),
+        max\_length=20,
+        widget=forms.PasswordInput(
+            attrs=\{\textcolor{stringliteral}{'class'}: \textcolor{stringliteral}{'form-control'},
+                   \textcolor{stringliteral}{'placeholder'}: \textcolor{stringliteral}{'Confirm password'}\}),
+        strip=\textcolor{keyword}{False},
+        help\_text=(\textcolor{stringliteral}{"Enter the same password as before, for verification."}))
+\end{DoxyCode}
+
+
+Definition at line 35 of file signup\+\_\+form.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_a8c27b29909d5bd4dbb401b9fa89577a6}\label{classcapstoneproject_1_1app__forms_1_1signup__form_1_1_sign_up_form_a8c27b29909d5bd4dbb401b9fa89577a6}} 
+\index{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}!username@{username}}
+\index{username@{username}!capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form@{capstoneproject\+::app\+\_\+forms\+::signup\+\_\+form\+::\+Sign\+Up\+Form}}
+\subsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily capstoneproject.\+app\+\_\+forms.\+signup\+\_\+form.\+Sign\+Up\+Form.\+username\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  forms.CharField(
+        label=\_(\textcolor{stringliteral}{"Username"}),
+        max\_length=20,
+        strip=\textcolor{keyword}{False},
+        widget=forms.TextInput(
+            attrs=\{\textcolor{stringliteral}{'class'}: \textcolor{stringliteral}{'form-control'},
+                   \textcolor{stringliteral}{'placeholder'}: \textcolor{stringliteral}{'Enter username'}\}),
+        help\_text=\_(\textcolor{stringliteral}{"Enter a username with less than 20 characters."}))
+\end{DoxyCode}
+
+
+Definition at line 18 of file signup\+\_\+form.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/app\+\_\+forms/signup\+\_\+form.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,47 @@
+\hypertarget{namespacecapstoneproject_1_1helpers_1_1form__helper}{}\section{capstoneproject.\+helpers.\+form\+\_\+helper Namespace Reference}
+\label{namespacecapstoneproject_1_1helpers_1_1form__helper}\index{capstoneproject.\+helpers.\+form\+\_\+helper@{capstoneproject.\+helpers.\+form\+\_\+helper}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1form__helper_aa06dc0a0cc29411b56da354a8a844a7b}{signup}} (form, request)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1form__helper_aa1bad910ca4cb4dd4365d0e62e43d77c}{authenticate\+\_\+user}} (form)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This class contains functions to interact between user interactions provided through HTML requests and the forms that
+the user is using.
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1form__helper_aa1bad910ca4cb4dd4365d0e62e43d77c}\label{namespacecapstoneproject_1_1helpers_1_1form__helper_aa1bad910ca4cb4dd4365d0e62e43d77c}} 
+\index{capstoneproject\+::helpers\+::form\+\_\+helper@{capstoneproject\+::helpers\+::form\+\_\+helper}!authenticate\+\_\+user@{authenticate\+\_\+user}}
+\index{authenticate\+\_\+user@{authenticate\+\_\+user}!capstoneproject\+::helpers\+::form\+\_\+helper@{capstoneproject\+::helpers\+::form\+\_\+helper}}
+\subsubsection{\texorpdfstring{authenticate\+\_\+user()}{authenticate\_user()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+form\+\_\+helper.\+authenticate\+\_\+user (\begin{DoxyParamCaption}\item[{}]{form }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function attempts to authenticate an existing user and returns an authenticated user upon completion.
+:param form: The form containing the user's username and password.
+:return: An authenticated user.
+\end{DoxyVerb}
+ 
+
+Definition at line 25 of file form\+\_\+helper.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1form__helper_aa06dc0a0cc29411b56da354a8a844a7b}\label{namespacecapstoneproject_1_1helpers_1_1form__helper_aa06dc0a0cc29411b56da354a8a844a7b}} 
+\index{capstoneproject\+::helpers\+::form\+\_\+helper@{capstoneproject\+::helpers\+::form\+\_\+helper}!signup@{signup}}
+\index{signup@{signup}!capstoneproject\+::helpers\+::form\+\_\+helper@{capstoneproject\+::helpers\+::form\+\_\+helper}}
+\subsubsection{\texorpdfstring{signup()}{signup()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+form\+\_\+helper.\+signup (\begin{DoxyParamCaption}\item[{}]{form,  }\item[{}]{request }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function saves a new user account and then authenticate the user and log them in.
+:param form: The form the user filled in to sign up.
+:param request: The HTML request containing the request to sign up.
+:return: None
+\end{DoxyVerb}
+ 
+
+Definition at line 9 of file form\+\_\+helper.\+py.
+

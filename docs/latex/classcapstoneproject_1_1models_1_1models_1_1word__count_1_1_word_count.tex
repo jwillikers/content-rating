@@ -1,0 +1,79 @@
+\hypertarget{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count}{}\section{capstoneproject.\+models.\+models.\+word\+\_\+count.\+Word\+Count Class Reference}
+\label{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count}\index{capstoneproject.\+models.\+models.\+word\+\_\+count.\+Word\+Count@{capstoneproject.\+models.\+models.\+word\+\_\+count.\+Word\+Count}}
+Inheritance diagram for capstoneproject.\+models.\+models.\+word\+\_\+count.\+Word\+Count\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_abe18ee553574addf798e43a4a17d8344}{is\+Related}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a3fee9d9f7d420f70b1b2d2e9fef5d0a7}{is\+Orphaned}} (self)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a24e6b243c8b49e89741a7977dcbb0a6e}\label{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a24e6b243c8b49e89741a7977dcbb0a6e}} 
+def {\bfseries \+\_\+\+\_\+str\+\_\+\+\_\+} (self)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a1d94f8ad3f136346d809979987554f31}\label{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a1d94f8ad3f136346d809979987554f31}} 
+{\bfseries word} = Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1word_1_1_word}{Word}}\textquotesingle{}, related\+\_\+name=\textquotesingle{}word\+\_\+counts\textquotesingle{}, on\+\_\+delete=C\+A\+S\+C\+A\+DE)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a1f59187e689769e9541f71678c2bd563}\label{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a1f59187e689769e9541f71678c2bd563}} 
+{\bfseries count} = \mbox{\hyperlink{classcapstoneproject_1_1models_1_1fields_1_1word__count__field_1_1_word_count_field}{Word\+Count\+Field}}(default=1)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a280b8a20f5e928c0a55605652be647d0}\label{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a280b8a20f5e928c0a55605652be647d0}} 
+{\bfseries word\+\_\+counts} = Manager()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This Model contains information regarding the number of times
+a word appears in a text.
+\end{DoxyVerb}
+ 
+
+Definition at line 6 of file word\+\_\+count.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a3fee9d9f7d420f70b1b2d2e9fef5d0a7}\label{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_a3fee9d9f7d420f70b1b2d2e9fef5d0a7}} 
+\index{capstoneproject\+::models\+::models\+::word\+\_\+count\+::\+Word\+Count@{capstoneproject\+::models\+::models\+::word\+\_\+count\+::\+Word\+Count}!is\+Orphaned@{is\+Orphaned}}
+\index{is\+Orphaned@{is\+Orphaned}!capstoneproject\+::models\+::models\+::word\+\_\+count\+::\+Word\+Count@{capstoneproject\+::models\+::models\+::word\+\_\+count\+::\+Word\+Count}}
+\subsubsection{\texorpdfstring{is\+Orphaned()}{isOrphaned()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word\+\_\+count.\+Word\+Count.\+is\+Orphaned (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if no relatives rely on this model instance.
+:return: True if no relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 22 of file word\+\_\+count.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_abe18ee553574addf798e43a4a17d8344}\label{classcapstoneproject_1_1models_1_1models_1_1word__count_1_1_word_count_abe18ee553574addf798e43a4a17d8344}} 
+\index{capstoneproject\+::models\+::models\+::word\+\_\+count\+::\+Word\+Count@{capstoneproject\+::models\+::models\+::word\+\_\+count\+::\+Word\+Count}!is\+Related@{is\+Related}}
+\index{is\+Related@{is\+Related}!capstoneproject\+::models\+::models\+::word\+\_\+count\+::\+Word\+Count@{capstoneproject\+::models\+::models\+::word\+\_\+count\+::\+Word\+Count}}
+\subsubsection{\texorpdfstring{is\+Related()}{isRelated()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+word\+\_\+count.\+Word\+Count.\+is\+Related (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if any relatives rely on this model instance.
+:return: True if relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 15 of file word\+\_\+count.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/models/models/word\+\_\+count.\+py\end{DoxyCompactItemize}

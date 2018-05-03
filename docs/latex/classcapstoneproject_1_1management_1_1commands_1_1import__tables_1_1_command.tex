@@ -1,0 +1,71 @@
+\hypertarget{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command}{}\section{capstoneproject.\+management.\+commands.\+import\+\_\+tables.\+Command Class Reference}
+\label{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command}\index{capstoneproject.\+management.\+commands.\+import\+\_\+tables.\+Command@{capstoneproject.\+management.\+commands.\+import\+\_\+tables.\+Command}}
+Inheritance diagram for capstoneproject.\+management.\+commands.\+import\+\_\+tables.\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a4656a82a4bacd81dcd535a2ba6c652fa}\label{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a4656a82a4bacd81dcd535a2ba6c652fa}} 
+def {\bfseries csv\+\_\+reader}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a24bcc70d03aa9a37bf7f24edc70f851e}\label{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a24bcc70d03aa9a37bf7f24edc70f851e}} 
+def {\bfseries import\+\_\+category}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a4c3c255dea0b11e58d1e595cddcf0576}\label{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a4c3c255dea0b11e58d1e595cddcf0576}} 
+def {\bfseries import\+\_\+word}
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a0dcd206805dbb47f91221c22dd2f2db0}{import\+\_\+tables}} (self, root\+\_\+folder=\textquotesingle{}\textquotesingle{}, category\+\_\+path=\textquotesingle{}\textquotesingle{}, word\+\_\+path=\textquotesingle{}\textquotesingle{})
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a0ab9db6ed07e47f4ff5e6a5beb51674c}{handle}} (self, args, options)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 32 of file import\+\_\+tables.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a0ab9db6ed07e47f4ff5e6a5beb51674c}\label{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a0ab9db6ed07e47f4ff5e6a5beb51674c}} 
+\index{capstoneproject\+::management\+::commands\+::import\+\_\+tables\+::\+Command@{capstoneproject\+::management\+::commands\+::import\+\_\+tables\+::\+Command}!handle@{handle}}
+\index{handle@{handle}!capstoneproject\+::management\+::commands\+::import\+\_\+tables\+::\+Command@{capstoneproject\+::management\+::commands\+::import\+\_\+tables\+::\+Command}}
+\subsubsection{\texorpdfstring{handle()}{handle()}}
+{\footnotesize\ttfamily def capstoneproject.\+management.\+commands.\+import\+\_\+tables.\+Command.\+handle (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{args,  }\item[{}]{options }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Imports tables from the root folder, category path, and word path.
+:param args:
+:param options:
+:return: None.
+\end{DoxyVerb}
+ 
+
+Definition at line 143 of file import\+\_\+tables.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a0dcd206805dbb47f91221c22dd2f2db0}\label{classcapstoneproject_1_1management_1_1commands_1_1import__tables_1_1_command_a0dcd206805dbb47f91221c22dd2f2db0}} 
+\index{capstoneproject\+::management\+::commands\+::import\+\_\+tables\+::\+Command@{capstoneproject\+::management\+::commands\+::import\+\_\+tables\+::\+Command}!import\+\_\+tables@{import\+\_\+tables}}
+\index{import\+\_\+tables@{import\+\_\+tables}!capstoneproject\+::management\+::commands\+::import\+\_\+tables\+::\+Command@{capstoneproject\+::management\+::commands\+::import\+\_\+tables\+::\+Command}}
+\subsubsection{\texorpdfstring{import\+\_\+tables()}{import\_tables()}}
+{\footnotesize\ttfamily def capstoneproject.\+management.\+commands.\+import\+\_\+tables.\+Command.\+import\+\_\+tables (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{root\+\_\+folder = {\ttfamily \textquotesingle{}\textquotesingle{}},  }\item[{}]{category\+\_\+path = {\ttfamily \textquotesingle{}\textquotesingle{}},  }\item[{}]{word\+\_\+path = {\ttfamily \textquotesingle{}\textquotesingle{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Import the tables from the csv files into the dictionary tables.
+:param root_folder: a string, the path to the folder
+where the csv's are located.
+:param category_path: a string, the path to the category csv file.
+:param word_path: a string, the path to the word csv file.
+:return: None
+\end{DoxyVerb}
+ 
+
+Definition at line 128 of file import\+\_\+tables.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/management/commands/import\+\_\+tables.\+py\end{DoxyCompactItemize}

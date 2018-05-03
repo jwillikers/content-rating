@@ -1,0 +1,181 @@
+\hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage}{}\section{capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage Class Reference}
+\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage}\index{capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage@{capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage}}
+Inheritance diagram for capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a8c5a538b7ce7cc8f2542a2c6ce3674f0}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a8c5a538b7ce7cc8f2542a2c6ce3674f0}} 
+def {\bfseries \+\_\+\+\_\+str\+\_\+\+\_\+} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_acee64beae981948db0a3decdf8f1033b}{create\+\_\+user\+\_\+storage}} (sender, instance, created, kwargs)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a78435bf6aa48eee6d2090e1c7977f000}{delete\+\_\+relatives}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_ab0d31f40530cadade0c9304061bcd3e5}{delete}} (self, args, kwargs)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a28af083de45df95cdfdd73d853ad1af8}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a28af083de45df95cdfdd73d853ad1af8}} 
+{\bfseries user} = One\+To\+One\+Field(User, on\+\_\+delete=C\+A\+S\+C\+A\+DE)
+\item 
+{\bfseries categories}
+\item 
+{\bfseries words}
+\item 
+{\bfseries word\+\_\+features}
+\item 
+{\bfseries ratings}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a52d6af55b4083df405389b9aa5acddca}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a52d6af55b4083df405389b9aa5acddca}} 
+{\bfseries user\+\_\+storage} = User\+Storage\+Query\+Set.\+as\+\_\+manager()
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a7851902ba5f507a22edf81bf694caf50}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a7851902ba5f507a22edf81bf694caf50}} 
+{\bfseries post\+\_\+save}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a0e11e35e8a540590c33d877fe9e7a906}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a0e11e35e8a540590c33d877fe9e7a906}} 
+{\bfseries sender}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This Model contains data that is specific to each user.
+\end{DoxyVerb}
+ 
+
+Definition at line 14 of file user\+\_\+storage.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_acee64beae981948db0a3decdf8f1033b}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_acee64beae981948db0a3decdf8f1033b}} 
+\index{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}!create\+\_\+user\+\_\+storage@{create\+\_\+user\+\_\+storage}}
+\index{create\+\_\+user\+\_\+storage@{create\+\_\+user\+\_\+storage}!capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}}
+\subsubsection{\texorpdfstring{create\+\_\+user\+\_\+storage()}{create\_user\_storage()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage.\+create\+\_\+user\+\_\+storage (\begin{DoxyParamCaption}\item[{}]{sender,  }\item[{}]{instance,  }\item[{}]{created,  }\item[{}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Creates a new user storage model upon creation of a new user.
+:param instance: the newly created User instance.
+:param created: Whether or not the User was successfully created.
+:param kwargs: Other arguments.
+:return:
+\end{DoxyVerb}
+ 
+
+Definition at line 46 of file user\+\_\+storage.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_ab0d31f40530cadade0c9304061bcd3e5}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_ab0d31f40530cadade0c9304061bcd3e5}} 
+\index{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}!delete@{delete}}
+\index{delete@{delete}!capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}}
+\subsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage.\+delete (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{args,  }\item[{}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Deletes this model instance along with any relatives that \
+are only related to it.
+:param *args: Possible arguments to the default delete method.
+:param *kwargs: Possible arguments to the default delete method.
+:return:
+\end{DoxyVerb}
+ 
+
+Definition at line 81 of file user\+\_\+storage.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a78435bf6aa48eee6d2090e1c7977f000}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a78435bf6aa48eee6d2090e1c7977f000}} 
+\index{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}!delete\+\_\+relatives@{delete\+\_\+relatives}}
+\index{delete\+\_\+relatives@{delete\+\_\+relatives}!capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}}
+\subsubsection{\texorpdfstring{delete\+\_\+relatives()}{delete\_relatives()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage.\+delete\+\_\+relatives (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Deletes this model instance's related model instances.
+:return:
+\end{DoxyVerb}
+ 
+
+Definition at line 57 of file user\+\_\+storage.\+py.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_af2711919329388e7db3c2efc459b72a7}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_af2711919329388e7db3c2efc459b72a7}} 
+\index{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}!categories@{categories}}
+\index{categories@{categories}!capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}}
+\subsubsection{\texorpdfstring{categories}{categories}}
+{\footnotesize\ttfamily capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage.\+categories\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  ManyToManyField(
+        Category,
+        related\_name=\textcolor{stringliteral}{'user\_storage'},
+        blank=\textcolor{keyword}{True})
+\end{DoxyCode}
+
+
+Definition at line 19 of file user\+\_\+storage.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a918ac2eca21ff60132ffbf0ed6efe46c}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a918ac2eca21ff60132ffbf0ed6efe46c}} 
+\index{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}!ratings@{ratings}}
+\index{ratings@{ratings}!capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}}
+\subsubsection{\texorpdfstring{ratings}{ratings}}
+{\footnotesize\ttfamily capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage.\+ratings\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  ManyToManyField(
+        ContentRating,
+        related\_name=\textcolor{stringliteral}{'user\_storage'},
+        blank=\textcolor{keyword}{True})
+\end{DoxyCode}
+
+
+Definition at line 31 of file user\+\_\+storage.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a39353ace70868bbbcdb134a89c51adc7}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a39353ace70868bbbcdb134a89c51adc7}} 
+\index{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}!word\+\_\+features@{word\+\_\+features}}
+\index{word\+\_\+features@{word\+\_\+features}!capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}}
+\subsubsection{\texorpdfstring{word\+\_\+features}{word\_features}}
+{\footnotesize\ttfamily capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage.\+word\+\_\+features\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  ManyToManyField(
+        WordFeature,
+        related\_name=\textcolor{stringliteral}{'user\_storage'},
+        blank=\textcolor{keyword}{True})
+\end{DoxyCode}
+
+
+Definition at line 27 of file user\+\_\+storage.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a37b41faaab81909ee20da3697773defc}\label{classcapstoneproject_1_1models_1_1models_1_1user__storage_1_1_user_storage_a37b41faaab81909ee20da3697773defc}} 
+\index{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}!words@{words}}
+\index{words@{words}!capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage@{capstoneproject\+::models\+::models\+::user\+\_\+storage\+::\+User\+Storage}}
+\subsubsection{\texorpdfstring{words}{words}}
+{\footnotesize\ttfamily capstoneproject.\+models.\+models.\+user\+\_\+storage.\+User\+Storage.\+words\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  ManyToManyField(
+        Word,
+        related\_name=\textcolor{stringliteral}{'user\_storage'},
+        blank=\textcolor{keyword}{True})
+\end{DoxyCode}
+
+
+Definition at line 23 of file user\+\_\+storage.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/models/models/user\+\_\+storage.\+py\end{DoxyCompactItemize}

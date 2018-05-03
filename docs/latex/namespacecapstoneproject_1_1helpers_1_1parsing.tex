@@ -1,0 +1,132 @@
+\hypertarget{namespacecapstoneproject_1_1helpers_1_1parsing}{}\section{capstoneproject.\+helpers.\+parsing Namespace Reference}
+\label{namespacecapstoneproject_1_1helpers_1_1parsing}\index{capstoneproject.\+helpers.\+parsing@{capstoneproject.\+helpers.\+parsing}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1parsing_a46495d837ce1ac5e6d70c12bca06ed64}{parse\+\_\+docx}} (filename)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1parsing_aaedb4fff5ed35e366bded59afca0c56f}{parse\+\_\+pdf}} (filename)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1parsing_a5f5865532be60ee335c3d045aeb06a47}{parse\+\_\+epub}} (filename)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1parsing_aeb58d9fbf20a62927e3f22490f1dc760}{parse\+\_\+txt}} (filename)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1parsing_affb8b513c7f687e47ca2c068cfa28d2d}{parse\+\_\+srt}} (filename)
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1parsing_ab61dc07445d1ead2bf985aa1ddcadc7c}{search\+\_\+songs}} (song, artist=\char`\"{}\char`\"{})
+\item 
+def \mbox{\hyperlink{namespacecapstoneproject_1_1helpers_1_1parsing_a6b677a3dfd33e29cc5e4049f9a174062}{search\+\_\+website}} (website)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This file contains functions for parsing different forms of text.
+The functions convert the various text formats into simple strings.
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1parsing_a46495d837ce1ac5e6d70c12bca06ed64}\label{namespacecapstoneproject_1_1helpers_1_1parsing_a46495d837ce1ac5e6d70c12bca06ed64}} 
+\index{capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}!parse\+\_\+docx@{parse\+\_\+docx}}
+\index{parse\+\_\+docx@{parse\+\_\+docx}!capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}}
+\subsubsection{\texorpdfstring{parse\+\_\+docx()}{parse\_docx()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+parsing.\+parse\+\_\+docx (\begin{DoxyParamCaption}\item[{}]{filename }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function parses a docx file by parsing the file given by the filename and returning a string of the
+content in the file.
+:param filename: The docx file to parse.
+:return: A string containing the docx file's contents.
+\end{DoxyVerb}
+ 
+
+Definition at line 18 of file parsing.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1parsing_a5f5865532be60ee335c3d045aeb06a47}\label{namespacecapstoneproject_1_1helpers_1_1parsing_a5f5865532be60ee335c3d045aeb06a47}} 
+\index{capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}!parse\+\_\+epub@{parse\+\_\+epub}}
+\index{parse\+\_\+epub@{parse\+\_\+epub}!capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}}
+\subsubsection{\texorpdfstring{parse\+\_\+epub()}{parse\_epub()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+parsing.\+parse\+\_\+epub (\begin{DoxyParamCaption}\item[{}]{filename }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function parses an epub file by parsing the file given by the filename and returning a string of the content
+in the file.
+:param filename: The epub file to parse.
+:return: A string containing the epub file's contents.
+\end{DoxyVerb}
+ 
+
+Definition at line 56 of file parsing.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1parsing_aaedb4fff5ed35e366bded59afca0c56f}\label{namespacecapstoneproject_1_1helpers_1_1parsing_aaedb4fff5ed35e366bded59afca0c56f}} 
+\index{capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}!parse\+\_\+pdf@{parse\+\_\+pdf}}
+\index{parse\+\_\+pdf@{parse\+\_\+pdf}!capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}}
+\subsubsection{\texorpdfstring{parse\+\_\+pdf()}{parse\_pdf()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+parsing.\+parse\+\_\+pdf (\begin{DoxyParamCaption}\item[{}]{filename }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function parses a pdf file by parsing the file given by the filename and returning a string of the content in
+the file.
+:param filename: The pdf file to parse.
+:return: A string containing the pdf file's contents.
+\end{DoxyVerb}
+ 
+
+Definition at line 34 of file parsing.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1parsing_affb8b513c7f687e47ca2c068cfa28d2d}\label{namespacecapstoneproject_1_1helpers_1_1parsing_affb8b513c7f687e47ca2c068cfa28d2d}} 
+\index{capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}!parse\+\_\+srt@{parse\+\_\+srt}}
+\index{parse\+\_\+srt@{parse\+\_\+srt}!capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}}
+\subsubsection{\texorpdfstring{parse\+\_\+srt()}{parse\_srt()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+parsing.\+parse\+\_\+srt (\begin{DoxyParamCaption}\item[{}]{filename }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function parses srt subtitle file by parsing the file given by the filename and returning a string of the
+content in the file.
+:param filename: The srt subtitle file to parse.
+:return: A string containing the srt subtitle file's contents.
+\end{DoxyVerb}
+ 
+
+Definition at line 85 of file parsing.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1parsing_aeb58d9fbf20a62927e3f22490f1dc760}\label{namespacecapstoneproject_1_1helpers_1_1parsing_aeb58d9fbf20a62927e3f22490f1dc760}} 
+\index{capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}!parse\+\_\+txt@{parse\+\_\+txt}}
+\index{parse\+\_\+txt@{parse\+\_\+txt}!capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}}
+\subsubsection{\texorpdfstring{parse\+\_\+txt()}{parse\_txt()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+parsing.\+parse\+\_\+txt (\begin{DoxyParamCaption}\item[{}]{filename }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function parses a txt file by parsing the file given by the filename and returning a string of the content
+in the file.
+:param filename: The txt file to parse.
+:return: A string containing the txt file's contents.
+\end{DoxyVerb}
+ 
+
+Definition at line 72 of file parsing.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1parsing_ab61dc07445d1ead2bf985aa1ddcadc7c}\label{namespacecapstoneproject_1_1helpers_1_1parsing_ab61dc07445d1ead2bf985aa1ddcadc7c}} 
+\index{capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}!search\+\_\+songs@{search\+\_\+songs}}
+\index{search\+\_\+songs@{search\+\_\+songs}!capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}}
+\subsubsection{\texorpdfstring{search\+\_\+songs()}{search\_songs()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+parsing.\+search\+\_\+songs (\begin{DoxyParamCaption}\item[{}]{song,  }\item[{}]{artist = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function searches for a song given a song title and artist and returns a string containing the lyrics.
+:param song: The song title to search.
+:param artist: The artist of the song to search.
+:return: A string containing the song's lyrics.
+\end{DoxyVerb}
+ 
+
+Definition at line 103 of file parsing.\+py.
+
+\mbox{\Hypertarget{namespacecapstoneproject_1_1helpers_1_1parsing_a6b677a3dfd33e29cc5e4049f9a174062}\label{namespacecapstoneproject_1_1helpers_1_1parsing_a6b677a3dfd33e29cc5e4049f9a174062}} 
+\index{capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}!search\+\_\+website@{search\+\_\+website}}
+\index{search\+\_\+website@{search\+\_\+website}!capstoneproject\+::helpers\+::parsing@{capstoneproject\+::helpers\+::parsing}}
+\subsubsection{\texorpdfstring{search\+\_\+website()}{search\_website()}}
+{\footnotesize\ttfamily def capstoneproject.\+helpers.\+parsing.\+search\+\_\+website (\begin{DoxyParamCaption}\item[{}]{website }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function gets the contents from a website and returns its contents as a string.
+:param website: The website title to retrieve content from.
+:return: A string containing the website's contents.
+\end{DoxyVerb}
+ 
+
+Definition at line 141 of file parsing.\+py.
+

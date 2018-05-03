@@ -1,0 +1,140 @@
+\hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category}{}\section{capstoneproject.\+models.\+models.\+category.\+Category Class Reference}
+\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category}\index{capstoneproject.\+models.\+models.\+category.\+Category@{capstoneproject.\+models.\+models.\+category.\+Category}}
+Inheritance diagram for capstoneproject.\+models.\+models.\+category.\+Category\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_ac82aee120190ed17cbe05a413a1dda24}{\+\_\+\+\_\+str\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_afe100593a8db752b806a253f93ff10cf}{\+\_\+\+\_\+repr\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_af1932495f6574ea8cfabc3ce40e9b8d0}{is\+Default}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a9e49b76788e6c3a4d1a85e9c3449cb6b}{is\+Custom}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a06d132bc2c34f2fa0591f9580aa21d32}{is\+Related}} (self)
+\item 
+def \mbox{\hyperlink{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a08f12b4c20d985a0a1b57491d73463e6}{is\+Orphaned}} (self)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a7fdccdd37f0ecbb4dd11feb7f4f1dba8}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a7fdccdd37f0ecbb4dd11feb7f4f1dba8}} 
+{\bfseries default} = Boolean\+Field(default=False)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_ad631f9f96a04b7e05f1cd2659c4690d3}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_ad631f9f96a04b7e05f1cd2659c4690d3}} 
+{\bfseries name} = Char\+Field(max\+\_\+length=30)
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a51406cf34cddf3e7705f125963198e69}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a51406cf34cddf3e7705f125963198e69}} 
+{\bfseries weight} = \mbox{\hyperlink{classcapstoneproject_1_1models_1_1fields_1_1weight__field_1_1_weight_field}{Weight\+Field}}()
+\item 
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_af3bfd584f62fd349c80b430265b31631}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_af3bfd584f62fd349c80b430265b31631}} 
+{\bfseries categories} = Category\+Query\+Set.\+as\+\_\+manager()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}The Category class is a table that stores the offensive category and weight
+associated with an offensive word.
+\end{DoxyVerb}
+ 
+
+Definition at line 9 of file category.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_afe100593a8db752b806a253f93ff10cf}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_afe100593a8db752b806a253f93ff10cf}} 
+\index{capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}!\+\_\+\+\_\+repr\+\_\+\+\_\+@{\+\_\+\+\_\+repr\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+repr\+\_\+\+\_\+@{\+\_\+\+\_\+repr\+\_\+\+\_\+}!capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+repr\+\_\+\+\_\+()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+category.\+Category.\+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Overwrites the __repr__ function and returns the name of the category.
+:return: The category name.
+\end{DoxyVerb}
+ 
+
+Definition at line 28 of file category.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_ac82aee120190ed17cbe05a413a1dda24}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_ac82aee120190ed17cbe05a413a1dda24}} 
+\index{capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}!\+\_\+\+\_\+str\+\_\+\+\_\+@{\+\_\+\+\_\+str\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+str\+\_\+\+\_\+@{\+\_\+\+\_\+str\+\_\+\+\_\+}!capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+str\+\_\+\+\_\+()}{\_\_str\_\_()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+category.\+Category.\+\_\+\+\_\+str\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Overwrites the __str__ function and returns a string containing the
+category name and the weight.
+:return: A string containing the category name and the weight.
+\end{DoxyVerb}
+ 
+
+Definition at line 19 of file category.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a9e49b76788e6c3a4d1a85e9c3449cb6b}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a9e49b76788e6c3a4d1a85e9c3449cb6b}} 
+\index{capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}!is\+Custom@{is\+Custom}}
+\index{is\+Custom@{is\+Custom}!capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}}
+\subsubsection{\texorpdfstring{is\+Custom()}{isCustom()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+category.\+Category.\+is\+Custom (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if this model instance is User created.
+:return: True if this model instance is User created.
+\end{DoxyVerb}
+ 
+
+Definition at line 50 of file category.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_af1932495f6574ea8cfabc3ce40e9b8d0}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_af1932495f6574ea8cfabc3ce40e9b8d0}} 
+\index{capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}!is\+Default@{is\+Default}}
+\index{is\+Default@{is\+Default}!capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}}
+\subsubsection{\texorpdfstring{is\+Default()}{isDefault()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+category.\+Category.\+is\+Default (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if this model instance is a default.
+:return: True if this model instance is a default.
+\end{DoxyVerb}
+ 
+
+Definition at line 43 of file category.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a08f12b4c20d985a0a1b57491d73463e6}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a08f12b4c20d985a0a1b57491d73463e6}} 
+\index{capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}!is\+Orphaned@{is\+Orphaned}}
+\index{is\+Orphaned@{is\+Orphaned}!capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}}
+\subsubsection{\texorpdfstring{is\+Orphaned()}{isOrphaned()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+category.\+Category.\+is\+Orphaned (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if no relatives rely on this model instance.
+:return: True if no relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 64 of file category.\+py.
+
+\mbox{\Hypertarget{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a06d132bc2c34f2fa0591f9580aa21d32}\label{classcapstoneproject_1_1models_1_1models_1_1category_1_1_category_a06d132bc2c34f2fa0591f9580aa21d32}} 
+\index{capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}!is\+Related@{is\+Related}}
+\index{is\+Related@{is\+Related}!capstoneproject\+::models\+::models\+::category\+::\+Category@{capstoneproject\+::models\+::models\+::category\+::\+Category}}
+\subsubsection{\texorpdfstring{is\+Related()}{isRelated()}}
+{\footnotesize\ttfamily def capstoneproject.\+models.\+models.\+category.\+Category.\+is\+Related (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determines if any relatives rely on this model instance.
+:return: True if relatives rely on this model instance.
+\end{DoxyVerb}
+ 
+
+Definition at line 57 of file category.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+capstoneproject/models/models/category.\+py\end{DoxyCompactItemize}
